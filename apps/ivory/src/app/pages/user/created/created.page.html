@@ -1,0 +1,38 @@
+<ng-container class="works" *ngrxLet="pageUid$;let pageUid">
+    <div class="allCreated">
+        <li>
+            <a class="different" *ngIf="pageUid == (id$ | ngrxPush)">我</a>
+            <a class="different" *ngIf="pageUid != (id$ | ngrxPush)">Ta</a>
+            创建的
+            <a class="new" *ngIf="pageUid == (id$ | ngrxPush)" (click)="createCollection()">新建合集</a>
+        </li>
+        <div class="list" *ngrxLet="create$;let create">
+            <li [routerLink]="['..',create.id]" *ngFor="let create of create?.list">
+                <img [attr.src]="create.cover">
+                <span class="name">{{create.name}}</span>
+                <span class="name">
+                    <img src="/assets/image/svg/defalut-avatar.svg">
+                    {{create.nickname}}
+                </span>
+                <span class="count">该合辑一共有{{create.work_count}}个作品</span>
+                <span class="message">
+                    <a>
+                        <img src="assets/image/svg/thumbs-up.svg">
+                        {{create.like_count |changeUnit}}
+                    </a>
+                    <a>
+                        <img src="assets/image/svg/subscribe.svg">
+                        {{create.subscribe_count | changeUnit}}
+                    </a>
+                </span>
+            </li>
+            <ng-container *ngIf="create.count>0">
+             <div class="page" *ngrxLet="indexPage$;let indexPage">
+               <ivo-pagination [currentPage]="indexPage"  [total]="create?.count" [pageSize]="12"  (onPageChange)="toPage($event)">
+                </ivo-pagination>
+            </div>
+        </ng-container>
+        </div>
+
+    </div>
+</ng-container>

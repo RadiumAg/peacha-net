@@ -1,0 +1,37 @@
+<form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="report()" [@modalEnterLeaveTrigger]>
+    <div class="report-modal-box">
+        <div class="report-head">
+            <span class="title">评论举报</span>
+        </div>
+        <div class="report-body">
+            <span>你觉得这个评论有什么问题？</span>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="请选择问题描述">
+                    <nz-radio-group formControlName="option">
+                        <div class="radio-box">
+                            <ng-container *ngFor="let option of options$ | ngrxPush;let index">
+                                <div>
+                                    <label nz-radio id="radio-{{index}}" [nzValue]="index">{{option}}
+                                    </label>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item>
+            <ng-container *ngIf="otherChecked$|async">
+                <span>为帮助审核人员更快处理，请具体描述违规内容</span>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="请输入详细违规内容">
+                        <textarea nz-input placeholder="限制输入800字符" maxlength="800" formControlName="text"></textarea>
+                    </nz-form-control>
+                </nz-form-item>
+            </ng-container>
+
+        </div>
+        <div class="btn-group">
+            <button type="button" cancel (click)="cancel()">取消</button>
+            <button type="submit" ok>举报</button>
+        </div>
+    </div>
+</form>

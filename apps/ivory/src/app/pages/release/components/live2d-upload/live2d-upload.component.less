@@ -1,0 +1,212 @@
+:host {
+    display: block;
+}
+
+.live2d-upload-box {
+    height: 1113px/2;
+    width: 1113px;
+    background: rgba(230, 230, 230, 1);
+    border-radius: 10px;
+    position: relative;
+
+    &>.upload-item-box {
+        display: flex;
+        position: absolute;
+        z-index: 110;
+        top: 40px;
+        right: 40px;
+
+        &>div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 500px;
+            height: 40px;
+            background-color: rgba(0,0,0,0.5);
+            border-radius: 10px;
+
+            &>.upload-container {
+                &>img {
+                    margin-left: 20px;
+                    margin-right: 20px;
+                    width: 20px;
+                    height: 20px;
+                }
+
+                &>.file-name {
+                    width: 136px;
+                    height: 20px;
+                    font-size: 14px;
+                    color: rgba(255, 255, 255, 1);
+                    line-height: 20px;
+                }
+            }
+
+            &>.re-upload {
+                margin-right: 20px;
+                width: 60px;
+                height: 20px;
+                font-size: 14px;
+                color: rgba(250, 137, 175, 1);
+                line-height: 20px;
+
+                &:hover {
+                    color: #FFA5C3;
+                }
+            }
+        }
+
+        &>button {
+            margin-left: 30px;
+            width: 150px;
+            height: 40px;
+            background: rgba(255, 99, 152, 1);
+            opacity: 1;
+            border-radius: 4px;
+            border: none;
+
+            &:hover {
+                background-color: #FFA5C3;
+            }
+
+            &[error] {
+                background-color: rgba(154, 154, 154, 1);
+            }
+
+            &[loading]{
+                background-color: #FFA5C3;
+            }
+
+            &[success] {
+                background-color: #63A9FF;
+            }
+
+            &[fail] {
+                background-color: #F1403C;
+            }
+
+            &>span {
+                width: 60px;
+                height: 20px;
+                font-size: 14px;
+                font-weight: 600;
+                color: rgba(255, 255, 255, 1);
+                line-height: 20px;
+            }
+        }
+    }
+
+    &>.live2d-not-loaded {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &>.tips-bottom {
+            position: absolute;
+            bottom: 70px;
+
+
+            text-align: center;
+            width: 625px;
+            font-size: 14px;
+            color: #666666;
+            line-height: 22px;
+            &>a{
+                color: #FA89AF;
+            }
+        }
+
+        &>div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &>img {
+                width: 39px;
+                height: 35px;
+            }
+
+            &>.tips-top {
+                text-align: center;
+                margin-top: 30px;
+                margin-bottom: 50px;
+                width: 255px;
+                height: 22px;
+                font-size: 16px;
+                color: rgba(0, 0, 0, 1);
+                line-height: 22px;
+            }
+
+            &>.tips-center {
+                text-align: center;
+                width: 625px;
+                font-size: 14px;
+                color: #666666;
+                line-height: 22px;
+                &>a{
+                    color: #FA89AF;
+                }
+            }
+
+            &>button {
+                width: 240px;
+                height: 40px;
+                background: rgba(250, 137, 175, 1);
+                border-radius: 4px;
+                border: none;
+                margin-bottom: 50px;
+
+                &:hover {
+                    background-color: #FFA5C3;
+                }
+
+                &>span {
+                    width: 119px;
+                    height: 20px;
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: rgba(255, 255, 255, 1);
+                    line-height: 20px;
+                }
+            }
+        }
+    }
+
+    &>.live2d-loaded {
+        width: 100%;
+        height: 100%;
+    }
+
+    &>.live2d-load-error {
+        width: 100%;
+        height: 100%;
+
+        &>.upload-error-box {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            &>img {
+                width: 64px;
+                height: 64px;
+                margin-bottom: 30px;
+            }
+
+            &>span {
+                width: 194px;
+                height: 20px;
+                font-size: 14px;
+                font-weight: 600;
+                color: rgba(114, 111, 111, 1);
+                line-height: 20px;
+                text-align: center;
+            }
+        }
+    }
+}

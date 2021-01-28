@@ -1,0 +1,43 @@
+<div class="all" *ngrxLet="goods$;let goods">
+    <div class="order">
+        <!-- <h1>创建订单</h1> -->
+        <div class="goods" *ngFor="let good of goods?.list">
+            <img [attr.src]="good.cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'">
+            <li class="good-left">
+                <span class="name">
+                    {{good.work_name}}
+                </span>
+                <!-- <span class="good-name">商品名称:&nbsp;&nbsp;{{good.goods_name}}</span> -->
+                <span class="ower">卖家:&nbsp;&nbsp;{{good.seller_name}}</span>
+                <span class="type" *ngIf="good.maxstock==1;else otherWay">单次出售</span>
+                <ng-template #otherWay>
+                    <span class="type">多次出售</span>
+                </ng-template>
+            </li>
+            <li class="good-right">
+                <span class="orderid"></span>
+                <span class="price">
+                    价格:
+                    <a>¥{{good.price | number:'1.2-2'}}</a>
+                </span>
+            </li>
+        </div>
+        <div class="operate">
+            <p>
+                <img src="/assets/image/svg/i-warning.svg">
+                一经购买，不得退款或再次出售/发布
+            </p>
+            <li>
+                <span class="total">
+                    合计:
+                    <a>¥{{total$ | ngrxPush | number:'1.2-2'}}</a>
+                </span>
+                <span class="next">
+                    <button (click)="createOrder()">创建订单 </button>
+                </span>
+
+                <span class="tip">创建订单后需要在30分钟内支付,否则订单失效</span>
+            </li>
+        </div>
+    </div>
+</div>

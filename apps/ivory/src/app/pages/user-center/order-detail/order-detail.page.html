@@ -1,0 +1,107 @@
+<div class="main" *ngrxLet="work$;let item">
+    <div class="head">
+        <span>
+            订单详情
+        </span>
+        <span class="return" (click)="goback()"> &lt;返回列表</span>
+    </div>
+
+    <div class="des">
+        <img [src]="item.cover" (click)="toWork(item.workid,item.category)" />
+        <div class="desc">
+            <div class="left">
+                <span class="workname" (click)="toWork(item.workid,item.category)">{{item.work_name}}</span>
+                <!-- <span class="goodname">商品名称：{{item.goods_name}}</span> -->
+                <span class="seller">卖家:{{item.seller_name}}</span>
+                <span class="sell" *ngIf="item.maxstock==1; else elseBlock1">单次出售</span>
+                <ng-template #elseBlock1>
+                    <span class="sell">
+                        多次出售
+                    </span>
+                </ng-template>
+            </div>
+
+            <div class="right">
+                <span class="dele" *ngIf="item.state!=0;else black" (click)="delet(item)">删除</span>
+                <ng-template #black>
+                    <br />
+                </ng-template>
+
+                <span class="pre">价格：
+                    <span class="money">￥{{item.price|number}}</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom">
+        <div class="bl">
+            <span>订单号：{{item.orderid}}</span>
+            <span class="b">创建时间：{{item.createtime|date:"y-MM-dd HH:mm"}}</span>
+            <span class="b"
+                *ngIf="item.state==1||item.state==5||item.state==4">支付时间：{{item.completetime|date:"y-MM-dd HH:mm"}}</span>
+            <!-- <span *ngIf="item.state==1||item.state==5||item.state==4">支付交易号：{{item.transaction_id}}</span> -->
+
+        </div>
+        <div class="br">
+            <span [ngSwitch]="item.state">
+                <span *ngSwitchCase="0">
+                    <!-- 待支付 -->
+                    <span>
+                        <a (click)="cancel(item.orderid)">取消订单</a>
+                        <button (click)="toPay(item.orderid)">立即支付</button>
+                    </span>
+                    <div>请在 <ivo-cd [createtime]="item.createtime" (cdTimeout)="orderTimeout()"></ivo-cd>内支付，否则订单将会失效
+                    </div>
+                </span>
+                <span *ngSwitchCase="1">
+                    <!-- 已完成 -->
+                    <span class="state">订单状态：已完成</span>
+                    <span>支付方式：
+                        <span class="ttt">{{item.pay_type}}</span>
+                    </span>
+                    <span>支付交易号：{{item.transaction_id}}</span>
+                </span>
+                <span *ngSwitchCase="2">
+                    <!-- 超时 -->
+                    <span class="state">订单状态：已失效</span>
+                    <span>失效时间：{{item.completetime|date:"yyyy-MM-dd HH:mm"}}</span>
+                </span>
+                <span *ngSwitchCase="3">
+                    <!-- 取消 -->
+                    <span class="state">订单状态：已失效</span>
+                    <span>失效时间：{{item.completetime|date:"yyyy-MM-dd HH:mm"}}</span>
+                </span>
+                <span *ngSwitchCase="4">
+                    <!-- 退款中 -->
+                    <span class="state">订单状态：退款中</span>
+                    <span [ngSwitch]="item.pay_type">支付方式：
+                        <span class="ttt" *ngSwitchCase="0">钱包</span>
+                        <span class="ttt" *ngSwitchCase="1">支付宝</span>
+                        <span class="ttt" *ngSwitchCase="2">微信</span>
+                        <span class="ttt" *ngSwitchCase="3">银联</span>
+                    </span>
+                    <span>支付交易号：{{item.transaction_id}}</span>
+                </span>
+                <span *ngSwitchCase="5">
+                    <!-- 退款完成 -->
+                    <span class="state">订单状态：已退款</span>
+                    <span [ngSwitch]="item.pay_type">支付方式：
+                        <span class="ttt" *ngSwitchCase="0">钱包</span>
+                        <span class="ttt" *ngSwitchCase="1">支付宝</span>
+                        <span class="ttt" *ngSwitchCase="2">微信</span>
+                        <span class="ttt" *ngSwitchCase="3">银联</span>
+                    </span>
+                    <!-- <span>支付时间：{{item.completetime|date:"yyyy-MM-dd HH:mm"}}</span> -->
+                    <span [ngSwitch]="item.refund_type">退款渠道：
+                        <span class="ttt" *ngSwitchCase="0">钱包</span>
+                        <span class="ttt" *ngSwitchCase="1">支付宝</span>
+                        <span class="ttt" *ngSwitchCase="2">微信</span>
+                        <span class="ttt" *ngSwitchCase="3">银联</span>
+                    </span>
+                    <span>退款时间：{{item.refundtime|date:"yyyy-MM-dd HH:mm"}}</span>
+                </span>
+            </span>
+        </div>
+    </div>
+</div>

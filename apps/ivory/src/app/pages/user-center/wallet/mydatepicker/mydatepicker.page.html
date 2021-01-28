@@ -1,0 +1,10 @@
+<div class="datepicker">
+    <div class="year">
+        <span><<</span>
+        <span>{{thisYear}}年</span>
+        <span>>></span>
+    </div>
+    <span *ngFor="let item of dateMonth" [ngClass]="{red: thisMonth==item}">
+            {{item}}月
+    </span>
+</div>

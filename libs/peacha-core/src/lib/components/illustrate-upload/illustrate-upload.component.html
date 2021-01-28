@@ -1,0 +1,26 @@
+<div #uploadList (dragover)="$event.preventDefault();">
+    <ng-container *ngFor="let upload of imageShow$|ngrxPush;trackBy: trackBy;let i =index">
+        <div class="illust-box" draggable="true" (drop)="drop($event)" (dragstart)="drag($event)" [id]='upload.url'
+            *ngrxLet="upload.process$;let process">
+            <div class="delete" (click)="removeFile(upload.symbol)"></div>
+            <img [src]="upload.url">
+
+            <ng-container *ngIf="!(process.progress==1)">
+                <div class='process-body'>
+                    <div class='outer'>
+                        <div class="mask" [ngStyle]="{'width': (process.progress * 100)+'%'}">
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+        </div>
+    </ng-container>
+
+</div>
+
+<div class="illust-box" draggable="true" (dragover)="$event.preventDefault();" (dragenter)="$event.preventDefault();"
+    (dragstart)="$event.preventDefault();" (dragleave)="$event.preventDefault();" (drop)="dropFile($event)"
+    (click)="c.click()" *ngIf="!disabled">
+    <input #input [accept]="accept" style="display: none;" #c type="file" (change)="inputChange($event)">
+</div>

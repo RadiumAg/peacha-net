@@ -1,0 +1,97 @@
+.slider-box {
+    padding: 5px 0px 5px 0px;
+    margin: 0px 4px 0px 4px;
+
+    .slider-label {
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+
+        &>img {
+            width: 16px;
+            height: 16px;
+        }
+
+        &>span {
+            height: 18px;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 18px;
+            color: rgba(255, 255, 255, 1);
+            opacity: 1;
+            margin-left: 3px;
+        }
+    }
+
+    .slider-controller {
+        display: flex;
+        flex-direction: column;
+
+        &>.slider-controller-base {
+            display: flex;
+            align-items: center;
+
+            &>.slider-body {
+                &>.slider-track {
+                    width: 135px;
+                    height: 8px;
+                    background: rgba(255, 99, 152, 1);
+                    opacity: 1;
+                    border-radius: 4px;
+                    margin: 5px 0px 5px 0px;
+
+                    &>.slider-thumb {
+                        position: relative;
+                        left: -8px;
+                        top: -5px;
+                        width: 18px;
+                        height: 18px;
+                        background: rgba(255, 99, 152, 1);
+                        border: 2px solid rgba(255, 255, 255, 1);
+                        border-radius: 50%;
+                        opacity: 1;
+                        pointer-events: none;
+                    }
+                }
+            }
+
+            &>img {
+                width: 16px;
+                height: 16px;
+                margin: 0px 12px 0px 12px;
+            }
+
+            &>input {
+                width: 45px;
+                height: 18px;
+                background: rgba(255, 255, 255, 1);
+                opacity: 1;
+                border-radius: 9px;
+                border: none;
+                text-align: center;
+                font-size: 12px;
+                line-height: 18px;
+            }
+
+            &>input::-webkit-outer-spin-button,
+            &>input::-webkit-inner-spin-button {
+                -webkit-appearance: none !important;
+            }
+        }
+
+        &>.slider-mark {
+            display: flex;
+            width: 135px;
+            justify-content: space-between;
+
+            &>span {
+                height: 18px;
+                font-size: 12px;
+                line-height: 18px;
+                color: rgba(255, 255, 255, 1);
+                opacity: 1;
+            }
+        }
+    }
+
+}

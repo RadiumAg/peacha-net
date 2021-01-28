@@ -1,0 +1,42 @@
+<div class="body">
+  <div>
+    <div class="title">{{ title }}</div>
+    <div class="search">
+      <div (click)="search()"><span class="search-icon"></span></div>
+      <input placeholder="搜索" (keydown.Enter)="search()" #searchInput />
+    </div>
+    <div
+      class="staff"
+      #staff
+      *ngrxLet="model$; let model"
+      (scroll)="onScroll($event)"
+    >
+      <ng-container *ngFor="let item of model">
+        <div (click)="select($event)" class="single" id="list_body">
+          <img
+            [ngClass]="{
+              react: imgStyle === 'react',
+              circul: imgStyle === 'circul'
+            }"
+            class="react circul"
+            [id]="item[idprototype]"
+            [src]="item[imgprototype]"
+          />
+          <span>{{ item[titleprototype] }}</span>
+          <span class="symbol">{{
+            item[symbolprototype] | date: 'MM-dd'
+          }}</span>
+        </div>
+      </ng-container>
+      <div class="loading" *ngIf="isLoading">
+        <img src="/assets/image/selectCompany/loading.gif" alt="" />
+      </div>
+      <div *ngIf="!hasData" style="width: 100%">已经没有数据了！</div>
+    </div>
+    <p>{{ tips }}</p>
+    <div class="oper">
+      <div (click)="cancel()">取消</div>
+      <div (click)="complete()">完成</div>
+    </div>
+  </div>
+</div>

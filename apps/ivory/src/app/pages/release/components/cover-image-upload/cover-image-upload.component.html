@@ -1,0 +1,5 @@
+<div class="body" (click)="file.click()">
+    <span *ngIf="!isLoading" class="oper-icon"></span>
+    <img *ngIf="isLoading" [src]="imgUrl" />
+    <input type="file" name="file" (change)="openCrop($event)" accept="Image/*" #file hidden />
+</div>

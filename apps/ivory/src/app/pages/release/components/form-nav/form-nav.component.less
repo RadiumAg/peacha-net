@@ -1,0 +1,51 @@
+@import '../component.less';
+
+:host {
+    div.nav-container {
+        li.nav-item {
+            width: max-content;
+            font-size: 16px;
+            color: @component-font-color1;
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            position: relative;
+            line-height: 17px;
+
+            &::before {
+                content: '';
+                margin-right: 4px;
+                width: 17px;
+                display: inline-block;
+                height: 17px;
+                background-image: url(/assets/image/form-nav/01.png);
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+            &::after {
+                content: '';
+                display: inline-block;
+                width: 0.5px;
+                border: 0.25px dashed #FF6389;
+                height: 40px;
+                bottom: -40px;
+                left: 17px/2;
+                transform: translateX(-50%);
+                position: absolute;
+            }
+
+        }
+
+        li.nav-item:last-child {
+            &:after {
+                height: 0;
+            }
+        }
+
+        li.active{
+            font-weight: bold;
+        }
+    }
+}

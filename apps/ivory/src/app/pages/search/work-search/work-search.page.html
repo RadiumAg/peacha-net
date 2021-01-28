@@ -1,0 +1,15 @@
+<div *ngrxLet="workdata$;let workdata">
+    <div class="a">
+        <ng-container *ngFor="let item of workdata.list">
+            <ivo-work-card [work]="item"></ivo-work-card>
+        </ng-container>
+    </div>
+    <div class="default" *ngIf="(workdata.count==0)">
+        <ivo-lack-image></ivo-lack-image>
+        <span>啊咧，什么都没有搜索到的说</span>
+    </div>
+    <div *ngIf="workdata.count>20" class="page">
+        <ivo-pagination [total]="workdata?.count" [currentPage]="(page$|async)" [pageSize]="20" (onPageChange)="page($event)">
+        </ivo-pagination>
+    </div>
+</div>

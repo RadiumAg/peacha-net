@@ -1,0 +1,93 @@
+@import '../../common.less';
+@tag-disabled-color: #E6E6E6;
+:host {
+
+    input::-webkit-input-placeholder {
+        color: #999999;
+    }
+
+    input::-moz-input-placeholder {
+        color: #999999;
+    }
+
+    input::-ms-input-placeholder {
+        color: #999999;
+    }
+
+    display: grid;
+    grid-template-rows: max-content max-content;
+    justify-items: flex-start;
+    width: 100%;
+
+    div.tagInput {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+
+        div.sum {
+            color: @release-font-color1;
+            display: inline-block;
+        }
+
+        &>.tag-input {
+            border: none;
+            width: 305px;
+            display: block;
+            height: 40px;
+            border-radius: 4px;
+            line-height: 40px;
+            font-size: 14px;
+            padding: 0 20px;
+            margin-right: 20px;
+            background-color: @release-background-color;
+            color: #999999;
+            outline: none;
+        }
+
+        >.tag-input.disabled{
+            background-color: @tag-disabled-color;
+        }
+    }
+
+    .tag-items {
+
+        &>.tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 40px;
+            border-radius: 4px;
+            border: none;
+            padding: 0 10px;
+            margin-right: 20px;
+            color: #5C5E66;
+            width: max-content;
+            background-color: @release-background-color;
+
+            .delete {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                margin-left: 30px;
+                width: 22px;
+                height: 22px;
+            }
+
+            .delete::after {
+                content: "";
+                display: inline-block;
+                height: 18px;
+                width: 18px;
+                background-image: url(/assets/image/ivo-tag-input/delete2.svg);
+                background-repeat: no-repeat;
+                background-size: contain;
+                border-radius: 50%;
+            }
+
+            .delete:hover {
+                background-color: #EDEFF0;
+            }
+        }
+    }
+}

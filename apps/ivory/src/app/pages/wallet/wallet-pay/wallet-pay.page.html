@@ -1,0 +1,105 @@
+<div ivoStepper #step>
+    <div class="main" *ivoStep>
+        <div class="des">选择充值的金额</div>
+        <div class="money" *ngrxLet="money$;let m">
+            <button
+                (click)="money$.next(300)"
+                [ngClass]="{'select':m == '300'}"
+            >
+                ¥300
+            </button>
+            <button
+                (click)="money$.next(500)"
+                [ngClass]="{'select':m == '500'}"
+            >
+                ¥500
+            </button>
+            <button
+                (click)="money$.next(1000)"
+                [ngClass]="{'select':m == '1000'}"
+            >
+                ¥1,000
+            </button>
+            <button
+                (click)="money$.next(2000)"
+                [ngClass]="{'select':m == '2000'}"
+            >
+                ¥2,000
+            </button>
+            <button
+                (click)="money$.next(3000)"
+                [ngClass]="{'select':m == '3000'}"
+            >
+                ¥3,000
+            </button>
+            <button
+                (click)="money$.next(5000)"
+                [ngClass]="{'select':m == '5000'}"
+            >
+                ¥5,000
+            </button>
+            <input
+                [formControl]="money"
+                (click)="money$.next(money.value)"
+                (blur)="money$.next(money.value)"
+                class="mine"
+                placeholder="¥自定义"
+                [ngClass]="{'select':m==money.value}"
+            />
+
+            <div class="error-inset">
+                <ng-container *ngIf="m<=1&&error" >
+                    请输入不小于1的充值金额
+                </ng-container>
+            </div>
+        </div>
+        <div class="sel">支付方式</div>
+        <div class="way" *ngrxLet="way$;let w">
+            <button (click)="way$.next(1)" [ngClass]="{'select':w == '1'}">
+                <img src="assets/image/svg/支付宝.svg" /> 支付宝支付(沙箱环境)
+            </button>
+
+            <div class="error-inset">
+                <ng-container *ngIf="(w==0)&&error">
+                    请选择支付方式
+                </ng-container>
+            </div>
+        </div>
+        <button (click)="sum()" class="sure">确定</button>
+    </div>
+    <div *ivoStep="'code'" class="code">
+        <!-- <div class="jin">金额: <span class="m">{{money$|async}}</span></div>
+        <div class="s">
+            请用 <span class="z" *ngIf="(way$|async)==1">支付宝</span>
+            <span class="w" *ngIf="(way$|async)==2">微信</span>
+            扫码支付
+        </div>
+        <qrcode
+            *ngrxLet="qrcode$;let qrcode"
+            [qrdata]="qrcode"
+            [width]="200"
+            [errorCorrectionLevel]="'M'"
+        >
+        </qrcode>
+        <div class="mask" *ngIf="(error$|async)==2||(error$|async)==3">
+            <div></div>
+            <p class="tip">二维码已失效，请刷新</p>
+        </div>
+        <div>
+            <span
+                class="re"
+                (click)="refresh()"
+                *ngIf="(error$|async)==2||(error$|async)==3"
+                >刷新</span
+            >
+        </div> -->
+        <img src="/assets/image/unindex-exchange.png">
+        <li>等待支付完成......</li>
+      
+    </div>
+    <div *ivoStep="'success'" class="fin">
+        <img src="/assets/image/invest-success.png">
+        <span>支付成功</span>
+        <a [routerLink]="['../../setting/wallet']">返回我的钱包</a>
+    </div>
+</div>

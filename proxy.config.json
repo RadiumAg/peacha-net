@@ -1,0 +1,18 @@
+{
+    "/api/v1/commission": {
+        "target": "http://47.99.94.159:8601"
+    },
+    "/api/v1/trade": {
+        "target": "http://47.99.94.159:8700"
+    },
+    "/api/v1/chat/": {
+        "target": "http://47.99.94.159:18100",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/api/": {
+        "target": "http://47.99.94.159:8200",
+        "secure": false,
+        "changeOrigin": true
+    }
+}

@@ -1,0 +1,53 @@
+<ivo-commission-top-nav [isShowDetail]="true" [isShowRight]="true"></ivo-commission-top-nav>
+<div class="box" *ngIf="fileList?.length>0">
+    <li class="title">
+        <span class="name">驳回记录</span>
+        <a class="back" (click)="goback()"> <img src="/assets/image/commission/goback.svg">返回列表</a>
+    </li>
+    <div class="list" *ngFor="let item of fileList">
+        <li class="file">
+            <div class="one" *ngFor="let file of item?.submitFiles;let i=index">
+                <span class="name">文件{{i+1}}</span>
+                <span class="show"><a [href]="file+'?response-content-type=application/octet-stream'" download target="_block">下载</a></span>
+            </div>
+        </li>
+        <li class="file">
+            <div class="one">
+                <span class="name">
+                    <ng-container *ngIf="commissionType===1">
+                        画师提交时间
+                    </ng-container>
+                    <ng-container *ngIf="commissionType===0">
+                        模型师提交时间
+                    </ng-container>
+                </span>
+                <span class="show">{{item?.submitTime|date:'yyyy-MM-dd HH:mm'}}</span>
+            </div>
+            <div class="one" *ngIf="item.status!=0">
+                <span class="name" [ngSwitch]="item.status">
+                    <ng-container *ngSwitchCase="2">
+                        企划方驳回时间
+                    </ng-container>
+                    <ng-container *ngSwitchCase="1">
+                        企划方审核时间
+                    </ng-container>
+                </span>
+                <span class="show">{{item.audit?.auditTime |date:'yyyy-MM-dd HH:mm'}}</span>
+            </div>
+
+        </li>
+        <li *ngIf="item.audit?.description">
+            <span class="name">驳回理由</span>
+            <span class="show">{{item.audit?.description}}</span>
+        </li>
+        <li *ngIf="item.audit?.images.length>0">
+            <span class="name">附加图片</span>
+            <span class="show-pic">
+                <img *ngFor="let url of item.audit?.images" [src]="url" (click)="showDetail(url)">
+            </span>
+        </li>
+        <!-- <img *ngIf="item.status===3" class="result-img" src="/assets/image/commission/commission-nodelist/revise.svg">
+        <img *ngIf="item.status===2" class="result-img" src="/assets/image/commission/commission-nodelist/reject.svg"> -->
+
+    </div>
+</div>

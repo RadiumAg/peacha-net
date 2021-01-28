@@ -1,0 +1,30 @@
+<div class="every">
+    <img [attr.src]="item.public_useravatar" [routerLink]="['/user',item.public_userid]">
+    <div class="right">
+        <span class="name" [routerLink]="['/user',item.public_userid]">{{item.public_username}}</span>
+        <div class="work" *ngIf="item.news_type==300;else other">
+            <span class="w">{{item.one}}</span>
+            <span class="v"
+                [routerLink]="[item.catenation]">{{"《"+item.two+"》"}}</span>:
+            <span class="centent">{{item.centent}}</span>
+        </div>
+        <ng-template #other>
+            <div class="work">
+                <span class="a">{{item.one}}</span>
+                <span class="x">{{item.centent}}</span>
+            </div>
+        </ng-template>
+        <span class="time">{{item.public_time | date:"yyyy-MM-dd HH:mm"}}</span>
+        <!-- <a (click)="reply()">回复</a> -->
+        <span class="detail"  (click)="toDetail(item.catenation,item.source_id)">查看详情</span>
+   
+    </div>
+</div>
+<ng-container *ngIf="active">
+    <div class="text">
+        <img [attr.src]="avatar">
+        <textarea [formControl]="replyControl"></textarea>
+      
+    </div>
+    <button (click)="send(item.source_id)">发送</button>
+ </ng-container>

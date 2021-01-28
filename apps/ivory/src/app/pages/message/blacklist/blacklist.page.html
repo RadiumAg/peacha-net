@@ -1,0 +1,28 @@
+<div class="all">
+    <ng-container *ngrxLet="blackList$;let blackList">
+        <h3>黑名单管理
+            <span>已拉黑人数：{{blackList?.count}}/100</span>
+        </h3>
+
+        <div class="more">
+            <ng-container *ngIf="blackList?.count!=0">
+                <li class="title">
+                    <span class="nick">用户名称</span>
+                    <span class="time">拉黑时间</span>
+                    <span>操作</span>
+                </li>
+                <div class="list" cdkScrollable>
+                    <li *ngFor="let item of list">
+                        <span class="nick">{{item?.nickname}}</span>
+                        <span class="time">{{item?.blacktime | date:'yyyy-MM-dd'}}</span>
+                        <span class="operate" (click)="cancelBlack(item.id)">撤销拉黑</span>
+                    </li>
+                </div>
+                
+            </ng-container>
+            <ng-container *ngIf="blackList?.count===0">
+                <ivo-lack-image></ivo-lack-image>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>

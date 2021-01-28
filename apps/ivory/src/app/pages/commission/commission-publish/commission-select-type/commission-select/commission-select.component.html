@@ -1,0 +1,20 @@
+<div class="live2dorillust-container">
+  <div
+    class="left"
+    [ngClass]="{ active: activeList[0] }"
+    (click)="select(0, 'illust')"
+  >
+    <img src="/assets/image/release/01.png" alt="" />
+    <div>立绘创作</div>
+    <p class="detail-word">发布此企划招募一名画师完成原画创作。</p>
+  </div>
+  <div
+    class="right"
+    [ngClass]="{ active: activeList[1] }"
+    (click)="select(1, 'live2d')"
+  >
+    <img src="/assets/image/commission-select/01.png" alt="" />
+    <div>绑定Live2D</div>
+    <p class="detail-word">发布此企划招募一名模型师完成Live2D建模。</p>
+  </div>
+</div>

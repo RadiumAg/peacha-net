@@ -1,0 +1,28 @@
+<div class="all">
+    <div class="top">
+        <div class="choice">
+            <ng-container *ngrxLet="countList$;let countList">
+                <span [routerLink]="['.']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+                    queryParamsHandling="merge">
+                    发布成功
+                    ({{countList[1]}})
+                </span>
+                <span [routerLink]="['auditing']" routerLinkActive="active" queryParamsHandling="merge">
+                    审核中
+                    ({{countList[0]}})
+                </span>
+                <span [routerLink]="['fail']" routerLinkActive="active" queryParamsHandling="merge">
+                    审核失败
+                    ({{countList[2]}})
+                </span>
+            </ng-container>
+        </div>
+        <div class="search">
+            <input type="text" placeholder="搜索" (keydown.Enter)="keyword()" (blur)="keyword()" [formControl]="key">
+            <img src="assets/image/svg/worksearch.svg" class="work-search" />
+        </div>
+
+
+    </div>
+    <router-outlet></router-outlet>
+</div>

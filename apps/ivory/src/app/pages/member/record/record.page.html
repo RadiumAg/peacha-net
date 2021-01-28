@@ -1,0 +1,59 @@
+<div class="main" *ngrxLet="record$;let record">
+    <div class="index">
+        出售记录
+
+        <div class="search">
+            <input
+                type="text"
+                [formControl]="key"
+                placeholder="搜索"
+                (keydown.Enter)="keyword()"
+                (blur)="keyword()"
+            />
+            <img src="assets/image/svg/worksearch.svg" class="work-search" />
+        </div>
+    </div>
+
+    <div
+        class="show"
+        *ngFor="let item of record?.list"
+        [routerLink]="['/member/record/redetail']"
+        [queryParams]="{id:item.orderid}"
+    >
+        <img [src]="item.work_cover+'?x-oss-process=image/resize,m_fixed,w_102,h_102'" />
+        <div class="desc">
+            <div class="left">
+                <span class="name">
+                    {{item.work_name}}
+                </span>
+                <span class="color">
+                    买家： {{item.buyer_name}}
+                </span>
+                <span class="ssssssssss">
+                    订单号： {{item.orderid}}
+                </span>
+            </div>
+            <div class="right">
+                <br />
+                <div class="money">+¥{{item.amount}}</div>
+                <div class="time">
+                    出售时间：{{item.completetime|date:"yyyy-MM-dd HH:mm"}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="record?.count==0">
+        <ivo-lack-image></ivo-lack-image>
+     </ng-container >
+
+
+    <div class="page">
+        <ivo-pagination
+            *ngIf="record?.count>5"
+            [total]="record?.count"
+            [pageSize]="5"
+            [currentPage]="(page$|async)"
+            (onPageChange)="page($event)"
+        ></ivo-pagination>
+    </div>
+</div>

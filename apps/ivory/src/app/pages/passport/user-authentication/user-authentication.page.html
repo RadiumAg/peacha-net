@@ -1,0 +1,120 @@
+<div class="all" ivoStepper #step="steps">
+    <div class="top">
+        <span  [routerLink]="['/setting/security']" >
+            安全设置
+        </span>-<span class="oo">实名认证</span></div>
+    <!-- 输入账号 -->
+    <div class="three" *ivoStep="'one'">
+        <span class="title">验证身份</span>
+        <span class="tips">我们会向您绑定的邮箱/手机号发送验证码，来验证是否为本人操作。</span>
+        <ng-container *ngrxLet="phone$;let phone">
+            <button *ngIf="phone" (click)="request(0)"><img src="/assets/image/svg/reset-phone.svg">通过手机接受验证码</button>
+        </ng-container>
+        <ng-container *ngrxLet="email$;let email">
+            <button *ngIf="email" (click)="request(1)"><img src="/assets/image/svg/reset-email.svg">通过邮箱接受验证码</button>
+        </ng-container>
+    </div>
+    <!-- 验证账号 -->
+    <div class="four" *ivoStep="'two'">
+        <span class="title">验证码:</span>
+        <div class="code" *ngrxLet="cooldown$;let cooldown">
+            <input type="text" placeholder="请输入收到的验证码" [formControl]="verifyCode" #hello/>
+            <button class="veriftButton" (click)="requestAgain()" [disabled]=cooldown>
+                <ng-container *ngIf="cooldown==0">
+                    获取验证码
+                </ng-container>
+                <ng-container *ngIf="cooldown>0">
+                    等待({{cooldown}})
+                </ng-container>
+            </button>
+            <div class="btn">
+                <button  ivo-button class="buttonRight" (click)=" confirmVerify(hello)">
+                    下一步
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <div class="one" *ivoStep="'fill'">
+        <img src="/assets/image/svg/i-logo.svg">
+        <span class="title">输入您的身份信息</span>
+        <span class="tips">请输入您的姓名与18位身份证号码</span>
+        <span class="tips">请您放心，我们会严格保密您的身份信息</span>
+        <div class="fill-in">
+            <span class="input-tip">请输入您的姓名</span>
+            <input [formControl]="name">
+            <div class="error-inset" [errorDisplay]="name">
+                <ng-container *errorCase="'required'">
+                    姓名是必填项
+                </ng-container>
+                <ng-container *errorCase="'pattern'">
+                    姓名只能是汉字
+                </ng-container>
+                <ng-container *errorCase="'minlength'">
+                    姓名至少输入2个汉字
+                </ng-container>
+                <ng-container *errorCase="'maxlength'">
+                    姓名最多只能输入15个汉字
+                </ng-container>
+                <ng-container *errorCase="'wrong_code'">
+                    姓名格式错误
+                </ng-container>
+            </div>
+            <span class="input-tip">请输入您的18位身份证号码</span>
+            <input [formControl]="code"  #codeInput>
+            <div class="error-inset" [errorDisplay]="code" >
+                <ng-container *errorCase="'required'">
+                    身份证号码是必填项
+                </ng-container>
+                <ng-container *errorCase="'pattern'">
+                    身份证号码格式有误
+                </ng-container>
+                <ng-container *errorCase="'maxlength'">
+                    身份证号码最多18位
+                </ng-container>
+                <ng-container *errorCase="'wrong_code'">
+                    身份证号码错误
+                </ng-container>
+            </div>
+        </div>
+        <li>
+            <button ivo-button (click)="goUpdate(codeInput)">继续</button>
+        </li>
+    </div>
+    <div class="two" *ivoStep="'update'">
+        <img src="/assets/image/svg/i-logo.svg">
+        <span class="title">上传身份证照片</span>
+        <span class="tips">请上传您手持证件照（人像面）以及身份证人像面与国徽面照片，以便我们验证您的身份信息
+        </span>
+        <span class="tips">图片格式支持jpg、png、jpeg，大小请控制在2M以内</span>
+        <div class="update">
+            <li (click)="inputOne.click()">
+                <ng-container *ngrxLet="onePic$;let onePic">
+                    <img [attr.src]="onePic">
+                </ng-container>
+
+                <span class="pic-tip">点击上传手持证件照（人像面）</span>
+                <input hidden type="file" #inputOne (change)="upPicOne($event)">
+            </li>
+            <li (click)="inputTwo.click()">
+                <ng-container *ngrxLet="twoPic$;let twoPic">
+                    <img [attr.src]="twoPic">
+                </ng-container>
+                <span class="pic-tip" #backBtn>点击上传身份证国徽面照片</span>
+                <input hidden type="file" #inputTwo (change)="upPicTwo($event)">
+            </li>
+            <li (click)="inputThree.click()">
+                <ng-container *ngrxLet="threePic$;let threePic">
+                    <img [attr.src]="threePic">
+                </ng-container>
+                <span class="pic-tip">点击上传身份证人像面照片</span>
+                <input hidden type="file" #inputThree (change)="upPicThree($event)">
+            </li>
+        </div>
+        <li>
+            <button class="back" (click)="step.goto('fill')" >返回</button>
+            <button ivo-button (click)="next(backBtn)">继续</button>
+        </li>
+    </div>
+
+</div>

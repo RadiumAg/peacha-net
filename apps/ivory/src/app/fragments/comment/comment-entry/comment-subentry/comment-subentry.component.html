@@ -1,0 +1,35 @@
+<!-- <div *ngIf="comment" (mouseenter)="show(image)" (mouseleave)="hide(image)"> -->
+<div class="all" *ngIf="comment" #subShow>
+    <img [attr.src]="comment.avatar"  (click)="toUser(comment.userid)">
+    <div class="content" >
+        <h3><span class="nickn"  (click)="toUser(comment.userid)">{{comment.nickname}}</span><span class="time">{{comment.comment_time | date:'yyyy-MM-dd HH:mm'}}</span></h3>
+        <p>
+            <!-- <span *ngIf="comment.replied_user_id">
+                回复 <span>@{{comment.replied_user_name}}</span>
+            </span> -->
+            {{comment.content}}
+        </p>
+
+        <div class="actions">
+            <a class="like" (click)="like(comment.id)">
+                <img *ngIf="!comment.is_like;else likea" src="/assets/image/svg/i-thumbs-up.svg">
+                <ng-template #likea>
+                    <img src="/assets/image/svg/i-thumbs-up-red.svg">
+                </ng-template>
+                <span>  {{comment.like_count| changeUnit}}</span>
+            </a>
+            <a class="reply" (click)="clickReply()">回复</a>
+            <img #image src="/assets/image/svg/i-three-dot.svg" (click)="open()" #dot>
+
+            <ng-template #menuTemp>
+                <div class="opera">
+                    <ng-container *ngrxLet="id$;let id">
+                        <a *ngIf="comment.userid==id" (click)="deleteSub(comment.id)">删除</a>
+                        <a (click)="report(comment.id)">举报</a>
+                    </ng-container>
+                </div>
+            </ng-template>
+
+        </div>
+    </div>
+</div>

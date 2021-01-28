@@ -1,0 +1,81 @@
+<div class="node-container">
+
+    <div class="node-item">
+        <div class="progress">
+            <div class="progress-inner">
+                <div class="no-use">阶段节点</div>
+                <span class="word">企划开始</span>
+            </div>
+        </div>
+        <div class="node"><img src="/assets/image/commission-node/02.png" />
+        </div>
+        <div class="progress-detail">稿酬比例:0<span class="word-unit">%</span></div>
+    </div>
+
+    <div>
+        <div class="node-item create" *ngFor="let item of (nodes$ | async);let i = index">
+            <div class="progress">
+                <div class="progress-inner">
+                    <div class="no-use">阶段节点</div>
+                    <input #progress  [ngClass]="{ hidden : isEdit }" (click)="changeEdit($event)" [value]="item.n"
+                        (input)="editNodeName(item.symbol,$event)" [disabled]='isEdit'
+                        (blur)="endEdit($event,item.symbol);" type="text" class="node-name-input" />
+                    <span class="word"  [ngClass]="{ hidden : !isEdit }" #word (click)="edit(i, $event)">{{item.n}}</span>
+                </div>
+            </div>
+            <div class="node">
+                {{i+1}}
+            </div>
+            <div class="progress-detail">
+                稿酬比例:<input [disabled]='isEdit' [ngClass]="{ hidden : isEdit }" #proportion [value]="item.r"
+                    (input)="editNodeR(item.symbol,$event)" (blur)="endEdit($event,item.symbol,1);" type="number"
+                    class="free-input" min="0">
+                <span class="word" [ngClass]="{ hidden : !isEdit }" #proportion_word (click)="edit(i, $event ,1)">{{item.r}}</span>
+                <span class="word-unit">%</span>
+                <span class="commission-node-errors hidden" #commission_errors></span>
+            </div>
+            <span class="delete" [ngClass]="{ hidden : isEdit || !isCanDelete}"
+                (click)="deleteNode(item.symbol)"></span>
+        </div>
+
+        <div class="node-item create" [ngClass]="{hidden : !_isCute}"
+            *ngFor="let item of (nodesSpecial$ | async);let i = index">
+            <div class="progress">
+                <div class="progress-inner">
+                    <div class="no-use">阶段节点</div>
+                    <span class="word">立绘拆分</span>
+                </div>
+            </div>
+            <div class="node">
+                {{ nodes$.getValue().length + 1}}
+            </div>
+            <div class="progress-detail">
+                稿酬比例:<input [ngClass]="{ hidden : isEdit }" [value]="item.r" #node_special
+                    (input)="editNodeCuteR($event)" (blur)="endEdit($event,item.symbol,2);" type="number"
+                    [disabled]='isEdit' class="free-input" min="0">
+                <span class="word" [ngClass]="{ hidden : !isEdit }" (click)="edit(i, $event ,2)" #special_word>{{item.r}}</span>
+                <span class="word-unit">%</span>
+                <span class="commission-node-errors hidden" #commission_errors></span>
+            </div>
+        </div>
+
+        <div class="node-item create">
+            <div class="progress">
+                <div class="progress-inner">
+                    <div class="no-use">阶段节点</div>
+                    <span class="word">提交源文件</span>
+                </div>
+            </div>
+            <div class="node">
+                <img src="/assets/image/commission-node/03.png" />
+            </div>
+            <div class="progress-detail">
+                稿酬比例:100%
+            </div>
+        </div>
+    </div>
+
+    <div class="node-button" [ngClass]='{hidden:isEdit}'>
+        <button id="add_node" (click)='addNode()' ivo-button>新建阶段节点</button>
+    </div>
+</div>

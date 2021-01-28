@@ -1,0 +1,82 @@
+<ivo-commission-top-nav [isShowDetail]="true" [isShowRight]="true"></ivo-commission-top-nav>
+<div class="box" *ngIf="identity===1 && underwayTip">
+    <div class="stop" *ngIf="status===4||status===6 || status===3">
+        <p>
+            <ng-container *ngIf="status===3;else reject">
+                企划已完成，增加稿酬暂停，请前往“中止企划/历史”页面中查看或处理。
+            </ng-container>
+            <ng-template #reject>
+                企划已发起中止，增加稿酬暂停，请前往“中止企划/历史”页面中查看或处理。
+            </ng-template>
+            <a routerLink="/commission/detail/discontinue" [queryParams]="{id:commissionId}">查看</a>
+        </p>
+    </div>
+    <div class="box-show">
+        <li class="title">
+            <span>增加稿酬</span>
+            增加稿酬金额：￥{{underwayTip?.amount}}
+        </li>
+        <p class="state">画师发起增加稿酬需求，等待企划方处理。</p>
+        <p class="des">需求：{{underwayTip?.description}}</p>
+        <div class="operate">
+            <span>发起时间：{{underwayTip?.applyTime|date:'yyyy-MM-dd HH:mm'}}</span>
+            <div class="btn" *ngIf="identity===1">
+                <button ivo-button [buttonType]="1" appDebounceClick  (debounceClick)="audit(underwayTip.id,2)">拒绝增加</button>
+                <button ivo-button appDebounceClick (debounceClick)="audit(underwayTip.id,1)">同意并支付</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="box box-two" *ngrxLet="tipsList$">
+    <div class="box-show">
+        <li class="title">
+            <span>增加稿酬记录</span>
+        </li>
+        <div class="item" *ngFor="let item of tipList?.list">
+            <div class="item-top">
+                <span class="one">
+                    <span class="name">增加稿酬状态</span>
+                    <span [ngSwitch]="item.status">
+                        <ng-container *ngSwitchCase="0">
+                            等待
+                        </ng-container>
+                        <ng-container *ngSwitchCase="1">
+                            同意
+                        </ng-container>
+                        <ng-container *ngSwitchCase="2">
+                            拒绝
+                        </ng-container>
+                    </span>
+                </span>
+                <span class="one">
+                    <span class="name">增加稿酬金额</span>
+                    <span>¥{{item.amount}}</span>
+                </span>
+                <span class="one">
+                    <span class="name">发起时间</span>
+                    <span>{{item.applyTime |date:'yyyy-MM-dd HH:mm'}}</span>
+                </span>
+                <span class="one" *ngIf="item.status!=0">
+                    <span class="name" *ngIf="item.completeTime">企划方处理时间</span>
+                    <span>{{item.completeTime|date:'yyyy-MM-dd HH:mm'}}</span>
+                </span>
+            </div>
+            <div class="item-bottom">
+                <span class="one">
+                    <span class="name">增加稿酬需求</span>
+                    <span>{{item.description}}</span>
+                </span>
+            </div>
+        </div>
+        <ivo-lack-image *ngIf="tipList.list.length===0"></ivo-lack-image>
+    </div>
+
+
+
+
+    <div class="bottom" *ngIf="identity===2 && status===2">
+        <button ivo-button appDebounceClick (debounceClick)="addTip()">发起增加稿酬</button>
+    </div>
+</div>

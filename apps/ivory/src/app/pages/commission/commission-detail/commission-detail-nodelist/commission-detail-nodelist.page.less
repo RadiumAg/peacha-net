@@ -1,0 +1,202 @@
+.box {
+    width: 896px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 30px 30px 0;
+    position: relative;
+    overflow: hidden;
+
+    &>.title {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        // border-bottom: 1px solid #CBCBCB;
+        padding-bottom: 30px;
+
+        &>.name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #343434;
+        }
+
+        &>.back {
+            height: 31px;
+            line-height: 31px;
+
+            &>img {
+                margin-right: 4px;
+                margin-top: -3px;
+            }
+        }
+
+
+
+    }
+
+    &>.list {
+        width: 100%;
+        // padding-top: 30px;
+        border-top: 1px solid #f0f0f0;
+
+        &>li {
+            width: 100%;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+
+
+            &>.name {
+                font-size: 16px;
+                // font-weight: bold;
+                color: #333333;
+            }
+
+            &>.show {
+                margin-top: 10px;
+                font-size: 14px;
+                color: #999999;
+                white-space: pre-wrap;
+            }
+
+            &>.show-pic {
+                display: grid;
+                grid-template-columns: repeat(4, 100px);
+                grid-column-gap: 10px;
+                margin-top: 10px;
+
+                &>ivo-lazy-img {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 4px;
+                    object-fit: cover;
+                    cursor: pointer;
+                }
+            }
+
+
+        }
+
+
+        &>.time {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            grid-column-gap: 128px;
+
+            &>div {
+                display: inline-flex;
+                flex-direction: column;
+
+                &>.name {
+                    font-size: 16px;
+                    // font-weight: bold;
+                    color: #333333;
+                }
+
+                &>.show {
+                    margin-top: 10px;
+                    font-size: 14px;
+                    color: #999999;
+                }
+            }
+        }
+
+        &>.file {
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            grid-column-gap: 128px;
+
+            &>.one {
+                display: flex;
+                flex-direction: column;
+                width: 150px;
+                margin-top: 20px;
+
+                &>.name {
+                    font-size: 16px;
+                    // font-weight: bold;
+                    color: #333333;
+                }
+
+                &>.show {
+                    margin-top: 10px;
+                    display: inline-flex;
+                    justify-content: space-between;
+                    font-size: 14px;
+                    color: #999999;
+
+                    &>a {
+                        color: #0045E5;
+                    }
+                }
+            }
+
+        }
+
+        &>.result {
+
+            width: 440px;
+            display: grid;
+            grid-template-columns: repeat(3, 200px);
+            grid-column-gap: 80px;
+
+            &>.result-tip {
+
+                // margin-bottom: 30px;
+                &>.name {
+                    display: block;
+                    font-size: 16px;
+                    // font-weight: bold;
+                    color: #333333;
+                }
+
+                &>.show {
+                    display: block;
+                    margin-top: 10px;
+                    font-size: 14px;
+                    color: #999999;
+                }
+            }
+
+            &>.buttom {
+                margin-bottom: 30px;
+            }
+
+        }
+
+        &>.description {
+            width: 550px;
+
+            &>.result-tip {
+
+                // margin-bottom: 30px;
+                &>.name {
+                    display: block;
+                    font-size: 16px;
+                    // font-weight: bold;
+                    color: #333333;
+                }
+
+                &>.show {
+                    display: block;
+                    margin-top: 10px;
+                    font-size: 14px;
+                    color: #999999;
+                    word-wrap: break-word;
+                    word-break: normal;
+                }
+            }
+        }
+
+        &>.kefu {
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        &>.result-img {
+            width: 250px;
+            position: absolute;
+            margin-top: -155px;
+            margin-left: 588px;
+        }
+    }
+}

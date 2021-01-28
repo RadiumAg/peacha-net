@@ -1,0 +1,17 @@
+<div class="all">
+    <div class="top"><span  [routerLink]="['/setting/security']" >
+        安全设置
+    </span>-<span class="oo">实名认证</span></div>
+    <ng-container *ngrxLet="info$;let info">
+    <div class="seven">
+        <img src="/assets/image/svg/i-code.svg">
+        <span class="tips">
+            <img src="/assets/image/svg/i-green-check.svg">您已完成实名认证
+        </span>
+        <span class="detail">
+            <span>姓名：{{info.real_name}}</span>
+            <span>身份证号：{{info.card_no}}</span>
+        </span>
+    </div>
+</ng-container>
+</div>

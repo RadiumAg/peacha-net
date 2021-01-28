@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="85px" height="107px" viewBox="0 0 85 107" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>分类标签 copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="首页" transform="translate(-604.000000, -471.000000)">
+            <g id="热门推荐" transform="translate(331.000000, 406.000000)">
+                <g id="分类标签-copy" transform="translate(273.000000, 64.000000)">
+                    <g id="插画标签">
+                        <polygon id="Rectangle" fill="#5EB7FF" points="42.4241282 1 84.8482564 1 0 107.697985 0 50.8008056"></polygon>
+                        <polygon id="Path-4" fill="#5EB7FF" points="84.8282732 0.998779295 83.0825045 12 75.9539084 12"></polygon>
+                        <text id="插画" transform="translate(29.279276, 43.792311) rotate(-50.000000) translate(-29.279276, -43.792311) " font-family="PingFangHK-Semibold, PingFang HK" font-size="18" font-weight="500" fill="#FFFFFF">
+                            <tspan x="11.2792761" y="50.2923108">插画</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

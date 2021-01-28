@@ -1,0 +1,46 @@
+<div class="user-profile">
+    <div  class="basic">
+        基本信息
+    </div>
+
+    <div class="main">
+        <div class="mc">
+            <div class="new">头像</div>
+            <crop-image
+                class="avatar"
+                [imgUrl]="avatar$ | async"
+                [formControl]="avatar"
+            ></crop-image>
+            <span class="change-avatar">修改头像</span>
+        </div>
+        <div class="right">
+            <div class="new">用户名</div>
+            <input
+                #input
+                class="nick-name"
+                type="text"
+                [formControl]="nickName"
+                (blur)="saveName(input)"
+            />
+            <div>
+                <div class="new">个人简介</div>
+                <textarea
+                    #area
+                    class="file"
+                    [formControl]="description"
+                    cols="3"
+                    rows="3"
+                    (blur)="saveDesc(area)"
+                ></textarea>
+                <div class="error-inset" [errorDisplay]="description">
+                    <ng-container *errorCase="'maxlength'">
+                        最大不超过80字
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <!-- <div  class="basic">
+                 更多资料
+        </div> -->
+    </div>
+</div>

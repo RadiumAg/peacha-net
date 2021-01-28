@@ -1,0 +1,172 @@
+.body{
+    @padding-width:20px;
+    @margin-width:20px;
+    @img-width:60px;
+    width: 740px;
+    height: 799px;
+    background-color:rgba(255,255,255,1);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius:12px;
+    transform: translate(-50%,-50%);
+    .title{
+        font-size:20px;
+        font-weight:500;
+        height: 79px;
+        line-height: 79px;
+        border-bottom:1px dashed rgba(204,204,204,1);
+        padding-left:50px ;
+    }
+    .search{
+        width: 640px;
+        border: 1px solid rgba(204,204,204,1);
+        border-radius:20px;
+        height: 40px;
+        margin: 20px auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        input{
+            border-radius:20px;
+            width: 90%;
+            border: none;
+            height: 100%;
+        }
+        &::before{
+            content: "";
+            background-image: url(/assets/image/live-2d/correct.png);
+        }
+        >div{
+            width:10%;
+            height: 100%;
+            display:flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 100%;
+            cursor: pointer;
+            .search-icon{
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                background-image: url(/assets/image/live-2d/svg/search.svg);
+            }
+        }
+
+    }
+    @width:610px;
+    .staff{
+        border-top: 1px solid rgba(230,230,230,1) ;
+        border-bottom: 1px solid rgba(230,230,230,1) ;
+        width: @width;
+        height: 500px;
+        margin: 20px auto;
+        margin-bottom: 10px;
+        display: flex;
+        overflow-y: scroll;
+        justify-content: space-between;
+        align-content: flex-start;
+        flex-wrap: wrap;
+        padding-top: @padding-width;
+        padding-left: 10px;
+        padding-right: 10px;
+        div.single{
+             position: relative;
+             cursor: pointer;
+             align-items: center;
+             padding: @padding-width;
+             padding: @padding-width;
+             width: 280px;
+             height: 100px;
+             margin-bottom: @margin-width;
+             border:rgba(255,255,255,1);
+             box-shadow:0px 0px 4px rgba(0,0,0,0.16);
+             border-radius:4px;
+             .symbol{
+                  position: absolute;
+                  right :  @padding-width;
+                  bottom: @padding-width ;
+                  height:18px;
+                  font-size:12px;
+                  font-weight:400;
+                  line-height:18px;
+                  color:rgba(204,204,204,1);
+             }
+        }
+
+        .loading{
+           width: 100%;
+           display: flex;
+           justify-content: center;
+           align-items: flex-start;
+           margin: 40px 0px;
+        }
+
+        div.active{
+            box-shadow:none;
+            border:1px solid rgba(255,99,152,1);
+        }
+
+
+        &::-webkit-scrollbar {/*滚动条整体样式*/
+                width: 8px;     /*高宽分别对应横竖滚动条的尺寸*/
+                height: 8px;
+                scrollbar-arrow-color:rgba(150,150,153,1);
+            }
+        &::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+                border-radius: 8px;
+                background: rgba(150,150,153,1);
+                scrollbar-arrow-color:rgba(150,150,153,1);
+            }
+
+        &::-webkit-scrollbar-track {/*滚动条里面轨道*/
+                -webkit-box-shadow: inset 0 0 5px rgba(218, 218, 218,0.2);
+                box-shadow: inset 0 0 5px rgba(218, 218, 218,0.2);
+                border-radius: 0;
+                background: rgba(218, 218, 218,0.1);
+        }
+        img{
+            width: @img-width;
+            margin-right: @padding-width;
+        }
+
+        img.react{
+            border-radius: 0;
+        }
+        img.circul{
+            border-radius: 50%;
+        }
+    }
+    p{
+        display: block;
+        width: @width;
+        text-align: left;
+        margin: 0px auto;
+        color:rgba(153,153,153,1);
+    }
+    .oper{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: @width;
+        margin: 50px auto;
+        div:nth-child(1){
+            content: '取消';
+            display: inline-block;
+            margin-right: 30px;
+            cursor: pointer;
+            color:rgba(153,153,153,1);
+        }
+        div:nth-child(2){
+            color: rgba(255,255,255,1);
+            cursor: pointer;
+            display: inline-block;
+            width: 88px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background:rgba(255,99,152,1);
+            border-radius:4px;
+        }
+    }
+}

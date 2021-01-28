@@ -1,0 +1,89 @@
+<ng-container *ngrxLet="comment$;let comment">
+    <div class="group" *ngIf="comment">
+        <img [attr.src]="comment.avatar"  (click)="toUser(comment.userid)">
+        <div class="content" >
+            <p class="nick" (click)="toUser(comment.userid)">{{comment.nickname}}</p>
+            <p class="time">{{comment.comment_time | date:'yyyy-MM-dd HH:mm'}}</p>
+            <p class="content">{{comment.content}}</p>
+            <div class="actions">
+                <a (click)="like(comment.id)">
+                    <img *ngIf="!list?.is_like;else likea" src="/assets/image/svg/i-thumbs-up.svg">
+                    <ng-template #likea>
+                        <img src="/assets/image/svg/i-thumbs-up-red.svg">
+                    </ng-template>
+                    {{list?.like_count| changeUnit}}
+                </a>
+                <a (click)="toggleReply(undefined)">回复</a>
+
+                <img src="/assets/image/svg/i-three-dot.svg" (click)="open()" #dot>
+
+                <ng-template #menuTemp>
+                    <div class="opera">
+                        <ng-container *ngrxLet="id$;let id">
+                            <a *ngIf="comment.userid==id" (click)="delete(comment.id)">删除</a>
+                            <a (click)="report(comment.id)">举报</a>
+                        </ng-container>
+                    </div>
+                </ng-template>
+            </div>
+
+            <div class="reply" *ngIf="list?.comment_list.length>0">
+                <!-- 评论回复内容 -->
+                <ng-container *ngIf="!(show_all_reply$|async); else allSubComment">
+                    <div class="sub-comment-list" >
+                        <ivo-comment-subentry  *ngFor="let cm of list?.comment_list" [comment]="cm" [id]="'reply'+cm.id"
+                            (toggleReply)="toggleReply($event)" ></ivo-comment-subentry>
+                        <div class="check" *ngIf="comment.comment_count>3">共{{comment.comment_count}}条回复，<a
+                                (click)="showAllReply()">点击查看</a></div>
+                    </div>
+                </ng-container>
+                <ng-template #allSubComment>
+                    <ng-container *ngrxLet="comments$; let comments">
+                        <div class="sub-comment-list" >
+                            <div class="loading" *ngIf="showLoad">
+                                loading...
+                            </div>
+                            <ivo-comment-subentry *ngFor="let cm of (subList?.list)" [comment]="cm" [id]="'reply'+cm.id"
+                                (toggleReply)="toggleReply($event)">
+                            </ivo-comment-subentry>
+
+                            <ng-container *ngrxLet="page$;let page">
+                                <div class="page" *ngIf="subList?.count>10">
+                                    <ivo-subcomment-pagination [currentPage]="page" [total]="subList?.count" [pageSize]="10"
+                                        (onPageChange)="toPage($event)"></ivo-subcomment-pagination>
+                                </div>
+                            </ng-container>
+
+                            <!-- pagination -->
+                        </div>
+                    </ng-container>
+                </ng-template>
+
+
+
+                <!-- 评论回复控件 -->
+
+            </div>
+            <div class="reply-input" #textbox >
+                <ng-container *ngIf="active">
+                    <ng-container *ngrxLet="id$;let id">
+                        <ng-container  *ngIf="id">
+                            <textarea [formControl]="replyControl" *ngrxLet="current_replying$;let r"
+                                [attr.placeholder]="r?'回复 @'+r.nickname:'请开始你的表演'" maxlength="201" (focus)="tips(textbox,textbox)"></textarea>
+                            <button (click)="reply(comment.userid,comment.nickname,textbox,textbox)">发送</button>
+                        </ng-container>
+                        <ng-container *ngIf="!id">
+                            <div class="kongsub">
+                                请先<button ivo-button (click)="toLogin()">登录</button>后发表评论
+                            </div>
+                            <button class="cancel" disabled>发送</button>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </div>
+
+
+
+        </div>
+    </div>
+</ng-container>

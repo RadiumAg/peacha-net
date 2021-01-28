@@ -1,0 +1,30 @@
+<div class="one">
+  <img [attr.src]="user.avatar" (click)="toUser(user.id)">
+  <div class="meta" (click)="toUser(user.id)">
+    <span>{{user.nickname}}</span>
+    <p>{{user.description}}</p>
+  </div>
+
+  <ng-container ivo-follow [follow-id]="user.id" [follow-state]="user.follow_state" #followState="follow">
+    <ng-container *ngrxLet="followState.follow$;let f" [ngSwitch]="f">
+      <button ivo-button [class.checked]="f!=0" (click)="followState.request()">
+        <ng-container *ngSwitchCase="0">
+          <img src="/assets/image/svg/i-add.svg">
+          关注
+        </ng-container>
+        <ng-container *ngSwitchCase="1">
+          <img src="/assets/image/svg/i-follow-check.svg">
+          已关注
+        </ng-container>
+        <ng-container *ngSwitchCase="2">
+          <img src="/assets/image/svg/i-circle.svg">
+          互相关注
+        </ng-container>
+        <ng-container *ngSwitchCase="3">
+          <img src="/assets/image/svg/black.svg">
+          已拉黑
+        </ng-container>
+      </button>
+    </ng-container>
+  </ng-container>
+</div>

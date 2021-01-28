@@ -1,0 +1,64 @@
+<div class="work">
+    <a [href]="work?.category==1?['/illust/'+work?.id]:['/live2d/'+work?.id]">
+        <div class="empty"></div>
+        <img [attr.src]="work?.category?'/assets/image/work-card/ikon-tag.svg':work?.price==0?'/assets/image/work-card/free-tag.svg':'/assets/image/work-card/Live2D-tag.svg'"
+            class="good-icon">
+        <ivo-lazy-img [ngLazyLoad]="work?.cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'" [border]="1">
+        </ivo-lazy-img>
+    </a>
+    <a [href]="work?.category==1?['/illust/'+work?.id]:['/live2d/'+work?.id]">
+        <span class="name">{{work?.name}}</span>
+    </a>
+    <span class="first">
+        <span class="type" *ngIf="work?.category==1;else other">插画</span>
+        <ng-template #other>
+            <span class="type">Live2D</span>
+        </ng-template>
+    </span>
+    <a [href]="work?.category==1?['/illust/'+work?.id]:['/live2d/'+work?.id]">
+        <span class="sad">
+            <span class="like-count">
+                <img src="/assets/image/svg/i-thumbs-up.svg">
+                <ng-container *ngIf="work?.like_count;else add">
+                    {{work?.like_count | changeUnit}}
+                </ng-container>
+                <ng-template #add>
+                    点个赞吧
+                </ng-template>
+            </span>
+            <ng-container *ngIf="work?.category==0">
+                <span class="price" [ngSwitch]="work?.price">
+                    <ng-container *ngSwitchCase="0">
+                        <span class="free">
+                            免费下载
+                        </span>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="-1">
+                        <!-- <span class="no">
+                            暂无商品
+                        </span> -->
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        <a>¥</a>{{work?.price}}
+                    </ng-container>
+                </span>
+            </ng-container>
+
+        </span>
+    </a>
+    
+     <div class="work-buttom">
+      <a [href]="['/user/'+work?.userid]">
+        <span *ngIf="work?.userid" class="user">
+            <img [attr.src]="work?.avatar+'?x-oss-process=image/resize,m_fixed,w_22,h_22'">
+            <span class="nickname">{{work?.nickname}}</span>
+        </span>
+      </a>
+      <span class="publishtime">
+         {{showtime}}
+      </span>
+      
+     </div>
+   
+
+</div>

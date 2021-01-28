@@ -1,0 +1,44 @@
+@import '../../../../../../../components.less';
+@commission-footer-font-color:#FF778F;
+:host {
+    div.footer-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+
+        input[type=button].next-step {
+            padding: 6px 23px;
+            background-color: @theme-color ;
+            display: inline-block;
+            color: @font-color3;
+            font-size: 20px;
+            border-radius: 4px;
+            outline: none;
+            border: none;
+            cursor: pointer;
+
+        }
+
+        input[type=button].pre-step {
+            padding: 6px 23px;
+            display: inline-block;
+            color: @font-color2;
+            font-size: 20px;
+            background-color: transparent;
+            border-radius: 4px;
+            outline: none;
+            border: none;
+            cursor: pointer;
+            border: 1px solid @commission-footer-font-color;
+            margin-right: 8px;
+            color: @commission-footer-font-color;
+        }
+
+
+        input[type=button]:disabled {
+            background-color: rgba(255, 99, 152, 0.5);
+            cursor: not-allowed;
+        }
+    }
+}

@@ -1,0 +1,84 @@
+<div class="all">
+
+    <!-- 评论 回复 -->
+    <!-- <ivo-comment-input [aid]="comment_aid$|ngrxPush" [comment]="all"></ivo-comment-input> -->
+    <ng-container *ngrxLet="isLogin$;let isLogin">
+        <ng-container *ngIf="isLogin;else unlogin">
+            <div class="input-group ">
+                <img [attr.src]="avatar$|ngrxPush">
+                <textarea #textq placeholder="请开始你的表演" [formControl]="textarea" (focus)="tips(textq,textq)" maxlength="201"></textarea>
+            </div>
+            <div class="send">
+                <button (click)="send(textq,textq)">发表评论</button>
+            </div>
+        </ng-container>
+        <ng-template #unlogin>
+            <div class="input-group ">
+                <img src="/assets/image/defalut-avatar.png">
+                <div class="kong">
+                    请先<button ivo-button (click)="toLogin()">登录</button>后发表评论
+                </div>
+            </div>
+            <div class="send">
+                <button disabled class="close">发表评论</button>
+            </div>
+        </ng-template>
+
+    </ng-container>
+    <!-- 评论 回复 -->
+
+    <!-- 评论 列表 -->
+
+    <div class="comment-list" *ngrxLet="comments$; let comments">
+        <div class="loading" *ngIf="!show">
+              loading...
+        </div>
+        <ng-container *ngIf="show">
+            <div [id]="'reply'+comment.id"  *ngFor="let comment of all?.list;let i=index" >
+                <ivo-comment-entry #c [comment]="comment" [aid]="comment_aid$|ngrxPush"
+                (clickActive)="onactive($event,c)">  </ivo-comment-entry>
+            </div>
+        </ng-container>
+
+        <ng-container *ngrxLet="page$;let page">
+            <ng-container *ngIf="comments?.count>10">
+                <div class="page">
+                    <ivo-pagination [currentPage]="page" [total]="comments?.count" [pageSize]="10" (onPageChange)="toPage($event)">
+                    </ivo-pagination>
+                </div>
+
+            </ng-container>
+
+        </ng-container>
+        <ng-container *ngIf="all?.list.length>5">
+            <ng-container *ngrxLet="isLogin$;let isLogin">
+                <ng-container *ngIf="isLogin;else unlogin">
+                    <div class="input-group bottom">
+                        <img [attr.src]="avatar$|ngrxPush">
+                        <textarea #textT placeholder="请开始你的表演" [formControl]="textarea" (focus)="tips(textT,textT)" maxlength="201"></textarea>
+                    </div>
+                    <div class="send">
+                        <button (click)="sendTwo(textT,textT)">发表评论</button>
+                    </div>
+                </ng-container>
+                <ng-template #unlogin>
+                    <div class="input-group bottom">
+                        <img src="/assets/image/defalut-avatar.png">
+                        <div class="kong">
+                            请先<button ivo-button (click)="toLogin()">登录</button>后发表评论
+                        </div>
+                    </div>
+                    <div class="send">
+                        <button disabled>发表评论</button>
+                    </div>
+                </ng-template>
+
+            </ng-container>
+
+        </ng-container>
+    </div>
+
+
+
+
+</div>

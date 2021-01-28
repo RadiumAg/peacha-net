@@ -1,0 +1,50 @@
+:host {
+    display: block;
+}
+
+.input-group{
+    display: flex;
+
+    &>img {
+        display: block;
+        height:60px;
+        width:60px;
+        margin-right: 20px;
+        border-radius: 50%;
+        border:solid #CCCCCC 1px;
+    }
+
+    &>textarea {
+        width: 720px;
+        height: 60px;
+        display: block;
+        flex:1;
+        background:rgba(242,242,242,1);
+        border:1px solid rgba(204,204,204,1);
+        opacity:1;
+        border-radius:4px;
+        padding: 10px;
+        font-size:12px;
+        line-height:18px;
+        color:rgba(102,102,102,1);
+        resize: none;
+        &:focus{
+            background-color: white;
+            outline: none;
+        }
+    }
+}
+
+.send {
+    float:right;
+    &>button{
+        width: 80px;
+        height: 32px;
+        border: none;
+        border-radius: 4px;
+        background-color:#FF6398 ;
+        font-size: 14px;
+        color: #ffffff;
+        margin-top: 10px;
+    }
+}

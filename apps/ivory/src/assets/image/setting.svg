@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: rgba(255,99,152,0);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="调试" transform="translate(-1030 -510)">
+    <circle id="椭圆形备份_3" data-name="椭圆形备份 3" class="cls-1" cx="20" cy="20" r="20" transform="translate(1030 510)"/>
+    <g id="组_724" data-name="组 724" transform="translate(1038 521.147)">
+      <path id="路径_251" data-name="路径 251" class="cls-2" d="M429.909,232.091h-3a1.091,1.091,0,1,0-2.182,0H408.091a1.091,1.091,0,0,0,0,2.182h16.637a1.091,1.091,0,1,0,2.182,0h3a1.091,1.091,0,0,0,0-2.182Z" transform="translate(-407 -223.636)"/>
+      <path id="路径_252" data-name="路径 252" class="cls-2" d="M408.091,207.273h2.591a1.091,1.091,0,1,0,2.182,0h17.046a1.091,1.091,0,0,0,0-2.182H412.863a1.091,1.091,0,1,0-2.182,0h-2.591a1.091,1.091,0,0,0,0,2.182Z" transform="translate(-407 -204)"/>
+      <path id="路径_253" data-name="路径 253" class="cls-2" d="M429.909,259.091H419.887a1.091,1.091,0,0,0-2.182,0h-9.614a1.091,1.091,0,0,0,0,2.182H417.7a1.091,1.091,0,0,0,2.182,0h10.023a1.091,1.091,0,0,0,0-2.182Z" transform="translate(-407 -243.273)"/>
+    </g>
+  </g>
+</svg>

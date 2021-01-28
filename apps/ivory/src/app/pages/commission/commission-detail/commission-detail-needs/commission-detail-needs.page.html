@@ -1,0 +1,161 @@
+<ivo-commission-top-nav [isShowDetail]="false" [isShowRight]="true"></ivo-commission-top-nav>
+<div class="right-bottom">
+    <div class="model">
+        <li class="model-title">需求详情</li>
+        <div class="content type-one">
+            {{detail?.commission.detail}}
+        </div>
+        <li class="model-title">具体要求</li>
+        <div class="content type-two">
+            <li>
+                <div class="items">
+                    <img class="title-icon" src="/assets/image/commission/title-icon.svg">
+                    整体构思：
+                    <ng-container [ngSwitch]="detail?.commission.secrecy">
+                        <ng-container *ngSwitchCase="0">
+                            已有完整构思
+                        </ng-container>
+                        <ng-container *ngSwitchCase="1">
+                            <ng-container *ngIf="detail.commission.category===0">
+                                有大概构思，需与模型师讨论后确定
+                            </ng-container>
+                            <ng-container *ngIf="detail.commission.category===1">
+                                有大概构思，需与画师讨论后确定
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="2">
+                            <ng-container *ngIf="detail.commission.category===0">
+                                没有构思，需模型师帮助构思
+                            </ng-container>
+                            <ng-container *ngIf="detail.commission.category===1">
+                                没有构思，需画师帮助构思
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </li>
+            <li>
+                <div class="items">
+                    <img class="title-icon" src="/assets/image/commission/title-icon.svg">
+                    稿件保密：
+                    <ng-container [ngSwitch]="detail?.commission.secrecy">
+                        <ng-container *ngSwitchCase="0">
+                            可公开
+                        </ng-container>
+                        <ng-container *ngSwitchCase="1">
+                            约定公开
+                        </ng-container>
+                        <ng-container *ngSwitchCase="2">
+                            不可公开
+                        </ng-container>
+                    </ng-container>
+                </div>
+                <div class="items" *ngIf="detail?.commission.secrecyDescription">
+                    <img class="title-icon" src="/assets/image/commission/title-icon.svg">
+                    公开要求：{{detail?.commission.secrecyDescription}}
+                </div>
+            </li>
+            <li>
+                <div class="items">
+                    <img class="title-icon" src="/assets/image/commission/title-icon.svg">
+                    所需时长：{{detail?.commission.day}}天
+                </div>
+            </li>
+            <li>
+                <div class="items">
+                    <img class="title-icon" src="/assets/image/commission/title-icon.svg">
+                    表情需求：
+                    <ng-container *ngIf="detail?.commission.expressionCount===0">
+                        无
+                    </ng-container>
+                    <ng-container *ngIf="detail?.commission.expressionCount!=0">
+                        {{detail?.commission.expressionCount}}个
+                    </ng-container>
+                </div>
+                <div class="items">
+                    <img class="title-icon" src="/assets/image/commission/title-icon.svg">
+                    动作需求：
+                    <ng-container *ngIf="detail?.commission.actionCount===0">
+                        无
+                    </ng-container>
+                    <ng-container *ngIf="detail?.commission.actionCount!=0">
+                        {{detail?.commission.actionCount}}个
+                    </ng-container>
+                </div>
+
+            </li>
+            <li>
+                <ng-container *ngIf="category===1">
+                    <div class="items">
+                        <img class="title-icon" src="/assets/image/commission/title-icon.svg">
+                        稿件尺寸：{{detail?.property.width}}*{{detail?.property.high}} px
+                    </div>
+                    <div class="items">
+                        <img class="title-icon" src="/assets/image/commission/title-icon.svg">
+                        拆分需求：
+                        <ng-container [ngSwitch]="detail?.property.split">
+                            <ng-container *ngSwitchCase="0">需要</ng-container>
+                            <ng-container *ngSwitchCase="1">不需要</ng-container>
+                        </ng-container>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="category===0">
+
+                    <div class="items">
+                        <img class="title-icon" src="/assets/image/commission/title-icon.svg">
+                        绑定文件是否拆分：
+                        <ng-container [ngSwitch]="detail?.property.split">
+                            <ng-container *ngSwitchCase="0">已拆分</ng-container>
+                            <ng-container *ngSwitchDefault>未拆分</ng-container>
+                        </ng-container>
+                    </div>
+                    <div class="items">
+                        <img class="title-icon" src="/assets/image/commission/title-icon.svg">
+                        工程文件需求：
+                        <ng-container [ngSwitch]="detail?.property.project">
+                            <ng-container *ngSwitchCase="0">需要</ng-container>
+                            <ng-container *ngSwitchCase="1">不需要</ng-container>
+                        </ng-container>
+                    </div>
+                </ng-container>
+
+            </li>
+        </div>
+    </div>
+    <!-- <div class="long-line"></div> -->
+    <div class="model" *ngIf="detail?.commission.file">
+        <li class="model-title">上传附件</li>
+        <div class="content type-one">
+            <span>{{detail?.commission.fileName}}</span>
+            <a [href]="detail?.commission.file+'?response-content-type=application/octet-stream'" download
+                target="_block"><img src="/assets/image/commission/download.svg">下载</a>
+        </div>
+    </div>
+    <ng-container *ngIf="detail?.commission.fileImages.length>0">
+        <div class="model">
+            <li class="model-title">参考图片</li>
+            <div class="content type-two">
+                <div class="pic-list">
+                    <ivo-lazy-img *ngFor="let i of detail?.commission.fileImages" class="avatar" [ngLazyLoad]="i"
+                        [border]="5" [objectFit]="true" (click)="showDetail(i)"></ivo-lazy-img>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="long-line"></div> -->
+    </ng-container>
+
+    <div class="model" *ngIf="detail.commission.category===1">
+        <li class="model-title">企划流程</li>
+        <div class="content type-two">
+            <li class="count">
+                修改次数：{{detail.commission.modifyCount}} 次
+            </li>
+            <div class="tips">
+                <p>画师进行约稿合作时，需在约定好的验收节点上传作品，完成该阶段验收后才可继续进行创作。若约稿中途结束，则按照设置的费用比例支付至画师。</p>
+            </div>
+        </div>
+        <div class="content type-three">
+            <ivo-commission-node [isEdit]="true" #node></ivo-commission-node>
+        </div>
+    </div>
+</div>

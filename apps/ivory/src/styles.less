@@ -1,1 +1,178 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~normalize.css';
+@import '~@angular/cdk/overlay-prebuilt.css';
+
+@import '~ng-zorro-antd/style/entry.less';
+
+@import '~ng-zorro-antd/form/style/entry.less';
+
+@import "~ng-zorro-antd/button/style/entry.less";
+
+@import "~ng-zorro-antd/upload/style/entry.less";
+
+@import '~ng-zorro-antd/radio/style/entry.less';
+
+@import '~ng-zorro-antd/checkbox/style/entry.less';
+
+@import '~ng-zorro-antd/dropdown/style/entry.less';
+@import '~ng-zorro-antd/input/style/entry.less';
+
+@import '~ng-zorro-antd/select/style/entry.less';
+@import '~ng-zorro-antd/date-picker/style/entry.less';
+@import '~ng-zorro-antd/message/style/entry.less';
+
+@primary-color: rgba(255, 99, 152, 1);
+
+.footer-position {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+button {
+    outline: none;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+
+input:disabled {
+    background-color: #F6F6F6;
+}
+
+.commission-errors{
+    position: absolute;
+    right: -10px;
+    transform: translateX(100%) translateY(-50%);
+    top: 50%;
+    color:#DB0000;
+    font-size: 14px;
+    display: flex !important;
+    align-items: center;
+    margin: 0 !important;
+    width: max-content;
+    &::before{
+        content: "";
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        background-image: url(/assets/image/error-tips-two/01.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        margin-right: 2px;
+    }
+}
+
+@mobile: ~"only screen and (max-width: 529px)";
+@tablet: ~"only screen and (min-width: 530px) and (max-width: 949px)";
+@desktop: ~"only screen and (min-width: 950px) and (max-width: 1279px)";
+@desktop-xl: ~"only screen and (min-width: 1280px)";
+
+a,
+abbr,
+address,
+article,
+aside,
+audio,
+b,
+blockquote,
+body,
+canvas,
+caption,
+cite,
+code,
+dd,
+del,
+details,
+dfn,
+div,
+dl,
+dt,
+em,
+fieldset,
+figcaption,
+figure,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hgroup,
+hr,
+html,
+i,
+iframe,
+img,
+ins,
+kbd,
+label,
+legend,
+li,
+mark,
+menu,
+nav,
+object,
+ol,
+p,
+pre,
+q,
+samp,
+section,
+small,
+span,
+strong,
+sub,
+summary,
+sup,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+time,
+tr,
+ul,
+var,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.container {
+    margin: 0 auto;
+
+    @media @tablet {
+        width: 760px;
+    }
+
+    @media @desktop {
+        width: 900px;
+    }
+
+    @media @desktop-xl {
+        width: 1200px;
+    }
+}
+
+// html{
+//     overflow-y: overlay;
+// }

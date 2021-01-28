@@ -18,17 +18,27 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
+        "runtimeCacheInputs": [
+          "node -v"
+        ]
       }
     }
   },
   "projects": {
+    "peacha-core": {
+      "tags": []
+    },
     "ivory": {
       "tags": []
     },
-    "ivory-e2e": {
-      "tags": [],
-      "implicitDependencies": ["ivory"]
+    "peacha-studio-core": {
+      "tags": []
     }
   }
 }

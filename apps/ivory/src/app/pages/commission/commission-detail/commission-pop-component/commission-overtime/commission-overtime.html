@@ -1,0 +1,23 @@
+<div class="box">
+    <li class="title">
+        <img src="/assets/image/commission/red-flag.svg">
+        延长时间
+    </li>
+    <div class="input">
+        <span class="name">延长时间：</span>
+        <input placeholder="请输入" [formControl]="addtime">
+        <span class="unit">天</span>
+    </div>
+    <div class="error-inset" [errorDisplay]="addtime">
+        <ng-container *errorCase="'required'">
+            请填写延长时间
+        </ng-container>
+        <ng-container *errorCase="'pattern'">
+           请输入1-99间的整数
+        </ng-container>
+    </div>
+    <div class="btn">
+        <button ivo-button [buttonType]="1" (click)="cancel()">取消</button>
+        <button ivo-button appDebounceClick (debounceClick)="sure()">确定</button>
+    </div>
+</div>

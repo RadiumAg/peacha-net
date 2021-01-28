@@ -1,0 +1,304 @@
+.main {
+    padding:30px 40px;
+    font-size: 14px;
+    line-height: 14px;
+    background-color: white;
+    width: 940px;
+    height: 880px;
+    margin-bottom: 30px;
+
+    button:focus {
+        outline: none;
+    }
+
+    .index {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+
+        .check {
+            line-height: 36px;
+
+            a {
+                color: black;
+                margin-right: 30px;
+            }
+
+            .active {
+                color: #FF6398;
+            }
+        }
+
+        .search {
+            position: relative;
+
+            &>input {
+                position: relative;
+                width: 250px;
+                height: 30px;
+                line-height: 30px;
+                border: 1px solid #f0f0f0;
+                border-radius: 20px;
+                text-indent: 30px;
+                outline: none;
+                color: #999999;
+            }
+
+            &>input::placeholder {
+                color: #CCCCCC;
+            }
+
+            &>img {
+                position: absolute;
+                margin-left: -242px;
+                margin-top: 7px;
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+    .show:hover{
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.08);
+    }
+    .show {
+        display: flex;
+        margin-bottom: 20px;
+        border: 1px solid #F5F5F5 !important;
+        padding:10px;
+        border-radius: 4px;
+
+        &>input {
+            position: relative;
+            top: 39px;
+
+        }
+
+        &>img {
+            border-radius: 4px;
+
+            margin-right: 6px;
+            width: 130px;
+            height: 130px;
+            cursor: pointer;
+        }
+
+        .des {
+            padding: 6px 10px;
+            height: 130px;
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            .small {
+                font-size: 14px;
+                line-height: 19px;
+                // color: #FF6398;
+            }
+
+            .smal {
+                font-size: 12px;
+                line-height: 19px;
+                color: #666666;
+            }
+
+            .left {
+                // &>span{
+                //     display: block;
+                // }
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .right {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                text-align: right;
+
+                .tw-f {
+                    width: 100%;
+                    text-align: right;
+
+                    .tw {
+                        background-color: white;
+                        border: none;
+                        outline: none;
+                        font-size: 12px;
+                        line-height: 12px;
+                        color: #999999;
+                        // border-bottom: 1px solid red;
+                        width: 25px;
+                        // margin-left: 130px;
+                        cursor: pointer;
+                    }
+                }
+
+
+            }
+        }
+    }
+    .all{
+        height: 668px;
+    }
+
+    .show:last-child {
+        border: none;
+    }
+
+    .lack {
+        margin-top: 100px;
+    }
+
+    .bot {
+        font-size: 12px;
+        line-height: 12px;
+        display: flex;
+        justify-content: space-between;
+
+        label {
+            border: none;
+            cursor: pointer;
+            align-self: center;
+            margin-right: 30px;
+
+            input {
+                margin-right: 30px;
+                //zoom: 150%;
+            }
+
+            // input:checked::after{
+            //     content: "√";
+            //     color: #FA89AF;
+            // }
+        }
+
+        button {
+            background-color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        &>span {
+            align-self: center;
+
+        }
+
+        .goods {
+            margin-right: 20px;
+        }
+
+    }
+
+    .ts {
+        color: #999999;
+        line-height: 12px;
+        font-size: 12px;
+
+        &>ivo-cd {
+            color: #FF6398;
+        }
+
+        &>button {
+            text-align: center;
+            width: 88px;
+            height: 30px;
+            background-color: #FF6398;
+            border-radius: 4px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            border: none;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        &>button:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .money1 {
+        font-weight: bold;
+        color: #FF6398;
+        font-size: 20px;
+        line-height: 20px;
+        // margin-top: 20px;
+
+        .usual {
+            line-height: 12px;
+            font-size: 12px;
+            color: #666666;
+
+            &>span {
+                margin-left: 16px;
+                font-size: 20px;
+                font-weight: bold;
+                line-height: 26px;
+                color: #FF6398;
+            }
+        }
+
+        .has {
+            line-height: 14px;
+            font-size: 14px;
+            color: #5C8AE6;
+            font-weight: bold;
+
+            &>span {
+                margin-left: 16px;
+                font-size: 20px;
+                font-weight: bold;
+                line-height: 26px;
+                color: #FF6398;
+            }
+        }
+
+        .lose {
+            line-height: 14px;
+            font-size: 14px;
+            color: #999999;
+
+            &>span {
+                display: inline-block;
+                margin-left: 16px;
+                font-size: 20px;
+                font-weight: bold;
+                line-height: 4px;
+                color: #999999;
+                border-bottom: 1px solid #999999;
+
+            }
+        }
+    }
+
+    .money {
+        font-weight: bold;
+
+        color: #FA89AF;
+        font-size: 14px;
+    }
+
+    .name {
+        color: #666666;
+        font-weight: bolder;
+        cursor: pointer;
+
+        font-size: 14px;
+    }
+
+    #clear {
+        padding: 11px 30px;
+        line-height: 20px;
+        font-size: 20px;
+        counter-reset: #fff;
+        background-color: #FA89AF;
+        margin-left: 20px;
+    }
+
+    .page {
+        width: 940px;
+        text-align: center;
+        margin: 50px 0 20px;
+    }
+}

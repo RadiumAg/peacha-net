@@ -1,0 +1,5 @@
+<ng-container *ngFor="let tag of tags">
+    <span [style.backgroundColor]="computeHash(tag.name)" [style.box-shadow]=" computeHashBoxShaow()"(click)="searchWork(tag.id,tag.name)">
+        #{{tag.name}}
+    </span>
+</ng-container>

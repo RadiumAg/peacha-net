@@ -1,0 +1,56 @@
+<div class="message-box">
+    <div class="dialog">
+        <p>
+            客服
+            <!-- <span class="hellip">&hellip;</span> -->
+        </p>
+        <ng-container *ngrxLet="id$;let id">
+            <div class="content" #hellobox cdkScrollable>
+                <div class="box" #box>
+                    <div class="show-time" *ngIf="(count$|async)!=20">
+                        无更多消息...
+                     </div>
+                    <ng-container *ngFor="let item of histroy">
+                        <ng-container *ngIf="item.showtime || item==histroy[0]">
+                            <div class="show-time">{{item.speaktime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+                        </ng-container>
+                        <ng-container *ngIf="item.type==0">
+                            <li [ngClass]="item.sender_id==id?'me':'ta'">
+                                <ivo-lazy-img [ngLazyLoad]="item.sender_avatar">
+                                </ivo-lazy-img>
+                                <span class="words">{{item.message}}</span>
+                                <!-- <img class="warm" *ngIf="item.status!='success'" src="/assets/image/svg/i-warning.svg"> -->
+                            </li>
+                        </ng-container>
+                        <ng-container *ngIf="item.type==1">
+                            <li [ngClass]="item.sender_id==id?'me':'ta'">
+                                <ivo-lazy-img [ngLazyLoad]="item.sender_avatar">
+                                </ivo-lazy-img>
+                                <span class="show">
+                                    <ivo-lazy-img [ngLazyLoad]="item.message" (click)="showDetail(item.message)">
+                                    </ivo-lazy-img>
+                                </span>
+
+                                <!-- <img class="warm" *ngIf="item.status!='success'" src="/assets/image/svg/i-warning.svg"> -->
+                            </li>
+                        </ng-container>
+
+                    </ng-container>
+
+                </div>
+            </div>
+            <div class="input" (drop)="onDrop($event)">
+                <li>
+                    <img src="/assets/image/svg/pic.svg" (click)="input.click()">
+                    <input type="file" hidden (change)="sendPic($event.target.files[0])" #input>
+                </li>
+                <textarea class="content" placeholder="开始聊天吧~" maxlength="500" #text
+                    (input)="contentChange(text.value.length,text.value)"
+                    (keydown.Enter)="sendMsg(text,text,$event)"
+                  ></textarea>
+                <span>{{text.value.length}}/500</span>
+                <button (click)="sendMsg(text,text)">发送</button>
+            </div>
+        </ng-container>
+    </div>
+</div>

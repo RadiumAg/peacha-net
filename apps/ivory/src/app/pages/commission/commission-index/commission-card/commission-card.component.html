@@ -1,0 +1,52 @@
+<div class="card">
+    <img class="decoration" [src]="[5,6].includes(commission.status)?
+    '/assets/image/commission/commission-card/closed.svg' :commission.status===7?'/assets/image/commission/commission-card/stop.svg':
+    commission.category === 0 ? '/assets/image/commission/commission-card/live2d.svg' :
+    '/assets/image/commission/commission-card/ill.svg'">
+
+    <div class="top">
+        <span class="title">{{commission.name}}</span>
+        <ng-container *ngIf="commission?.receiver.id>0">
+            <button (click)="toWork(commission.id,commission.status,$event)">企划工作台</button>
+        </ng-container>
+        <ng-container *ngIf="commission.status===0">
+            <span class="amount"> {{'￥' + commission.minPrice/1000+'k' + '~' + '￥' + commission.maxPrice/1000+'k'}}</span>
+        </ng-container>
+    </div>
+    <div class="center">
+        <div>
+            <img class="icon" src="/assets/image/commission/commission-card/time.svg">
+            <span class="text">发布日期：{{commission.publishTime | date:'yyyy-MM-dd'}}</span>
+        </div>
+        <ng-container *ngIf="commission.status===0">
+            <!-- <div>
+                <img class="icon" src="/assets/image/commission/commission-card/time.svg">
+                <span class="text">企划截至日期：{{specialTime | date:'yyyy-MM-dd'}}</span>
+            </div> -->
+            <div>
+                <img class="icon" src="/assets/image/commission/commission-card/flag.svg">
+                <span class="text">已报名人数：{{commission.count}}</span>
+            </div>
+        </ng-container>
+
+        <div *ngIf="[1,2,4].includes(commission.status)">
+            <img class="icon" src="/assets/image/commission/commission-card/time.svg">
+            <span class="text">企划所需时长：{{commission.day}}天</span>
+        </div>
+        <div *ngIf="commission.status===3">
+            <img class="icon" src="/assets/image/commission/commission-card/time.svg">
+            <span class="text">企划完成时间：{{commission.updateTime | date:'yyyy-MM-dd'}}</span>
+        </div>
+        <div *ngIf="commission.status===6">
+            <img class="icon" src="/assets/image/commission/commission-card/time.svg">
+            <span class="text">企划中止时间：{{commission.updateTime | date:'yyyy-MM-dd'}}</span>
+        </div>
+
+        <div *ngIf="commission.status!=0">
+            <img class="icon" src="/assets/image/commission/commission-card/money.svg">
+            <span
+                class="text">企划稿酬：{{commission.finalPrice ? '￥' + commission.finalPrice : '￥' + commission.minPrice + '~' + '￥' + commission.maxPrice}}</span>
+        </div>
+    </div>
+    <span class="bottom">{{commission.detail}}</span>
+</div>

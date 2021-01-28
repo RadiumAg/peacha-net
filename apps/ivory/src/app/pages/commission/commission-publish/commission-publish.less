@@ -1,0 +1,250 @@
+@commission-background-color : #F2F2F2;
+@commission-border-color : #EDEDED;
+@commission-font-color: #FF778F;
+@commission-input-border-color : #DFDFDF;
+@commission-form-item-controller-title-color : #999999;
+@commission-form-item-controller-unit-color :#999999;
+@red-color1 : #FF778F;
+@red-color2: #C8C8C8;
+@font-color1-black : #333333;
+@black-color1 : #333333;
+@black-color2: #343434;
+@white-color1:#FFFFFF;
+
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+@border-width:2px;
+
+//checkbox
+div.node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @checkbox-size: 28px;
+    width: @checkbox-size ;
+    height: @checkbox-size;
+    border-radius: 50%;
+    position: relative;
+    top: 0;
+    border:@border-width solid @red-color2;
+    font-size: 12px;
+    color:@red-color2;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &::after {
+        left: -@border-width;
+        top: -@border-width;
+        width: @checkbox-size;
+        height: @checkbox-size ;
+        position: absolute;
+        border-radius: 50%;
+        content: '';
+    }
+
+    >div.node-inner {
+        width: @checkbox-size;
+        height: @checkbox-size ;
+        position: absolute;
+        border-radius: 50%;
+        left: -@border-width;
+        top: -@border-width;
+
+        &::after {
+            position: absolute;
+            z-index: 999;
+            @check-width: (@checkbox-size / 14) * 5px;
+            @check-height: (@checkbox-size / 14) * 8px;
+            content: '';
+            top: 50%;
+            left: 25%;
+            width: @check-width;
+            height: @check-height;
+            border: 2px solid @white-color1;
+            border-top: 0;
+            border-left: 0;
+            transform: rotate(45deg) scale(0) translate(-50%, -50%);
+            transition: all 0.1s 0.1s;
+        }
+    }
+}
+
+div.node.pre_active {
+    border:@border-width solid @red-color1;
+    color:@red-color1;
+}
+
+div.node.active {
+    border:@border-width solid @red-color1;
+    color:@red-color1;
+
+    &::after {
+        animation: antCheckboxEffect 0.36s ease-in-out;
+        animation-fill-mode: backwards;
+        background-color: @red-color1;
+    }
+
+
+    >div.node-inner {
+        &::after {
+            transform: rotate(45deg) scale(1) translate(-50%, -50%);
+            opacity: 1;
+        }
+    }
+}
+//checkbox
+.commission-form {
+    width: 100%;
+    height: max-content;
+    padding-top: 60px;
+    padding-left: 50px;
+    padding-right: 50px;
+
+    input,
+    textarea {
+        padding-left: 10px;
+    }
+
+    textarea{
+        padding-top: 10px;
+    }
+
+    input::-ms-input-placeholder {
+        font-size: 12px;
+        color: @commission-form-item-controller-title-color;
+    }
+
+    input::-moz-input-placeholder {
+        font-size: 12px;
+        color: @commission-form-item-controller-title-color;
+    }
+
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        color: @commission-form-item-controller-title-color;
+    }
+
+    textarea::-ms-input-placeholder {
+        font-size: 12px;
+        color: @commission-form-item-controller-title-color;
+    }
+
+    textarea::-moz-input-placeholder {
+        font-size: 12px;
+        color: @commission-form-item-controller-title-color;
+    }
+
+    textarea::-webkit-input-placeholder {
+        font-size: 12px;
+        color: @commission-form-item-controller-title-color;
+    }
+
+    div.commission-form-item {
+        width: 100%;
+        border-bottom: 1px solid @commission-border-color;
+        padding: 0 90px;
+        display: grid;
+        grid-template-columns: max-content 100%;
+        grid-template-rows: 100%;
+        column-gap: 30px;
+        margin-bottom: 30px;
+
+        .commission-form-item-title {
+            align-items: flex-start;
+            display: flex;
+            height: 30px;
+            line-height: 30px;
+            align-items: baseline;
+            position: relative;
+            width: 64px;
+
+            span {
+                align-self: baseline;
+                color: @commission-font-color;
+                font-weight: 500;
+                font-size: 16px;
+                display: inline-block;
+                height: 18px;
+                line-height: 18px;
+                font-weight: bold;
+                width: max-content;
+                position: absolute;
+                right: 0;
+            }
+        }
+
+        .commission-form-item-controller {
+            display: grid;
+            grid-template-rows: max-content auto;
+            grid-template-columns: 100%;
+            margin-bottom: 30px;
+            justify-items: flex-start;
+
+            .commission-form-item-controller-title {
+                align-self: baseline;
+                text-align: left;
+                font-size: 12px;
+                margin-bottom: 10px;
+                color: @commission-form-item-controller-title-color ;
+            }
+
+            .commission-form-item-controller-title.warning {
+                color: #FF3333;
+            }
+
+            .word-count {
+                position: absolute;
+                font-size: 12px;
+                top: 50%;
+                right: 0;
+                transform: translateX(-50%) translateY(-50%);
+                color: @commission-form-item-controller-title-color;
+            }
+
+            .word-unit {
+                position: absolute;
+                font-size: 14px;
+                top: 50%;
+                right: 10px;
+                transform:translateY(-50%);
+                color: @black-color2;
+            }
+
+        }
+    }
+
+    .commission-input {
+        width: 560px;
+        height: 36px;
+        border: 1px solid @commission-input-border-color;
+        border-radius: 4px;
+        outline: none;
+    }
+
+    .commission-textarea {
+        width: 560px;
+        height: 112px;
+        border: 1px solid @commission-input-border-color;
+        border-radius: 4px;
+        resize: none;
+        outline: none;
+    }
+
+    .commission-title {
+        padding-left: 54px;
+        font-size: 18px;
+        color: #666666;
+
+        span.title-blod {
+            font-size: 24px;
+        }
+    }
+}

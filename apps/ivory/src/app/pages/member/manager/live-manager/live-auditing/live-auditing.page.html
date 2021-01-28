@@ -1,0 +1,48 @@
+<div class="all">
+    <div class="top" *ngrxLet="params$;let params">
+
+        <!-- <div class="search">
+            <input type="text" placeholder="搜索" (keydown.Enter)="keyword()" (blur)="keyword()" [formControl]="key">
+            <img src="assets/image/svg/worksearch.svg" class="work-search" />
+        </div> -->
+    </div>
+    <div class="detail" *ngrxLet="works$;let works">
+        <div class="wo">
+            <!-- <li *ngFor="let item of works.list">
+                <div class="all-left">
+                    <img [attr.src]="item.cover+'?x-oss-process=image/resize,m_fixed,w_102,h_102'">
+                    <span class="left">
+                        <span class="name">
+                            {{item.name}}
+                        </span>
+                        <span class="count" *ngIf="item.count>0;else wo">包含{{item.count}}个商品</span>
+                        <ng-template #wo>
+                            <span class="count"></span>
+                        </ng-template>
+                        <span class="time">
+                            <span class="time-one">
+                                发布时间：{{item.submittime|date:'yyyy/MM/dd'}}
+                            </span>
+                        </span>
+                    </span>
+                </div>
+               <div class="all-right">
+                   <span class="edit" (click)="cannelApply(item.id)">撤销审核</span>
+               </div>
+            </li> -->
+            <ng-container *ngFor="let item of works.list">
+               <ivo-single-manager [item]="item" [type]="0" [state]="2" (delete)="ll($event)"></ivo-single-manager>
+            </ng-container>
+            <ng-container *ngIf="works?.count==0">
+                <ivo-lack-image></ivo-lack-image>
+             </ng-container >
+        </div>
+
+
+        <div class="page" *ngIf="works?.count>6">
+            <ng-container *ngrxLet="currentPage$;let currentPage">
+                <ivo-pagination [total]="works.count" [currentPage]="currentPage" [pageSize]="6" (onPageChange)="toPage($event)"></ivo-pagination>
+            </ng-container>
+        </div>
+    </div>
+</div>

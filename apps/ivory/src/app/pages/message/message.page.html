@@ -1,0 +1,103 @@
+<div class="wo" #all>
+    <div class="all">
+        <div class="nav" #nav>
+            <ng-container *ngrxLet="id$;let id">
+                <span class="aaa" [routerLink]="['chat']" routerLinkActive="active">
+                    <span class="back"></span>
+                    <span class="font">我的消息</span>
+                    <ng-container *ngrxLet="chatUnread$;let chatUnread">
+                        <span class="num">
+                            <a *ngIf="chatUnread">
+                                <ng-container *ngIf="chatUnread<100;else more">
+                                    {{chatUnread}}
+                                </ng-container>
+                            </a>
+                        </span>
+                    </ng-container>
+                </span>
+                <span class="aaa" [routerLink]="['reply']" routerLinkActive="active" (click)="toMO()">
+                    <span class="back"></span>
+                    <span class="font">回复我的</span>
+                    <ng-container *ngrxLet="forum$;let forum">
+                        <span class="num">
+                            <a *ngIf="forum">
+                                <ng-container *ngIf="forum<100;else more">
+                                    {{forum}}
+                                </ng-container>
+                            </a>
+                        </span>
+                    </ng-container>
+                </span>
+                <span class="aaa" [routerLink]="['likeme']" routerLinkActive="active" (click)="toMT()">
+                    <span class="back"></span>
+                    <span class="font">收到的赞</span>
+                    <ng-container *ngrxLet="star$;let star">
+                        <span class="num">
+                            <a *ngIf="star">
+                                <ng-container *ngIf="star<100;else more">
+                                    {{star}}
+                                </ng-container>
+                            </a>
+                        </span>
+                    </ng-container>
+
+                </span>
+                <span class="aaa" [routerLink]="['system']" routerLinkActive="active" (click)="toMTr()">
+                    <span class="back"></span>
+                    <span class="font">系统通知</span>
+                    <ng-container *ngrxLet="notice$;let notice">
+                        <span class="num">
+                            <a *ngIf="notice">
+                                <ng-container *ngIf="notice<100;else more">
+                                    {{notice}}
+                                </ng-container>
+                            </a>
+                        </span>
+                    </ng-container>
+                    
+                </span>
+                <ng-template #more>
+                    99+
+                </ng-template>
+                <!-- <span [routerLink]="['invitate']" routerLinkActive="active" (click)="toMF()">合作邀请
+                    <ng-container *ngrxLet="cooperation$;let cooperation">
+                        <a *ngIf="cooperation">
+                            {{cooperation}}
+                        </a>
+                    </ng-container>
+                </span> -->
+                <span class="aaa" [routerLink]="['customer-service']" routerLinkActive="active" (click)="remove()">
+                    <span class="back"></span>
+                    <span class="font">联系客服</span>
+                    <ng-container *ngrxLet="unread$;let unread">
+                        <span class="num">
+                            <a *ngIf="unread">
+                                <ng-container *ngIf="unread<100;else more">
+                                    {{unread}}
+                                </ng-container>
+                            </a>
+                        </span>
+                    </ng-container>
+                    
+                </span>
+                <span class="aaa" [routerLink]="['install']" routerLinkActive="active">
+                    <span class="back"></span>
+                    <span class="font">消息设置</span>
+                    <span class="num">
+                    </span>
+                </span>
+                <span class="aaa" [routerLink]="['blacklist']" routerLinkActive="active">
+                    <span class="back"></span>
+                    <span class="font">黑名单管理</span>
+                    <span class="empty"></span>
+                </span>
+
+              
+            </ng-container>
+
+        </div>
+        <div class="router" #router>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="all">
+    <h2>新增合辑</h2>
+    <input class="input" type="text" placeholder="请输入合辑名称" maxlength="20" #input (input)="onInput($event.target.value)">
+    <span *ngrxLet="nameLength$;let nameLength">{{nameLength}}/20</span>
+    <li>
+        <input type="checkbox" (click)="show()">是否设为私密
+    </li>
+    <li>
+        <button class="cancel" (click)="cancel()">取消</button>
+        <button class="sure" (click)="sure()">确定</button>
+    </li>
+</div>

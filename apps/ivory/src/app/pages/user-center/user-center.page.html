@@ -1,0 +1,46 @@
+<div class="bgc">
+    <div class="content">
+        <nav>
+            <div class="profile">
+                <img [attr.src]="avatar$ | async" />
+                <p class="nickname">{{nickname$ | async}}</p>
+                <div class="role">
+                    <img *ngIf="userRole.includes(11002)" src="/assets/image/role/lllustrator.svg">
+                    <img *ngIf="userRole.includes(11001)" src="/assets/image/role/live2d.svg">
+                </div>
+            </div>
+            <a
+                [routerLink]="['./']"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{'exact':true}"
+            >
+                <img src="assets/image/svg/我的.svg" class="d" />
+                <img src="assets/image/svg/我的1.svg" class="e" />
+                个人资料</a
+            >
+            <a [routerLink]="['./security']" routerLinkActive="active">
+                <img src="assets/image/svg/安全.svg" class="d" />
+                <img src="assets/image/svg/安全1.svg" class="e" />
+                安全 & 认证</a
+            >
+            <a [routerLink]="['./wallet']" routerLinkActive="active">
+                <img src="assets/image/svg/我的桃币.svg" class="d" />
+                <img src="assets/image/svg/我的桃币1.svg" class="e" />
+                桃币钱包</a
+            >
+            <a [routerLink]="['./pay']" routerLinkActive="active">
+                <img src="assets/image/svg/我的钱包.svg" class="d" />
+                <img src="assets/image/svg/我的钱包1.svg" class="e" />
+                支付记录</a
+            >
+            <a [routerLink]="['./order']" routerLinkActive="active">
+                <img src="assets/image/svg/订单.svg" class="d" />
+                <img src="assets/image/svg/订单1.svg" class="e" />
+                作品订单</a
+            >
+        </nav>
+        <div class="wrapper">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="75.001" viewBox="0 0 60 75.001">
+  <g id="组_500" data-name="组 500" transform="translate(-664 -221.999)">
+    <g id="组_497" data-name="组 497" transform="translate(0 39)">
+      <path id="Rectangle" d="M30.5,0h30L.5,75V35.047Z" transform="translate(663.5 183)" fill="#bcbcbc"/>
+      <path id="Path_4" data-name="Path 4" d="M5.96,0,5.25,7.8H-.424Z" transform="translate(718.039 182.998)" fill="#bcbcbc"/>
+    </g>
+    <text id="Live2D" transform="translate(688.336 253.313) rotate(-51)" fill="#fff" font-size="13" font-family="MicrosoftYaHei, Microsoft YaHei"><tspan x="-19.5" y="0">已暂停</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,117 @@
+<div ivoStepper #step>
+  <div *ivoStep>
+    <div class="main">
+      <div class="detail">
+        <ng-container *ngrxLet="account$;let account">
+          <div>
+            <div class="a">我的收益</div>
+            <span class="big">
+              <span>{{(account.balance)| number:'1.2-2'}}</span>
+              <span>桃币</span>
+
+              <span
+                (mouseenter)="isHelpShow=true"
+                (mouseleave)="isHelpShow=false"
+                class="help-icon"
+              >
+                <div *ngIf="isHelpShow" class="help">
+                  <p>桃币说明：</p>
+                  <p>1、桃币不可用于站内交易；</p>
+                  <p>
+                    2、您出售商品所获得的收益将即时按人民币：桃币进行1:1兑换；
+                  </p>
+                  <p>3、提现时桃币将按照1:1兑换为人民币提现至您的账户中；</p>
+                  <p>4、提现发起后将与3个工作日内到账。</p>
+                </div>
+              </span>
+              <span *ngIf="account.cashout"
+                >提现中金额：{{account.cashout}}</span
+              >
+            </span>
+          </div>
+
+          <div>
+            <a class="recordlist" [routerLink]="['/member','record']"
+              >出售记录</a
+            >
+            <button
+              (click)="steps.goto('ver')"
+              class="strong"
+              (click)="toWithdraw()"
+            >
+              提现
+            </button>
+          </div>
+        </ng-container>
+      </div>
+      <div class="middle">
+        <div>
+          <span style="color: #ff7fa9">桃币账单</span>
+        </div>
+        <div class="right">
+          <!-- <span (click)="datepicker">选择日期</span> -->
+          <nz-date-picker
+            [formControl]="date"
+            nzFormat="yyyy-MM"
+            [nzMode]="'month'"
+            (ngModelChange)="handleDatePanelChange($event)"
+          >
+          </nz-date-picker>
+
+          <div class="search">
+            <input
+              type="text"
+              [formControl]="key"
+              placeholder="搜索"
+              (keydown.Enter)="keyword()"
+              (blur)="keyword()"
+            />
+            <img src="assets/image/svg/worksearch.svg" class="work-search" />
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngrxLet="wallet$;let wallet">
+        <div class="min-h">
+          <div class="bottom">
+            <span class="name">账单类型</span>
+            <span class="order">订单号</span>
+            <span class="time">完成时间</span>
+            <span>金额</span>
+            <span>操作</span>
+          </div>
+          <div class="show">
+            <li *ngFor="let item of wallet.list">
+              <span class="names">{{item.title}}</span>
+              <span class="orders">{{item.orderId}}</span>
+              <span class="times">{{item.time|date:"yyyy-MM-dd HH:mm"}}</span>
+              <span class="money"
+                >{{item.amount.toString().startsWith('-')?'-￥'+(item.amount|
+                number:'1.2-2').slice(1):'￥'+(item.amount|
+                number:'1.2-2')}}</span
+              >
+              <a
+                style="color: #333333"
+                (click)="toOrderDetail(item.title,item.page,item.orderId)"
+                >查看订单详情</a
+              >
+              <!-- <span
+                            style="cursor: pointer;border: none;outline: none;"
+                            [routerLink]="['/setting/wallet',item.id]"
+                            >查看详情</span> -->
+            </li>
+          </div>
+        </div>
+
+        <div class="page" *ngIf="wallet.count>7">
+          <ivo-pagination
+            [total]="wallet?.count"
+            [pageSize]="7"
+            [currentPage]="(page$|async)"
+            (onPageChange)="page($event)"
+          ></ivo-pagination>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

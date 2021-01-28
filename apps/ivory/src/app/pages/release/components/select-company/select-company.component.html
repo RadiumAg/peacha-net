@@ -1,0 +1,86 @@
+<form nz-from [formGroup]="form">
+    <div class="body" *ngIf="false">
+        <ng-container *ngIf="!(isHaveCompany$ | async)">
+            <div class="self active" (click)="onClick($event)">
+                本作品完全由我自己创作
+            </div>
+            <div class="company" *ngIf='!ivoDisabled' (click)="addCompany()">
+                添加新的合作者
+            </div>
+        </ng-container>
+        <ng-container *ngIf="(isHaveCompany$ | async);">
+            <div *ngrxLet="user$;let user" class="author">
+                <div class="userInfo">
+                    <img src="{{user.avatar}}" alt="{{user.nickname}}">
+                    <div>
+                        <span>{{user.nickname}}</span>
+                        <ivo-select formControlName="wr" [disabled]='true'>
+                            <ivo-option value="0" text="模型师"  borderStyle='1'></ivo-option>
+                            <ivo-option value="1" text="画师"  borderStyle='2'></ivo-option>
+                            <!-- <ivo-option value="2" text="模型师"></ivo-option> -->
+                        </ivo-select>
+                    </div>
+                </div>
+
+                <div class="precent">
+                    <h3>收益成分设置</h3>
+                    <nz-form-item>
+                        <nz-form-control style="margin-top: 20px;" nzErrorTip="请设置合理的收益">
+                            <ivo-ingredient [disabled]="ivoDisabled" formControlName="s" (update)="setPrecent($event)"
+                                [process]="precent$ | async">
+                            </ivo-ingredient>
+                        </nz-form-control>
+                    </nz-form-item>
+                    <label for="precent"><input nz-input id="precent" [disabled]="ivoDisabled"
+                            (input)="setPrecentSelf($event)" type="number" [value]="precent$|async"
+                            type="text">%</label>
+                </div>
+                <button *ngIf='!ivoDisabled' nzType="default" type="button" nz-button
+                    (click)="cancel($event)">取消</button>
+            </div>
+        </ng-container>
+    </div>
+    <div *ngIf="false">
+        <!-- <div *ngIf="(isHaveCompany$ | async) && !ivoDisabled;" class="statement" > -->
+        <nz-form-item>
+            <nz-form-control nzErrorTip="请勾选用户合作协议" nzDisableAutoTips="true">
+                <nz-checkbox-wrapper>
+                    <label nz-checkbox formControlName='checked'>我已阅读且同意《Peacha用户合作协议》</label>
+                </nz-checkbox-wrapper>
+            </nz-form-control>
+        </nz-form-item>
+
+    </div>
+
+    <ng-container *ngrxLet="isHaveCompany$;let isHaveCompany">
+        <!-- <div *ngIf="isHaveCompany"> -->
+        <div *ngIf="false">
+            <ng-container *ngrxLet="isSelectWork$;let isSelectWork">
+                <nz-form-item>
+                    <nz-form-label nzRequired="true">添加关联作品</nz-form-label>
+                    <nz-form-control nzErrorTip="请设置关联作品">
+                        <input value=0 formControlName='cover' type="text" hidden #cover />
+                        <div class="illust-box" *ngIf="!isSelectWork" (click)="addAssociation($event);"></div>
+                        <ng-container *ngIf="isSelectWork">
+                            <div class="cover">
+                                <ng-container *ngrxLet="workImg$;let s">
+                                    <div *ngIf='!ivoDisabled' class="delete" (click)="deleteWork($event)"></div>
+                                    <img [src]="s.cover">
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </nz-form-control>
+                </nz-form-item>
+            </ng-container>
+        </div>
+    </ng-container>
+
+    <div *ngIf="!(isHaveCompany$ | async);">
+        <nz-form-control>
+            <nz-radio-group formControlName="c">
+                <label nz-radio nzValue="0" class="original" [nzDisabled]="ivoDisabled">我声明形象为本人原创</label>
+                <label nz-radio nzValue="1" [nzDisabled]="ivoDisabled">我声明本作品为同人作品</label>
+            </nz-radio-group>
+        </nz-form-control>
+    </div>
+</form>

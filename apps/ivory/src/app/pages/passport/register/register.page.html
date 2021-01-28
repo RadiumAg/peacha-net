@@ -1,0 +1,95 @@
+<div class="register">
+    <div class="logo">
+        <img src="/assets/image/svg/i-logo.svg">
+    </div>
+
+    <form class="passport" [formGroup]="checkForm" (ngSubmit)="submit()">
+
+        <div class="form-control">
+            <label>
+                账号：
+            </label>
+            <div class="input-control">
+                <nz-input-group nzCompact >
+                    <nz-select formControlName="method" nzSize="large">
+                        <nz-option [nzLabel]="'手机'" [nzValue]="'phone'"></nz-option>
+                        <nz-option [nzLabel]="'邮箱'" [nzValue]="'email'"></nz-option>
+                    </nz-select>
+                    <input type="text" nz-input formControlName="account" nzSize="large" autocomplete="username" />
+                </nz-input-group>
+
+                <div class="error-inset" [errorDisplay]="account">
+                    <ng-container *errorCase="'required'">
+                        账号是必填项
+                    </ng-container>
+                    <ng-container *errorCase="'used'">
+                        账号已被占用
+                    </ng-container>
+                    <ng-container *errorCase="'invaild'">
+                        账号不符合规范
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label>
+                密码：
+            </label>
+            <div class="input-control">
+                <input class="input-top" formControlName="password" type="password" placeholder="由8至16位字母与数字组成"
+                    autocomplete="new-password">
+                <div class="error-inset" [errorDisplay]="password">
+                    <ng-container *errorCase="'required'">
+                        密码是必填项
+                    </ng-container>
+                    <ng-container *errorCase="'minlength'">
+                        密码位数过短，至少输入八位
+                    </ng-container>
+                    <ng-container *errorCase="'maxlength'">
+                        密码位数过长，最多输入十六位
+                    </ng-container>
+                    <ng-container *errorCase="'pattern'">
+                        密码格式错误
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label>
+                验证码：
+            </label>
+            <div class="input-control">
+                <input class="input" formControlName="verify_code" />
+                <ng-container ivo-verifycode #v="verifycode" verify-type=0>
+                    <button *ngrxLet="v.cooldown$;let cooldown" type="button" (click)="queryVerifycode(v)">
+                        <ng-container *ngIf="cooldown==0">
+                            获取验证码
+                        </ng-container>
+                        <ng-container *ngIf="cooldown>0">
+                            等待({{cooldown}})
+                        </ng-container>
+                    </button>
+                </ng-container>
+
+                <div class="error-inset-extre" [errorDisplay]="verify_code">
+                    <ng-container *errorCase="'required'">
+                        验证码是必填项
+                    </ng-container>
+                    <ng-container *errorCase="'pattern'">
+                        请输入正确格式的验证码
+                    </ng-container>
+                    <ng-container *errorCase="'nocorrect'">
+                        验证码错误
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <button type="submit" [ngClass]="{'disabled':!formvalid}" ivo-button>注册</button>
+        <div class="form-actions">
+            <label nz-checkbox formControlName="eula">我已同意</label><a target="_blank" [routerLink]="['/useragreement']"  >《用户协议》</a>
+            <a class="right" [routerLink]="['../login']">已有帐号，快速登录></a>
+        </div>
+    </form>
+</div>

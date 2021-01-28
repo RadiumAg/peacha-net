@@ -1,0 +1,22 @@
+<ng-container *ngrxLet="tips$;let tips">
+    <div class="all" *ngIf="tips==1">
+        <li>
+            <img src="/assets/image/svg/i-warning.svg">
+            <span>商品已存在订单，请前往订单页面支付！</span>
+        </li>
+        <div class="btn">
+            <a (click)="toOrder()">前往支付</a>
+            <button (click)="sure()">确定</button>
+        </div>
+    </div>
+    <div class="all" *ngIf="tips==2">
+        <li>
+            <img src="/assets/image/svg/i-warning.svg">
+            <span>该商品不存在或已下架！</span>
+        </li>
+        <div class="btn">
+            <a (click)="toCart()">回到购物车</a>
+            <button (click)="sure()">确定</button>
+        </div>
+    </div>
+</ng-container>

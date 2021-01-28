@@ -1,0 +1,68 @@
+<div class="bgc" *ngrxLet="item$;let it">
+    <div class="main">
+
+        <div class="in" #bgc>
+
+            <div class="left">
+                <ng-container  *ngrxLet="works$;let items">
+                    <div class="st">
+                        <img src="/assets/image/svg/store.svg" /> 我的仓库
+                    </div>
+                    <div class="show" *ngIf="items?.count>0">
+                        <div class="des" [class.focus]="item.id==it.id" *ngFor="let item of items.list"
+                            (click)="selectOne(item.id)">
+                            <img [src]="item.cover" [attr.checked]="it.id===item.id?true:null" />
+                            <div class="name">{{item.name}}</div>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+            <div class="right">
+                <ng-container *ngIf="workCount$.value>0">
+                    <div class="mai">
+                        <div class="first">
+                            <img [src]="it.cover" (click)="toWork(it.id,it.category)">
+                            <div class="des">
+                                <span class="na">{{it.name}} </span>
+                                <span class="author">发布者：{{it.seller_name}}</span>
+                                <span class="time">发布时间：{{it.publishtime|date:"yyyy-MM-dd HH:mm"}}</span>
+                            </div>
+                        </div>
+                        <div class="b">
+                            <button (click)="downloadwork(it.list[0].id)">
+                                下载模型文件
+                            </button>
+                        </div>
+
+                        <div class="good" *ngFor="let item of it?.list">
+                            <ng-container *ngIf="!item.only_preview">
+                                <div class="aaa">
+                                    <span class="name">商品文件</span>
+                                    <span class="type" *ngIf="item.maxstock==1;else no">单次出售
+                                    </span>
+                                    <ng-template #no>
+                                        <span>多次出售</span>
+                                    </ng-template>
+                                </div>
+                                <div class="bbb">
+                                    <span>购买时间：{{item.createtime|date:"yyyy-MM-dd HH:mm"}}</span>
+                                    <span *ngIf="item.filesize!=0">文件大小：{{item.filesize|save}}M</span>
+                                </div>
+                                <button [ngClass]="{no: item.filesize==0}" [disabled]="item.filesize==0"
+                                    (click)="download(item.id)">
+                                    下载商品模型文件
+                                </button>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+        <div class="page" *ngIf="workCount$.value>12">
+            <ivo-pagination [total]="workCount$.value" [pageSize]="12" [currentPage]="(page$|async)"
+                (onPageChange)="page($event)"></ivo-pagination>
+        </div>
+    </div>
+</div>

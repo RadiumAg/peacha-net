@@ -1,0 +1,68 @@
+<div class="collection" *ngrxLet="pageUid$;let pageUid">
+    <li class="title">
+        <a class="different" *ngIf="pageUid == (id$ | ngrxPush)">我</a>
+        <a class="different" *ngIf="pageUid != (id$ | ngrxPush)">Ta</a>
+        创建的
+        <a [routerLink]="['created']">查看更多></a>
+    </li>
+    <div class="list">
+        <li *ngFor="let create of (create$ | async)?.list" [routerLink]="[create.id]">
+            <div class="normal">
+                <img [attr.src]="create.cover">
+                <span class="name">{{create.name}}</span>
+                <span class="name">
+                    <img src="/assets/image/svg/defalut-avatar.svg">
+                    {{create.nickname}}
+                </span>
+                <span class="count">该合辑一共有{{create.work_count}}个作品</span>
+                <span class="message">
+                    <a>
+                        <img src="assets/image/svg/thumbs-up.svg">
+                        {{create.like_count |changeUnit}}
+                    </a>
+                    <a>
+                        <img src="assets/image/svg/subscribe.svg">
+                        {{create.subscribe_count | changeUnit}}
+                    </a>
+                </span>
+            </div>
+        </li>
+    </div>
+
+    <li class="title">
+        <a class="different" *ngIf="pageUid == (id$ | ngrxPush)">我</a>
+        <a class="different" *ngIf="pageUid != (id$ | ngrxPush)">Ta</a>
+        收藏的
+        <a [routerLink]="['subscribed']">查看更多></a>
+    </li>
+    <div class="list">
+        <li *ngFor="let subscribed of (subscribed$ 
+        | async)?.list">
+            <div class="normal" [routerLink]="[subscribed.id]">
+                <img [attr.src]="subscribed.cover">
+                <span class="name">{{subscribed.name}}</span>
+                <span class="name">
+                    <img src="/assets/image/svg/defalut-avatar.svg">
+                    {{subscribed.nickname}}
+                </span>
+                <span class="count">该合辑一共有{{subscribed.work_count}}个作品</span>
+                <span class="message">
+                    <a>
+                        <img src="assets/image/svg/thumbs-up.svg">
+                        {{subscribed.like_count |changeUnit}}
+                    </a>
+                    <a>
+                        <img src="assets/image/svg/subscribe.svg">
+                        {{subscribed.subscribe_count | changeUnit}}
+                    </a>
+                </span>
+            </div>
+            <div class="lose" *ngIf="subscribed.mark==1">
+                <div class="bg"></div>
+                <p>已失效合辑</p>
+                <button (click)="cancelSubscribe(subscribed.id)">取消订阅</button>
+            </div>
+        </li>
+    </div>
+
+</div>

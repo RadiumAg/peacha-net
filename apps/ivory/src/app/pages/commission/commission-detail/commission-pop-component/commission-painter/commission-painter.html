@@ -1,0 +1,45 @@
+<div class="box">
+    <ng-container *ngrxLet="type$;let t">
+        <li class="title">
+            <img src="/assets/image/commission/red-flag.svg">
+            <ng-container [ngSwitch]="t">
+                <ng-container *ngSwitchCase="0">
+                    选定{{category}}
+                </ng-container>
+                <ng-container *ngSwitchCase="1">
+                    <ng-container *ngIf="Identity===1"> 取消选定</ng-container>
+                    <ng-container *ngIf="Identity===2||Identity===0"> 取消应征</ng-container>
+                </ng-container>
+            </ng-container>
+
+        </li>
+        <div class="tip">
+            <ng-container [ngSwitch]="t">
+                <ng-container *ngSwitchCase="0">
+                    是否确定选择此{{category}}？
+                </ng-container>
+                <span *ngSwitchCase="1">
+                    <ng-container *ngIf="Identity===2 ||Identity===0">
+                        是否确认取消应征该企划?
+                    </ng-container>
+                    <ng-container *ngIf="Identity===1">
+                        是否确认取消该企划的{{category}}，取消后重新选择{{category}}，取消后企划自动变为停止招募状态。
+                    </ng-container>
+
+                </span>
+            </ng-container>
+        </div>
+    </ng-container>
+
+    <div class="detail" *ngIf="(type$|async)===0">
+        <img [src]="k.avatar">
+        <span class="nick">{{k.nickname}}</span>
+        <span class="money">稿酬：¥ {{k.price}}</span>
+        <span class="time">企划所需时长：{{k.day}}天</span>
+        <span class="time">预计开始时间：{{k.start |date:'yyyy-MM-dd'}}</span>
+    </div>
+    <div class="btn">
+        <button ivo-button [buttonType]="1" (click)="cancel()">取消</button>
+        <button ivo-button (click)="sure()">确定</button>
+    </div>
+</div>

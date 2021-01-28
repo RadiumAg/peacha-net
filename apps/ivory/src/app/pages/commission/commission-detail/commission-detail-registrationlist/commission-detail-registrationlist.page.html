@@ -1,0 +1,68 @@
+<div class="right">
+    <ng-container *ngrxLet="rlist$;">
+        <div class="right-top">
+            <span class="c-title">
+                已报名：
+                <a class="goback" routerLink="/commission/detail" [queryParamsHandling]="'merge'">
+                    <img src="/assets/image/commission/goback.svg">返回列表
+                </a>
+            </span>
+            <div class="c-detail">
+                <span>共有{{list?.count}}位用户报名了该企划</span>
+            </div>
+
+        </div>
+        <div class="right-bottom">
+            <ng-container *ngIf="list?.count>0">
+                <div class="model" *ngFor="let i of list?.list">
+                    <li class="model-top">
+                        <div class="user-des">
+                            <a [href]="['/user/'+i?.userId]" target="_blank">
+                                <img [src]="i?.avatar">
+                                <span class="nick">{{i?.nickName}}</span>
+                            </a>
+                            <button ivo-button [buttonType]="1" appDebounceClick *ngIf="identity===1"
+                                (debounceClick)="select(i?.nickName,i?.detail.price,i?.detail.day,i?.detail.startTime,i?.avatar,i?.userId)">选定此用户</button>
+                        </div>
+                        <div class="c-des" *ngIf="i?.detail">
+                            <div class="line-des">
+                                <span>企划所需时长：{{i?.detail.day}}</span>
+                                <span>预计开始时间：{{i?.detail.startTime|date:'yyyy-MM-dd'}}</span>
+                                <span>期望稿酬：￥{{i?.detail.price}}</span>
+                            </div>
+                            <div class="line-chat">
+                                <span>备注：
+                                    <ng-container *ngIf="i?.detail.description;else none">
+                                        {{i?.detail.description}}
+                                    </ng-container>
+                                    <ng-template #none>
+                                        无
+                                    </ng-template>
+                                </span>
+                                <a (click)="toChat(i?.userId,i?.avatar,i?.nickName)">
+                                    <img src="/assets/image/commission/chat.svg">私聊
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </li>
+                    <div class="work-list">
+                        <ng-container *ngFor="let work of i?.workList">
+                            <a [href]="work?.category==1?['/illust/'+work?.id]:['/live2d/'+work?.id]" target="_block">
+                                <ivo-lazy-img [ngLazyLoad]="work.cover">
+                                </ivo-lazy-img>
+                            </a>
+
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+            <div class="lack-image" *ngIf="list.list.length===0">
+                <ivo-lack-image></ivo-lack-image>
+            </div>
+        </div>
+        <ivo-pagination *ngIf="list?.count>4" [currentPage]="currentPage" [total]="list?.count" [pageSize]="4"
+            (onPageChange)="toPage($event)"></ivo-pagination>
+    </ng-container>
+</div>

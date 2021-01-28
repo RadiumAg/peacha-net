@@ -1,0 +1,141 @@
+<header *ngIf="user$|async; let user">
+  <ng-container *ngrxLet="id$;let id">
+    <div class="banner">
+      <img [attr.src]="user.banner" *ngIf="user.id!=id;else me" />
+      <ng-template #me>
+        <img [attr.src]="banner$ | ngrxPush" />
+      </ng-template>
+    </div>
+    <nav>
+      <div class="userinfo">
+        <div class="wo">
+          <img [attr.src]="user.avatar" />
+          <div class="meta">
+            <h4>
+              {{user.nickname}}<span class="role">
+                <img
+                  *ngIf="userRole.includes(11002)"
+                  src="/assets/image/role/lllustrator.svg"
+                />
+                <img
+                  *ngIf="userRole.includes(11001)"
+                  src="/assets/image/role/live2d.svg"
+                />
+              </span>
+            </h4>
+            <p class="des">{{user.description}}</p>
+          </div>
+        </div>
+
+        <div class="focus">
+          <ng-container *ngIf="user.id !== (id$ | async);else changebg">
+            <li>
+              <button
+                class="already"
+                (click)="toDialog(user.id,user.nickname,user.avatar)"
+              >
+                <img class="chat" src="/assets/image/commission/chat.svg" />
+                私信
+              </button>
+            </li>
+            <li>
+              <ng-container
+                ivo-follow
+                [follow-id]="user.id"
+                [follow-state]="user.follow_state"
+                #fffff="follow"
+              >
+                <ng-container *ngrxLet="fffff.follow$;let f" [ngSwitch]="f">
+                  <button
+                    ivo-button
+                    [class.checked]="f!=0"
+                    (click)="fffff.request()"
+                  >
+                    <ng-container *ngSwitchCase="0">
+                      <img class="add" src="/assets/image/svg/i-add.svg" />
+                      关注
+                    </ng-container>
+                    <ng-container *ngSwitchCase="1">
+                      <img src="/assets/image/svg/i-follow-check.svg" />
+                      已关注
+                    </ng-container>
+                    <ng-container *ngSwitchCase="2">
+                      <img src="/assets/image/svg/i-follow-check.svg" />
+                      已关注
+                    </ng-container>
+                    <ng-container *ngSwitchCase="3">
+                      <img src="/assets/image/svg/black.svg" />
+                      已拉黑
+                    </ng-container>
+                  </button>
+                </ng-container>
+              </ng-container>
+            </li>
+            <li class="report" #fa>
+              <img
+                src="/assets/image/svg/i-three-dot.svg"
+                (click)="toReport(fa,box)"
+              />
+            </li>
+            <!-- <li>
+                            <a class="aa" (click)="report(user.id)">举报</a>
+                        </li> -->
+          </ng-container>
+          <ng-template #box>
+            <div class="box">
+              <li (click)="report(user.id)">举报</li>
+            </div>
+          </ng-template>
+          <ng-template #changebg>
+            <li (click)="input.click()">
+              <input
+                type="file"
+                hidden
+                #input
+                (change)="updateBanner($event,edit)"
+              />
+              <button class="already" #edit>编辑封面</button>
+            </li>
+          </ng-template>
+        </div>
+      </div>
+      <div class="wrapper">
+        <div class="left">
+          <a
+            [routerLink]="['.']"
+            data-tag="ivoCursor"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}"
+            >主页</a
+          >
+          <a
+            [routerLink]="['works']"
+            data-tag="ivoCursor"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}"
+            >作品</a
+          >
+        </div>
+        <!-- <a [routerLink]="['collection']" routerLinkActive="active">合辑</a> -->
+        <ivo-cursor></ivo-cursor>
+        <div class="right">
+          <a class="none">
+            <span>获赞</span>
+            <p>{{ user.like_count | changeUnit}}</p>
+          </a>
+          <a class="wo" [routerLink]="['following']" routerLinkActive="red">
+            <span>关注</span>
+            <p>{{ user.num_following | changeUnit}}</p>
+          </a>
+          <a class="wo" [routerLink]="['follower']" routerLinkActive="red">
+            <span>粉丝</span>
+            <p>{{ user.num_followed | changeUnit }}</p>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </ng-container>
+</header>
+<div class="route">
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,97 @@
+@import '../commission-pop.less';
+
+
+
+.content {
+
+
+    &>.item {
+        width: 100%;
+        padding: 20px 60px 0;
+        font-size: 14px;
+        color: #333333;
+        display: flex;
+        justify-content: space-between;
+
+        &>.time-unit {
+            height: 42px;
+            line-height: 42px;
+        }
+
+        &>input {
+
+            border: 1px solid #DFDFDF;
+            border-radius: 3px;
+            color: #333333;
+            outline: none;
+        }
+
+        &>input::placeholder{
+            color: #bbbbbb;
+        }
+
+        &>.fill {
+            padding: 13px 27px 13px 15px;
+            width: 336px;
+            height: 42px;
+        }
+
+        &>.small {
+            padding: 13px 10px;
+            width: 60px;
+            height: 42px;
+
+        }
+
+        &>textarea {
+            position: relative;
+            width: 392px;
+            height: 90px;
+            border: 1px solid  #DFDFDF;
+            border-radius: 3px;
+            padding: 13px 15px;
+            resize: none;
+            outline: none;
+            color: #333333;
+        }
+
+        &>.unit {
+            position: absolute;
+            margin-left: 420px;
+            margin-top: 10px;
+        }
+
+        &>.line {
+            margin-bottom: 20px;
+            &>.checkbox {
+                width: 16px;
+                height: 16px;
+                border-radius: 2px;
+
+            }
+
+            &>.error {
+                color: red;
+            }
+        }
+
+    }
+
+    &>.error-inset {
+        width: 100%;
+        color: red;
+        padding-left: 167px;
+    }
+
+    &>.last{
+        margin-left: -55px;
+    }
+
+   
+
+
+}
+
+.btn-style{
+      margin-top: 20px;  
+}

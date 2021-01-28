@@ -1,0 +1,36 @@
+<div class="all">
+    <h3>
+        投诉
+    </h3>
+    <img class="delete" src="/assets/image/svg/close.svg" (click)="close()">
+    <li>
+        <p>你觉得这个收藏夹有什么问题？</p>
+        <span class="choice" *ngFor="let key of keyArray;let i =index"><input type="checkbox" name="kind"
+                (change)="choice(i)">{{key}}</span>
+
+    </li>
+    <li>
+        <p>为帮助审核人员更快处理，补充违规内容出现位置</p>
+        <div class="input">
+            <textarea placeholder="限制输入400字" rows="4" cols="50" #text maxlength="400"
+                (change)="extra($event.target.value)"></textarea>
+            <span>{{text.value.length}}/400</span>
+        </div>
+    </li>
+    <li class="other" *ngrxLet="imgList$;let imgList">
+        <span class="show" *ngFor="let img of imgList;let i=index">
+            <img [attr.src]="img">
+            <img class="delete" src="/assets/image/svg/delete-pic.svg"  (click)="deleteUpdate(i)">
+        </span>
+        
+        <span class="add-pic" *ngIf="imgList.length!=5" (click)="input.click()">
+            <input hidden type="file" name="file" #input (change)="updatePic($event.target.files[0])">
+            <img src="/assets/image/svg/add-pic.svg">
+        </span>
+        <p class="tip">每张小于2M，支持JPG/PNG等格式，最多上传5张</p>
+    </li>
+    <li>
+        <button class="cancel" (click)="cancel()">取消</button>
+        <button class="sure" (click)="submit()">提交</button>
+    </li>
+</div>

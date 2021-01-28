@@ -1,0 +1,115 @@
+.body-upload {
+  button {
+    border: none;
+    color: rgba(255, 255, 255, 1);
+    width: 118px;
+    height: 34px;
+    // background:rgba(255,99,152,1);
+    opacity: 1;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  > div {
+    margin-bottom: 20px;
+  }
+  > .upload {
+    position: relative;
+    overflow: hidden;
+    width: 500px;
+    height: 36px;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(204, 204, 204, 1);
+    opacity: 1;
+    border-radius: 4px;
+
+    > div {
+      > div {
+        width: 500px;
+        height: 100px;
+      }
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      position: absolute;
+      left: 0;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      display: block;
+      width: 110%;
+      position: absolute;
+    }
+    .upload-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      padding-right: 10px;
+      padding-left: 20px;
+
+      > span:nth-child(2) {
+        display: inline-block;
+        background-image: url(/assets/image/additional/svg/delete.svg);
+        width: 14px;
+        height: 14px;
+        cursor: pointer;
+      }
+
+      > span:nth-child(1) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        &::before {
+          content: '';
+          margin-right: 10px;
+          display: inline-block;
+          background-image: url(/assets/image/additional/svg/file.svg);
+          width: 20px;
+          height: 20px;
+          cursor: pointer;
+        }
+      }
+    }
+    .process-body {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      border-radius: 4px;
+      width: auto;
+      padding-left: 20px;
+      height: 14px;
+      & > .outer {
+        margin-right: 10px;
+        top: 0;
+        background: rgba(230, 230, 230, 1);
+        display: flex;
+        align-items: center;
+        border-radius: 4px;
+        width: 200px;
+        height: 4px;
+        .mask {
+          width: 0;
+          height: 4px;
+          background: rgba(255, 99, 152, 1);
+          opacity: 1;
+          border-radius: 4px;
+        }
+      }
+    }
+    .process-body:nth-child(1) {
+      padding-top: 20px;
+      padding-left: 20px;
+      padding-bottom: 10px;
+      padding-right: 10px;
+    }
+    .upload-item:nth-child(1) {
+      padding-top: 8px;
+    }
+    .upload-item:last-child {
+      padding-right: 10px;
+      padding-left: 20px;
+      padding-bottom: 20px;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+<div class="slider-box">
+    <div class="slider-label">
+        <img [src]="lock?'/assets/image/lock-on.svg':'/assets/image/lock-off.svg'" (click)="lockValue()">
+        <span>{{name || id}}</span>
+    </div>
+    <div class="slider-controller">
+        <div class="slider-controller-base">
+            <div class="slider-body" #sliderBody>
+                <div class="slider-track">
+                    <div class="slider-thumb" [ngStyle]="{'transform': 'translateX(' + 135*(inputValue.value-min)/(max-min) + 'px)'}"></div>
+                </div>
+            </div>
+            <img src="/assets/image/Icon-iconfont09@2x.svg" (click)="reset()">
+            <input [formControl]="inputValue" type="number" pattern/>
+        </div>
+        <div class="slider-mark">
+            <span>{{min.toFixed(2)}}</span>
+            <span>{{max.toFixed(2)}}</span>
+        </div>
+    </div>
+</div>

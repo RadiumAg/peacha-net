@@ -1,0 +1,28 @@
+<div class="bgc">
+    <div class="main">
+        <div class="left">
+            <div [routerLink]="['./manager/illust']" routerLinkActive="selected">
+                <img src="assets/image/member/1.svg" alt="" class="d" />
+                <img src="assets/image/member/2.svg" alt="" class="e" />
+                插画管理
+            </div>
+            <div [routerLink]="['./manager/live2D']" routerLinkActive="selected">
+                <img src="assets/image/member/6.svg" alt="" class="d" />
+                <img src="assets/image/member/5.svg" alt="" class="e" />
+                live2D管理
+            </div>
+            <!-- <div [routerLink]="['./cooperate']" routerLinkActive="selected">
+                <img src="assets/image/svg/2.svg" alt="" />
+                合作作品
+            </div> -->
+            <div [routerLink]="['./record']" routerLinkActive="selected">
+                <img src="assets/image/member/4.svg" alt="" class="d" />
+                <img src="assets/image/member/3.svg" alt="" class="e" />
+                出售记录
+            </div>
+        </div>
+        <div class="right">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

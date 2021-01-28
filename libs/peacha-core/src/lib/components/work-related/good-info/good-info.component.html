@@ -1,0 +1,104 @@
+<h3>
+    {{price>0?'付费下载内容':'免费下载内容'}}
+</h3>
+
+<div class="hello">
+    <a (click)="showFileList()">查看文件列表</a>
+</div>
+<div class="three">
+    <span class="price" *ngIf="price>0">{{price|currency:'¥'}}</span>
+    <span class="type" [ngSwitch]="maxStock" *ngIf="price>0">
+        <ng-container *ngSwitchCase="1">
+            单次出售
+        </ng-container>
+        <ng-container *ngSwitchCase="-1">
+            多次出售
+        </ng-container>
+    </span>
+</div>
+<ng-container>
+
+    <!-- 不显示按钮 -->
+    <!-- 自己发布的付费商品 -->
+    <!-- 已下架 -->
+    <!-- 公示期内 -->
+    <ng-container *ngIf="!((authorId === (id$ | async) && price>0 ) || sellState === 0 || period>0)">
+    <!-- <ng-container *ngIf="!((authorId === (id$ | async) && price>0 ) || sellState === 0)"> -->
+        <ng-container *ngIf="price > 0; else freeTemplate">
+            <ng-container *ngIf="!own; else ownTemplate">
+                <ng-container *ngIf="maxStock!==-1 && saleNumber>=maxStock; else onSaleTemplate">
+                    <button class="selled-out">
+                        已售罄
+                    </button>
+                </ng-container>
+                <ng-template #onSaleTemplate>
+                    <button ivo-button class="already" (click)="goToCart()" *ngIf="isInCart(goodId)|async">
+                        已加入购物车
+                    </button>
+                    <button ivo-button (click)="addToCart()" *ngIf="!(isInCart(goodId)|async)">
+                        加入购物车
+                    </button>
+                    <button  ivo-button [buttonType]="1" (click)="toBuy()">
+                        立即购买
+                    </button>
+                </ng-template>
+            </ng-container>
+        </ng-container>
+        <ng-template #freeTemplate>
+            <ng-container *ngIf="!own; else ownTemplate">
+                <button class="free" (click)="addToWarehouse()" *ngIf="!own">
+                    添加到仓库
+                </button>
+            </ng-container>
+        </ng-template>
+        <ng-template #ownTemplate>
+            <button class="view" (click)="goToWarehouse()">
+                已添加到仓库
+            </button>
+        </ng-template>
+    </ng-container>
+</ng-container>
+<div class="detail-modal" *ngIf="fileListShow">
+    <div class="detail-modal-box">
+        <div class="detail-modal-head">
+            可下载内容
+        </div>
+        <!-- <div class="detail-modal-line"></div> -->
+        <ng-container *ngrxLet="fileList$;let fileList">
+            <div class="detail-modal-body">
+                <div class="file-box">
+                    <span *ngIf="showWorkDetail?.length>0">模型文件</span>
+                    <div class="file" *ngFor="let file of showWorkDetail">
+                        <ng-container [ngSwitch]="file.type">
+                            <img *ngSwitchCase="0" src="/assets/image/live-2d/svg/图片.svg">
+                            <img *ngSwitchCase="1" src="/assets/image/live-2d/svg/压缩.svg">
+                            <img *ngSwitchCase="2" src="/assets/image/live-2d/svg/2D.svg">
+                            <img *ngSwitchCase="3" src="/assets/image/live-2d/svg/其他.svg">
+                        </ng-container>
+
+                        <span>{{file.font}}</span>
+                    </div>
+                    <span *ngIf="showGoodDetail?.length>0">商品模型文件</span>
+                    <div class="file" *ngFor="let file of showGoodDetail">
+                        <ng-container [ngSwitch]="file.type">
+                            <img *ngSwitchCase="0" src="/assets/image/live-2d/svg/图片.svg">
+                            <img *ngSwitchCase="1" src="/assets/image/live-2d/svg/压缩.svg">
+                            <img *ngSwitchCase="2" src="/assets/image/live-2d/svg/2D.svg">
+                            <img *ngSwitchCase="3" src="/assets/image/live-2d/svg/其他.svg">
+                        </ng-container>
+
+                        <span>{{file.font}}</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="detail-modal-footer">
+                <div class="detail-footer">
+                    <span>总大小：{{fileList.size>=1024*1024?(fileList.size/(1024*1024)).toFixed(2)+'MB':fileList.size>1024?(fileList.size/1024).toFixed(2)+'KB':fileList.size+'B'}}</span>
+                </div>
+                <button ivo-button (click)="closeFileList()">返回</button>
+            </div>
+        </ng-container>
+
+    </div>
+</div>

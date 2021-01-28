@@ -1,0 +1,20 @@
+<div class="tagInput">
+    <input class="tag-input" maxlength="10" [ngClass]="{'disabled':tags$.getValue().length === tagCount}"
+        [disabled]="tags$.getValue().length === tagCount"
+        [placeholder]="tags$.getValue().length === tagCount? '标签数量已超过上限': '点击编辑新标签，回车添加'"
+        (blur)="addTag($event.srcElement.value,$event);$event.srcElement.value='';"
+        (keydown.Enter)=" addTag($event.srcElement.value,$event);$event.srcElement.value='';"
+        (keydown.Space)=" $event.preventDefault();" />
+    <!-- <p>Enter输入标签 </p> -->
+    <div class="sum" *ngrxLet="tagsShow$;let tags">标签（{{tags.length}}）</div>
+</div>
+
+<div class="tag-items">
+    <ng-container *ngrxLet="tagsShow$;let tags">
+        <div class="tag" *ngFor="let tag of tags">
+            {{tag.value}}
+            <span class="delete" (click)="removeTag(tag.symbol)"></span>
+        </div>
+    </ng-container>
+    <!-- 20字数判断/相同检测(就用set吧) -->
+</div>

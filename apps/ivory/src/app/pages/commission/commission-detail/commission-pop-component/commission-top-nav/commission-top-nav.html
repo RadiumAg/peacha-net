@@ -1,0 +1,37 @@
+<div class="top">
+    <span class="c-title">
+        {{commission.commission.name}}
+        <span class="id" *ngIf="isShowDetail" [routerLink]="['/commission/detail']"
+            [queryParams]="{id:commissionId}" (click)="clickEvent()">查看企划详情</span>
+    </span>
+    <span *ngIf="isShowRight &&  status$.value!=0 &&status$.value!=7&&status$.value!=5" class="back"
+        [routerLink]="['/commission/detail/node']" [queryParams]="{id:commissionId}"
+        [queryParamsHandling]="'merge'" (click)="clickEvent()">企划工作台首页</span>
+    <span *ngIf="!isShowRight">
+        <span [ngSwitch]="status$.value">
+            企划状态：
+            <ng-container *ngSwitchCase="3">
+                完成
+            </ng-container>
+            <ng-container *ngSwitchCase="6">
+                中止
+            </ng-container>
+            <ng-container *ngSwitchCase="2">
+                进行中
+            </ng-container>
+            <ng-container *ngSwitchCase="4">
+                待中止
+            </ng-container>
+            <ng-container *ngSwitchCase="1">
+                待确认
+            </ng-container>
+            <ng-container *ngSwitchCase="5">
+                关闭
+            </ng-container>
+            <ng-container *ngSwitchCase="7">
+                停止
+            </ng-container>
+
+        </span>
+    </span>
+</div>

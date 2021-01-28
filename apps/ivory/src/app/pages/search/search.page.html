@@ -1,0 +1,129 @@
+<div class="bgc">
+  <div class="main">
+    <ng-container *ngrxLet="label$;let label">
+      <div
+        class="label"
+        *ngIf="label.count>0"
+        [routerLink]="['/hotTagWork']"
+        [queryParams]="{k:keyword$|async,id:label.id,page:1}"
+      >
+        <span class="tag">#{{keyword$|async}}</span>
+        <span class="num">此标签内含{{label.count}}个作品</span>
+      </div>
+    </ng-container>
+    <div class="select">
+      <div class="menu">
+        <span
+          [routerLink]="['/search']"
+          [queryParams]="{c:-1,choice:0,p:1}"
+          [class.active]="(params$|async).choice==0"
+          [queryParamsHandling]="'merge'"
+          >全部</span
+        >
+        <span
+          [routerLink]="['/search']"
+          [queryParams]="{c:1,choice:1,p:1}"
+          [class.active]="(params$|async).choice==1"
+          [queryParamsHandling]="'merge'"
+          >插画</span
+        >
+        <span
+          [routerLink]="['/search']"
+          [queryParams]="{c:0,choice:2,p:1}"
+          [class.active]="(params$|async).choice==2"
+          [queryParamsHandling]="'merge'"
+          >Live2D</span
+        >
+        <span
+          [routerLink]="['/search/good']"
+          [queryParams]="{choice:3,p:1}"
+          [class.active]="(params$|async).choice==3"
+          [queryParamsHandling]="'merge'"
+          >商品</span
+        >
+        <span
+          [routerLink]="['/search/user']"
+          [queryParams]="{choice:4,p:1}"
+          [class.active]="(params$|async).choice==4"
+          [queryParamsHandling]="'merge'"
+          >用户</span
+        >
+      </div>
+      <ivo-cursor></ivo-cursor>
+      <div class="choice">
+        <ng-container [ngSwitch]="searchType$ | async">
+          <ng-container *ngSwitchCase="0">
+            <ivo-select class="ok" [formControl]="order">
+              <ivo-option
+                value="0"
+                text="关键字匹配"
+                [selected]="true"
+              ></ivo-option>
+              <ivo-option value="1" text="最新发布"></ivo-option>
+              <ivo-option value="2" text="最多点赞"></ivo-option>
+              <!-- <ivo-option value='3' text='最多收藏'></ivo-option> -->
+            </ivo-select>
+            <ivo-select class="ok" [formControl]="time">
+              <ivo-option
+                value="0"
+                text="发布时间"
+                [selected]="true"
+              ></ivo-option>
+              <ivo-option value="-1" text="本日"></ivo-option>
+              <ivo-option value="-7" text="七日内"></ivo-option>
+              <ivo-option value="-30" text="一个月内"></ivo-option>
+              <ivo-option value="-90" text="三个月"></ivo-option>
+              <ivo-option value="-180" text="六个月"></ivo-option>
+              <ivo-option value="-360" text="一年"></ivo-option>
+            </ivo-select>
+          </ng-container>
+          <ng-container *ngSwitchCase="1">
+            <ivo-select class="ok" [formControl]="order">
+              <ivo-option
+                value="0"
+                text="关键字匹配"
+                [selected]="true"
+              ></ivo-option>
+              <ivo-option value="1" text="最新发布"></ivo-option>
+              <ivo-option value="2" text="最多点赞"></ivo-option>
+              <!-- <ivo-option value='3' text='最多收藏'></ivo-option> -->
+            </ivo-select>
+            <ivo-select class="ok" [formControl]="time">
+              <ivo-option
+                value="0"
+                text="发售时间"
+                [selected]="true"
+              ></ivo-option>
+              <ivo-option value="-1" text="本日"></ivo-option>
+              <ivo-option value="-7" text="七日内"></ivo-option>
+              <ivo-option value="-30" text="一个月内"></ivo-option>
+              <ivo-option value="-90" text="三个月"></ivo-option>
+              <ivo-option value="-180" text="六个月"></ivo-option>
+              <ivo-option value="-360" text="一年"></ivo-option>
+            </ivo-select>
+          </ng-container>
+          <ng-container *ngSwitchCase="2">
+            <ivo-select class="ok" [formControl]="userOrder">
+              <ivo-option
+                value="0"
+                text="关键字匹配"
+                [selected]="true"
+              ></ivo-option>
+              <ivo-option value="1" text="最多粉丝"></ivo-option>
+            </ivo-select>
+            <ivo-select class="ok" [formControl]="userType">
+              <ivo-option value="-1" text="全部" [selected]="true"></ivo-option>
+              <!-- <ivo-option value="0" text="画师"></ivo-option>
+                            <ivo-option value="1" text="模型师"></ivo-option> -->
+              <!-- <ivo-option value="2" text="模型师"></ivo-option> -->
+            </ivo-select>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

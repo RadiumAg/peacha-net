@@ -1,0 +1,29 @@
+ <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="62" height="62" viewBox="0 0 62 62">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        filter: url(#Oval_2);
+      }
+    </style>
+    <filter id="Oval_2" x="0" y="0" width="62" height="62" filterUnits="userSpaceOnUse">
+      <feOffset dy="2" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feFlood flood-color="#bfbfbf" flood-opacity="0.502"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="组_2" data-name="组 2" transform="translate(387.5 647) rotate(180)">
+    <g id="滑动按钮_copy" data-name="滑动按钮 copy" transform="translate(331.5 593)">
+      <g class="cls-2" transform="matrix(-1, 0, 0, -1, 56, 54)">
+        <circle id="Oval_2-2" data-name="Oval 2" class="cls-1" cx="25" cy="25" r="25" transform="translate(56 54) rotate(180)"/>
+      </g>
+    </g>
+    <path id="路径_1" data-name="路径 1" d="M224.5,16.945A.746.746,0,0,1,223.445,18l-8.887-8.143a.863.863,0,0,1,0-1.132L223.445.582A.746.746,0,1,1,224.5,1.639l-8.35,7.653,8.35,7.653Zm0,0" transform="translate(136.556 608.644)"/>
+    <path id="路径_16" data-name="路径 16" d="M224.5,16.945A.746.746,0,0,1,223.445,18l-8.887-8.143a.863.863,0,0,1,0-1.132L223.445.582A.746.746,0,1,1,224.5,1.639l-8.35,7.653,8.35,7.653Zm0,0" transform="translate(136.556 608.644)"/>
+  </g>
+</svg>

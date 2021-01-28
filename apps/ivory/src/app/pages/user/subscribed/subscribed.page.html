@@ -1,0 +1,44 @@
+<div class="allSubscribed" *ngrxLet="pageUid$;let pageUid">
+    <li>
+        <a class="different" *ngIf="pageUid == (id$ | ngrxPush)">我</a>
+        <a class="different" *ngIf="pageUid != (id$ | ngrxPush)">Ta</a>
+        收藏的
+    </li>
+    <div class="list" *ngrxLet="subscribed$;let subscribed">
+        <li [routerLink]="['..',subscribed.id]" *ngFor="let subscribed of subscribed?.list">
+            <div class="normal">
+                <img [attr.src]="subscribed.cover">
+                <span class="name">{{subscribed.name}}</span>
+                <span class="name">
+                    <img src="/assets/image/svg/defalut-avatar.svg">
+                    {{subscribed.nickname}}
+                </span>
+                <span class="count">该合辑一共有{{subscribed.work_count}}个作品</span>
+                <span class="message">
+                    <a>
+                        <img src="assets/image/svg/thumbs-up.svg">
+                        {{subscribed.like_count |changeUnit}}
+                    </a>
+                    <a>
+                        <img src="assets/image/svg/subscribe.svg">
+                        {{subscribed.subscribe_count | changeUnit}}
+                    </a>
+                </span>
+            </div>
+
+            <div class="lose" *ngIf="subscribed.mark==1">
+                <div class="bg"></div>
+                <p>已失效合辑</p>
+                <button (click)="cancelSubscribe(subscribed.id)">取消订阅</button>
+            </div>
+        </li>
+        <ng-container *ngIf="subscribed.count > 0">
+            <div class="page" *ngrxLet="currentPage$;let currentPage">
+                <ivo-pagination [currentPage]="currentPage" [total]="subscribed?.count" [pageSize]="12"
+                    (onPageChange)="toPage($event)">
+                </ivo-pagination>
+            </div>
+        </ng-container>
+
+    </div>
+</div>

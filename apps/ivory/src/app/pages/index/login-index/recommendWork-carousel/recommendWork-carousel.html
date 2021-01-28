@@ -1,0 +1,23 @@
+<div class="all">
+    <div class="imgs">
+        <li [@workMove]="ImgState(0)">
+            <ivo-work-card *ngIf="workList[0]" [work]="workList[0]"></ivo-work-card>
+            <ivo-work-card *ngIf="workList[1]" [work]="workList[1]"></ivo-work-card>
+            <ivo-work-card *ngIf="workList[2]" [work]="workList[2]"></ivo-work-card>
+        </li>
+        <li [@workMove]="ImgState(1)">
+            <ivo-work-card *ngIf="workList[3]" [work]="workList[3]"></ivo-work-card>
+            <ivo-work-card *ngIf="workList[4]" [work]="workList[4]"></ivo-work-card>
+            <ivo-work-card *ngIf="workList[5]" [work]="workList[5]"></ivo-work-card>
+        </li>
+        <li [@workMove]="ImgState(2)">
+            <ivo-work-card *ngIf="workList[6]" [work]="workList[6]"></ivo-work-card>
+            <ivo-work-card *ngIf="workList[7]" [work]="workList[7]"></ivo-work-card>
+            <ivo-work-card *ngIf="workList[8]" [work]="workList[8]"></ivo-work-card>
+        </li>
+    </div>
+    <img *ngIf="current!=0 && workList.length>3 " class="btn-img left-btn"
+        src="/assets/image/index/recommend-btn-left.svg" (click)="Prev()">
+    <img *ngIf="current!=partNum-1  && workList.length>3" class="btn-img right-btn"
+        src="/assets/image/index/recommend-btn-right.svg" (click)="Next()">
+</div>

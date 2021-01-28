@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="229" height="68" viewBox="0 0 229 68">
+  <defs>
+    <filter id="路径_264" x="0" y="0" width="229" height="68" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-color="#ff2929" flood-opacity="0.549"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#路径_264)">
+    <path id="路径_264-2" data-name="路径 264" d="M5,0H201c2.544,0,5,1.595,5,3.061v44.9c0,1.466-2.456,2.041-5,2.041H5c-2.544,0-4-.574-4-2.041V5.1L-5,0Z" transform="translate(14 9)" fill="#fff"/>
+  </g>
+</svg>

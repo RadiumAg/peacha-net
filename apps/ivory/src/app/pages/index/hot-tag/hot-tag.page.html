@@ -1,0 +1,24 @@
+<div class="all">
+    <ng-container *ngrxLet="hotTags$;let hotTags">
+        <div class="tags">
+            <ivo-tags [tags]="hotTags?.list"></ivo-tags>
+        </div>
+    </ng-container>
+    <ng-container *ngrxLet="works$;let works">
+        <li class="tag-title" *ngrxLet="tagName$;let tagName">
+            #&nbsp;{{tagName}}
+            <span>共有{{works.count}}个作品</span>
+        </li>
+        <div class="works">
+            <ng-container *ngFor="let work of works.list">
+                <ivo-work-card [work]="work"></ivo-work-card>
+            </ng-container>
+        </div>
+        <ng-container *ngIf="works?.count>20">
+            <div class="page" *ngrxLet="pageWorks$;let pageWorks">
+                <ivo-pagination [currentPage]="pageWorks" [total]="works.count" [pageSize]="20"
+                    (onPageChange)="toPagePublic($event)"></ivo-pagination>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>

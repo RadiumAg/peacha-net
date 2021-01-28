@@ -1,0 +1,159 @@
+<div class="all">
+    <div class="cart">
+        <ng-container *ngrxLet="checkArr$;let checkArr">
+            <ng-container *ngrxLet="validGoods$;let validGoods">
+                <div class="can">
+                    <h1>
+                        <img src="/assets/image/navbar/cart.svg" />
+                        购物车
+                    </h1>
+                    <ng-container *ngIf="validGoods.length >0 ;else kong">
+                        <div class="every" *ngFor="let good of validGoods">
+                            <div class="checkbox-group">
+                                <!-- <img class="join" *ngIf="checkArr.has(good.goodid)" (click)="checkOne(good.goodid)"
+                                    src="/assets/image/svg/i-tick.svg"> -->
+                                <input
+                                    type="checkbox"
+                                    [ngClass]="{'isChecked':checkArr.has(good.goodid)}"
+                                    (click)="checkOne(good.goodid)"
+                                />
+                            </div>
+                            <div>
+                                <ivo-lazy-img
+                                    [ngLazyLoad]="good.cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'"
+                                    (click)="toWork(good.workid)"
+                                >
+                                </ivo-lazy-img>
+
+                                <div class="main-info">
+                                    <div>
+                                        <li class="left">
+                                            <span
+                                                class="name"
+                                                (click)="toWork(good.workid)"
+                                                >{{good.work_name}}</span
+                                            >
+                                            <!-- 2020/11/4
+                                            去掉商品名称
+                                            by kinori -->
+                                            <!-- <span class="goodname"
+                                                (click)="toWork(good.workid)">商品名称:&nbsp;&nbsp;{{good.goods_name}}</span> -->
+                                            <span
+                                                class="author"
+                                                [routerLink]="['/user',good.seller_id]"
+                                                >卖家:&nbsp;&nbsp;{{good.seller_name}}</span
+                                            >
+                                            <span
+                                                class="type"
+                                                *ngIf="good.maxstock==1;else otherWay"
+                                                >单次出售</span
+                                            >
+                                            <ng-template #otherWay>
+                                                <span class="type"
+                                                    >多次出售</span
+                                                >
+                                            </ng-template>
+                                        </li>
+                                    </div>
+                                    <li class="right">
+                                        <span
+                                            class="cat"
+                                            (click)="deleteOne(good.goodid)"
+                                        >
+                                            删除
+                                            <!--<img (click)="deleteOne(good.goodid)"
+                                            src="/assets/image/cart/delete.svg">-->
+                                        </span>
+
+                                        <span class="price"
+                                            >价格:<a
+                                                >¥{{good.price |
+                                                number:'1.2-2'}}</a
+                                            ></span
+                                        >
+                                    </li>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="operate">
+                            <li class="op-left">
+                                <span (click)="allCheck(validGoods)">
+                                    <input
+                                        type="checkbox"
+                                        [ngClass]="{'isChecked':validGoods.length === checkArr.size && checkArr.size !=0}"
+                                    />
+                                    <!-- <img *ngIf="validGoods.length === checkArr.size && checkArr.size !=0"
+                                        src="/assets/image/svg/i-tick.svg"> -->
+                                    <span> 全选 </span>
+                                </span>
+
+                                <a (click)="deleteAll()">删除</a>
+                            </li>
+                            <li class="op-right">
+                                <span class="count"
+                                    >已选商品<a>{{checkArr.size}}</a>件</span
+                                >
+                                <span class="total">
+                                    合计:
+                                    <a
+                                        >¥{{ total$ | ngrxPush |
+                                        number:'1.2-2'}}</a
+                                    ></span
+                                >
+                                <button ivo-button (click)="toOrder()">
+                                    结算
+                                </button>
+                            </li>
+                        </div>
+                    </ng-container>
+                    <ng-template #kong>
+                        <div class="kong">
+                            <img src="/assets/image/cart-empty.png" />
+                        </div>
+                    </ng-template>
+                </div>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngrxLet="invalidGoods$;let invalidGoods">
+            <div class="cannot" *ngIf="invalidGoods.length >0">
+                <li class="cannot-count">
+                    <a>失效商品</a>
+                    <a (click)="deleteUnable(invalidGoods)">清空失效商品</a>
+                </li>
+                <div class="every" *ngFor="let good of invalidGoods">
+                    <a class="unabled">已失效</a>
+                    <div>
+                        <ivo-lazy-img
+                            [ngLazyLoad]="good.cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'"
+                        >
+                        </ivo-lazy-img>
+                        <div class="main-info">
+                            <!-- <span class="zhe"></span> -->
+                            <div>
+                                <li class="left">
+                                    <span class="name g"
+                                        >{{good.work_name}}</span
+                                    >
+                                    <span class="goodname g"
+                                        >商品名称：{{good.goods_name}}</span
+                                    >
+                                    <span class="author g"
+                                        >作者:{{good.seller_name}}</span
+                                    >
+                                </li>
+                            </div>
+
+                            <li class="right">
+                                <span class="cat"
+                                    ><span (click)="deleteOne(good.goodid)"
+                                        >删除</span
+                                    ></span
+                                >
+                            </li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

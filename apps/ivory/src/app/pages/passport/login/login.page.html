@@ -1,0 +1,59 @@
+<div class="login">
+    <div class="logo">
+        <img src="/assets/image/svg/i-logo.svg">
+    </div>
+    <form class="passport" [formGroup]="loginForm">
+        <div class="form-control">
+            <label>
+                账号：
+            </label>
+            <div class="input-control">
+                <input class="input-top" formControlName="account" placeholder="请输入邮箱或手机号" autocomplete="username" (click)="changeValue()">
+                <div class="error-inset" [errorDisplay]="account">
+                    <ng-container *errorCase="'required'">
+                        账号不能为空
+                    </ng-container>
+                    <ng-container *errorCase="'account_locked'">
+                        账号已被锁定
+                    </ng-container>
+                    <ng-container *errorCase="'user_not_exist'">
+                        账号不存在，请输入正确的账号
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="form-control">
+            <label>
+                密码：
+            </label>
+            <div class="input-control">
+                <input class="input-top" formControlName="password" placeholder="请输入密码" type="password" autocomplete="current-password">
+                <div class="error-inset" [errorDisplay]="password">
+                    <ng-container *errorCase="'required'">
+                        密码不能为空
+                    </ng-container>
+                    <ng-container *errorCase="'wrong_password'">
+                        密码错误
+                    </ng-container>
+                    <ng-container *errorCase="'minlength'">
+                        密码位数过短，至少输入八位
+                    </ng-container>
+                    <ng-container *errorCase="'maxlength'">
+                        密码位数过长，最多输入十六位
+                    </ng-container>
+                    <ng-container *errorCase="'pattern'">
+                        密码格式错误
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="form-control" style="height:30px;text-align: left;width: 78%;">
+            <label nz-checkbox>记住我</label>
+        </div>
+        <button ivo-button type="submit" (click)="login($event)">登录</button>
+        <div class="form-actions">
+            <a [routerLink]="['..','register']" queryParamsHandling="preserve" >注册</a>
+            <a class="right" [routerLink]="['..','forget_password']" [queryParams]="{type:1}" queryParamsHandling="preserve" >忘记密码？</a>
+        </div>
+    </form>
+</div>

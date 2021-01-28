@@ -1,0 +1,143 @@
+<!-- <ng-container>
+    <div class="created" *ngrxLet="pageUid$;let pageUid">
+        <div class="shifou" *ngIf="(collection$ | ngrxPush);let collection">
+            <li class="title">
+                <a class="different" *ngIf="pageUid == (id$ | ngrxPush)">我</a>
+                <a class="different" *ngIf="pageUid != (id$ | ngrxPush)">{{collection.create_user}}</a>
+                <a *ngIf="collection.create_user_id == pageUid">创建的 &gt;</a>
+                <a *ngIf="collection.create_user_id != pageUid">收藏的 &gt;</a>
+                {{collection.name}}
+            </li>
+            <div class="content">
+                <img [attr.src]="collection.cover">
+                <div class="font-content">
+                    <input class="name" value="{{collection.name}}" [attr.disabled]="isChange"
+                        (blur)="changeName(input)" #input>
+                    <a (click)="toChange(input)"
+                        [ngStyle]="{'display':collection.create_user == (nickname$ | ngrxPush)?'inline-block':'none'}">
+                        <img src="/assets/image/svg/edit.svg">
+                    </a>
+                    <span #cdkOverlayOrigin>{{collection.work_count}}个内容</span>
+                    <span>创建者：{{collection.create_user}}</span>
+                    <span>创建时间：{{collection.createtime | date:'yyyy-MM-dd'}}</span>
+                </div>
+                <div class="icon-content">
+                    <div class="edit">
+                        <li *ngIf="collection.create_user == (nickname$ | ngrxPush);else other1">
+                            <span (click)="show(boardOne)" #edit>
+                                <img src="/assets/image/svg/setting.svg"> 操作
+                            </span>
+                        </li>
+                        <ng-template #other1>
+                            <li>
+                                <span (click)="show(boardTwo)" #edit>
+                                    <img src="/assets/image/svg/dots.svg">
+                                </span>
+                            </li>
+                        </ng-template>
+                    </div>
+                    <div class="show">
+                        <li>
+                            <span class="quan" [ngClass]="{'active': collection.view_state==0?true:false}"
+                                (click)="open()"></span>
+                            公开
+                        </li>
+                        <li>
+                            <span class="quan" [ngClass]="{'active': collection.view_state==1?true:false}"
+                                (click)="close()"></span>
+                            私密
+                        </li>
+                    </div>
+                    <div class="icon">
+                        <span (click)="like()">
+                            <img *ngIf="collection.is_like==0;else other " src="/assets/image/svg/thumbs-up.svg">
+                            <ng-template #other>
+                                <img src="/assets/image/svg/thumbs-up copy.svg">
+                            </ng-template>
+                            {{collection.like_count |changeUnit}}
+                        </span>
+                        <span (click)="collect()">
+                            <img *ngIf="collection.is_collect==0;else collectOther"
+                                src="/assets/image/svg/subscribe.svg">
+                            <ng-template #collectOther>
+                                <img src="/assets/image/svg/subscribe copy.svg">
+                            </ng-template>
+                            {{collection.subcribe_count | changeUnit}}
+                        </span>
+                        <span (click)="share()">
+                            <img src="/assets/image/svg/share.svg">
+                            {{collection.share_count | changeUnit}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="work" *ngrxLet="work$;let works">
+            <ng-container *ngrxLet="show$;let show">
+                <ng-container *ngrxLet="selected$;let selected">
+                    <div class="show-edit" *ngIf="show">
+                        <span class="checkbox">
+                            <input id="allCheck" type="checkbox" (click)="checkedAll(works)"
+                                [checked]="works.list.length==selected.size">
+                            全选
+                        </span>
+                        <span class="cancel" (click)="deleteWork()">取消收藏</span>
+                        <span class="back" (click)="back()">返回</span>
+                    </div>
+                    <li *ngFor="let work of works?.list;let i = index">
+                        <span class="img-cover" *ngIf="show">
+                            <div class="cover"></div>
+                            <a class="check" (click)="checkedWork(work.id)">
+                                <img class="unchecked" *ngIf=" !selected.has(work.id);else selectedOther"
+                                    src="assets/image/svg/unchecked.svg">
+                                <ng-template #selectedOther>
+                                    <img class="checked" src="assets/image/svg/checked.svg">
+                                </ng-template>
+                            </a>
+                        </span>
+                        <div class="show-work" (click)="toWork(work.id)">
+                            <a class="commodity" *ngIf="work.state==1">
+                                <img src="assets/image/svg/commodity.svg">
+                            </a>
+                            <img [attr.src]="work.cover">
+                            <span class="type" *ngIf="work.type==0">live2D</span>
+                            <span class="type" *ngIf="work.type==1">原画</span>
+                            <span class="name">{{work.name}}</span>
+                            <span class="message">
+                                <a>
+                                    <img src="/assets/image/svg/thumbs-up.svg">
+                                    {{work.like_count}}
+                                </a>
+                                <a>
+                                    <img src="/assets/image/svg/collect.svg">
+                                    {{work.collect_count}}
+                                </a>
+                            </span>
+                        </div>
+
+                    </li>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="works?.count >0">
+                <div class="page">
+                    <ivo-pagination [currentPage] [total]="works?.count" [pageSize]="15" (onPageChange)="toPage($event)">
+                    </ivo-pagination>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</ng-container>
+
+
+<ng-template #boardOne>
+    <div class="hello">
+        <li (click)="deleteTip()">删除合辑</li>
+        <li (click)="batchUpdate()">批量操作</li>
+    </div>
+</ng-template>
+<ng-template #boardTwo>
+    <div class="hello">
+        <li (click)="toComplain()">投诉合辑</li>
+    </div>
+</ng-template> -->

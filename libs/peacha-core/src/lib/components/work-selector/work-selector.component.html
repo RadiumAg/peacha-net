@@ -1,0 +1,26 @@
+<div class="top">
+    <p>选择作品</p>
+</div>
+<div class="center" *ngrxLet="works$;let works">
+    <div class="search">
+        <img src="/assets/image/svg/search.svg">
+        <input #key placeholder="搜索作品名称" (keyup.enter)="search(key.value)">
+    </div>
+    <div class="back">
+        <div class="list" cdkScrollable >
+            <div class="work-card" *ngFor="let work of works.list" (click)="select(work)">
+                <img [src]="work.cover">
+                <div class="work-info">
+                    <p class="name">{{work.name}}</p>
+                    <p class="time">{{work.publishtime | date:'yyyy-MM-dd'}}</p>
+                </div>
+            </div>
+            <div class="empty" *ngIf="works.list.length ==0 ">
+                啊咧，什么都没有搜索到的说
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bottom">
+    <button class="cancel" (click)="close()">取消</button>
+</div>

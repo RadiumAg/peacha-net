@@ -1,0 +1,55 @@
+<form [formGroup]="detailsForm" (ngSubmit)="appendProfile()" *ngrxLet="user$;let user">
+    <h2>个人信息完善</h2>
+    <div class="form-control">
+        <label >
+            头像：
+        </label>
+        <crop-image class="crop" formControlName="avatar" [imgUrl]="user.avatar"></crop-image>
+    </div>
+    
+    <div class="form-control">
+        <label>
+            昵称：
+        </label>
+        <input formControlName="nickname"
+        >
+        <div [errorDisplay]="nickname">
+            <ng-container *errorCase="'myPattern'">
+                昵称不允许使用特殊字符哦！
+            </ng-container>
+            <ng-container *errorCase="'maxlength'">
+                昵称长度不得大于20个字符
+            </ng-container>
+            <ng-container *errorCase="'required'">
+                昵称必填哦！ 
+            </ng-container>
+            <ng-container *errorCase="'minlength'">
+                昵称长度不得小于2个字符 
+            </ng-container>
+            <ng-container *errorCase="'second'">
+                昵称重复
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="form-control">
+        <label>
+            个人简介：
+        </label>
+        <textarea formControlName="description" rows="4" cols="60"
+        [value]="user.description"
+        ></textarea>
+        <div [errorDisplay]="description">
+            <ng-container *errorCase="'maxlength'">
+                自我介绍有点长哦
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="form-check">
+        <a (click)="goBack()">跳过</a>
+        <!-- <button #save [attr.disabled]="isDisabled">保存</button> -->
+        <button #save ivo-button>保存</button>
+    </div>
+
+</form>

@@ -1,0 +1,54 @@
+<div class="box">
+    <li class="title">
+        <img src="/assets/image/commission/red-flag.svg">
+        企划{{title}}
+    </li>
+    <li class="item top">
+        请告知对方{{title}}理由。
+    </li>
+    <li class="item" *ngIf="text.type===2">
+        若发起无理由驳回或恶意驳回，对方可申请平台介入，限制驳回次数。
+    </li>
+    <li class="item bottom">
+        <span class="name">
+            <!-- <span class="must">*</span> -->
+            {{title}}理由：
+        </span>
+        <textarea placeholder="请输入理由" [formControl]="reason"></textarea>
+
+    </li>
+    <div class="error-inset" [errorDisplay]="reason">
+        <ng-container *errorCase="'required'">
+            理由是必填项
+        </ng-container>
+    </div>
+    <li class="item bottom">
+        <span class="name">附加图片：
+
+        </span>
+        <div class="op-box">
+    <li class="op-btn">
+        <button uploadImage #u='uploadimage' (click)="input.click()" (result)="result($event)"><img
+                src="/assets/image/commission/upload.svg">上传</button>
+        <input type="file" hidden (change)="upload($event.target.files[0],input,u)" #input>
+        <span class="tip">最多上传4张图片，每张图片大小不得超过4M</span>
+    </li>
+    <li class="show-box">
+        <span *ngFor="let image of images;let i=index">
+            <img class="show-pic" [src]="image?.url" (click)="showDetail(image.url)">
+            <img class="delete" (click)="delete(i)" src="/assets/image/commission/delete.svg">
+
+        </span>
+        <span *ngIf="isShowReportProgress">
+            进度（{{p}}）
+        </span>
+    </li>
+
+</div>
+
+</li>
+<div class="btn">
+    <button ivo-button [buttonType]="1" (click)="cancel()">取消</button>
+    <button ivo-button (click)="sure()">确定</button>
+</div>
+</div>

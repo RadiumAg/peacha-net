@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="118" height="282" viewBox="0 0 118 282">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ff778f;
+      }
+    </style>
+  </defs>
+  <g id="侧边装饰_左_" data-name="侧边装饰（左）" transform="translate(-0.5)">
+    <path id="Path_3" data-name="Path 3" class="cls-1" d="M.5,0V49l118,70V69Z"/>
+    <path id="Path_3_Copy" data-name="Path 3 Copy" class="cls-1" d="M.5,0V49l118,70V69Z" transform="translate(0 83)"/>
+    <path id="Path_3_Copy_2" data-name="Path 3 Copy 2" class="cls-1" d="M.5,0V49l118,70V69Z" transform="translate(0 163)"/>
+  </g>
+</svg>

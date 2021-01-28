@@ -1,0 +1,58 @@
+<div class="all">
+    <div class="left" (click)="toWork(item?.id,type)" #dd>
+        <img [attr.src]="item?.cover">
+        <span class="detail">
+            <span class="name">{{item?.name}}</span>
+            <!-- <span class="count" *ngIf="item?.count>0;else wo">包含{{item?.count}}个商品</span> -->
+            <ng-template #wo>
+                <span class="count"></span>
+            </ng-template>
+            <span class="time" [ngSwitch]="state">
+                <!-- 审核中&审核失败列表中，发布时间应改为提交时间
+                2020/11/4
+                kinori -->
+                <ng-container *ngSwitchCase="3">
+                    提交时间：{{item.audittime|date:'yyyy/MM/dd HH:mm'}}
+                </ng-container>
+                <ng-container *ngSwitchCase="1">
+                    发布时间： {{item?.publishtime|date:'yyyy/MM/dd HH:mm'}}
+                </ng-container>
+                <ng-container *ngSwitchCase="2">
+                    提交时间： {{item?.submittime|date:'yyyy/MM/dd HH:mm'}}
+                </ng-container>
+            </span>
+        </span>
+    </div>
+    <div class="right">
+        <ng-container [ngSwitch]="state">
+            <ng-container *ngSwitchCase="1">
+                <span class="jj" (click)="open(aa,success)"><img src="/assets/image/member/set.svg" #aa>管理</span>
+                <span class="kk" *ngIf="item?.time>0">公示期剩余时间：{{item?.time|timerdate}}</span>
+            </ng-container>
+            <ng-container *ngSwitchCase="3">
+                <span class="jj" (click)="open(bb,fail)"><img src="/assets/image/member/set.svg" #bb>管理</span>
+                <span class="kk"> 拒绝理由：{{item?.auditresult}}</span>
+            </ng-container>
+
+            <span class="qq" *ngSwitchCase="2" (click)="cancel(item?.id)"><img
+                    src="/assets/image/member/cancel.svg">撤销审核</span>
+        </ng-container>
+
+
+    </div>
+</div>
+
+<ng-template #success>
+    <div class="overlay">
+        <span (click)="edit(item?.id)">编辑</span>
+        <span *ngIf="item.price>0" (click)="manager(item?.id,item?.publishtime)">商品管理</span>
+        <span (click)="deleteWork(item?.id)">删除</span>
+    </div>
+</ng-template>
+
+<ng-template #fail>
+    <div class="overlay">
+        <span (click)="edit(item?.id)">再次编辑</span>
+        <span (click)="deleteApply(item?.id)">删除申请</span>
+    </div>
+</ng-template>

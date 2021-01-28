@@ -1,0 +1,7 @@
+<div class="input-group">
+    <img [attr.src]="avatar$|ngrxPush">
+    <textarea #text placeholder="请开始你的表演"></textarea>
+</div>
+<div class="send">
+    <button (click)="send()">发表评论</button>
+</div>
