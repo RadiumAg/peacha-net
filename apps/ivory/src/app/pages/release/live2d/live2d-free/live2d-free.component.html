@@ -1,133 +1,199 @@
 <div class="live2d-free-container form">
-    <form [formGroup]="form">
-        <div class="form-item">
-            <div class="title">
-                发布作品
-            </div>
-        </div>
+	<form [formGroup]="form">
+		<div class="form-item">
+			<div class="title">发布作品</div>
+		</div>
 
-        <div class="form-item">
-            <div class="title">
-                作品信息
-            </div>
-            <div class="form-controller">
-                <div class="title required">
-                    作品标题
-                    <span class="word-count">{{title.value.length}}/20</span>
-                </div>
-                <input ivoErroTip ivoErrorTipString='请输入标题!' ivoFormNav formControlName="n" class="input" maxlength="20"
-                    placeholder="请输入作品标题" data-control-index='0' #title />
-            </div>
-            <div class="form-controller">
-                <div class="title required">
-                    作品简介
-                    <span class="word-count">{{des.value.length}}/1000</span>
-                </div>
-                <textarea ivoErroTip ivoErrorTipString='请输入作品简介!' formControlName="d" class="textarea" maxlength="1000"
-                    rows="4" placeholder="请输入作品简介…&#10;&#10;" ivoFormNav data-control-index='0' #des>
-                </textarea>
-            </div>
+		<div class="form-item">
+			<div class="title">作品信息</div>
+			<div class="form-controller">
+				<div class="title required">
+					作品标题
+					<span class="word-count">{{ title.value.length }}/20</span>
+				</div>
+				<input
+					ivoErroTip
+					ivoErrorTipString="请输入标题!"
+					ivoFormNav
+					formControlName="n"
+					class="input"
+					maxlength="20"
+					placeholder="请输入作品标题"
+					data-control-index="0"
+					#title
+				/>
+			</div>
+			<div class="form-controller">
+				<div class="title required">
+					作品简介
+					<span class="word-count">{{ des.value.length }}/1000</span>
+				</div>
+				<textarea
+					ivoErroTip
+					ivoErrorTipString="请输入作品简介!"
+					formControlName="d"
+					class="textarea"
+					maxlength="1000"
+					rows="4"
+					placeholder="请输入作品简介…&#10;&#10;"
+					ivoFormNav
+					data-control-index="0"
+					#des
+				>
+				</textarea>
+			</div>
+		</div>
 
-        </div>
+		<div class="form-item">
+			<div class="title" [ivoNoticeTitle]="'标签能让更多小伙伴看到你的作品(最多输入5个)'">标签</div>
+			<div class="form-controller">
+				<ivo-tag-input formControlName="t" ivoFormNav data-control-index="1"></ivo-tag-input>
+			</div>
+		</div>
 
-        <div class="form-item">
-            <div class="title" [ivoNoticeTitle]='"标签能让更多小伙伴看到你的作品(最多输入5个)"'>
-                标签
-            </div>
-            <div class="form-controller">
-                <ivo-tag-input formControlName="t" ivoFormNav data-control-index='1'></ivo-tag-input>
-            </div>
-        </div>
+		<div class="form-item">
+			<div class="title" [ivoNoticeTitle]="'上传封面图片大小5M以下'">上传封面</div>
+			<div class="form-controller required">
+				<ivo-thumbnail-upload
+					maxSize="5242880"
+					formControlName="b"
+					ivoErroTip
+					ivoErrorTipString="请上传封面!"
+					ivoFormNav
+					data-control-index="2"
+				>
+				</ivo-thumbnail-upload>
+			</div>
+		</div>
 
-        <div class="form-item">
-            <div class="title" [ivoNoticeTitle]='"上传封面图片大小5M以下"'>
-                上传封面
-            </div>
-            <div class="form-controller required">
-                <ivo-thumbnail-upload maxSize='5242880' formControlName="b" ivoErroTip ivoErrorTipString='请上传封面!'
-                    ivoFormNav data-control-index='2'>
-                </ivo-thumbnail-upload>
-            </div>
-        </div>
+		<div class="form-item">
+			<div
+				class="title"
+				[ivoNoticeTitle]="
+					'请将所有的模型文件压缩成zip格式文件上传，请不要将文件放在文件夹中，以免出现加载错误，或使用指南内方式直接导出ZIP文件'
+				"
+			>
+				添加Live2D模型
+				<span class="download" (click)="openPDF('/assets/download_files/ZIP文件准备指南.pdf')">ZIP文件准备指南</span>
+			</div>
+			<div class="form-controller">
+				<ivo-live2d-upload
+					formControlName="g"
+					ivoErroTip
+					ivoErrorTipString="请添加Live2D模型!"
+					ivoFormNav
+					data-control-index="3"
+					(transformDataUpdate)="onTransformDataUpdate($event)"
+				></ivo-live2d-upload>
+			</div>
+			<div class="form-controller">
+				<form [formGroup]="checkedForm">
+					<nz-checkbox-wrapper (nzOnChange)="modalSet($event)">
+						<div nz-col>
+							<div>
+								<label
+									nz-checkbox
+									nzValue="0"
+									[nzDisabled]="modelCheckedSet"
+									ivoFormNav
+									data-control-index="3"
+									formControlName="enableFaceTrackerChecked"
+									>在预览页面启用面部捕捉</label
+								>
+							</div>
+							<div>
+								<label
+									nz-checkbox
+									nzValue="1"
+									[nzDisabled]="modelCheckedSet"
+									ivoFormNav
+									data-control-index="3"
+									formControlName="enableSettingPanelChecked"
+									>在预览页面显示模型参数</label
+								>
+							</div>
+							<div>
+								<label
+									nz-checkbox
+									nzValue="2"
+									[nzDisabled]="modelCheckedSet"
+									ivoFormNav
+									(ngModelChange)="onFreeModelDownloadChanged($event)"
+									data-control-index="3"
+									formControlName="freeModelDownLoadChecked"
+									>免费提供该模型文件下载</label
+								>
+							</div>
+						</div>
+					</nz-checkbox-wrapper>
+				</form>
+			</div>
+		</div>
 
-        <div class="form-item">
-            <div class="title" [ivoNoticeTitle]="'请将所有的模型文件压缩成zip格式文件上传，请不要将文件放在文件夹中，以免出现加载错误，或使用指南内方式直接导出ZIP文件'">
-                添加Live2D模型
-                <span class="download" (click)="openPDF('/assets/download_files/ZIP文件准备指南.pdf')">ZIP文件准备指南</span>
-            </div>
-            <div class="form-controller">
-                <ivo-live2d-upload formControlName="g" ivoErroTip ivoErrorTipString='请添加Live2D模型!' ivoFormNav
-                    data-control-index='3' (transformDataUpdate)="onTransformDataUpdate($event)"></ivo-live2d-upload>
-            </div>
-            <div class="form-controller">
-                <form [formGroup]="checkedForm">
-                    <nz-checkbox-wrapper (nzOnChange)="modalSet($event)">
-                        <div nz-col>
-                            <div><label nz-checkbox nzValue="0" [nzDisabled]="modelCheckedSet" ivoFormNav
-                                    data-control-index='3'
-                                    formControlName="enableFaceTrackerChecked">在预览页面启用面部捕捉</label></div>
-                            <div><label nz-checkbox nzValue="1" [nzDisabled]="modelCheckedSet" ivoFormNav
-                                    data-control-index='3'
-                                    formControlName="enableSettingPanelChecked">在预览页面显示模型参数</label></div>
-                            <div><label nz-checkbox nzValue="2" [nzDisabled]="modelCheckedSet" ivoFormNav
-                                    (ngModelChange)="onFreeModelDownloadChanged($event)" data-control-index='3'
-                                    formControlName="freeModelDownLoadChecked">免费提供该模型文件下载</label></div>
-                        </div>
-                    </nz-checkbox-wrapper>
-                </form>
-            </div>
-        </div>
+		<div class="form-item">
+			<div class="title">版权声明</div>
+			<div class="form-controller">
+				<nz-radio-group
+					(ngModelChange)="changeCopyrightState($event)"
+					formControlName="c"
+					ivoFormNav
+					data-control-index="4"
+					ivoErroTip
+					ivoErrorTipString="请选择版权声明!"
+				>
+					<label nz-radio [nzValue]="0" [nzDisabled]="isEdit">此作品为原创作品</label>
+					<label nz-radio [nzValue]="1" [nzDisabled]="isEdit">此作品为同人作品</label>
+				</nz-radio-group>
+				<form [formGroup]="checkedForm">
+					<nz-checkbox-wrapper (nzOnChange)="changeCopyright($event)">
+						<div nz-col>
+							<ng-container *ngFor="let item of copyrightCheckes$ | async; let i = index">
+								<div>
+									<label
+										nz-checkbox
+										[nzValue]="item['id']"
+										(click)="(copyright.click)"
+										formControlName="copychecked"
+										[nzChecked]="copyrightModel.includes(item['id'])"
+										[nzDisabled]="isEdit || stateMentStates[i]"
+										>{{ item['name'] }}</label
+									>
+								</div>
+							</ng-container>
+							<input type="hidden" formControlName="copyright" #copyright ivoFormNav data-control-index="4" />
+						</div>
+					</nz-checkbox-wrapper>
+				</form>
+			</div>
+		</div>
 
-        <div class="form-item">
-            <div class="title">
-                版权声明
-            </div>
-            <div class="form-controller">
-                <nz-radio-group (ngModelChange)="changeCopyrightState($event)" formControlName="c" ivoFormNav
-                    data-control-index='4' ivoErroTip ivoErrorTipString='请选择版权声明!'>
-                    <label nz-radio [nzValue]="0" [nzDisabled]="isEdit">此作品为原创作品</label>
-                    <label nz-radio [nzValue]="1" [nzDisabled]="isEdit">此作品为同人作品</label>
-                </nz-radio-group>
-                <form [formGroup]="checkedForm">
-                    <nz-checkbox-wrapper (nzOnChange)="changeCopyright($event)">
-                        <div nz-col>
-                            <ng-container *ngFor="let item of (copyrightCheckes$|async);let i = index;">
-                                <div><label nz-checkbox [nzValue]="item['id']" (click)='copyright.click'
-                                        formControlName="copychecked" [nzChecked]="copyrightModel.includes(item['id'])"
-                                        [nzDisabled]="isEdit ||stateMentStates[i]">{{item['name']}}</label>
-                                </div>
-                            </ng-container>
-                            <input type="hidden" formControlName='copyright' #copyright ivoFormNav
-                                data-control-index='4'>
-                        </div>
-                    </nz-checkbox-wrapper>
-                </form>
-            </div>
-        </div>
+		<nz-form-item>
+			<nz-form-control>
+				<nz-checkbox-wrapper>
+					<nz-row
+						class="releaseNotice"
+						[ivoNoticeTitle]="
+							'为维护网站环境，请严格遵守Peacha.net创作者公约。严禁盗用他人作品，或上传涉及描摹、临摹、抄袭等行为。'
+						"
+					></nz-row>
+					<nz-row class="readme">
+						<label nz-checkbox formControlName="checked" ivoErroTip ivoErrorTipString="请勾选作品上传协议!">
+							我已阅读且同意
+						</label>
+						<a target="_blank" href="/useragreement">《Peacha用户协议》</a>
+						和
+						<a class="convention" href="/convention" target="_blank">《Peacha.net创作者公约》</a>
+					</nz-row>
+				</nz-checkbox-wrapper>
+			</nz-form-control>
+		</nz-form-item>
 
-        <nz-form-item>
-            <nz-form-control>
-                <nz-checkbox-wrapper>
-                    <nz-row class="releaseNotice"
-                    [ivoNoticeTitle]="'为维护网站环境，请严格遵守Peacha.net创作者公约。严禁盗用他人作品，或上传涉及描摹、临摹、抄袭等行为。'"></nz-row>
-                    <nz-row class="readme">
-                        <label nz-checkbox formControlName="checked" ivoErroTip ivoErrorTipString='请勾选作品上传协议!'>
-                            我已阅读且同意
-                        </label>
-                        <a target="_blank" href="/useragreement">《Peacha用户协议》</a>
-                        和
-                        <a class="convention" href="/convention" target="_blank">《Peacha.net创作者公约》</a>
-                    </nz-row>
-                </nz-checkbox-wrapper>
-            </nz-form-control>
-        </nz-form-item>
+		<nz-form-item>
+			<nz-form-control>
+				<input ivo-button type="button" value="提交" #submitButton />
+			</nz-form-control>
+		</nz-form-item>
+	</form>
 
-        <nz-form-item>
-            <nz-form-control>
-                <input ivo-button type="button" value="提交" #submitButton />
-            </nz-form-control>
-        </nz-form-item>
-    </form>
-
-    <!-- <ivo-form-nav class="nav" top='23' [titleList]='["作品信息","添加标签","上传封面","添加Live2D模型","版权声明"]'></ivo-form-nav> -->
+	<!-- <ivo-form-nav class="nav" top='23' [titleList]='["作品信息","添加标签","上传封面","添加Live2D模型","版权声明"]'></ivo-form-nav> -->
 </div>

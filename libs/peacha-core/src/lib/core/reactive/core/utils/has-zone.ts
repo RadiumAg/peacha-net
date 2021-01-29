@@ -14,5 +14,5 @@ import { NgZone } from '@angular/core';
  * ```
  */
 export function hasZone(z: NgZone): boolean {
-  return z instanceof NgZone;
+	return z instanceof NgZone;
 }

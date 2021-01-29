@@ -1,9 +1,9 @@
 <div class="live2d-box">
-    <canvas #canvas></canvas>
-    <div class="live2d-error" *ngIf="error$|async">
-        <img src="/assets/image/error.png">
-    </div>
-    <div class="live2d-loading" *ngIf="loading$|async">
-        <img src="/assets/image/loading.gif">
-    </div>
+	<canvas #canvas></canvas>
+	<div class="live2d-error" *ngIf="error$ | async">
+		<img src="/assets/image/error.png" />
+	</div>
+	<div class="live2d-loading" *ngIf="loading$ | async">
+		<img src="/assets/image/loading.gif" />
+	</div>
 </div>

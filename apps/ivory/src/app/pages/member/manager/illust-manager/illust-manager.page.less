@@ -1,50 +1,49 @@
 .all {
-    width: 100%;
+	width: 100%;
 
-    &>.top {
-        display: flex;
-        justify-content: space-between;
+	& > .top {
+		display: flex;
+		justify-content: space-between;
 
-        &>.choice {
-            height: 55px;
+		& > .choice {
+			height: 55px;
 
-            &>span {
-                color: #999999;
-                margin-right: 30px;
-                font-size: 16px;
-                cursor: pointer;
-                outline: none;
-            }
+			& > span {
+				color: #999999;
+				margin-right: 30px;
+				font-size: 16px;
+				cursor: pointer;
+				outline: none;
+			}
 
-            &>.active {
-                color: #FF6398;
-                font-weight: bold;
-            }
-        }
+			& > .active {
+				color: #ff6398;
+				font-weight: bold;
+			}
+		}
 
-        &>.search {
+		& > .search {
+			& > input {
+				position: relative;
+				width: 250px;
+				height: 30px;
+				line-height: 30px;
+				border: 1px solid #f0f0f0;
+				border-radius: 20px;
+				text-indent: 30px;
+				outline: none;
+				color: #999999;
+			}
 
-            &>input {
-                position: relative;
-                width: 250px;
-                height: 30px;
-                line-height: 30px;
-                border: 1px solid #f0f0f0;
-                border-radius: 20px;
-                text-indent: 30px;
-                outline: none;
-                color: #999999;
-            }
+			& > input::placeholder {
+				color: #cccccc;
+			}
 
-            &>input::placeholder {
-                color: #CCCCCC;
-            }
-
-            &>img {
-                position: absolute;
-                margin-left: -241px;
-                margin-top: 7px;
-            }
-        }
-    }
+			& > img {
+				position: absolute;
+				margin-left: -241px;
+				margin-top: 7px;
+			}
+		}
+	}
 }

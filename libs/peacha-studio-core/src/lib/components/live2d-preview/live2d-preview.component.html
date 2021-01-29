@@ -1,121 +1,90 @@
 <div class="live2d-box">
-  <div class="modal" *ngIf="modalShow" [@modalEnterLeaveTrigger]>
-    <div class="modal-box">
-      <div class="modal-head">
-        <span class="title">开启面部捕捉</span>
-        <span class="tip">测试功能，展示效果仅供参考</span>
-      </div>
-      <div class="modal-body">
-        <span>请选择摄像头{{ selectDevice }}</span>
-        <ng-container *ngrxLet="cameraDevices$; let cameraDevices">
-          <select [value]="selectDevice && cameraDevices[0].id" #camera>
-            <option *ngFor="let camera of cameraDevices" [value]="camera.id">
-              {{ camera.label }}
-            </option>
-          </select>
-          <span *ngIf="cameraDevices.length === 0" class="modal-warn"
-            >未检测到摄像头，请检查设备连接</span
-          >
-          <span class="tips"
-            >注：该功能仅会在本地运行，我们不会获取/传播您的任何个人信息，请放心使用</span
-          >
-          <div>
-            <button
-              type="button"
-              class="button-cancel"
-              (click)="cancelRequestTracker()"
-            >
-              <span>取消</span>
-            </button>
-            <button
-              type="button"
-              class="button-ok"
-              (click)="startTracker(camera.value)"
-            >
-              <span>确定</span>
-            </button>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-  </div>
-  <div class="live2d-error" *ngIf="error$ | async">
-    <img src="/assets/image/error.png" />
-  </div>
-  <div class="live2d-loading" *ngIf="loading$ | async">
-    <img src="/assets/image/loading.gif" />
-  </div>
-  <canvas #canvas></canvas>
-  <peacha-live2d-animation-panel
-    *ngIf="animationPanelShow"
-    [@modalEnterLeaveTrigger]
-    [motions]="motionAnimator?.clips"
-    [exps]="expressionAnimator?.clips"
-    (reset)="resetAnimation()"
-    (playMontion)="playMotion($event)"
-    (playExpression)="playExpression($event)"
-  >
-  </peacha-live2d-animation-panel>
-  <peacha-live2d-setting-panel
-    #settingPanel
-    (parameterValuesUpdate)="onParameterValuesUpdate($event)"
-    (partOpacitiesUpdate)="onPartOpacitiesUpdateUpdate($event)"
-    *ngIf="settingPanelShow"
-    [@modalEnterLeaveTrigger]
-    [parameterValues]="parameterValues"
-    [partOpacities]="partOpacities"
-  >
-  </peacha-live2d-setting-panel>
-  <div class="live2d-toolbar">
-    <button type="button" (click)="reloadModel()">
-      <img src="/assets/image/reset.svg" />
-      <span class="tip"> 重置 </span>
-    </button>
-    <button
-      type="button"
-      (click)="requestFollowMouse()"
-      [attr.active]="followMouse ? true : null"
-    >
-      <img src="/assets/image/pointer.svg" />
-      <span class="tip"> 鼠标跟随 </span>
-    </button>
-    <button
-      type="button"
-      (click)="requestTracker()"
-      [attr.active]="cs ? true : null"
-      *ngIf="enableFaceTracker == true"
-    >
-      <img src="/assets/image/face-tracker.svg" />
-      <span class="tip"> 面部捕捉 </span>
-    </button>
-    <button
-      type="button"
-      (click)="animationPanelShow = !animationPanelShow"
-      [attr.active]="animationPanelShow ? true : null"
-    >
-      <img src="/assets/image/animation.svg" />
-      <span class="tip"> 表情动作 </span>
-    </button>
-    <button
-      type="button"
-      (click)="settingPanelShow = !settingPanelShow"
-      [attr.active]="settingPanelShow ? true : null"
-      *ngIf="enableSettingPanel == true"
-    >
-      <img src="/assets/image/setting.svg" />
-      <span class="tip"> 参数调整 </span>
-    </button>
-    <button type="button" (click)="requestFullScreen()">
-      <img
-        [src]="
-          fullScreen
-            ? '/assets/image/exit-fullscreen.svg'
-            : '/assets/image/fullscreen.svg'
-        "
-      />
-      <div class="tip">
-        {{ fullScreen ? '退出全屏' : '全屏' }}
-      </div>
-    </button>
-  </div>
+	<div class="modal" *ngIf="modalShow" [@modalEnterLeaveTrigger]>
+		<div class="modal-box">
+			<div class="modal-head">
+				<span class="title">开启面部捕捉</span>
+				<span class="tip">测试功能，展示效果仅供参考</span>
+			</div>
+			<div class="modal-body">
+				<span>请选择摄像头{{ selectDevice }}</span>
+				<ng-container *ngrxLet="cameraDevices$; let cameraDevices">
+					<select [value]="selectDevice && cameraDevices[0].id" #camera>
+						<option *ngFor="let camera of cameraDevices" [value]="camera.id">
+							{{ camera.label }}
+						</option>
+					</select>
+					<span *ngIf="cameraDevices.length === 0" class="modal-warn">未检测到摄像头，请检查设备连接</span>
+					<span class="tips">注：该功能仅会在本地运行，我们不会获取/传播您的任何个人信息，请放心使用</span>
+					<div>
+						<button type="button" class="button-cancel" (click)="cancelRequestTracker()">
+							<span>取消</span>
+						</button>
+						<button type="button" class="button-ok" (click)="startTracker(camera.value)">
+							<span>确定</span>
+						</button>
+					</div>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+	<div class="live2d-error" *ngIf="error$ | async">
+		<img src="/assets/image/error.png" />
+	</div>
+	<div class="live2d-loading" *ngIf="loading$ | async">
+		<img src="/assets/image/loading.gif" />
+	</div>
+	<canvas #canvas></canvas>
+	<peacha-live2d-animation-panel
+		*ngIf="animationPanelShow"
+		[@modalEnterLeaveTrigger]
+		[motions]="motionAnimator?.clips"
+		[exps]="expressionAnimator?.clips"
+		(resetParams)="resetAnimation()"
+		(playMontion)="playMotion($event)"
+		(playExpression)="playExpression($event)"
+	>
+	</peacha-live2d-animation-panel>
+	<peacha-live2d-setting-panel
+		#settingPanel
+		(parameterValuesUpdate)="onParameterValuesUpdate($event)"
+		(partOpacitiesUpdate)="onPartOpacitiesUpdateUpdate($event)"
+		*ngIf="settingPanelShow"
+		[@modalEnterLeaveTrigger]
+		[parameterValues]="parameterValues"
+		[partOpacities]="partOpacities"
+	>
+	</peacha-live2d-setting-panel>
+	<div class="live2d-toolbar">
+		<button type="button" (click)="reloadModel()">
+			<img src="/assets/image/reset.svg" />
+			<span class="tip"> 重置 </span>
+		</button>
+		<button type="button" (click)="requestFollowMouse()" [attr.active]="followMouse ? true : null">
+			<img src="/assets/image/pointer.svg" />
+			<span class="tip"> 鼠标跟随 </span>
+		</button>
+		<button type="button" (click)="requestTracker()" [attr.active]="cs ? true : null" *ngIf="enableFaceTracker == true">
+			<img src="/assets/image/face-tracker.svg" />
+			<span class="tip"> 面部捕捉 </span>
+		</button>
+		<button type="button" (click)="animationPanelShow = !animationPanelShow" [attr.active]="animationPanelShow ? true : null">
+			<img src="/assets/image/animation.svg" />
+			<span class="tip"> 表情动作 </span>
+		</button>
+		<button
+			type="button"
+			(click)="settingPanelShow = !settingPanelShow"
+			[attr.active]="settingPanelShow ? true : null"
+			*ngIf="enableSettingPanel == true"
+		>
+			<img src="/assets/image/setting.svg" />
+			<span class="tip"> 参数调整 </span>
+		</button>
+		<button type="button" (click)="requestFullScreen()">
+			<img [src]="fullScreen ? '/assets/image/exit-fullscreen.svg' : '/assets/image/fullscreen.svg'" />
+			<div class="tip">
+				{{ fullScreen ? '退出全屏' : '全屏' }}
+			</div>
+		</button>
+	</div>
 </div>

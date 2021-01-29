@@ -10,27 +10,27 @@ import { TradeApiService } from './trade-api.service';
 import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 
 @NgModule({
-  declarations: [PayPage, PurchaseResultsPage, NoResult, PaySuccessPage],
-  imports: [
-    CommonModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: PayPage,
-      },
-      {
-        path: 'results',
-        component: PurchaseResultsPage,
-      },
-      {
-        path: 'success',
-        component: PaySuccessPage,
-      },
-    ]),
-    PeachaComponentsModule,
-    ReactiveComponentModule,
-    OverlayModule,
-  ],
-  providers: [TradeApiService],
+	declarations: [PayPage, PurchaseResultsPage, NoResult, PaySuccessPage],
+	imports: [
+		CommonModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				component: PayPage,
+			},
+			{
+				path: 'results',
+				component: PurchaseResultsPage,
+			},
+			{
+				path: 'success',
+				component: PaySuccessPage,
+			},
+		]),
+		PeachaComponentsModule,
+		ReactiveComponentModule,
+		OverlayModule,
+	],
+	providers: [TradeApiService],
 })
 export class PayModule {}

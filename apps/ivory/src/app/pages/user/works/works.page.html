@@ -1,49 +1,40 @@
 <div class="allworks" *ngrxLet="works$;let works">
-  <li class="nav">
-    <div class="nav-left">
-      <span>
-        <ivo-select [formControl]="cid">
-          <ivo-option value="-1" text="全部"></ivo-option>
-          <ivo-option value="1" text="插画"></ivo-option>
-          <ivo-option value="0" text="Live2D"></ivo-option>
-        </ivo-select>
-      </span>
-      <!-- <span>
+	<li class="nav">
+		<div class="nav-left">
+			<span>
+				<ivo-select [formControl]="cid">
+					<ivo-option value="-1" text="全部"></ivo-option>
+					<ivo-option value="1" text="插画"></ivo-option>
+					<ivo-option value="0" text="Live2D"></ivo-option>
+				</ivo-select>
+			</span>
+			<!-- <span>
                 <ivo-select [formControl]="wsid">
                     <ivo-option value='-1' text='全部'></ivo-option>
                     <ivo-option value='0' text='仅作品'></ivo-option>
                     <ivo-option value='1' text='包含商品'></ivo-option>
                 </ivo-select>
             </span> -->
-    </div>
-    <span class="search-input">
-      <img src="/assets/image/svg/search.svg" />
-      <input
-        placeholder="搜索"
-        #keyword
-        (keydown.Enter)="addParams(keyword.value)"
-      />
-    </span>
-  </li>
-  <div class="works">
-    <ng-container *ngFor="let work of works?.list">
-      <ivo-work-card [work]="work"></ivo-work-card>
-    </ng-container>
-  </div>
-  <ng-container *ngIf="works.count >20">
-    <div class="page" *ngrxLet="currentPage$;let currentPage">
-      <ivo-pagination
-        [currentPage]="currentPage"
-        [total]="works?.count"
-        [pageSize]="20"
-        (onPageChange)="toPage($event)"
-      >
-      </ivo-pagination>
-    </div>
-  </ng-container>
+		</div>
+		<span class="search-input">
+			<img src="/assets/image/svg/search.svg" />
+			<input placeholder="搜索" #keyword (keydown.Enter)="addParams(keyword.value)" />
+		</span>
+	</li>
+	<div class="works">
+		<ng-container *ngFor="let work of works?.list">
+			<ivo-work-card [work]="work"></ivo-work-card>
+		</ng-container>
+	</div>
+	<ng-container *ngIf="works.count >20">
+		<div class="page" *ngrxLet="currentPage$;let currentPage">
+			<ivo-pagination [currentPage]="currentPage" [total]="works?.count" [pageSize]="20" (onPageChange)="toPage($event)">
+			</ivo-pagination>
+		</div>
+	</ng-container>
 </div>
 <ng-container *ngrxLet="error$;let error">
-  <div *ngIf="error" class="error">
-    <ivo-lack-image></ivo-lack-image>
-  </div>
+	<div *ngIf="error" class="error">
+		<ivo-lack-image></ivo-lack-image>
+	</div>
 </ng-container>

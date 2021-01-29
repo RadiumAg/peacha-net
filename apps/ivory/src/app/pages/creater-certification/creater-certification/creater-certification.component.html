@@ -1,50 +1,46 @@
-<div class="container" *ngrxLet="role$;let role">
-    <p class="title">{{roleMapper(role)}}认证</p>
-    <p class="tips">
-        为保护您的权益，我们不会要求您上传作品的源文件，您仅需要将我们提供的水印插入到源文件中，并保证水印清晰可见的情况下提供一张作品整体在工作界面的截图及五张单独图层在工作界面中的截图，以便我们确认您是作品的创作者，感谢您的配合。
-    </p>
-    <div class="content">
-        <a class="download" download="download" href="/assets/download_files/水印.png">下载水印文件</a>
-        <div class="work-group">
-            <div class="work-item" *ngFor="let item of applyWorkList$|async;index as i">
-                <span class="left-label">作品{{i+1}}</span>
-                <ng-container *ngIf="item?.id; else elseTemplate">
-                    <img class="work" [src]="item?.cover" (click)="selectWork(i)">
-                </ng-container>
-                <ng-template #elseTemplate>
-                    <div class="add-work" (click)="selectWork(i)">
-                        <img src="/assets/image/svg/add-hover.svg">
-                        <p>添加一个作品</p>
-                    </div>
-                </ng-template>
+<div class="container" *ngrxLet="role$; let role">
+	<p class="title">{{ roleMapper(role) }}认证</p>
+	<p class="tips">
+		为保护您的权益，我们不会要求您上传作品的源文件，您仅需要将我们提供的水印插入到源文件中，并保证水印清晰可见的情况下提供一张作品整体在工作界面的截图及五张单独图层在工作界面中的截图，以便我们确认您是作品的创作者，感谢您的配合。
+	</p>
+	<div class="content">
+		<a class="download" download="download" href="/assets/download_files/水印.png">下载水印文件</a>
+		<div class="work-group">
+			<div class="work-item" *ngFor="let item of applyWorkList$ | async; index as i">
+				<span class="left-label">作品{{ i + 1 }}</span>
+				<ng-container *ngIf="item?.id; else elseTemplate">
+					<img class="work" [src]="item?.cover" (click)="selectWork(i)" />
+				</ng-container>
+				<ng-template #elseTemplate>
+					<div class="add-work" (click)="selectWork(i)">
+						<img src="/assets/image/svg/add-hover.svg" />
+						<p>添加一个作品</p>
+					</div>
+				</ng-template>
 
-                <span class="right-label">作品{{i+1}}证明截图</span>
-                <div class="screenshots">
-                    <div *ngFor="let screenshot of item?.screenshots; index as shot_i">
-                        <ng-container *ngrxLet="screenshot.process$;let process">
-                            <div class="mask" *ngIf="!process.success">
-                                <div class="circular">
-                                    <section class="left">
-                                        <div class="left-inner"
-                                            [ngStyle]="{'transform': progressCircularRight(process.progress)}"></div>
-                                    </section>
-                                    <section class="right">
-                                        <div class="right-inner"
-                                            [ngStyle]="{'transform': progressCircularLeft(process.progress)}">
-                                        </div>
-                                    </section>
-                                    <p>{{(process.progress*100).toFixed(0)}}%</p>
-                                </div>
-                            </div>
-                            <span class="ivo-icon-delete" (click)="delete(shot_i,i)"></span>
-                            <img class="screenshot-item" [src]="screenshot?.url" />
-                        </ng-container>
-                    </div>
-                    <ivo-screenshot (uploadCallback)="uploadCallback($event , i)" *ngIf="6 > item?.screenshots.length">
-                    </ivo-screenshot>
-                </div>
-            </div>
-        </div>
-    </div>
-    <button class="apply-button" ivo-button (click)="submitForCertification()">提交认证</button>
+				<span class="right-label">作品{{ i + 1 }}证明截图</span>
+				<div class="screenshots">
+					<div *ngFor="let screenshot of item?.screenshots; index as shot_i">
+						<ng-container *ngrxLet="screenshot.process$; let process">
+							<div class="mask" *ngIf="!process.success">
+								<div class="circular">
+									<section class="left">
+										<div class="left-inner" [ngStyle]="{ transform: progressCircularRight(process.progress) }"></div>
+									</section>
+									<section class="right">
+										<div class="right-inner" [ngStyle]="{ transform: progressCircularLeft(process.progress) }"></div>
+									</section>
+									<p>{{ (process.progress * 100).toFixed(0) }}%</p>
+								</div>
+							</div>
+							<span class="ivo-icon-delete" (click)="delete(shot_i, i)"></span>
+							<img class="screenshot-item" [src]="screenshot?.url" />
+						</ng-container>
+					</div>
+					<ivo-screenshot (uploadCallback)="uploadCallback($event, i)" *ngIf="6 > item?.screenshots.length"> </ivo-screenshot>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button class="apply-button" ivo-button (click)="submitForCertification()">提交认证</button>
 </div>

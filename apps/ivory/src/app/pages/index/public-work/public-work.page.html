@@ -1,19 +1,23 @@
 <div class="all">
-    <li>
-        公示期作品
-        <span>新发布的作品全都在这里，每六小时更新一次~</span>
-    </li>
-    <ng-container *ngrxLet="publicWork$;let publicWork">
-        <div class="works">
-            <ng-container *ngFor="let work of publicWork.list">
-                <ivo-work-card [work]="work"></ivo-work-card>
-            </ng-container>
-        </div>
-        <ng-container *ngIf="publicWork?.count>20">
-            <div class="page" *ngrxLet="currentPage$;let currentPage">
-                <ivo-pagination [currentPage]="currentPage" [total]=" publicWork.count" [pageSize]="20"
-                    (onPageChange)="toPagePublic($event)"></ivo-pagination>
-            </div>
-        </ng-container>
-    </ng-container>
+	<li>
+		公示期作品
+		<span>新发布的作品全都在这里，每六小时更新一次~</span>
+	</li>
+	<ng-container *ngrxLet="publicWork$;let publicWork">
+		<div class="works">
+			<ng-container *ngFor="let work of publicWork.list">
+				<ivo-work-card [work]="work"></ivo-work-card>
+			</ng-container>
+		</div>
+		<ng-container *ngIf="publicWork?.count>20">
+			<div class="page" *ngrxLet="currentPage$;let currentPage">
+				<ivo-pagination
+					[currentPage]="currentPage"
+					[total]=" publicWork.count"
+					[pageSize]="20"
+					(onPageChange)="toPagePublic($event)"
+				></ivo-pagination>
+			</div>
+		</ng-container>
+	</ng-container>
 </div>

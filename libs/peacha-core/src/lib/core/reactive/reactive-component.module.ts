@@ -6,7 +6,7 @@ const DECLARATIONS = [LetDirective, PushPipe];
 const EXPORTS = [DECLARATIONS];
 
 @NgModule({
-  declarations: [DECLARATIONS],
-  exports: [EXPORTS],
+	declarations: [DECLARATIONS],
+	exports: [EXPORTS],
 })
 export class ReactiveComponentModule {}

@@ -1,3 +1,3 @@
-<section class="screentshot-container" [ngClass]="{'disabled':disabled}" (click)="file.click()">
-    <input type="file" accept="image/jpeg,image/png" [disabled]="disabled" [multiple]='multiple' #file (change)="uploadFile(file.files)">
+<section class="screentshot-container" [ngClass]="{ disabled: disabled }" (click)="file.click()">
+	<input type="file" accept="image/jpeg,image/png" [disabled]="disabled" [multiple]="multiple" #file (change)="uploadFile(file.files)" />
 </section>

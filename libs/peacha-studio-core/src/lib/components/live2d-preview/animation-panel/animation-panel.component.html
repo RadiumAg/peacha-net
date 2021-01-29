@@ -1,23 +1,31 @@
 <div class="panel-head">
-    <div class="reset-label">
-        <div (click)="onResetClick()">
-            <img src="/assets/image/Icon-iconfont09@2x.svg">
-            <span>重置</span>
-        </div>
-        <button type="button" (click)="setSelectAnimationOption('motions')"
-            [attr.select]="selectAnimationOption ==='motions'?true:null"><span>动作</span></button>
-        <button type="button" (click)="setSelectAnimationOption('exps')"
-            [attr.select]="selectAnimationOption ==='exps'?true:null"><span>表情</span></button>
-    </div>
+	<div class="reset-label">
+		<div (click)="onResetClick()">
+			<img src="/assets/image/Icon-iconfont09@2x.svg" />
+			<span>重置</span>
+		</div>
+		<button
+			type="button"
+			(click)="setSelectAnimationOption('motions')"
+			[attr.select]="selectAnimationOption === 'motions' ? true : null"
+		>
+			<span>动作</span>
+		</button>
+		<button type="button" (click)="setSelectAnimationOption('exps')" [attr.select]="selectAnimationOption === 'exps' ? true : null">
+			<span>表情</span>
+		</button>
+	</div>
 </div>
 <div class="line"></div>
 <div class="animation-box">
-    <div *ngFor="let item of selectAnimationOption === 'motions'?motions:selectAnimationOption === 'exps'?exps:null; index as index"
-        [class]="selectAnimationOption === 'motions'?'motion-item':selectAnimationOption === 'exps'?'exp-item':null"
-        (click)="selectAnimationOption === 'motions'?onMotionClick(index):selectAnimationOption === 'exps'?onExpClick(index):null"
-        [attr.exp-active]="playingExps.has(index)?true:null">
-        <span>
-            {{item.name}}
-        </span>
-    </div>
+	<div
+		*ngFor="let item of selectAnimationOption === 'motions' ? motions : selectAnimationOption === 'exps' ? exps : null; index as index"
+		[class]="selectAnimationOption === 'motions' ? 'motion-item' : selectAnimationOption === 'exps' ? 'exp-item' : null"
+		(click)="selectAnimationOption === 'motions' ? onMotionClick(index) : selectAnimationOption === 'exps' ? onExpClick(index) : null"
+		[attr.exp-active]="playingExps.has(index) ? true : null"
+	>
+		<span>
+			{{ item.name }}
+		</span>
+	</div>
 </div>

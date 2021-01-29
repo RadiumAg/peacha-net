@@ -3,12 +3,11 @@ import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class SharedService {
+	private emitChangeSource = new BehaviorSubject<number>(0);
 
-    private emitChangeSource = new BehaviorSubject<number>(0);
+	changeEmitted$ = this.emitChangeSource;
 
-    changeEmitted$ = this.emitChangeSource;
-
-    emitChange(change: any) {
-        this.emitChangeSource.next(change);
-    }
+	emitChange(change: any) {
+		this.emitChangeSource.next(change);
+	}
 }

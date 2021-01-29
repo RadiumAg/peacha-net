@@ -1,4 +1,4 @@
 export interface OpalError {
-    code: number;
-    description: string;
+	code: number;
+	description: string;
 }

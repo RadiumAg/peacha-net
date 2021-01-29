@@ -1,482 +1,471 @@
 @import '../../../../../components.less';
 @import '../commission-publish.less';
-@font-color1-black : #333333;
+@font-color1-black: #333333;
 
 :host {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background-color: @commission-background-color;
-
-    input:read-only {
-        background-color: @grey-color3;
-    }
-
-    .pre-line {
-        white-space: pre-line;
-    }
-
-    div.container {
-        box-sizing: content-box;
-        display: flex;
-        justify-content: space-between;
-        height: max-content;
-        padding: 46px 0;
-
-        // 导航栏
-        div.nav {
-            width: 200px;
-            min-width: 200px;
-            height: auto;
-
-            div.nodes {
-                width: 100%;
-                height: 100%;
-                padding-top: 30px;
-                padding-left: 40px;
-                display: flex;
-                align-content: flex-start;
-                flex-wrap: wrap;
-                justify-content: flex-start;
-
-                div.node-item {
-                    position: relative;
-                    align-items: center;
-                    width: 100%;
-                    margin-bottom: 30px;
-                    display: flex;
-
-                    span.tips {
-                        margin-left: 6px;
-                        font-size: 12px;
-                        font-weight: bold;
-                        color: @red-color2;
-                    }
-
-                    span.tips.active {
-                        color: @red-color1;
-                    }
-
-                    &::before {
-                        content: '';
-                        display: inline-block;
-                        width: 0;
-                        height: 22px;
-                        position: absolute;
-                        border-right: 2px dashed @red-color2;
-                        left: 13px;
-                        bottom: -4px;
-                        transform: translateY(100%);
-                    }
-                }
-
-                div.node-item.active {
-                    &::before {
-                        border-right: 2px solid @red-color1;
-                    }
-                }
-
-                div.node-item:nth-last-of-type(1) {
-                    &::before {
-                        content: none;
-                    }
-                }
-            }
-        }
-
-        // 导航栏
-
-        div.nav,
-        div.forms {
-            background-color: @background-white-color1 ;
-            border-radius: 8px;
-        }
-
-        div.forms {
-            width: 980px;
-
-            div.upload-imgs {
-                display: flex;
-                width: 100%;
-                flex-wrap: nowrap;
-                margin-bottom: 30px;
-
-                div.img-item {
-                    margin-right: 18px;
-                    width: 126px;
-                    height: 126px;
-                    background: #F5F5F5;
-                    border: 1px solid #D8D8D8;
-                    border-radius: 4px;
-
-                    img {
-                        width: 100%;
-                        height: 100%;
-                        cursor: pointer;
-                        object-fit: cover;
-                    }
-                }
-            }
-
-            div.down-item {
-                display: flex;
-                margin-bottom: 10px;
-                align-items: center;
-
-                >span {
-                    display: inline-block;
-                    margin-right: 10px;
-                }
-            }
-
-            h2.commission-title {
-                margin-bottom: 70px;
-            }
-
-            form {
-                div.controller {
-                    position: relative;
-                }
-            }
-
-            >form.commission-form:nth-of-type(1) {
-                div.commission-form-item:nth-child(3) {
-                    width: 100%;
-
-                    ivo-select {
-                        width: 300px;
-                    }
-                }
-
-                div.commission-form-item:nth-child(4) {
-                    width: 100%;
-
-                    ivo-select {
-                        width: 143px;
-                    }
-                }
-
-                div.commission-form-item:nth-child(5) {
-                    width: 100%;
-
-                    div.controller {
-                        width: 307px;
-
-                        input {
-                            width: 307px;
-                        }
-                    }
-                }
-
-                div.commission-form-item:nth-child(6) {
-                    width: 100%;
-
-                    div.controller {
-                        width: 143px;
-
-                        input {
-                            width: 143px;
-                        }
-                    }
-                }
-
-                div.commission-form-item:nth-child(7) {
-                    width: 100%;
-
-                    div.commission-form-item-controller {
-                        display: flex;
-                        align-items: center;
-                        width: 143px;
-
-                        span.commission-errors {
-                            transform: translateY(100%);
-                            left: 0;
-                            top: unset;
-                            bottom: -5px;
-                        }
-
-                        span.no-use {
-                            display: inline-block;
-                            margin: 0 20px;
-                        }
-
-                        input {
-                            width: 143px;
-                            padding-right: 20px;
-                        }
-                    }
-                }
-            }
-
-            >form.commission-form:nth-of-type(2) {
-
-                div.commission-form-item:nth-child(2) {
-                    div.commission-form-item-controller-title:nth-of-type(1) {
-                        margin-bottom: 0;
-                    }
-
-
-                }
-
-                div.commission-form-item:nth-child(2) {
-                    div.controller {
-                        width: 560px;
-
-                        input {
-                            width: 560px;
-                        }
-
-                        span.word-count {
-                            top: auto;
-                            bottom: 15px;
-                            transform: translateX(-50%);
-                        }
-                    }
-                }
-
-                div.commission-form-item:nth-child(3) {
-                    border-bottom: none;
-                    margin-bottom: 0;
-                }
-
-                div.commission-form-item:nth-child(4) {
-                    div.commission-form-item-controller-title {
-                        margin-bottom: 0;
-                    }
-                }
-
-                div.commission-form-item:nth-child(3),
-                div.commission-form-item:nth-child(4) {
-                    div.controller {
-                        width: 143px;
-
-                        input {
-                            width: 143px;
-                        }
-
-                        margin-bottom: 20px;
-                    }
-                }
-
-                div.commission-form-item:nth-child(5) {
-                    div.commission-form-item-controller {
-                        display: flex;
-                        flex-wrap: nowrap;
-                        align-items: center;
-
-                        div.controller {
-                            display: flex;
-                            flex-wrap: nowrap;
-                            align-items: center;
-                            justify-content: flex-start;
-
-                            >input {
-                                width: 100px;
-                            }
-
-                            span.commission-errors {
-                                transform: translateY(100%);
-                                left: 0;
-                                top: unset;
-                                bottom: -5px;
-                            }
-
-                            span.word-unit {
-                                position: relative;
-                                top: 0;
-                                right: 0;
-                                transform: none;
-                                margin-left: 10px;
-                            }
-
-                        }
-
-                        span.multiply {
-                            display: flex;
-                            align-items: center;
-                            color: @commission-form-item-controller-unit-color;
-                            margin: 0 12px;
-                            font-size: 24px;
-                        }
-                    }
-                }
-
-                div.commission-form-item:nth-child(6) {
-                    width: 100%;
-
-                    div.controller {
-                        width: max-content;
-
-                        ivo-select {
-                            width: 143px;
-                        }
-                    }
-                }
-
-                span.tip {
-                    font-size: 12px;
-                    color: @font-color2;
-                }
-
-                div.commission-form-item:nth-child(7) {
-                    div.controller {
-                        display: flex;
-                        align-items: flex-end;
-                        position: relative;
-
-                        ivo-upload {
-                            margin-right: 8px;
-                        }
-
-                        span.upload-fileName {
-                            position: absolute;
-                            left: 0;
-                            transform: translateY(100%);
-                            bottom: -5px;
-                        }
-
-
-                    }
-                }
-
-                div.commission-form-item:nth-child(8) {
-                    div.controller {
-                        width: 100%;
-                        display: flex;
-                        align-items: flex-end;
-                        position: relative;
-                        flex-wrap: wrap;
-
-                        ivo-upload {
-                            margin-right: 8px;
-                        }
-
-                        >div:nth-child(1) {
-                            width: 100%;
-                            display: flex;
-                            justify-content: flex-start;
-                            flex-wrap: nowrap;
-                            align-items: flex-end;
-                        }
-
-                    }
-                }
-            }
-
-            // 验收节点表单
-            >form.commission-form:nth-of-type(3) {
-
-                div.commission-form-item:nth-child(2) {
-                    div.controller {
-                        width: 100%;
-                        display: flex;
-                        justify-content: center;
-                        margin-top: 30px;
-                    }
-
-                    .no-use {
-                        margin-top: 29px;
-                    }
-                }
-
-                div.commission-form-item:nth-child(3) {
-                    div.controller {
-                        input {
-                            width: 143px;
-                        }
-
-                        div.word-unit {
-                            position: relative;
-                        }
-                    }
-                }
-            }
-
-            // 验收节点表单
-
-            // 预览表单
-            >div.commission-form:nth-of-type(1) {
-                div.commission-form-item {
-                    border-bottom: none;
-                }
-
-                div.commission-form-item:nth-last-child(2) {
-                    div.commission-form-item-controller-title:nth-of-type(2) {
-                        margin-bottom: 40px;
-                    }
-                }
-            }
-
-            // 预览表单
-
-            form.publish {
-                div.commission-form-item {
-                    display: flex;
-
-                    div.commission-form-item-controller {
-                        width: 100%;
-                        text-align: justify;
-                        color: @font-color1-black;
-
-                        div.commission-form-item-controller-title {
-                            color: @font-color1-black;
-
-                        }
-                    }
-
-                }
-            }
-
-            ivo-select {
-                border: 1px solid #DFDFDF;
-            }
-
-            footer.commission-form-footer {
-                width: 100%;
-                display: flex;
-                justify-content: flex-end;
-                padding-right: 140px;
-                align-items: flex-start;
-                height: 116px;
-
-                input.pre-button,
-                input.next-button {
-                    width: 74px;
-                    height: 31px;
-                    // background: @red-color1;
-                    border-radius: 4px;
-                    cursor: pointer;
-                }
-
-                input.pre-button {
-                    background-color: transparent;
-                    color: @font-color1-black;
-                }
-
-                input.next-button {
-                    color: @white-color1;
-                }
-            }
-        }
-
-        form.hidden,
-        div.hidden,
-        button.hidden,
-        input[type=button].hidden {
-            display: none;
-        }
-    }
-
-    @keyframes antCheckboxEffect {
-        0% {
-            transform: scale(1);
-            opacity: 0.5;
-        }
-
-        100% {
-            transform: scale(1.6);
-            opacity: 0;
-        }
-    }
-
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-color: @commission-background-color;
+
+	input:read-only {
+		background-color: @grey-color3;
+	}
+
+	.pre-line {
+		white-space: pre-line;
+	}
+
+	div.container {
+		box-sizing: content-box;
+		display: flex;
+		justify-content: space-between;
+		height: max-content;
+		padding: 46px 0;
+
+		// 导航栏
+		div.nav {
+			width: 200px;
+			min-width: 200px;
+			height: auto;
+
+			div.nodes {
+				width: 100%;
+				height: 100%;
+				padding-top: 30px;
+				padding-left: 40px;
+				display: flex;
+				align-content: flex-start;
+				flex-wrap: wrap;
+				justify-content: flex-start;
+
+				div.node-item {
+					position: relative;
+					align-items: center;
+					width: 100%;
+					margin-bottom: 30px;
+					display: flex;
+
+					span.tips {
+						margin-left: 6px;
+						font-size: 12px;
+						font-weight: bold;
+						color: @red-color2;
+					}
+
+					span.tips.active {
+						color: @red-color1;
+					}
+
+					&::before {
+						content: '';
+						display: inline-block;
+						width: 0;
+						height: 22px;
+						position: absolute;
+						border-right: 2px dashed @red-color2;
+						left: 13px;
+						bottom: -4px;
+						transform: translateY(100%);
+					}
+				}
+
+				div.node-item.active {
+					&::before {
+						border-right: 2px solid @red-color1;
+					}
+				}
+
+				div.node-item:nth-last-of-type(1) {
+					&::before {
+						content: none;
+					}
+				}
+			}
+		}
+
+		// 导航栏
+
+		div.nav,
+		div.forms {
+			background-color: @background-white-color1;
+			border-radius: 8px;
+		}
+
+		div.forms {
+			width: 980px;
+
+			div.upload-imgs {
+				display: flex;
+				width: 100%;
+				flex-wrap: nowrap;
+				margin-bottom: 30px;
+
+				div.img-item {
+					margin-right: 18px;
+					width: 126px;
+					height: 126px;
+					background: #f5f5f5;
+					border: 1px solid #d8d8d8;
+					border-radius: 4px;
+
+					img {
+						width: 100%;
+						height: 100%;
+						cursor: pointer;
+						object-fit: cover;
+					}
+				}
+			}
+
+			div.down-item {
+				display: flex;
+				margin-bottom: 10px;
+				align-items: center;
+
+				> span {
+					display: inline-block;
+					margin-right: 10px;
+				}
+			}
+
+			h2.commission-title {
+				margin-bottom: 70px;
+			}
+
+			form {
+				div.controller {
+					position: relative;
+				}
+			}
+
+			> form.commission-form:nth-of-type(1) {
+				div.commission-form-item:nth-child(3) {
+					width: 100%;
+
+					ivo-select {
+						width: 300px;
+					}
+				}
+
+				div.commission-form-item:nth-child(4) {
+					width: 100%;
+
+					ivo-select {
+						width: 143px;
+					}
+				}
+
+				div.commission-form-item:nth-child(5) {
+					width: 100%;
+
+					div.controller {
+						width: 307px;
+
+						input {
+							width: 307px;
+						}
+					}
+				}
+
+				div.commission-form-item:nth-child(6) {
+					width: 100%;
+
+					div.controller {
+						width: 143px;
+
+						input {
+							width: 143px;
+						}
+					}
+				}
+
+				div.commission-form-item:nth-child(7) {
+					width: 100%;
+
+					div.commission-form-item-controller {
+						display: flex;
+						align-items: center;
+						width: 143px;
+
+						span.commission-errors {
+							transform: translateY(100%);
+							left: 0;
+							top: unset;
+							bottom: -5px;
+						}
+
+						span.no-use {
+							display: inline-block;
+							margin: 0 20px;
+						}
+
+						input {
+							width: 143px;
+							padding-right: 20px;
+						}
+					}
+				}
+			}
+
+			> form.commission-form:nth-of-type(2) {
+				div.commission-form-item:nth-child(2) {
+					div.commission-form-item-controller-title:nth-of-type(1) {
+						margin-bottom: 0;
+					}
+				}
+
+				div.commission-form-item:nth-child(2) {
+					div.controller {
+						width: 560px;
+
+						input {
+							width: 560px;
+						}
+
+						span.word-count {
+							top: auto;
+							bottom: 15px;
+							transform: translateX(-50%);
+						}
+					}
+				}
+
+				div.commission-form-item:nth-child(3) {
+					border-bottom: none;
+					margin-bottom: 0;
+				}
+
+				div.commission-form-item:nth-child(4) {
+					div.commission-form-item-controller-title {
+						margin-bottom: 0;
+					}
+				}
+
+				div.commission-form-item:nth-child(3),
+				div.commission-form-item:nth-child(4) {
+					div.controller {
+						width: 143px;
+
+						input {
+							width: 143px;
+						}
+
+						margin-bottom: 20px;
+					}
+				}
+
+				div.commission-form-item:nth-child(5) {
+					div.commission-form-item-controller {
+						display: flex;
+						flex-wrap: nowrap;
+						align-items: center;
+
+						div.controller {
+							display: flex;
+							flex-wrap: nowrap;
+							align-items: center;
+							justify-content: flex-start;
+
+							> input {
+								width: 100px;
+							}
+
+							span.commission-errors {
+								transform: translateY(100%);
+								left: 0;
+								top: unset;
+								bottom: -5px;
+							}
+
+							span.word-unit {
+								position: relative;
+								top: 0;
+								right: 0;
+								transform: none;
+								margin-left: 10px;
+							}
+						}
+
+						span.multiply {
+							display: flex;
+							align-items: center;
+							color: @commission-form-item-controller-unit-color;
+							margin: 0 12px;
+							font-size: 24px;
+						}
+					}
+				}
+
+				div.commission-form-item:nth-child(6) {
+					width: 100%;
+
+					div.controller {
+						width: max-content;
+
+						ivo-select {
+							width: 143px;
+						}
+					}
+				}
+
+				span.tip {
+					font-size: 12px;
+					color: @font-color2;
+				}
+
+				div.commission-form-item:nth-child(7) {
+					div.controller {
+						display: flex;
+						align-items: flex-end;
+						position: relative;
+
+						ivo-upload {
+							margin-right: 8px;
+						}
+
+						span.upload-fileName {
+							position: absolute;
+							left: 0;
+							transform: translateY(100%);
+							bottom: -5px;
+						}
+					}
+				}
+
+				div.commission-form-item:nth-child(8) {
+					div.controller {
+						width: 100%;
+						display: flex;
+						align-items: flex-end;
+						position: relative;
+						flex-wrap: wrap;
+
+						ivo-upload {
+							margin-right: 8px;
+						}
+
+						> div:nth-child(1) {
+							width: 100%;
+							display: flex;
+							justify-content: flex-start;
+							flex-wrap: nowrap;
+							align-items: flex-end;
+						}
+					}
+				}
+			}
+
+			// 验收节点表单
+			> form.commission-form:nth-of-type(3) {
+				div.commission-form-item:nth-child(2) {
+					div.controller {
+						width: 100%;
+						display: flex;
+						justify-content: center;
+						margin-top: 30px;
+					}
+
+					.no-use {
+						margin-top: 29px;
+					}
+				}
+
+				div.commission-form-item:nth-child(3) {
+					div.controller {
+						input {
+							width: 143px;
+						}
+
+						div.word-unit {
+							position: relative;
+						}
+					}
+				}
+			}
+
+			// 验收节点表单
+
+			// 预览表单
+			> div.commission-form:nth-of-type(1) {
+				div.commission-form-item {
+					border-bottom: none;
+				}
+
+				div.commission-form-item:nth-last-child(2) {
+					div.commission-form-item-controller-title:nth-of-type(2) {
+						margin-bottom: 40px;
+					}
+				}
+			}
+
+			// 预览表单
+
+			form.publish {
+				div.commission-form-item {
+					display: flex;
+
+					div.commission-form-item-controller {
+						width: 100%;
+						text-align: justify;
+						color: @font-color1-black;
+
+						div.commission-form-item-controller-title {
+							color: @font-color1-black;
+						}
+					}
+				}
+			}
+
+			ivo-select {
+				border: 1px solid #dfdfdf;
+			}
+
+			footer.commission-form-footer {
+				width: 100%;
+				display: flex;
+				justify-content: flex-end;
+				padding-right: 140px;
+				align-items: flex-start;
+				height: 116px;
+
+				input.pre-button,
+				input.next-button {
+					width: 74px;
+					height: 31px;
+					// background: @red-color1;
+					border-radius: 4px;
+					cursor: pointer;
+				}
+
+				input.pre-button {
+					background-color: transparent;
+					color: @font-color1-black;
+				}
+
+				input.next-button {
+					color: @white-color1;
+				}
+			}
+		}
+
+		form.hidden,
+		div.hidden,
+		button.hidden,
+		input[type='button'].hidden {
+			display: none;
+		}
+	}
+
+	@keyframes antCheckboxEffect {
+		0% {
+			transform: scale(1);
+			opacity: 0.5;
+		}
+
+		100% {
+			transform: scale(1.6);
+			opacity: 0;
+		}
+	}
 }

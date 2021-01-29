@@ -1,10 +1,10 @@
-<div class="container" *ngrxLet="params$;let params">
-    <div class="left">
-        <img class="title-icon" src="/assets/image/commission/title-icon.svg">
-        <img class="face" [src]="avatar$ | async" [routerLink]="['/user/'+(id$|async)]">
-        <span class="user-name" [routerLink]="['/user/'+(id$|async)]">{{nickname$ | async}}</span>
-        <div class="tag-list">
-            <!-- <span *ngFor="let i of role">
+<div class="container" *ngrxLet="params$; let params">
+	<div class="left">
+		<img class="title-icon" src="/assets/image/commission/title-icon.svg" />
+		<img class="face" [src]="avatar$ | async" [routerLink]="['/user/' + (id$ | async)]" />
+		<span class="user-name" [routerLink]="['/user/' + (id$ | async)]">{{ nickname$ | async }}</span>
+		<div class="tag-list">
+			<!-- <span *ngFor="let i of role">
                 <ng-container *ngIf="i.id===11002 || i.id===11001">
                     <ng-container [ngSwitch]="i.id">
                         <ng-container *ngSwitchCase="11002">
@@ -16,121 +16,156 @@
                     </ng-container>
                 </ng-container>
             </span> -->
-            <span>
-                <img *ngIf="roleIdList.includes(11002)" src="/assets/image/role/lllustrator.svg">
-                <img *ngIf="roleIdList.includes(11001)" src="/assets/image/role/live2d.svg">
-            </span>
-        </div>
-        <div class="route-button-group">
-            <a class="link" routerLink="./" [queryParams]="{sw:1}"
-                [class.link-active]="params.sw==1"><button>我发起的企划</button></a>
-            <a class="link" routerLink="./" [queryParams]="{sw:2}"
-                [class.link-active]="params.sw==2"><button>我参与的企划</button></a>
-        </div>
-        <button ivo-button routerLink="./publish" class="publish-button">发布企划</button>
+			<span>
+				<img *ngIf="roleIdList.includes(11002)" src="/assets/image/role/lllustrator.svg" />
+				<img *ngIf="roleIdList.includes(11001)" src="/assets/image/role/live2d.svg" />
+			</span>
+		</div>
+		<div class="route-button-group">
+			<a class="link" routerLink="./" [queryParams]="{ sw: 1 }" [class.link-active]="params.sw == 1"><button>我发起的企划</button></a>
+			<a class="link" routerLink="./" [queryParams]="{ sw: 2 }" [class.link-active]="params.sw == 2"><button>我参与的企划</button></a>
+		</div>
+		<button ivo-button routerLink="./publish" class="publish-button">发布企划</button>
 
-        <div class="link">
-            <a href="/message/customer-service">
-                <img src="/assets/image/commission/customer.svg">
-                <span>联系客服</span>
-            </a>
-            <a href="/commission/technological">
-                <img src="/assets/image/commission/technological.svg">
-                <span>企划流程/常见问题</span>
-            </a>
-        </div>
+		<div class="link">
+			<a href="/message/customer-service">
+				<img src="/assets/image/commission/customer.svg" />
+				<span>联系客服</span>
+			</a>
+			<a href="/commission/technological">
+				<img src="/assets/image/commission/technological.svg" />
+				<span>企划流程/常见问题</span>
+			</a>
+		</div>
+	</div>
+	<div class="right" [ngSwitch]="params.sw">
+		<!-- 企划首页选项卡 -->
+		<div class="top" *ngSwitchDefault>
+			<div class="item-group">
+				<span class="top-title">全部企划</span>
+				<span
+					class="router-link top-item"
+					routerLink="./"
+					[queryParams]="{ c: -1 }"
+					[class.top-item-active]="params.c == -1 || !params.c"
+					>全部</span
+				>
+				<span class="router-link top-item" routerLink="./" [queryParams]="{ c: 1 }" [class.top-item-active]="params.c == 1"
+					>原画创作</span
+				>
+				<span class="router-link top-item" routerLink="./" [queryParams]="{ c: 0 }" [class.top-item-active]="params.c == 0"
+					>Live2D建模</span
+				>
+				<form [formGroup]="priceForm">
+					<span class="label">价格区间</span>
+					<div class="top-input">
+						<span>￥</span>
+						<input
+							#minPrice
+							type="tel"
+							maxlength="6"
+							(keydown)="isInput($event)"
+							(keyup.enter)="search(minPrice.value, maxPrice.value, key.value)"
+							formControlName="minPrice"
+						/>
+					</div>
+					<span class="partition">~</span>
+					<div class="top-input">
+						<span>￥</span>
+						<input
+							#maxPrice
+							type="tel"
+							maxlength="6"
+							(keydown)="isInput($event)"
+							(keyup.enter)="search(minPrice.value, maxPrice.value, key.value)"
+							formControlName="maxPrice"
+						/>
+					</div>
+				</form>
 
-    </div>
-    <div class="right" [ngSwitch]="params.sw">
-        <!-- 企划首页选项卡 -->
-        <div class="top" *ngSwitchDefault>
-            <div class="item-group">
-                <span class="top-title">全部企划</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{c:-1}"
-                    [class.top-item-active]="params.c==-1 || !params.c">全部</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{c:1}"
-                    [class.top-item-active]="params.c==1">原画创作</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{c:0}"
-                    [class.top-item-active]="params.c==0">Live2D建模</span>
-                <form [formGroup]="priceForm">
-                    <span class="label">价格区间</span>
-                    <div class="top-input">
-                        <span>￥</span>
-                        <input #minPrice type="tel" maxlength="6" (keydown)="isInput($event)"
-                            (keyup.enter)="search(minPrice.value,maxPrice.value,key.value)" formControlName="minPrice">
-                    </div>
-                    <span class="partition">~</span>
-                    <div class="top-input">
-                        <span>￥</span>
-                        <input #maxPrice type="tel" maxlength="6" (keydown)="isInput($event)"
-                            (keyup.enter)="search(minPrice.value,maxPrice.value,key.value)" formControlName="maxPrice">
-                    </div>
-                </form>
+				<div class="search-input">
+					<input
+						#key
+						type="text"
+						maxlength="10"
+						placeholder="请输入搜索关键字"
+						(keyup.enter)="search(minPrice.value, maxPrice.value, key.value)"
+					/>
+					<img src="/assets/image/commission/search.svg" />
+				</div>
+			</div>
+		</div>
+		<!-- 我发起的企划选项卡 -->
+		<div class="top" *ngSwitchCase="1">
+			<div class="item-group">
+				<span class="top-title">我发起的企划</span>
+				<span class="router-link top-item" routerLink="./" [queryParams]="{ sw: 1, t: 0 }" [class.top-item-active]="params.t == 0"
+					>招募中</span
+				>
+				<span class="router-link top-item" routerLink="./" [queryParams]="{ sw: 1, t: 5 }" [class.top-item-active]="params.t == 5"
+					>暂停招募</span
+				>
+				<span class="router-link top-item" routerLink="./" [queryParams]="{ sw: 1, t: 1 }" [class.top-item-active]="params.t == 1"
+					>进行中</span
+				>
+				<span class="router-link top-item" routerLink="./" [queryParams]="{ sw: 1, t: 2 }" [class.top-item-active]="params.t == 2"
+					>已完成</span
+				>
+				<span class="router-link top-item" routerLink="./" [queryParams]="{ sw: 1, t: 3 }" [class.top-item-active]="params.t == 3"
+					>中止</span
+				>
+				<span class="router-link top-item" routerLink="./" [queryParams]="{ sw: 1, t: 4 }" [class.top-item-active]="params.t == 4"
+					>关闭</span
+				>
+			</div>
+			<a class="back" routerLink="./" [queryParams]="{ c: -1 }">
+				<img class="back-icon" src="/assets/image/commission/back.svg" />
+				<span class="back-text">返回</span>
+			</a>
+		</div>
 
-                <div class="search-input">
-                    <input #key type="text" maxlength="10" placeholder="请输入搜索关键字"
-                        (keyup.enter)="search(minPrice.value,maxPrice.value,key.value)">
-                    <img src="/assets/image/commission/search.svg">
-                </div>
-            </div>
-        </div>
-        <!-- 我发起的企划选项卡 -->
-        <div class="top" *ngSwitchCase="1">
-            <div class="item-group">
-                <span class="top-title">我发起的企划</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{sw:1,t:0}"
-                    [class.top-item-active]="params.t==0">招募中</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{sw:1,t:5}"
-                    [class.top-item-active]="params.t==5">暂停招募</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{sw:1,t:1}"
-                    [class.top-item-active]="params.t==1">进行中</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{sw:1,t:2}"
-                    [class.top-item-active]="params.t==2">已完成</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{sw:1,t:3}"
-                    [class.top-item-active]="params.t==3">中止</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{sw:1,t:4}"
-                    [class.top-item-active]="params.t==4">关闭</span>
-            </div>
-            <a class="back" routerLink="./" [queryParams]="{c:-1}">
-                <img class="back-icon" src="/assets/image/commission/back.svg">
-                <span class="back-text">返回</span>
-            </a>
-        </div>
-
-        <!-- 我参与的企划选项卡 -->
-        <div class="top" *ngSwitchCase="2">
-            <div class="item-group">
-                <span class="top-title">我参与的企划</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{sw:2,t:0}"
-                    [class.top-item-active]="params.t==0">招募中</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{sw:2,t:1}"
-                    [class.top-item-active]="params.t==1">进行中</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{sw:2,t:2}"
-                    [class.top-item-active]="params.t==2">已完成</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{sw:2,t:3}"
-                    [class.top-item-active]="params.t==3">中止</span>
-                <span class="router-link top-item" routerLink="./" [queryParams]="{sw:2,t:4}"
-                    [class.top-item-active]="params.t==4">已失效</span>
-            </div>
-            <a class="back" routerLink="./" [queryParams]="{c:-1}">
-                <img class="back-icon" src="/assets/image/commission/back.svg">
-                <span class="back-text">返回</span>
-            </a>
-        </div>
-        <ng-container *ngrxLet="list$;let list">
-            <div class="list">
-                <a *ngFor="let item of list?.list" (click)="toDetail(item.id,item.status,$event)">
-                    <ivo-commission-card [commission]="item"></ivo-commission-card>
-                </a>
-                <div class="lack" *ngIf="list?.count===0">
-                    <ivo-lack-image></ivo-lack-image>
-                    <p>暂无企划！</p>
-                </div>
-            </div>
-            <ivo-pagination *ngIf="list?.count>4" [currentPage]="currentPage" [total]="list?.count" [pageSize]="4"
-                (onPageChange)="toPage($event)"></ivo-pagination>
-
-        </ng-container>
-
-    </div>
+		<!-- 我参与的企划选项卡 -->
+		<div class="top" *ngSwitchCase="2">
+			<div class="item-group">
+				<span class="top-title">我参与的企划</span>
+				<span class="router-link top-item" routerLink="./" [queryParams]="{ sw: 2, t: 0 }" [class.top-item-active]="params.t == 0"
+					>招募中</span
+				>
+				<span class="router-link top-item" routerLink="./" [queryParams]="{ sw: 2, t: 1 }" [class.top-item-active]="params.t == 1"
+					>进行中</span
+				>
+				<span class="router-link top-item" routerLink="./" [queryParams]="{ sw: 2, t: 2 }" [class.top-item-active]="params.t == 2"
+					>已完成</span
+				>
+				<span class="router-link top-item" routerLink="./" [queryParams]="{ sw: 2, t: 3 }" [class.top-item-active]="params.t == 3"
+					>中止</span
+				>
+				<span class="router-link top-item" routerLink="./" [queryParams]="{ sw: 2, t: 4 }" [class.top-item-active]="params.t == 4"
+					>已失效</span
+				>
+			</div>
+			<a class="back" routerLink="./" [queryParams]="{ c: -1 }">
+				<img class="back-icon" src="/assets/image/commission/back.svg" />
+				<span class="back-text">返回</span>
+			</a>
+		</div>
+		<ng-container *ngrxLet="list$; let list">
+			<div class="list">
+				<a *ngFor="let item of list?.list" (click)="toDetail(item.id, item.status, $event)">
+					<ivo-commission-card [commission]="item"></ivo-commission-card>
+				</a>
+				<div class="lack" *ngIf="list?.count === 0">
+					<ivo-lack-image></ivo-lack-image>
+					<p>暂无企划！</p>
+				</div>
+			</div>
+			<ivo-pagination
+				*ngIf="list?.count > 4"
+				[currentPage]="currentPage"
+				[total]="list?.count"
+				[pageSize]="4"
+				(onPageChange)="toPage($event)"
+			></ivo-pagination>
+		</ng-container>
+	</div>
 </div>

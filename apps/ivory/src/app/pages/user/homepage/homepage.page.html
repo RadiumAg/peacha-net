@@ -1,129 +1,106 @@
 <div class="works" *ngrxLet="pageId$;let pageUid">
-  <ng-container *ngrxLet="represent$;let represents">
-    <div
-      class="bg"
-      *ngIf="represents?.list.length>0 || pageUid==(id$ |ngrxPush
+	<ng-container *ngrxLet="represent$;let represents">
+		<div
+			class="bg"
+			*ngIf="represents?.list.length>0 || pageUid==(id$ |ngrxPush
                 )"
-    >
-      <li class="bestli">
-        代表作品
-        <ng-container *ngrxLet="showEdit$;let showEdit">
-          <span>
-            <a
-              (click)="showEdit$.next(false)"
-              *ngIf="pageUid == (id$ |ngrxPush) && showEdit"
-              >编辑</a
-            >
-            <ng-container *ngIf="!showEdit">
-              <a (click)="cancel()">取消</a>
-              <a class="save" (click)="save()">保存</a>
-            </ng-container>
-          </span>
-        </ng-container>
-      </li>
-      <div class="best">
-        <li class="best-work" *ngFor="let represent of representList">
-          <img
-            class="delete-pic"
-            *ngIf="!(showEdit$|async)"
-            src="/assets/image/live-2d/svg/delete.svg"
-            (click)="deleteWork(represent.id,$event)"
-          />
-          <a
-            [href]="represent?.category==1?['/illust/'+represent?.id]:['/live2d/'+represent?.id]"
-          >
-            <img
-              [attr.src]="represent?.category?'/assets/image/work-card/ikon-tag.svg':represent?.price==0?'/assets/image/work-card/free-tag.svg':'/assets/image/work-card/Live2D-tag.svg'"
-              class="good-icon"
-            />
+		>
+			<li class="bestli">
+				代表作品
+				<ng-container *ngrxLet="showEdit$;let showEdit">
+					<span>
+						<a (click)="showEdit$.next(false)" *ngIf="pageUid == (id$ |ngrxPush) && showEdit">编辑</a>
+						<ng-container *ngIf="!showEdit">
+							<a (click)="cancel()">取消</a>
+							<a class="save" (click)="save()">保存</a>
+						</ng-container>
+					</span>
+				</ng-container>
+			</li>
+			<div class="best">
+				<li class="best-work" *ngFor="let represent of representList">
+					<img
+						class="delete-pic"
+						*ngIf="!(showEdit$|async)"
+						src="/assets/image/live-2d/svg/delete.svg"
+						(click)="deleteWork(represent.id,$event)"
+					/>
+					<a [href]="represent?.category==1?['/illust/'+represent?.id]:['/live2d/'+represent?.id]">
+						<img
+							[attr.src]="represent?.category?'/assets/image/work-card/ikon-tag.svg':represent?.price==0?'/assets/image/work-card/free-tag.svg':'/assets/image/work-card/Live2D-tag.svg'"
+							class="good-icon"
+						/>
 
-            <!-- <img [attr.src]="represent.cover" (click)="toWork(represent.id,represent.category)"> -->
-            <ivo-lazy-img
-              [ngLazyLoad]="represent?.cover+'?x-oss-process=image/resize,m_fixed,w_384,h_384'"
-            >
-            </ivo-lazy-img>
-            <span class="first">
-              <span class="type" *ngIf="represent.category==0;else other"
-                >Live2D</span
-              >
-              <ng-template #other>
-                <span class="type">插画</span>
-              </ng-template>
-            </span>
-            <span class="name">{{represent.name}}</span>
-            <span class="sad">
-              <span class="like-count">
-                <img src="/assets/image/svg/i-thumbs-up.svg" />
-                <ng-container *ngIf="represent.like_count">
-                  {{represent.like_count | changeUnit}}
-                </ng-container>
-              </span>
-              <ng-container *ngIf="represent.category==0">
-                <span class="price" [ngSwitch]="represent?.price">
-                  <ng-container *ngSwitchCase="0">
-                    <span class="free"> 免费下载 </span>
-                  </ng-container>
-                  <ng-container *ngSwitchCase="-1">
-                    <!-- <span class="no">
+						<!-- <img [attr.src]="represent.cover" (click)="toWork(represent.id,represent.category)"> -->
+						<ivo-lazy-img [ngLazyLoad]="represent?.cover+'?x-oss-process=image/resize,m_fixed,w_384,h_384'"> </ivo-lazy-img>
+						<span class="first">
+							<span class="type" *ngIf="represent.category==0;else other">Live2D</span>
+							<ng-template #other>
+								<span class="type">插画</span>
+							</ng-template>
+						</span>
+						<span class="name">{{represent.name}}</span>
+						<span class="sad">
+							<span class="like-count">
+								<img src="/assets/image/svg/i-thumbs-up.svg" />
+								<ng-container *ngIf="represent.like_count"> {{represent.like_count | changeUnit}} </ng-container>
+							</span>
+							<ng-container *ngIf="represent.category==0">
+								<span class="price" [ngSwitch]="represent?.price">
+									<ng-container *ngSwitchCase="0">
+										<span class="free"> 免费下载 </span>
+									</ng-container>
+									<ng-container *ngSwitchCase="-1">
+										<!-- <span class="no">
                         暂无商品
                     </span> -->
-                  </ng-container>
-                  <ng-container *ngSwitchDefault>
-                    <a>¥</a>{{represent?.price}}
-                  </ng-container>
-                </span>
-              </ng-container>
-            </span>
-          </a>
-        </li>
-        <li
-          class="best-work2"
-          *ngIf="representList.length<4 && pageUid == (id$ |ngrxPush)"
-          (mouseenter)="Addpic$.next(false)"
-          (mouseleave)="Addpic$.next(true)"
-          (click)="changeBest()"
-        >
-          <ng-container *ngrxLet="Addpic$;let Addpic">
-            <img
-              class="add"
-              [class.opa]="!Addpic"
-              src="/assets/image/svg/add.svg"
-            />
-            <img
-              class="add-hover"
-              [class.opa]="Addpic"
-              src="/assets/image/svg/add-hover.svg"
-            />
-          </ng-container>
-          <span class="tips">添加一个作品</span>
-        </li>
-      </div>
-      <!-- <ng-template #emptyOne>
+									</ng-container>
+									<ng-container *ngSwitchDefault> <a>¥</a>{{represent?.price}} </ng-container>
+								</span>
+							</ng-container>
+						</span>
+					</a>
+				</li>
+				<li
+					class="best-work2"
+					*ngIf="representList.length<4 && pageUid == (id$ |ngrxPush)"
+					(mouseenter)="Addpic$.next(false)"
+					(mouseleave)="Addpic$.next(true)"
+					(click)="changeBest()"
+				>
+					<ng-container *ngrxLet="Addpic$;let Addpic">
+						<img class="add" [class.opa]="!Addpic" src="/assets/image/svg/add.svg" />
+						<img class="add-hover" [class.opa]="Addpic" src="/assets/image/svg/add-hover.svg" />
+					</ng-container>
+					<span class="tips">添加一个作品</span>
+				</li>
+			</div>
+			<!-- <ng-template #emptyOne>
                 <div class="empty-one">
                     <img src="/assets/image/represent-empty.png">
                     <span>你还没有设置代表作哦～</span>
                 </div>
             </ng-template> -->
-    </div>
-  </ng-container>
+		</div>
+	</ng-container>
 
-  <li>全部作品</li>
-  <ng-container *ngrxLet="loadedItems$;let workList">
-    <ng-container *ngIf="count>0;else emptyTwo">
-      <div class="mywork">
-        <ng-container *ngFor="let work of workList">
-          <ivo-work-card [work]="work"></ivo-work-card>
-        </ng-container>
-      </div>
-      <li *ngIf="count > workList.length">
-        <button>下拉加载更多</button>
-      </li>
-    </ng-container>
-  </ng-container>
+	<li>全部作品</li>
+	<ng-container *ngrxLet="loadedItems$;let workList">
+		<ng-container *ngIf="count>0;else emptyTwo">
+			<div class="mywork">
+				<ng-container *ngFor="let work of workList">
+					<ivo-work-card [work]="work"></ivo-work-card>
+				</ng-container>
+			</div>
+			<li *ngIf="count > workList.length">
+				<button>下拉加载更多</button>
+			</li>
+		</ng-container>
+	</ng-container>
 
-  <ng-template #emptyTwo>
-    <div class="empty-two">
-      <ivo-lack-image></ivo-lack-image>
-    </div>
-  </ng-template>
+	<ng-template #emptyTwo>
+		<div class="empty-two">
+			<ivo-lack-image></ivo-lack-image>
+		</div>
+	</ng-template>
 </div>

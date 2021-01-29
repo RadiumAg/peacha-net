@@ -1,8 +1,8 @@
 <section class="submited-container">
-    <div>
-        <img [src]="ImgSrc" alt="">
-        <h1>{{Title}}</h1>
-        <p class="reason" *ngIf="reason">审核失败原因：{{reason}}</p>
-        <button ivo-button [routerLink] = "backRoute">{{ButtonTitle}}</button>
-    </div>
+	<div>
+		<img [src]="ImgSrc" alt="" />
+		<h1>{{ Title }}</h1>
+		<p class="reason" *ngIf="reason">审核失败原因：{{ reason }}</p>
+		<button ivo-button [routerLink]="backRoute">{{ ButtonTitle }}</button>
+	</div>
 </section>

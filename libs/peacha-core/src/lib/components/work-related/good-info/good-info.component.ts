@@ -13,209 +13,182 @@ import { AddToCart } from '../../../core/state/cart.action';
 import { CartState } from '../../../core/state/cart.state';
 
 @Component({
-  selector: 'ivo-good-info',
-  templateUrl: './good-info.component.html',
-  styleUrls: ['./good-info.component.less'],
+	selector: 'ivo-good-info',
+	templateUrl: './good-info.component.html',
+	styleUrls: ['./good-info.component.less'],
 })
 export class GoodInfoComponent {
-  @Input() authorId: number;
-  @Input() name: string;
-  @Input() price: number;
-  @Input() workId: number;
-  @Input() goodId: number;
-  @Input() own: boolean;
-  @Input() size: number;
-  @Input() maxStock: number;
-  @Input() saleNumber: number;
-  @Input() sellState: number;
-  @Input() period: number;
+	@Input() authorId: number;
+	@Input() name: string;
+	@Input() price: number;
+	@Input() workId: number;
+	@Input() goodId: number;
+	@Input() own: boolean;
+	@Input() size: number;
+	@Input() maxStock: number;
+	@Input() saleNumber: number;
+	@Input() sellState: number;
+	@Input() period: number;
 
-  @Select(UserState.id)
-  id$: Observable<number>;
+	@Select(UserState.id)
+	id$: Observable<number>;
 
-  @Select(CartState.list)
-  list$: Observable<number[]>;
+	@Select(CartState.list)
+	list$: Observable<number[]>;
 
-  @Select(UserState.phone)
-  phone$: Observable<string>;
+	@Select(UserState.phone)
+	phone$: Observable<string>;
 
-  fileList$ = new BehaviorSubject({});
-  fileListShow = false;
+	fileList$ = new BehaviorSubject({});
+	fileListShow = false;
 
-  constructor(
-    private store: Store,
-    private router: Router,
-    private platform: PlatformLocation,
-    private http: HttpClient,
-    private modal: ModalService
-  ) {}
+	constructor(
+		private store: Store,
+		private router: Router,
+		private platform: PlatformLocation,
+		private http: HttpClient,
+		private modal: ModalService
+	) {}
 
-  ngAfterViewInit(): void {}
+	ngAfterViewInit(): void {}
 
-  isInCart(goodId: number) {
-    return this.list$.pipe(
-      map((list) => {
-        return list.indexOf(goodId) !== -1;
-      })
-    );
-  }
+	isInCart(goodId: number) {
+		return this.list$.pipe(
+			map(list => {
+				return list.indexOf(goodId) !== -1;
+			})
+		);
+	}
 
-  addToCart() {
-    this.store.dispatch(new AddToCart(this.goodId));
-  }
+	addToCart() {
+		this.store.dispatch(new AddToCart(this.goodId));
+	}
 
-  goToCart() {
-    this.router.navigateByUrl('/cart');
-  }
+	goToCart() {
+		this.router.navigateByUrl('/cart');
+	}
 
-  addToWarehouse() {
-    this.id$
-      .pipe(
-        take(1),
-        map((id) => {
-          if (id > 0) {
-            this.http
-              .post(`/work/add_own`, {
-                w: this.goodId,
-              })
-              .pipe(take(1))
-              .subscribe({
-                next: () => {
-                  this.own = true;
-                },
-                error: (e) => {
-                  //console.log(e)
-                },
-              });
-          } else {
-            this.router.navigate(['/passport/login'], {
-              queryParams: {
-                return: this.platform.pathname,
-              },
-            });
-          }
-        })
-      )
-      .subscribe();
-  }
+	addToWarehouse() {
+		this.id$
+			.pipe(
+				take(1),
+				map(id => {
+					if (id > 0) {
+						this.http
+							.post(`/work/add_own`, {
+								w: this.goodId,
+							})
+							.pipe(take(1))
+							.subscribe({
+								next: () => {
+									this.own = true;
+								},
+								error: e => {
+									//console.log(e)
+								},
+							});
+					} else {
+						this.router.navigate(['/passport/login'], {
+							queryParams: {
+								return: this.platform.pathname,
+							},
+						});
+					}
+				})
+			)
+			.subscribe();
+	}
 
-  goToWarehouse() {
-    this.router.navigateByUrl('/store?id=' + this.workId);
-  }
+	goToWarehouse() {
+		this.router.navigateByUrl('/store?id=' + this.workId);
+	}
 
-  showWorkDetail = [];
-  showGoodDetail = [];
+	showWorkDetail = [];
+	showGoodDetail = [];
 
-  showFileList() {
-    this.showWorkDetail = [];
-    this.showGoodDetail = [];
-    this.http
-      .get<{ goods_list: string[]; work_list: string[]; size: number }>(
-        `/work/get_goods_detail?g=${this.goodId}`
-      )
-      .pipe(
-        take(1),
-        tap((x) => {
-          x.work_list?.forEach((l) => {
-            let a: { font: string; type: number } = { font: '', type: -1 };
-            a.font = l;
-            if (
-              l.split('.png').length > 1 ||
-              l.split('.jpg').length > 1 ||
-              l.split('.psd').length > 1
-            ) {
-              a.type = 0;
-            } else if (
-              l.split('.zip').length > 1 ||
-              l.split('.rar').length > 1
-            ) {
-              a.type = 1;
-            } else if (
-              l.split('.moc3').length > 1 ||
-              l.split('.cmo3').length > 1
-            ) {
-              a.type = 2;
-            } else {
-              a.type = 3;
-            }
-            this.showWorkDetail.push(a);
-          });
+	showFileList() {
+		this.showWorkDetail = [];
+		this.showGoodDetail = [];
+		this.http
+			.get<{ goods_list: string[]; work_list: string[]; size: number }>(`/work/get_goods_detail?g=${this.goodId}`)
+			.pipe(
+				take(1),
+				tap(x => {
+					x.work_list?.forEach(l => {
+						let a: { font: string; type: number } = { font: '', type: -1 };
+						a.font = l;
+						if (l.split('.png').length > 1 || l.split('.jpg').length > 1 || l.split('.psd').length > 1) {
+							a.type = 0;
+						} else if (l.split('.zip').length > 1 || l.split('.rar').length > 1) {
+							a.type = 1;
+						} else if (l.split('.moc3').length > 1 || l.split('.cmo3').length > 1) {
+							a.type = 2;
+						} else {
+							a.type = 3;
+						}
+						this.showWorkDetail.push(a);
+					});
 
-          x.goods_list?.forEach((l) => {
-            let a: { font: string; type: number } = { font: '', type: -1 };
-            a.font = l;
-            if (
-              l.split('.png').length > 1 ||
-              l.split('.jpg').length > 1 ||
-              l.split('.psd').length > 1
-            ) {
-              a.type = 0;
-            } else if (
-              l.split('.zip').length > 1 ||
-              l.split('.rar').length > 1
-            ) {
-              a.type = 1;
-            } else if (
-              l.split('.moc3').length > 1 ||
-              l.split('.cmo3').length > 1
-            ) {
-              a.type = 2;
-            } else {
-              a.type = 3;
-            }
-            this.showGoodDetail.push(a);
-          });
-        })
-      )
-      .subscribe({
-        next: (fileList) => {
-          this.fileList$.next(fileList);
-        },
-      });
-    this.fileListShow = true;
-  }
+					x.goods_list?.forEach(l => {
+						let a: { font: string; type: number } = { font: '', type: -1 };
+						a.font = l;
+						if (l.split('.png').length > 1 || l.split('.jpg').length > 1 || l.split('.psd').length > 1) {
+							a.type = 0;
+						} else if (l.split('.zip').length > 1 || l.split('.rar').length > 1) {
+							a.type = 1;
+						} else if (l.split('.moc3').length > 1 || l.split('.cmo3').length > 1) {
+							a.type = 2;
+						} else {
+							a.type = 3;
+						}
+						this.showGoodDetail.push(a);
+					});
+				})
+			)
+			.subscribe({
+				next: fileList => {
+					this.fileList$.next(fileList);
+				},
+			});
+		this.fileListShow = true;
+	}
 
-  closeFileList() {
-    this.fileListShow = false;
-  }
+	closeFileList() {
+		this.fileListShow = false;
+	}
 
-  toBuy() {
-    combineLatest([this.id$, this.phone$])
-      .pipe(
-        take(1),
-        tap(([id, phone]) => {
-          if (id > 0) {
-            if (phone) {
-              this.router.navigate(['order/create'], {
-                queryParams: {
-                  order: JSON.stringify([this.goodId]),
-                },
-              });
-            } else {
-              this.modal
-                .open(PopTips, [
-                  '依据《网络安全法》，为了保障您的账户安全和正常使用，请完成手机绑定。',
-                  1,
-                  2,
-                  '前往绑定',
-                ])
-                .afterClosed()
-                .pipe(take(1))
-                .subscribe((sure) => {
-                  if (sure) {
-                    this.router.navigate(['/passport/bind_phone']);
-                  }
-                });
-            }
-          } else {
-            this.router.navigate(['login'], {
-              queryParams: {
-                return: 'cart',
-              },
-            });
-          }
-        })
-      )
-      .subscribe();
-  }
+	toBuy() {
+		combineLatest([this.id$, this.phone$])
+			.pipe(
+				take(1),
+				tap(([id, phone]) => {
+					if (id > 0) {
+						if (phone) {
+							this.router.navigate(['order/create'], {
+								queryParams: {
+									order: JSON.stringify([this.goodId]),
+								},
+							});
+						} else {
+							this.modal
+								.open(PopTips, ['依据《网络安全法》，为了保障您的账户安全和正常使用，请完成手机绑定。', 1, 2, '前往绑定'])
+								.afterClosed()
+								.pipe(take(1))
+								.subscribe(sure => {
+									if (sure) {
+										this.router.navigate(['/passport/bind_phone']);
+									}
+								});
+						}
+					} else {
+						this.router.navigate(['login'], {
+							queryParams: {
+								return: 'cart',
+							},
+						});
+					}
+				})
+			)
+			.subscribe();
+	}
 }

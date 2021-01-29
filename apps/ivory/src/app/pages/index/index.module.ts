@@ -16,80 +16,76 @@ import { HotGoodPage } from './hot-good/hot-good.page';
 import { UnloginIndexPage } from './unlogin-index/unlogin-index.page';
 import { UnindexResolve } from './unindex.guard';
 import { RecommendWorkCarousel } from './login-index/recommendWork-carousel/recommendWork-carousel';
-import {
-  PeachaComponentsModule,
-  ReactiveComponentModule,
-  WorkRelatedModule,
-} from '@peacha-core';
+import { PeachaComponentsModule, ReactiveComponentModule, WorkRelatedModule } from '@peacha-core';
 import { FollowModule } from 'libs/peacha-core/src/lib/features/follow/follow.module';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { PeachaStudioCoreModule } from '@peacha-studio-core';
 
 @NgModule({
-  declarations: [
-    IndexPage,
-    LoginIndexPage,
-    UnloginIndexPage,
-    HotOriginalWorkPage,
-    NewestWorkPage,
-    HotLiveWorkPage,
-    PublicWorkPage,
-    HotTagPage,
-    HotGoodPage,
-    RecommendWorkCarousel,
-  ],
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: IndexPage,
-        children: [
-          {
-            path: '',
-            component: UnloginIndexPage,
-            canActivate: [IndexResolve],
-          },
-          {
-            path: 'homepage',
-            component: LoginIndexPage,
-            canActivate: [UnindexResolve],
-          },
-          {
-            path: 'hotgood',
-            component: HotGoodPage,
-          },
-          {
-            path: 'hotLive2DWork',
-            component: HotLiveWorkPage,
-          },
-          {
-            path: 'hotOriginalWork',
-            component: HotOriginalWorkPage,
-          },
-          {
-            path: 'hotTagWork',
-            component: HotTagPage,
-          },
-          {
-            path: 'newestWork',
-            component: NewestWorkPage,
-          },
-          {
-            path: 'publicWork',
-            component: PublicWorkPage,
-          },
-        ],
-      },
-    ]),
-    NzCheckboxModule,
-    PeachaComponentsModule,
-    ReactiveComponentModule,
-    FollowModule,
-    PeachaStudioCoreModule,
-    WorkRelatedModule,
-  ],
-  providers: [IndexResolve, UnindexResolve],
+	declarations: [
+		IndexPage,
+		LoginIndexPage,
+		UnloginIndexPage,
+		HotOriginalWorkPage,
+		NewestWorkPage,
+		HotLiveWorkPage,
+		PublicWorkPage,
+		HotTagPage,
+		HotGoodPage,
+		RecommendWorkCarousel,
+	],
+	imports: [
+		ReactiveFormsModule,
+		CommonModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				component: IndexPage,
+				children: [
+					{
+						path: '',
+						component: UnloginIndexPage,
+						canActivate: [IndexResolve],
+					},
+					{
+						path: 'homepage',
+						component: LoginIndexPage,
+						canActivate: [UnindexResolve],
+					},
+					{
+						path: 'hotgood',
+						component: HotGoodPage,
+					},
+					{
+						path: 'hotLive2DWork',
+						component: HotLiveWorkPage,
+					},
+					{
+						path: 'hotOriginalWork',
+						component: HotOriginalWorkPage,
+					},
+					{
+						path: 'hotTagWork',
+						component: HotTagPage,
+					},
+					{
+						path: 'newestWork',
+						component: NewestWorkPage,
+					},
+					{
+						path: 'publicWork',
+						component: PublicWorkPage,
+					},
+				],
+			},
+		]),
+		NzCheckboxModule,
+		PeachaComponentsModule,
+		ReactiveComponentModule,
+		FollowModule,
+		PeachaStudioCoreModule,
+		WorkRelatedModule,
+	],
+	providers: [IndexResolve, UnindexResolve],
 })
 export class IndexModule {}

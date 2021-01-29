@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  NgZone,
-  OnDestroy,
-  Pipe,
-  PipeTransform,
-} from '@angular/core';
+import { ChangeDetectorRef, NgZone, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { NextObserver, ObservableInput, Unsubscribable } from 'rxjs';
 import { CdAware, createCdAware, createRender } from '../core';
 
@@ -53,39 +47,35 @@ import { CdAware, createCdAware, createRender } from '../core';
  */
 @Pipe({ name: 'ngrxPush', pure: false })
 export class PushPipe<S> implements PipeTransform, OnDestroy {
-  private renderedValue: S | null | undefined;
+	private renderedValue: S | null | undefined;
 
-  private readonly subscription: Unsubscribable;
-  private readonly cdAware: CdAware<S | null | undefined>;
-  private readonly resetContextObserver: NextObserver<void> = {
-    next: () => (this.renderedValue = undefined),
-  };
-  private readonly updateViewContextObserver: NextObserver<
-    S | null | undefined
-  > = {
-    next: (value: S | null | undefined) => (this.renderedValue = value),
-  };
+	private readonly subscription: Unsubscribable;
+	private readonly cdAware: CdAware<S | null | undefined>;
+	private readonly resetContextObserver: NextObserver<void> = {
+		next: () => (this.renderedValue = undefined),
+	};
+	private readonly updateViewContextObserver: NextObserver<S | null | undefined> = {
+		next: (value: S | null | undefined) => (this.renderedValue = value),
+	};
 
-  constructor(cdRef: ChangeDetectorRef, ngZone: NgZone) {
-    this.cdAware = createCdAware<S>({
-      render: createRender({ cdRef, ngZone }),
-      updateViewContextObserver: this.updateViewContextObserver,
-      resetContextObserver: this.resetContextObserver,
-    });
-    this.subscription = this.cdAware.subscribe();
-  }
+	constructor(cdRef: ChangeDetectorRef, ngZone: NgZone) {
+		this.cdAware = createCdAware<S>({
+			render: createRender({ cdRef, ngZone }),
+			updateViewContextObserver: this.updateViewContextObserver,
+			resetContextObserver: this.resetContextObserver,
+		});
+		this.subscription = this.cdAware.subscribe();
+	}
 
-  transform<T>(potentialObservable: null): null;
-  transform<T>(potentialObservable: undefined): undefined;
-  transform<T>(potentialObservable: ObservableInput<T>): T;
-  transform<T>(
-    potentialObservable: ObservableInput<T> | null | undefined
-  ): T | null | undefined {
-    this.cdAware.nextPotentialObservable(potentialObservable);
-    return this.renderedValue as any;
-  }
+	transform<T>(potentialObservable: null): null;
+	transform<T>(potentialObservable: undefined): undefined;
+	transform<T>(potentialObservable: ObservableInput<T>): T;
+	transform<T>(potentialObservable: ObservableInput<T> | null | undefined): T | null | undefined {
+		this.cdAware.nextPotentialObservable(potentialObservable);
+		return this.renderedValue as any;
+	}
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+	ngOnDestroy(): void {
+		this.subscription.unsubscribe();
+	}
 }

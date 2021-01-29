@@ -1,64 +1,41 @@
 <div class="main">
-<div class="index">
-    <li style="color:#FF6398;font-size: 20px;">支付记录</li>
-    <li>
-        <nz-date-picker
-            [formControl]="date"
-            nzFormat="yyyy-MM"
-            [nzMode]="'month'"
-            (ngModelChange)="handleDatePanelChange($event)"
-        >
-        </nz-date-picker>
-        <div class="search">
-            <input
-                type="text"
-                [formControl]="key"
-                placeholder="搜索"
-                (keydown.Enter)="keyword()"
-                (blur)="keyword()"
-            />
-            <img
-                src="assets/image/svg/worksearch.svg"
-                class="work-search"
-            />
-        </div>
-    </li>
-</div>
-<ng-container *ngrxLet="wallet$;let wallet">
-<div class="min-h" >
-    <div class="bottom">
-        <span class="name">名称</span>
-        <span class="order">支付交易号</span>
-        <span class="time">支付时间</span>
-        <span>金额</span>
-        <span>操作</span>
-    </div>
-    <div class="show" >
-        <li
-            *ngFor="let item of wallet.list"
-        >
-            <span >{{item.title}}</span>
-            <span >{{item.payId}}</span>
-            <span
-                >{{item.startTime|date:"yyyy-MM-dd HH:mm"}}</span
-            >
-            <span class="money"
-                >¥{{item.amount| number:'1.2-2'}}</span
-            >
-            <span
-            style="cursor: pointer;border: none;outline: none;"
-            [routerLink]="['/setting/pay',item.payId]"
-             >查看详情</span>
-        </li>
-    </div>
-</div>
-<div class="page" *ngIf="wallet.count>10">
-    <ivo-pagination
-        [total]="wallet?.count"
-        [pageSize]="10"
-        [currentPage]="(page$|async)"
-        (onPageChange)="page($event)"
-    ></ivo-pagination>
-</div>
-</ng-container>
+	<div class="index">
+		<li style="color: #ff6398; font-size: 20px">支付记录</li>
+		<li>
+			<nz-date-picker [formControl]="date" nzFormat="yyyy-MM" [nzMode]="'month'" (ngModelChange)="handleDatePanelChange($event)">
+			</nz-date-picker>
+			<div class="search">
+				<input type="text" [formControl]="key" placeholder="搜索" (keydown.Enter)="keyword()" (blur)="keyword()" />
+				<img src="assets/image/svg/worksearch.svg" class="work-search" />
+			</div>
+		</li>
+	</div>
+	<ng-container *ngrxLet="wallet$;let wallet">
+		<div class="min-h">
+			<div class="bottom">
+				<span class="name">名称</span>
+				<span class="order">支付交易号</span>
+				<span class="time">支付时间</span>
+				<span>金额</span>
+				<span>操作</span>
+			</div>
+			<div class="show">
+				<li *ngFor="let item of wallet.list">
+					<span>{{item.title}}</span>
+					<span>{{item.payId}}</span>
+					<span>{{item.startTime|date:"yyyy-MM-dd HH:mm"}}</span>
+					<span class="money">¥{{item.amount| number:'1.2-2'}}</span>
+					<span style="cursor: pointer; border: none; outline: none" [routerLink]="['/setting/pay',item.payId]">查看详情</span>
+				</li>
+			</div>
+		</div>
+		<div class="page" *ngIf="wallet.count>10">
+			<ivo-pagination
+				[total]="wallet?.count"
+				[pageSize]="10"
+				[currentPage]="(page$|async)"
+				(onPageChange)="page($event)"
+			></ivo-pagination>
+		</div>
+	</ng-container>
 </div>

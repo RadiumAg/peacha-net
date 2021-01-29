@@ -1,417 +1,373 @@
 .box {
-    width: 896px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    background: #FFFFFF;
-    // box-shadow: 0px 0px 10px rgba(141, 141, 141, 0.16);
-    border-radius: 8px;
-    margin-bottom: 20px;
-    // justify-content: space-between;
-
-    &>.stop {
-        width: 100%;
-        height: 56px;
-        line-height: 56px;
-        border-radius: 8px 8px 0px 0px;
-        background: rgba(250, 225, 162, 0.7);
-        text-align: center;
-
-        &>p {
-            &>a {
-                position: absolute;
-                margin-left: 150px;
-                outline: none;
-            }
-        }
-
-    }
-
-    &>.box-node {
-        width: 100%;
-        padding: 30px 40px;
-
-        &>.show-title {
-            display: block;
-            width: 100%;
-            // padding: 0 30px;
-            font-size: 20px;
-            font-weight: bold;
-            line-height: 34px;
-            color: #343434;
-            margin-bottom: 25px;
-        }
-
-        &>.show-status {
-            display: block;
-            width: 100%;
-            font-size: 18px;
-            // font-weight: bold;
-            color: #333333;
-            // padding: 0 48px;
-            margin-top: 40px;
-            // margin-bottom: 20px;
-
-
-            &>.status {
-                &>a {
-                    color: #FF778F;
-                    font-weight: bold;
-                }
-
-                &>.update-file {
-                    width: 100%;
-                    // padding: 10px 0;
-
-                    &>.op-box {
-                        color: #FF778F;
-                        font-size: 18px;
-                        font-weight: bold;
-                        padding-top: 20px;
-
-                        &>button {
-                            display: inline-block;
-                            width: 80px;
-                            height: 30px;
-                            font-size: 14px;
-                            font-weight: normal;
-                            border: none;
-                            outline: none;
-                            border-radius: 4px;
-                            margin-right: 12px;
-
-                            &>img {
-                                margin-top: -4px;
-                                margin-right: 5px;
-                            }
-                        }
-
-                        &>.not {
-                            background-color: #999999;
-                            cursor: default;
-                        }
-
-                        &>.file-num {
-                            font-size: 12px;
-                            font-weight: normal;
-                            margin-right: 12px;
-                        }
-
-                        &>.op-tip {
-                            font-size: 12px;
-                            font-weight: normal;
-                            color: #999999;
-                        }
-                    }
-
-                    &>.show-box {
-
-                        // height: 126px;
-                        margin: 20px 0 10px;
-
-                        &>.image-box {
-                            display: grid;
-                            grid-template-columns: repeat(5, 126px);
-                            grid-column-gap: 20px;
-
-                            &>li {
-                                &>.delete {
-                                    width: 16px;
-                                    height: 16px;
-                                    position: absolute;
-                                    margin-left: 105px;
-                                    margin-top: 5px;
-                                    cursor: pointer;
-                                }
-                            }
-
-                        }
-
-                        &>.file-box {
-                            display: grid;
-                            grid-template-columns: repeat(2, 200px);
-                            grid-column-gap: 20px;
-                            margin-left: 95px;
-
-                            &>li {
-                                &>.delete {
-                                    width: 16px;
-                                    height: 16px;
-                                    position: absolute;
-                                    margin-left: 105px;
-                                    margin-top: 8px;
-                                    cursor: pointer;
-                                }
-                            }
-                        }
-
-                        &>div {
-                            &>li {
-                                display: inline-block;
-                                position: relative;
-
-
-
-                                &>.update-img {
-                                    width: 126px;
-                                    height: 126px;
-                                    border-radius: 4px;
-                                    cursor: pointer;
-                                    object-fit: cover;
-                                }
-
-                                &>span {
-                                    font-size: 12px;
-                                    font-weight: normal;
-
-                                    &>img {
-                                        width: 11px;
-                                        margin-top: -3px;
-                                        margin-right: 10px;
-                                    }
-                                }
-
-                            }
-                        }
-
-
-
-                    }
-
-                    &>.pre {
-                        font-size: 14px;
-                        color: #666666;
-                        height: 20px;
-                        margin-left: 94px;
-                    }
-
-                }
-
-                &>.download-file {
-                    margin-top: 10px;
-
-                    &>.down-title {
-                        color: #FF778F;
-                        font-weight: bold;
-
-                        &>span {
-                            color: #333333;
-                            font-weight: normal;
-                        }
-                    }
-
-                    &>.submit-img {
-                        display: grid;
-                        grid-template-columns: repeat(5, 126px);
-                        grid-column-gap: 20px;
-                        margin-top: 20px;
-
-                        &>.avatar {
-                            width: 126px;
-                            height: 126px;
-                            border-radius: 4px;
-                            cursor: pointer;
-                            object-fit: cover;
-                        }
-                    }
-
-
-                    &>.choice {
-
-                        width: 100%;
-                        display: grid;
-                        grid-template-columns: repeat(2, 200px);
-                        grid-column-gap: 20px;
-                        padding-left: 125px;
-
-                        &>.file-name {
-
-                            color: #999999;
-                            font-size: 14px;
-                            margin-top: 10px;
-
-                            &>img {
-                                width: 11px;
-                                margin-top: -2px;
-                                margin-right: 10px;
-                            }
-
-                            &>a {
-
-                                &>img {
-                                    margin-top: -3px;
-                                    margin-left: 20px;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                &>.btns {
-                    width: 100%;
-                    display: flex;
-                    justify-content: space-between;
-
-                    &>.showNodeDetail {
-
-                        width: 100%;
-                        margin-top: 30px;
-
-
-                        &>span {
-                            display: block;
-                            font-size: 12px;
-                            color: #999999;
-                            font-weight: normal;
-                            margin-bottom: 5px;
-                            line-height: 20px;
-                        }
-                    }
-
-                    &>.line-top {
-                        width: 100%;
-                        display: flex;
-                        justify-content: flex-end;
-                        align-items: flex-end;
-
-                        &>.note {
-                            font-size: 14px;
-                            color: #FF778F;
-                            font-weight: normal;
-                            line-height: 36px;
-                        }
-
-                        &>button {
-                            height: 36px;
-                            border-radius: 4px;
-                            font-size: 14px;
-                            margin-left: 12px;
-                            padding: 0 15px;
-
-                        }
-
-
-                    }
-
-
-
-
-                }
-            }
-
-
-        }
-
-        &>.steps {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            // padding: 0 48px;
-
-            &>.step {
-                display: inline-flex;
-                align-items: center;
-
-
-                &>.show-step {
-
-                    &>.point {
-                        display: inline-flex;
-                        width: 40px;
-                        height: 40px;
-                        line-height: 40px;
-                        border-radius: 50%;
-                        border: 3px solid #CDCDCD;
-                        align-items: center;
-                        justify-content: center;
-                        position: relative;
-                        background-color: #ffffff;
-
-                        &>span {
-                            display: inline-block;
-                            cursor: default;
-                        }
-
-                        &>.side {
-                            color: #999999;
-                            font-size: 12px;
-                        }
-
-                        &>.side-active {
-                            color: #FF778F;
-
-                        }
-
-                        &>.number {
-                            color: #CDCDCD;
-                            font-size: 20px;
-                        }
-
-                        &>.number-active {
-                            color: #FF778F;
-                        }
-
-                        &>.step-finished {
-                            color: #ffffff;
-                        }
-                    }
-
-                    &>.icon {
-                        position: absolute;
-                        margin-left: -30px;
-                        margin-top: 14px;
-                        cursor: pointer;
-
-                    }
-
-                    &>.finshed {
-                        background-color: #FF778F;
-                        border: 3px solid #FF778F;
-                    }
-
-                    &>.show-pointer {
-                        cursor: pointer;
-
-                        &>span {
-                            cursor: pointer;
-                        }
-                    }
-
-                    &>.doing {
-                        border: 3px solid #FF778F;
-
-                    }
-
-                    &>.selected {
-                        border: 3px solid #FFC8C8 !important;
-                    }
-                }
-
-
-
-
-
-
-                &>.line {
-                    display: inline-block;
-                    min-width: 40px;
-                    height: 1px;
-                    border: 1px dashed #CDCDCD;
-                    margin: 0 10px;
-                }
-
-                &>.act {
-                    border: 1px solid #FF778F;
-                }
-            }
-
-        }
-    }
-
-
-
-
-
-
-
+	width: 896px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	background: #ffffff;
+	// box-shadow: 0px 0px 10px rgba(141, 141, 141, 0.16);
+	border-radius: 8px;
+	margin-bottom: 20px;
+	// justify-content: space-between;
+
+	& > .stop {
+		width: 100%;
+		height: 56px;
+		line-height: 56px;
+		border-radius: 8px 8px 0px 0px;
+		background: rgba(250, 225, 162, 0.7);
+		text-align: center;
+
+		& > p {
+			& > a {
+				position: absolute;
+				margin-left: 150px;
+				outline: none;
+			}
+		}
+	}
+
+	& > .box-node {
+		width: 100%;
+		padding: 30px 40px;
+
+		& > .show-title {
+			display: block;
+			width: 100%;
+			// padding: 0 30px;
+			font-size: 20px;
+			font-weight: bold;
+			line-height: 34px;
+			color: #343434;
+			margin-bottom: 25px;
+		}
+
+		& > .show-status {
+			display: block;
+			width: 100%;
+			font-size: 18px;
+			// font-weight: bold;
+			color: #333333;
+			// padding: 0 48px;
+			margin-top: 40px;
+			// margin-bottom: 20px;
+
+			& > .status {
+				& > a {
+					color: #ff778f;
+					font-weight: bold;
+				}
+
+				& > .update-file {
+					width: 100%;
+					// padding: 10px 0;
+
+					& > .op-box {
+						color: #ff778f;
+						font-size: 18px;
+						font-weight: bold;
+						padding-top: 20px;
+
+						& > button {
+							display: inline-block;
+							width: 80px;
+							height: 30px;
+							font-size: 14px;
+							font-weight: normal;
+							border: none;
+							outline: none;
+							border-radius: 4px;
+							margin-right: 12px;
+
+							& > img {
+								margin-top: -4px;
+								margin-right: 5px;
+							}
+						}
+
+						& > .not {
+							background-color: #999999;
+							cursor: default;
+						}
+
+						& > .file-num {
+							font-size: 12px;
+							font-weight: normal;
+							margin-right: 12px;
+						}
+
+						& > .op-tip {
+							font-size: 12px;
+							font-weight: normal;
+							color: #999999;
+						}
+					}
+
+					& > .show-box {
+						// height: 126px;
+						margin: 20px 0 10px;
+
+						& > .image-box {
+							display: grid;
+							grid-template-columns: repeat(5, 126px);
+							grid-column-gap: 20px;
+
+							& > li {
+								& > .delete {
+									width: 16px;
+									height: 16px;
+									position: absolute;
+									margin-left: 105px;
+									margin-top: 5px;
+									cursor: pointer;
+								}
+							}
+						}
+
+						& > .file-box {
+							display: grid;
+							grid-template-columns: repeat(2, 200px);
+							grid-column-gap: 20px;
+							margin-left: 95px;
+
+							& > li {
+								& > .delete {
+									width: 16px;
+									height: 16px;
+									position: absolute;
+									margin-left: 105px;
+									margin-top: 8px;
+									cursor: pointer;
+								}
+							}
+						}
+
+						& > div {
+							& > li {
+								display: inline-block;
+								position: relative;
+
+								& > .update-img {
+									width: 126px;
+									height: 126px;
+									border-radius: 4px;
+									cursor: pointer;
+									object-fit: cover;
+								}
+
+								& > span {
+									font-size: 12px;
+									font-weight: normal;
+
+									& > img {
+										width: 11px;
+										margin-top: -3px;
+										margin-right: 10px;
+									}
+								}
+							}
+						}
+					}
+
+					& > .pre {
+						font-size: 14px;
+						color: #666666;
+						height: 20px;
+						margin-left: 94px;
+					}
+				}
+
+				& > .download-file {
+					margin-top: 10px;
+
+					& > .down-title {
+						color: #ff778f;
+						font-weight: bold;
+
+						& > span {
+							color: #333333;
+							font-weight: normal;
+						}
+					}
+
+					& > .submit-img {
+						display: grid;
+						grid-template-columns: repeat(5, 126px);
+						grid-column-gap: 20px;
+						margin-top: 20px;
+
+						& > .avatar {
+							width: 126px;
+							height: 126px;
+							border-radius: 4px;
+							cursor: pointer;
+							object-fit: cover;
+						}
+					}
+
+					& > .choice {
+						width: 100%;
+						display: grid;
+						grid-template-columns: repeat(2, 200px);
+						grid-column-gap: 20px;
+						padding-left: 125px;
+
+						& > .file-name {
+							color: #999999;
+							font-size: 14px;
+							margin-top: 10px;
+
+							& > img {
+								width: 11px;
+								margin-top: -2px;
+								margin-right: 10px;
+							}
+
+							& > a {
+								& > img {
+									margin-top: -3px;
+									margin-left: 20px;
+								}
+							}
+						}
+					}
+				}
+
+				& > .btns {
+					width: 100%;
+					display: flex;
+					justify-content: space-between;
+
+					& > .showNodeDetail {
+						width: 100%;
+						margin-top: 30px;
+
+						& > span {
+							display: block;
+							font-size: 12px;
+							color: #999999;
+							font-weight: normal;
+							margin-bottom: 5px;
+							line-height: 20px;
+						}
+					}
+
+					& > .line-top {
+						width: 100%;
+						display: flex;
+						justify-content: flex-end;
+						align-items: flex-end;
+
+						& > .note {
+							font-size: 14px;
+							color: #ff778f;
+							font-weight: normal;
+							line-height: 36px;
+						}
+
+						& > button {
+							height: 36px;
+							border-radius: 4px;
+							font-size: 14px;
+							margin-left: 12px;
+							padding: 0 15px;
+						}
+					}
+				}
+			}
+		}
+
+		& > .steps {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			// padding: 0 48px;
+
+			& > .step {
+				display: inline-flex;
+				align-items: center;
+
+				& > .show-step {
+					& > .point {
+						display: inline-flex;
+						width: 40px;
+						height: 40px;
+						line-height: 40px;
+						border-radius: 50%;
+						border: 3px solid #cdcdcd;
+						align-items: center;
+						justify-content: center;
+						position: relative;
+						background-color: #ffffff;
+
+						& > span {
+							display: inline-block;
+							cursor: default;
+						}
+
+						& > .side {
+							color: #999999;
+							font-size: 12px;
+						}
+
+						& > .side-active {
+							color: #ff778f;
+						}
+
+						& > .number {
+							color: #cdcdcd;
+							font-size: 20px;
+						}
+
+						& > .number-active {
+							color: #ff778f;
+						}
+
+						& > .step-finished {
+							color: #ffffff;
+						}
+					}
+
+					& > .icon {
+						position: absolute;
+						margin-left: -30px;
+						margin-top: 14px;
+						cursor: pointer;
+					}
+
+					& > .finshed {
+						background-color: #ff778f;
+						border: 3px solid #ff778f;
+					}
+
+					& > .show-pointer {
+						cursor: pointer;
+
+						& > span {
+							cursor: pointer;
+						}
+					}
+
+					& > .doing {
+						border: 3px solid #ff778f;
+					}
+
+					& > .selected {
+						border: 3px solid #ffc8c8 !important;
+					}
+				}
+
+				& > .line {
+					display: inline-block;
+					min-width: 40px;
+					height: 1px;
+					border: 1px dashed #cdcdcd;
+					margin: 0 10px;
+				}
+
+				& > .act {
+					border: 1px solid #ff778f;
+				}
+			}
+		}
+	}
 }

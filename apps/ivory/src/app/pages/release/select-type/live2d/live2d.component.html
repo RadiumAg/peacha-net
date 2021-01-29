@@ -1,15 +1,15 @@
 <div class="live2dorillust-container">
-    <div class="left" [ngClass]="{'active': activeList[0]}" (click)="select(0,'live2d/free')">
-        <img src="/assets/image/release/01.png" alt="">
-        <div>仅展示/免费分享</div>
-    </div>
-    <div *ngIf="paid_enabled" class="right" [ngClass]="{'active':activeList[1]}" (click)="select(1,'live2d/paid')">
-        <img src="/assets/image/release/03.png" alt="">
-        <div>作为商品出售</div>
-    </div>
+	<div class="left" [ngClass]="{ active: activeList[0] }" (click)="select(0, 'live2d/free')">
+		<img src="/assets/image/release/01.png" alt="" />
+		<div>仅展示/免费分享</div>
+	</div>
+	<div *ngIf="paid_enabled" class="right" [ngClass]="{ active: activeList[1] }" (click)="select(1, 'live2d/paid')">
+		<img src="/assets/image/release/03.png" alt="" />
+		<div>作为商品出售</div>
+	</div>
 
-    <div *ngIf="!paid_enabled" class="right" style="cursor:not-allowed;" [ngClass]="{'active':activeList[1]}">
-        <img src="/assets/image/release/04.png" alt="">
-        <div>功能未开启</div>
-    </div>
+	<div *ngIf="!paid_enabled" class="right" style="cursor: not-allowed" [ngClass]="{ active: activeList[1] }">
+		<img src="/assets/image/release/04.png" alt="" />
+		<div>功能未开启</div>
+	</div>
 </div>

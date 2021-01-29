@@ -8,41 +8,37 @@ import { RecordDetailPage } from './record/record-detail/record-detail.page';
 import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 
 @NgModule({
-  declarations: [MemberPage, RecordPage, RecordDetailPage],
-  imports: [
-    ReactiveFormsModule,
-    PeachaComponentsModule,
-    CommonModule,
-    ReactiveComponentModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        // pathMatch: 'full',
-        component: MemberPage,
-        children: [
-          {
-            path: 'manager',
-            loadChildren: () =>
-              import('./manager/manager.module').then((m) => m.ManagerModule),
-          },
-          {
-            path: 'record',
-            component: RecordPage,
-          },
-          {
-            path: 'record/redetail',
-            component: RecordDetailPage,
-          },
-          {
-            path: 'cooperate',
-            loadChildren: () =>
-              import('./cooperate/cooperate.module').then(
-                (m) => m.CooperateModule
-              ),
-          },
-        ],
-      },
-    ]),
-  ],
+	declarations: [MemberPage, RecordPage, RecordDetailPage],
+	imports: [
+		ReactiveFormsModule,
+		PeachaComponentsModule,
+		CommonModule,
+		ReactiveComponentModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				// pathMatch: 'full',
+				component: MemberPage,
+				children: [
+					{
+						path: 'manager',
+						loadChildren: () => import('./manager/manager.module').then(m => m.ManagerModule),
+					},
+					{
+						path: 'record',
+						component: RecordPage,
+					},
+					{
+						path: 'record/redetail',
+						component: RecordDetailPage,
+					},
+					{
+						path: 'cooperate',
+						loadChildren: () => import('./cooperate/cooperate.module').then(m => m.CooperateModule),
+					},
+				],
+			},
+		]),
+	],
 })
 export class MemberModule {}

@@ -1,12 +1,11 @@
-<input accept="Image/png,Image/jpeg" #c style="display: none;" type="file" (change)="inputChange($event)">
-<div class="illust-box" *ngrxLet="Process$;let process" (click)="c.click()">
-    <img *ngIf="currentImage$|async" [src]="currentImage$|async">
-    <ng-container *ngIf="progress">
-        <div class='process-body'>
-            <div class='outer'>
-                <div class="mask" [ngStyle]="{'width': (process.progress * 100)+'%'}">
-                </div>
-            </div>
-        </div>
-    </ng-container>
+<input accept="Image/png,Image/jpeg" #c style="display: none" type="file" (change)="inputChange($event)" />
+<div class="illust-box" *ngrxLet="Process$; let process" (click)="c.click()">
+	<img *ngIf="currentImage$ | async" [src]="currentImage$ | async" />
+	<ng-container *ngIf="progress">
+		<div class="process-body">
+			<div class="outer">
+				<div class="mask" [ngStyle]="{ width: process.progress * 100 + '%' }"></div>
+			</div>
+		</div>
+	</ng-container>
 </div>

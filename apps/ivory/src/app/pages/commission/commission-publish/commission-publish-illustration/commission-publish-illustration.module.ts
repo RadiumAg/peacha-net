@@ -8,20 +8,20 @@ import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
-  declarations: [CommissionPublishIllustrationComponent],
-  imports: [
-    CommonModule,
-    PeachaComponentsModule,
-    ReactiveFormsModule,
-    ReactiveComponentModule,
-    ComponentsModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: CommissionPublishIllustrationComponent,
-      },
-    ]),
-  ],
-  providers: [CommissionApiService],
+	declarations: [CommissionPublishIllustrationComponent],
+	imports: [
+		CommonModule,
+		PeachaComponentsModule,
+		ReactiveFormsModule,
+		ReactiveComponentModule,
+		ComponentsModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				component: CommissionPublishIllustrationComponent,
+			},
+		]),
+	],
+	providers: [CommissionApiService],
 })
 export class CommissionPublishIllustrationModule {}

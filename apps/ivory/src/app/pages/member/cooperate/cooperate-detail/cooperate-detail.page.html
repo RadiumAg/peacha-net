@@ -1,69 +1,72 @@
 <div class="all">
-  <li class="title">合作详情<span class="back" (click)="goback()">&lt;返回列表</span></li>
-  <div class="lists" *ngrxLet="detail$;let detail">
-    <li class="list">
-      <img [attr.src]="detail.launch_cover+'?x-oss-process=image/resize,m_fixed,w_102,h_102'" (click)="toWork(detail.launch_workid,detail.launch_category)">
-      <span class="left">
-        <span class="name" (click)="toWork(detail.launch_workid,detail.launch_category)">{{detail.launch_name}}</span>
-        <span class="time">发布时间：{{detail.launch_publishtime | date:"y-MM-dd-HH:mm"}}</span>
-      </span>
-      <span class="right">
-        发布作品
-      </span>
-    </li>
-    <li class="list">
-      <img [attr.src]="detail.participate_cover+'?x-oss-process=image/resize,m_fixed,w_102,h_102'" (click)="toWork(detail.participate_workid,detail.participate_category)">
-      <span class="left">
-        <span class="name" (click)="toWork(detail.participate_workid,detail.participate_category)">{{detail.participate_name}}</span>
-        <span class="time">发布时间：{{detail.participate_publishtime | date:"y-MM-dd-HH:mm"}}</span>
-      </span>
-      <span class="right">
-        合作作品
-      </span>
-    </li>
-    <li class="good-list" *ngFor="let good of detail.list">
-      <span class="good-left">
-        <span class="good-name">{{good.name}}</span>
-        <span class="good-type" *ngIf="good.maxstock==1;else other">单次出售</span>
-        <ng-template #other>
-          <span class="good-type">多次出售</span>
-        </ng-template>
-      </span>
-      <span class="price"> ¥{{good.price| number:'1.2-2'}}</span>
-    </li>
-    <div class="hello">
-      <li>
-        <span class="user-name">发布者：{{detail.launch_username}}</span>
-        <span class="user-price">发布者收益分成：总收益的{{((1-detail.participate_share)*100).toFixed(0)+'%'}}</span>
-      </li>
-      <li>
-        <span class="user-name">合作者：{{detail.participate_username}}</span>
-        <span class="user-price">合作者收益分成：总收益的{{(detail.participate_share*100).toFixed(0)+'%'}}</span>
-      </li>
-      <li class="bottom">
-        <span>
-          合作状态：
-          <a *ngIf="detail.state==1">已合作</a>
-          <a class="checking" *ngIf="detail.state==0">确认中</a>
-          <a class="refuse" *ngIf="detail.state==2">已拒绝</a>
-        </span>
-        <span>
-          <a *ngIf="detail.state==1">合作时间：</a>
-          <a *ngIf="detail.state==0">申请合作时间：</a>
-          <a *ngIf="detail.state==2">拒绝时间：</a>
-          {{detail.time | date:"y-MM-dd-HH:mm" }}
-        </span>
-      </li>
-    </div>
-    <ng-container *ngrxLet="id$;let id">
-      <li class="btn" *ngIf="detail.state==2 && detail.participate_userid!=id">
-        <button (click)="change(detail.id,detail.participate_share)">修改收益分成</button>
-      </li>
-      <li class="btn" *ngIf="detail.state==0 && detail.participate_userid==id" >
-        <button class="s" (click)="audit(2,detail.id)">拒绝合作</button>
-        <button (click)="audit(1,detail.id)">同意合作</button>
-      </li>
-    </ng-container>
-
-  </div>
+	<li class="title">合作详情<span class="back" (click)="goback()">&lt;返回列表</span></li>
+	<div class="lists" *ngrxLet="detail$;let detail">
+		<li class="list">
+			<img
+				[attr.src]="detail.launch_cover+'?x-oss-process=image/resize,m_fixed,w_102,h_102'"
+				(click)="toWork(detail.launch_workid,detail.launch_category)"
+			/>
+			<span class="left">
+				<span class="name" (click)="toWork(detail.launch_workid,detail.launch_category)">{{detail.launch_name}}</span>
+				<span class="time">发布时间：{{detail.launch_publishtime | date:"y-MM-dd-HH:mm"}}</span>
+			</span>
+			<span class="right"> 发布作品 </span>
+		</li>
+		<li class="list">
+			<img
+				[attr.src]="detail.participate_cover+'?x-oss-process=image/resize,m_fixed,w_102,h_102'"
+				(click)="toWork(detail.participate_workid,detail.participate_category)"
+			/>
+			<span class="left">
+				<span class="name" (click)="toWork(detail.participate_workid,detail.participate_category)"
+					>{{detail.participate_name}}</span
+				>
+				<span class="time">发布时间：{{detail.participate_publishtime | date:"y-MM-dd-HH:mm"}}</span>
+			</span>
+			<span class="right"> 合作作品 </span>
+		</li>
+		<li class="good-list" *ngFor="let good of detail.list">
+			<span class="good-left">
+				<span class="good-name">{{good.name}}</span>
+				<span class="good-type" *ngIf="good.maxstock==1;else other">单次出售</span>
+				<ng-template #other>
+					<span class="good-type">多次出售</span>
+				</ng-template>
+			</span>
+			<span class="price"> ¥{{good.price| number:'1.2-2'}}</span>
+		</li>
+		<div class="hello">
+			<li>
+				<span class="user-name">发布者：{{detail.launch_username}}</span>
+				<span class="user-price">发布者收益分成：总收益的{{((1-detail.participate_share)*100).toFixed(0)+'%'}}</span>
+			</li>
+			<li>
+				<span class="user-name">合作者：{{detail.participate_username}}</span>
+				<span class="user-price">合作者收益分成：总收益的{{(detail.participate_share*100).toFixed(0)+'%'}}</span>
+			</li>
+			<li class="bottom">
+				<span>
+					合作状态：
+					<a *ngIf="detail.state==1">已合作</a>
+					<a class="checking" *ngIf="detail.state==0">确认中</a>
+					<a class="refuse" *ngIf="detail.state==2">已拒绝</a>
+				</span>
+				<span>
+					<a *ngIf="detail.state==1">合作时间：</a>
+					<a *ngIf="detail.state==0">申请合作时间：</a>
+					<a *ngIf="detail.state==2">拒绝时间：</a>
+					{{detail.time | date:"y-MM-dd-HH:mm" }}
+				</span>
+			</li>
+		</div>
+		<ng-container *ngrxLet="id$;let id">
+			<li class="btn" *ngIf="detail.state==2 && detail.participate_userid!=id">
+				<button (click)="change(detail.id,detail.participate_share)">修改收益分成</button>
+			</li>
+			<li class="btn" *ngIf="detail.state==0 && detail.participate_userid==id">
+				<button class="s" (click)="audit(2,detail.id)">拒绝合作</button>
+				<button (click)="audit(1,detail.id)">同意合作</button>
+			</li>
+		</ng-container>
+	</div>
 </div>

@@ -7,19 +7,19 @@ import { CommissionApiService } from '../../service/commission-api.service';
 import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 
 @NgModule({
-  declarations: [CommissionPublishLive2dComponent],
-  imports: [
-    CommonModule,
-    ReactiveComponentModule,
-    ReactiveFormsModule,
-    PeachaComponentsModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: CommissionPublishLive2dComponent,
-      },
-    ]),
-  ],
-  providers: [CommissionApiService],
+	declarations: [CommissionPublishLive2dComponent],
+	imports: [
+		CommonModule,
+		ReactiveComponentModule,
+		ReactiveFormsModule,
+		PeachaComponentsModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				component: CommissionPublishLive2dComponent,
+			},
+		]),
+	],
+	providers: [CommissionApiService],
 })
 export class CommissionPublishLive2dModule {}

@@ -6,45 +6,44 @@ import { Injectable } from '@angular/core';
  */
 export const SingletonComponent = Injectable;
 
-export declare type SingletonComponentType<T = any> = new() => T;
+export declare type SingletonComponentType<T = any> = new () => T;
 
 export type ComponentType<P = any> = (new (data: P) => Component<P>) & {
-    type: number;
+	type: number;
 
-    allFrom(entity: Entity): Component<P>[];
+	allFrom(entity: Entity): Component<P>[];
 
-    oneFrom(entity: Entity): Component<P>;
+	oneFrom(entity: Entity): Component<P>;
 };
 
 export abstract class Component<T = any> {
+	private static SEQ_COMPONENT = 0;
 
-    private static SEQ_COMPONENT = 0;
+	public attr: {
+		[key: string]: any;
+	} = {};
 
-    public attr: {
-        [key: string]: any;
-    } = {};
+	constructor(public type: number, public data: T) {}
 
-    constructor(public type: number, public data: T) { }
+	public static register<P>(): ComponentType<P> {
+		const typeId = Component.SEQ_COMPONENT++;
 
-    public static register<P>(): ComponentType<P> {
-        const typeId = Component.SEQ_COMPONENT++;
+		class ComponentImpl extends Component<P> {
+			static type = typeId;
 
-        class ComponentImpl extends Component<P> {
-            static type = typeId;
+			static allFrom(entity: Entity): ComponentImpl[] {
+				return entity.components[typeId] ?? [];
+			}
 
-            static allFrom(entity: Entity): ComponentImpl[] {
-                return entity.components[typeId] ?? [];
-            }
+			static oneFrom(entity: Entity): ComponentImpl {
+				return entity.components[typeId]?.[0];
+			}
 
-            static oneFrom(entity: Entity): ComponentImpl {
-                return entity.components[typeId]?.[0];
-            }
+			constructor(data: P) {
+				super(typeId, data);
+			}
+		}
 
-            constructor(data: P) {
-                super(typeId, data);
-            }
-        }
-
-        return ComponentImpl as ComponentType<P>;
-    }
+		return ComponentImpl as ComponentType<P>;
+	}
 }

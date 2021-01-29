@@ -5,13 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReactiveComponentModule } from '@peacha-core';
 
 @NgModule({
-  declarations: [CommissionNodeComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ReactiveComponentModule,
-    FormsModule,
-  ],
-  exports: [CommissionNodeComponent],
+	declarations: [CommissionNodeComponent],
+	imports: [CommonModule, ReactiveFormsModule, ReactiveComponentModule, FormsModule],
+	exports: [CommissionNodeComponent],
 })
 export class ComponentsModule {}

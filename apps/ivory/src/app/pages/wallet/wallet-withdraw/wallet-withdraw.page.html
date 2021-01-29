@@ -1,110 +1,80 @@
 <div class="all" ivoStepper #step="steps">
-  <div class="one" *ivoStep="'one'">
-    <span class="title">验证身份</span>
-    <span class="tips"
-      >我们会向您绑定的邮箱/手机号发送验证码，来验证是否为本人操作。</span
-    >
-    <ng-container *ngrxLet="phone$;let phone">
-      <button *ngIf="phone" (click)="request(0)">
-        <img src="/assets/image/svg/reset-phone.svg" />通过手机接受验证码
-      </button>
-    </ng-container>
-    <ng-container *ngrxLet="email$;let email">
-      <button *ngIf="email" (click)="request(1)">
-        <img src="/assets/image/svg/reset-email.svg" />通过邮箱接受验证码
-      </button>
-    </ng-container>
-  </div>
+	<div class="one" *ivoStep="'one'">
+		<span class="title">验证身份</span>
+		<span class="tips">我们会向您绑定的邮箱/手机号发送验证码，来验证是否为本人操作。</span>
+		<ng-container *ngrxLet="phone$;let phone">
+			<button *ngIf="phone" (click)="request(0)"><img src="/assets/image/svg/reset-phone.svg" />通过手机接受验证码</button>
+		</ng-container>
+		<ng-container *ngrxLet="email$;let email">
+			<button *ngIf="email" (click)="request(1)"><img src="/assets/image/svg/reset-email.svg" />通过邮箱接受验证码</button>
+		</ng-container>
+	</div>
 
-  <!-- 验证账号 -->
-  <div class="two" *ivoStep="'two'">
-    <span class="title">验证码:</span>
-    <div class="code" *ngrxLet="cooldown$;let cooldown">
-      <input
-        type="text"
-        placeholder="请输入收到的验证码"
-        [formControl]="verifyCode"
-        #hello
-      />
-      <button
-        class="veriftButton"
-        (click)="requestAgain()"
-        [disabled]="cooldown"
-      >
-        <ng-container *ngIf="cooldown==0"> 获取验证码 </ng-container>
-        <ng-container *ngIf="cooldown>0"> 等待({{cooldown}}) </ng-container>
-      </button>
-      <div class="btn">
-        <button class="buttonRight" (click)=" confirmVerify(hello)">
-          下一步
-        </button>
-      </div>
-    </div>
-  </div>
+	<!-- 验证账号 -->
+	<div class="two" *ivoStep="'two'">
+		<span class="title">验证码:</span>
+		<div class="code" *ngrxLet="cooldown$;let cooldown">
+			<input type="text" placeholder="请输入收到的验证码" [formControl]="verifyCode" #hello />
+			<button class="veriftButton" (click)="requestAgain()" [disabled]="cooldown">
+				<ng-container *ngIf="cooldown==0"> 获取验证码 </ng-container>
+				<ng-container *ngIf="cooldown>0"> 等待({{cooldown}}) </ng-container>
+			</button>
+			<div class="btn">
+				<button class="buttonRight" (click)=" confirmVerify(hello)">下一步</button>
+			</div>
+		</div>
+	</div>
 
-  <div class="three" *ivoStep="'three'">
-    <ng-container *ngrxLet="wallet$;let wallet">
-      <li>提现</li>
-      <div class="part">
-        <li>
-          输入提现金额<a>可提现金额：{{wallet?.balance| number:'1.2-2'}}元</a>
-        </li>
-        <div class="input">
-          <input
-            [formControl]="money"
-            placeholder="请输入金额"
-            (keyup)="out()"
-            [max]="wallet?.balance"
-          />
-          <a (click)="allMoney(wallet?.balance)">全部提现</a>
-          <span>¥</span>
-        </div>
+	<div class="three" *ivoStep="'three'">
+		<ng-container *ngrxLet="wallet$;let wallet">
+			<li>提现</li>
+			<div class="part">
+				<li>输入提现金额<a>可提现金额：{{wallet?.balance| number:'1.2-2'}}元</a></li>
+				<div class="input">
+					<input [formControl]="money" placeholder="请输入金额" (keyup)="out()" [max]="wallet?.balance" />
+					<a (click)="allMoney(wallet?.balance)">全部提现</a>
+					<span>¥</span>
+				</div>
 
-        <div class="tip">
-          <!-- <span *ngIf="outMoney$.value">到账金额：{{outMoney$.value | number:'1.2-2'}}(手续费2%)</span>  -->
-          <div class="error-inset" [errorDisplay]="money">
-            <ng-container *errorCase="'required'">
-              请输入提现金额
-            </ng-container>
-            <ng-container *errorCase="'max'"> 钱包余额不足 </ng-container>
-            <ng-container *errorCase="'nocan'"> {{errorMsg}} </ng-container>
-          </div>
-        </div>
-      </div>
-      <div class="partt">
-        <li>选择提现方式</li>
-        <ng-container *ngrxLet="choice$;let choice">
-          <div
-            class="choice"
-            (click)="choice$.next(0)"
-            [class.shadow]="choice==0"
-          >
-            <img src="/assets/image/svg/支付宝.svg" />
-            <span>提现至支付宝</span>
-          </div>
-        </ng-container>
-      </div>
-      <div class="btn">
-        <button (click)="next(wallet?.balance)">确定</button>
-      </div>
-    </ng-container>
-  </div>
-  <div class="four" *ivoStep="'four'">
-    <li class="title">确认支付宝</li>
-    <li class="tipst">提现金额：<a>{{money.value}}</a>RMB</li>
-    <!-- <ng-container *ngrxLet="pay$"> -->
-    <ng-container>
-      <div class="shuru">
-        <span>输入支付宝账号实名认证姓名：</span>
-        <input [formControl]="name" />
-      </div>
-      <div class="shuru">
-        <span>输入支付宝账号：</span>
-        <input [formControl]="account" #uu />
-      </div>
-      <div class="btn">
-        <button (click)="sure(uu)">确定</button>
-      </div>
-    </ng-container>
-  </div>
+				<div class="tip">
+					<!-- <span *ngIf="outMoney$.value">到账金额：{{outMoney$.value | number:'1.2-2'}}(手续费2%)</span>  -->
+					<div class="error-inset" [errorDisplay]="money">
+						<ng-container *errorCase="'required'"> 请输入提现金额 </ng-container>
+						<ng-container *errorCase="'max'"> 钱包余额不足 </ng-container>
+						<ng-container *errorCase="'nocan'"> {{errorMsg}} </ng-container>
+					</div>
+				</div>
+			</div>
+			<div class="partt">
+				<li>选择提现方式</li>
+				<ng-container *ngrxLet="choice$;let choice">
+					<div class="choice" (click)="choice$.next(0)" [class.shadow]="choice==0">
+						<img src="/assets/image/svg/支付宝.svg" />
+						<span>提现至支付宝</span>
+					</div>
+				</ng-container>
+			</div>
+			<div class="btn">
+				<button (click)="next(wallet?.balance)">确定</button>
+			</div>
+		</ng-container>
+	</div>
+	<div class="four" *ivoStep="'four'">
+		<li class="title">确认支付宝</li>
+		<li class="tipst">提现金额：<a>{{money.value}}</a>RMB</li>
+		<!-- <ng-container *ngrxLet="pay$"> -->
+		<ng-container>
+			<div class="shuru">
+				<span>输入支付宝账号实名认证姓名：</span>
+				<input [formControl]="name" />
+			</div>
+			<div class="shuru">
+				<span>输入支付宝账号：</span>
+				<input [formControl]="account" #uu />
+			</div>
+			<div class="btn">
+				<button (click)="sure(uu)">确定</button>
+			</div>
+		</ng-container>
+	</div>
 </div>

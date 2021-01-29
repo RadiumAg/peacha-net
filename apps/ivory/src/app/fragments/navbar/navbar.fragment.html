@@ -1,80 +1,79 @@
 <header *ngIf="(info$|async);let info">
-    <div class="left">
-        <img class="logo" src="/assets/image/svg/i-logo.svg" routerLink="/" />
-        <li>
-            <a [routerLink]="['homepage']" routerLinkActive="choiced">主页</a>
-            <a [routerLink]="['search']" [queryParams]="{choice:0,p:1}"
-                [class.choiced]="(params$|async).choice &&(params$|async).choice!=3">作品</a>
-            <a [routerLink]="['search/good']" [queryParams]="{choice:3,p:1}"
-                [class.choiced]="(params$|async).choice==3">商品</a>
-            <a [routerLink]="['commission']" routerLinkActive="choiced">企划</a>
-        </li>
-    </div>
-    <div class="center">
-        <div class="search-input">
-            <img class="search-icon" src="/assets/image/navbar/search.svg" />
-            <input [value]="input$|async" placeholder="搜索..." (keydown.Enter)="search(input)" #input />
-        </div>
-    </div>
-    <div class="right">
-        <span class="cart" *ngIf="enablePaid">
-            <img [routerLink]="['cart']" src="/assets/image/navbar/cart.svg" />
-        </span>
+	<div class="left">
+		<img class="logo" src="/assets/image/svg/i-logo.svg" routerLink="/" />
+		<li>
+			<a [routerLink]="['homepage']" routerLinkActive="choiced">主页</a>
+			<a [routerLink]="['search']" [queryParams]="{choice:0,p:1}" [class.choiced]="(params$|async).choice &&(params$|async).choice!=3"
+				>作品</a
+			>
+			<a [routerLink]="['search/good']" [queryParams]="{choice:3,p:1}" [class.choiced]="(params$|async).choice==3">商品</a>
+			<a [routerLink]="['commission']" routerLinkActive="choiced">企划</a>
+		</li>
+	</div>
+	<div class="center">
+		<div class="search-input">
+			<img class="search-icon" src="/assets/image/navbar/search.svg" />
+			<input [value]="input$|async" placeholder="搜索..." (keydown.Enter)="search(input)" #input />
+		</div>
+	</div>
+	<div class="right">
+		<span class="cart" *ngIf="enablePaid">
+			<img [routerLink]="['cart']" src="/assets/image/navbar/cart.svg" />
+		</span>
 
-        <ng-container *ngIf="!(isLogin$|async);else logined">
-            <a [routerLink]="['login']">登录</a>|
-            <a [routerLink]="['register']">注册</a>
-        </ng-container>
-        <ng-template #logined>
-            <span class="cart" (click)="toMessage()">
-                <img src="/assets/image/navbar/bell.svg" />
-                <span class="yuan" *ngIf="(allCount$ |async)>0 ||(chatUnread$|async)>0"></span>
-            </span>
-            <img [attr.src]="info.avatar" class="avatar" #avatar (mouseenter)="hoverAvatar($event)"
-                (click)="toUser(info.id)" />
-            <span class="cl">
-                <button ivo-button (click)="toUpload()">发布</button>
-            </span>
-        </ng-template>
-    </div>
+		<ng-container *ngIf="!(isLogin$|async);else logined">
+			<a [routerLink]="['login']">登录</a>|
+			<a [routerLink]="['register']">注册</a>
+		</ng-container>
+		<ng-template #logined>
+			<span class="cart" (click)="toMessage()">
+				<img src="/assets/image/navbar/bell.svg" />
+				<span class="yuan" *ngIf="(allCount$ |async)>0 ||(chatUnread$|async)>0"></span>
+			</span>
+			<img [attr.src]="info.avatar" class="avatar" #avatar (mouseenter)="hoverAvatar($event)" (click)="toUser(info.id)" />
+			<span class="cl">
+				<button ivo-button (click)="toUpload()">发布</button>
+			</span>
+		</ng-template>
+	</div>
 
-    <ng-template #template>
-        <div [@dashboard] class="temp" (mouseleave)="leaveDashboard()" (mousewheel)="leaveDashboard()">
-            <div class="user-info">
-                <div class="background">
-                    <img [attr.src]="info?.banner" />
-                </div>
-                <img [@avatar]="(isPortalShowing$|async)?'active':'normal'" class="ava" [attr.src]="info.avatar" />
-                <!-- <img  class="ava" [attr.src]="info.avatar"> -->
-                <div class="info">
-                    <h3 [routerLink]="['user',info.id]">{{info.nickname}}</h3>
-                    <h4>UID:{{info.id}}</h4>
-                    <p>
-                        <b [routerLink]="['user',info.id,'following']">关注{{info.num_following}}</b>
-                        &nbsp;&nbsp;&nbsp;
-                        <b (click)="seeFollow(info.id)">粉丝{{info.num_followed}}</b>
-                        <a *ngIf="followerCount">{{'+'+followerCount}}</a>
-                    </p>
-                </div>
-            </div>
-            <ul>
-                <li [routerLink]="['cart']" *ngIf="enablePaid">
-                    <!-- <img class="cart" src="/assets/image/svg/i-cart.svg"> -->
-                    购物车
-                </li>
-                <li [routerLink]="['./user']">个人主页</li>
-                <!-- <li (click)="toMessage()">
+	<ng-template #template>
+		<div [@dashboard] class="temp" (mouseleave)="leaveDashboard()" (mousewheel)="leaveDashboard()">
+			<div class="user-info">
+				<div class="background">
+					<img [attr.src]="info?.banner" />
+				</div>
+				<img [@avatar]="(isPortalShowing$|async)?'active':'normal'" class="ava" [attr.src]="info.avatar" />
+				<!-- <img  class="ava" [attr.src]="info.avatar"> -->
+				<div class="info">
+					<h3 [routerLink]="['user',info.id]">{{info.nickname}}</h3>
+					<h4>UID:{{info.id}}</h4>
+					<p>
+						<b [routerLink]="['user',info.id,'following']">关注{{info.num_following}}</b>
+						&nbsp;&nbsp;&nbsp;
+						<b (click)="seeFollow(info.id)">粉丝{{info.num_followed}}</b>
+						<a *ngIf="followerCount">{{'+'+followerCount}}</a>
+					</p>
+				</div>
+			</div>
+			<ul>
+				<li [routerLink]="['cart']" *ngIf="enablePaid">
+					<!-- <img class="cart" src="/assets/image/svg/i-cart.svg"> -->
+					购物车
+				</li>
+				<li [routerLink]="['./user']">个人主页</li>
+				<!-- <li (click)="toMessage()">
           我的消息<a *ngIf="allCount"></a>
         </li> -->
-                <li class="divider"></li>
-                <li [routerLink]="['./member/manager']">创作中心</li>
-                <li [routerLink]="['./setting']">个人中心</li>
-                <li [routerLink]="['./store']">我的仓库</li>
-                <li class="divider"></li>
-                <li (click)="logout()">退出登录</li>
-            </ul>
-        </div>
-    </ng-template>
+				<li class="divider"></li>
+				<li [routerLink]="['./member/manager']">创作中心</li>
+				<li [routerLink]="['./setting']">个人中心</li>
+				<li [routerLink]="['./store']">我的仓库</li>
+				<li class="divider"></li>
+				<li (click)="logout()">退出登录</li>
+			</ul>
+		</div>
+	</ng-template>
 </header>
 <!-- <div class="tip">
  网站该版本为测试版本

@@ -17,74 +17,74 @@ import { SingleManagerPage } from './single-manager/single-manager.page';
 import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 
 @NgModule({
-  declarations: [
-    ManagerPage,
-    GoodsManagerPage,
-    LiveManagerPage,
-    IllustManagerPage,
-    LiveSuccessPage,
-    LiveFailPage,
-    LiveAuditingPage,
-    IllustAuditingPage,
-    IllustSuccessPage,
-    IllustFailPage,
-    SingleManagerPage,
-  ],
-  imports: [
-    ReactiveFormsModule,
-    PeachaComponentsModule,
-    CommonModule,
-    ReactiveComponentModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        // pathMatch: 'full',
-        component: ManagerPage,
-        children: [
-          {
-            path: '',
-            redirectTo: 'illust',
-          },
-          {
-            path: 'illust',
-            component: IllustManagerPage,
-            children: [
-              {
-                path: '',
-                component: IllustSuccessPage,
-              },
-              {
-                path: 'fail',
-                component: IllustFailPage,
-              },
-              {
-                path: 'auditing',
-                component: IllustAuditingPage,
-              },
-            ],
-          },
-          {
-            path: 'live2D',
-            component: LiveManagerPage,
-            children: [
-              {
-                path: '',
-                component: LiveSuccessPage,
-              },
-              {
-                path: 'fail',
-                component: LiveFailPage,
-              },
-              {
-                path: 'auditing',
-                component: LiveAuditingPage,
-              },
-            ],
-          },
-        ],
-      },
-    ]),
-  ],
-  providers: [SharedService],
+	declarations: [
+		ManagerPage,
+		GoodsManagerPage,
+		LiveManagerPage,
+		IllustManagerPage,
+		LiveSuccessPage,
+		LiveFailPage,
+		LiveAuditingPage,
+		IllustAuditingPage,
+		IllustSuccessPage,
+		IllustFailPage,
+		SingleManagerPage,
+	],
+	imports: [
+		ReactiveFormsModule,
+		PeachaComponentsModule,
+		CommonModule,
+		ReactiveComponentModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				// pathMatch: 'full',
+				component: ManagerPage,
+				children: [
+					{
+						path: '',
+						redirectTo: 'illust',
+					},
+					{
+						path: 'illust',
+						component: IllustManagerPage,
+						children: [
+							{
+								path: '',
+								component: IllustSuccessPage,
+							},
+							{
+								path: 'fail',
+								component: IllustFailPage,
+							},
+							{
+								path: 'auditing',
+								component: IllustAuditingPage,
+							},
+						],
+					},
+					{
+						path: 'live2D',
+						component: LiveManagerPage,
+						children: [
+							{
+								path: '',
+								component: LiveSuccessPage,
+							},
+							{
+								path: 'fail',
+								component: LiveFailPage,
+							},
+							{
+								path: 'auditing',
+								component: LiveAuditingPage,
+							},
+						],
+					},
+				],
+			},
+		]),
+	],
+	providers: [SharedService],
 })
 export class ManagerModule {}

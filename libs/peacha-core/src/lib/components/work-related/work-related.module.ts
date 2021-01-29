@@ -11,26 +11,8 @@ import { WorkLikeModule } from '../../features/work-like/work-like.module';
 import { FollowModule } from '../../features/follow/follow.module';
 
 @NgModule({
-  declarations: [
-    CreatorBlockComponent,
-    RelatedWorkComponent,
-    WorkActionsComponent,
-    TagsComponent,
-    GoodInfoComponent,
-  ],
-  imports: [
-    CommonModule,
-    FollowModule,
-    WorkLikeModule,
-    ReactiveComponentModule,
-    PeachaComponentsModule,
-  ],
-  exports: [
-    CreatorBlockComponent,
-    RelatedWorkComponent,
-    WorkActionsComponent,
-    TagsComponent,
-    GoodInfoComponent,
-  ],
+	declarations: [CreatorBlockComponent, RelatedWorkComponent, WorkActionsComponent, TagsComponent, GoodInfoComponent],
+	imports: [CommonModule, FollowModule, WorkLikeModule, ReactiveComponentModule, PeachaComponentsModule],
+	exports: [CreatorBlockComponent, RelatedWorkComponent, WorkActionsComponent, TagsComponent, GoodInfoComponent],
 })
 export class WorkRelatedModule {}

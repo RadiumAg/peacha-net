@@ -1,12 +1,12 @@
 <div class="pics">
-    <ng-container *ngFor="let upload of imageShow$|ngrxPush;trackBy: trackBy;">
-        <div class="pic-box" *ngrxLet="upload.process$;let process">
-            <div class="delete" (click)="removeFile(upload.symbol)"></div>
-            <img [src]="upload.url">
-        </div>
-    </ng-container>
-    <div *ngIf="(imageShow$|async).length<5">
-        <input type="file" hidden #picInput accept="Image/*" (change)="onPic($event)">
-        <img class="add-pic" src="/assets/image/add-pic.png" (click)="picInput.click()">
-    </div>
+	<ng-container *ngFor="let upload of imageShow$ | ngrxPush; trackBy: trackBy">
+		<div class="pic-box" *ngrxLet="upload.process$; let process">
+			<div class="delete" (click)="removeFile(upload.symbol)"></div>
+			<img [src]="upload.url" />
+		</div>
+	</ng-container>
+	<div *ngIf="(imageShow$ | async).length < 5">
+		<input type="file" hidden #picInput accept="Image/*" (change)="onPic($event)" />
+		<img class="add-pic" src="/assets/image/add-pic.png" (click)="picInput.click()" />
+	</div>
 </div>

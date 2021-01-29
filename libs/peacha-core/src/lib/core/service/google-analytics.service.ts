@@ -4,14 +4,11 @@ declare let gtag: Function;
 
 @Injectable()
 export class GoogleAnalyticsService {
+	constructor() {}
 
-    constructor() { }
-
-    private eventEmitter(
-        eventName: string,
-        eventValue: any) {
-        gtag('event', eventName, {
-            ...eventValue
-        });
-    }
+	private eventEmitter(eventName: string, eventValue: any) {
+		gtag('event', eventName, {
+			...eventValue,
+		});
+	}
 }

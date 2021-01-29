@@ -1,47 +1,37 @@
-import {
-  Directive,
-  ViewContainerRef,
-  TemplateRef,
-  Input,
-  Host,
-} from '@angular/core';
+import { Directive, ViewContainerRef, TemplateRef, Input, Host } from '@angular/core';
 import { Steps } from './steps';
 
 @Directive({
-  selector: '[ivoStep]',
+	selector: '[ivoStep]',
 })
 export class Step {
-  constructor(
-    public viewContainer: ViewContainerRef,
-    public template: TemplateRef<any>,
-    @Host() private stepHost: Steps
-  ) {}
+	constructor(public viewContainer: ViewContainerRef, public template: TemplateRef<any>, @Host() private stepHost: Steps) {}
 
-  @Input('ivoStep') step: string;
+	@Input('ivoStep') step: string;
 
-  private stepIndex = 0;
+	private stepIndex = 0;
 
-  created = false;
+	created = false;
 
-  ngOnInit() {
-    this.stepIndex = this.stepHost.addStep(this.step);
-  }
+	ngOnInit() {
+		this.stepIndex = this.stepHost.addStep(this.step);
+	}
 
-  ngDoCheck() {
-    this.enforceState();
-  }
+	ngDoCheck() {
+		this.enforceState();
+	}
 
-  enforceState() {
-    if (this.stepHost.currentStepIndex == this.stepIndex) {
-      if (!this.created) {
-        this.viewContainer.createEmbeddedView(this.template);
-        this.created = true;
-      }
-    } else {
-      if (this.created) {
-        this.viewContainer.clear();
-        this.created = false;
-      }
-    }
-  }
+	enforceState() {
+		if (this.stepHost.currentStepIndex == this.stepIndex) {
+			if (!this.created) {
+				this.viewContainer.createEmbeddedView(this.template);
+				this.created = true;
+			}
+		} else {
+			if (this.created) {
+				this.viewContainer.clear();
+				this.created = false;
+			}
+		}
+	}
 }

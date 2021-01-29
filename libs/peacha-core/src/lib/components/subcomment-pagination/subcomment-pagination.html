@@ -1,55 +1,41 @@
 <ng-container *ngrxLet="pageCount$;let pageCount">
-  <div class="complete" *ngrxLet="currentPage$;let currentPage">
-    <span
-      class="step-prev"
-      (click)="changePage(+currentPage -1)"
-      [attr.disabled]="currentPage==1?true:null"
-      *ngIf="currentPage!=1"
-    >
-      上一页</span
-    >
+	<div class="complete" *ngrxLet="currentPage$;let currentPage">
+		<span class="step-prev" (click)="changePage(+currentPage -1)" [attr.disabled]="currentPage==1?true:null" *ngIf="currentPage!=1">
+			上一页</span
+		>
 
-    <span
-      class="step-button"
-      (click)="changePage(1)"
-      [ngClass]="{'active':  currentPage==1||currentPage==0?true:false}"
-      [ngStyle]="{'display':pageCount==0 ? 'none' : 'inline-block' }"
-      >1</span
-    >
-    <ng-container *ngrxLet="showFrontDots$;let showFrontDots">
-      <div class="omit left" [ngClass]="{'disable': showFrontDots}">
-        &bull;&bull;&bull;
-      </div>
-    </ng-container>
-    <ng-container *ngrxLet="pageList$;let pageList">
-      <span
-        class="step-button"
-        (click)="changePage(page)"
-        [ngClass]="{'active': currentPage == page}"
-        *ngFor="let page of pageList"
-      >
-        {{page}}
-      </span>
-    </ng-container>
-    <ng-container *ngrxLet="showBackDots$;let showBackDots">
-      <div class="omit right" [ngClass]="{'disable': showBackDots}">
-        &bull;&bull;&bull;
-      </div>
-    </ng-container>
-    <span
-      class="step-button last"
-      (click)="changePage(pageCount)"
-      [ngClass]="{'active':  currentPage==pageCount?true:false}"
-      [ngStyle]="{'display':pageCount==1 ? 'none' : 'inline-block' }"
-      >{{pageCount}}</span
-    >
+		<span
+			class="step-button"
+			(click)="changePage(1)"
+			[ngClass]="{'active':  currentPage==1||currentPage==0?true:false}"
+			[ngStyle]="{'display':pageCount==0 ? 'none' : 'inline-block' }"
+			>1</span
+		>
+		<ng-container *ngrxLet="showFrontDots$;let showFrontDots">
+			<div class="omit left" [ngClass]="{'disable': showFrontDots}">&bull;&bull;&bull;</div>
+		</ng-container>
+		<ng-container *ngrxLet="pageList$;let pageList">
+			<span class="step-button" (click)="changePage(page)" [ngClass]="{'active': currentPage == page}" *ngFor="let page of pageList">
+				{{page}}
+			</span>
+		</ng-container>
+		<ng-container *ngrxLet="showBackDots$;let showBackDots">
+			<div class="omit right" [ngClass]="{'disable': showBackDots}">&bull;&bull;&bull;</div>
+		</ng-container>
+		<span
+			class="step-button last"
+			(click)="changePage(pageCount)"
+			[ngClass]="{'active':  currentPage==pageCount?true:false}"
+			[ngStyle]="{'display':pageCount==1 ? 'none' : 'inline-block' }"
+			>{{pageCount}}</span
+		>
 
-    <span
-      class="step-next"
-      (click)="changePage(+currentPage +1)"
-      [attr.disabled]="currentPage==pageCount?true:null"
-      *ngIf="currentPage!=pageCount"
-      >下一页</span
-    >
-  </div>
+		<span
+			class="step-next"
+			(click)="changePage(+currentPage +1)"
+			[attr.disabled]="currentPage==pageCount?true:null"
+			*ngIf="currentPage!=pageCount"
+			>下一页</span
+		>
+	</div>
 </ng-container>

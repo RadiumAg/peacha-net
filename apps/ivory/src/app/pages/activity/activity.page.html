@@ -1,262 +1,204 @@
 <div class="description">
-  <img src="assets/image/activity/abgc.jpg" alt="" style="max-width: 1900px" />
-  <div class="button-group">
-    <button (click)="but=0" [ngClass]="{buttonClick: but==0}">背景故事</button>
-    <button (click)="but=1" [ngClass]="{buttonClick: but==1}">活动规则</button>
-    <button (click)="but=2" [ngClass]="{buttonClick: but==2}">活动奖品</button>
-    <button (click)="but=3" [ngClass]="{buttonClick: but==3}">获奖作品</button>
-  </div>
-  <div class="notice">
-    <div class="left">
-      <img
-        class="img1"
-        *ngIf="but!=3"
-        src="assets/image/activity/列三.svg"
-        alt=""
-      />
-      <img class="img2" src="assets/image/activity/左圆.png" alt="" />
-      <img
-        class="img3"
-        *ngIf="but===1"
-        src="assets/image/activity/列三.svg"
-        alt=""
-      />
-    </div>
-    <div class="center" *ngIf="but==0">
-      <div>
-        人类因为对Plasma技术的深度开采，成功实现将其作为新能源运用。不久，”EFE“计划正式启动，名为“伊莉斯”太空站顺利发射，作为地球的卫星开始了旅程。许多年后……
-      </div>
-      <div>
-        现在，空间站里的成员，来自不同的世界和时空，但是他们都因为对科技的向往和痴迷而来到这里。他们的外貌或奇异或怪诞或可爱或平凡，但他们都拥有与众不同的大脑，在这一方空间里，实现了许多不敢想象的科技尝试。作为科学圣地的“伊莉斯”，许多人来了又离开。
-      </div>
-      <div>
-        这一次，“伊莉斯”又要打开大门，迎接一波新鲜血液，你，会是其中一员吗？
-      </div>
-    </div>
-    <div class="center1" *ngIf="but==1">
-      <span>活动时间</span>
-      <div>
-        征集时间：2020.11.26~2020.12.31
-        <br />
-        评比时间：2021.01.01~2021.01.07
-        <br />
-        结果公布：2021.01.07
-        <br />
-      </div>
-      <span>活动规则</span>
-      <div>
-        1.参赛者可寻找画师或建模师组队参与或者单人参与，进行Live2D形象创作（仅限Live2D模型），主题不限，风格不限。保证作品原创性，完整且清晰。
-        <br />
-        <br />
-        2.参赛者在活动规定有效征集时间内，将作品以规定格式、样式等，发送至主办方官网参赛渠道，上传成功后，主办方会在三个工作日内予以有效站内信回复。如未及时收到回复，请及时检查作品是否符合要求格式、法规等，如有疑问可与主办方沟通咨询。
-        <br />
-        <br />
-        3.活动期间，参赛者不得将参赛作品及相关设计转让或授权任何第三方，不得以参赛作品参与任何与本活动无关的任何活动。且每组参赛者只允许上传一幅作品，若多次上传则以最初上传的作品为准。
-        <br />
-        <br />
-        4.参赛作品一经投稿，则视为在活动期间内同意该作品版权与Peacha官方共享版权，主办方有权使用作品进行包括但不限于专题活动、官网、微博、B站推广等署名宣传，但作品版权在活动结束后，仍归作者所有，主办方仅保留作品展示权。
-        <br />
-        <br />
-        5.参赛作品必须遵守相关法律法规，不得盗用、剽窃、抄袭他人作品，不得过度宣扬包括但不限于色情、暴力、血腥等不良内容。
-        <br />
-        <br />
-        6.任何参赛作品均不得侵犯第三方知识产权专利等。如版权归属多人或作品有其他设计借鉴的情况下，参赛者需获得其他共有版权人的同意及授权，如有违反，主办方将取消该作品参赛权利，产生的相关任何纠纷及法律问题由参赛者承担，与主办方无关，情节严重者，主办方将保留法律追责权。
-        <br />
-        <br />
-        7.一经投稿，则视为参赛者已知悉并认同该活动相关规定。最终解释权归主办方所有。
-        <br />
-      </div>
-      <span>参赛方式</span>
-      <div>
-        登录Peacha官网https://www.peacha.net/，进入作品上传页面，上传不大于200MB大小的Live2D作品。
-        <br />
-        格式要求：
-        <br />
-        作品标题：作品名称
-        <br />
-        作品简介：300字以内人物形象介绍以及创作人员名单。
-        <br />
-        作品标签：第一届人物设计大赛
-        <br />
-        版权声明：选择“此作品为原创作品”，需注意，此次活动仅限原创作品参与。
-        <br />
-        <br />
-        注：作品类型需为仅展示类型作品，请不要开启提供模型文件下载
-        <br />
-      </div>
-      <span>其他活动</span>
-      <div>
-        关注Peacha官方微博，转发+关注并@三个好友，在活动期间内，会随机转抽3名幸运小伙伴，赠送《赛博朋克2077》Steam兑换码一个。
-      </div>
-      <span>联系方式</span>
-      <div>
-        客服QQ：2504129961（尘尘）&nbsp;&nbsp;微博：PeachaNet
-        <br />
-        B站官方账号：PeachaNet&nbsp;&nbsp;&nbsp;&nbsp;电话：0571-82153627
-        <br />
-      </div>
-    </div>
-    <div class="center2" *ngIf="but==2">
-      <div>
-        一等奖 1名 提供11英寸128G iPad Pro + 256G iPad Mini
-        <br />
-        三等奖 2名 每名提供Nintendo Switch一台 + Nintendo Switch Lite一台
-        <br />
-        三等奖 3名 每名提供任选两款价值400以内的3A游戏
-        <br />
-        优秀奖 10名 每名提供立牌+抱枕一套
-        <br />
-        参与奖 不限 每名参赛者提供徽章一个
-        <br />
-        备注：各奖项奖品不予累积。
-        <br />
-      </div>
-    </div>
-    <div class="center3" *ngIf="but==3">
-      <ng-container *ngrxLet="id$;let id">
-        <!-- 一等奖 -->
-        <div class="first">
-          <div class="left">
-            <img src="assets/image/activity/jb1.svg" class="jb" />
-            <div class="mid">获奖名单：</div>
-            <div (click)="skipUser(12227)">
-              <img
-                src="//p0.peacha.net/user/avatar/67dee41c-cc52-4348-841d-bb2201f86fd4.jpg"
-                class="avatar"
-              />
-              <span class="name">草莓奶兔</span>
-            </div>
-          </div>
-          <div class="show">
-            <div class="display">
-              <img
-                (click)="skip(10246)"
-                src="assets/image/activity/work/一等奖.jpg"
-              />
-              <div class="title">【立春】Ano奈建模展示</div>
-            </div>
-          </div>
-        </div>
-        <!-- 二等奖 -->
-        <div class="second">
-          <div class="left">
-            <img src="assets/image/activity/jb2.svg" class="jb" />
-            <div class="mid">获奖名单：</div>
-            <div (click)="skipUser(12959)">
-              <img
-                src="//p0.peacha.net/user/avatar/9bd21e98-7fd6-4bd5-af4b-94d9ad36d93a.jpg"
-                class="avatar"
-              />
-              <span class="name">chakun</span>
-            </div>
-            <div (click)="skipUser(16654)">
-              <img
-                src="//p0.peacha.net/user/avatar/24788990-18a6-4968-b6dc-65d18f5419be.jpg"
-                class="avatar"
-              />
-              <span class="name">友尽的幽鬼兔</span>
-            </div>
-          </div>
-          <div class="show">
-            <div class="display">
-              <img
-                (click)="skip(10290)"
-                src="assets/image/activity/work/二等奖1.jpg"
-              />
-              <div class="title">Chakun-大角度人物</div>
-            </div>
-            <div class="display">
-              <img
-                (click)="skip(10385)"
-                src="assets/image/activity/work/二等奖2.jpg"
-              />
-              <div class="title">友尽的幽鬼兔-活蹦乱跳的vtb你见过吗</div>
-            </div>
-          </div>
-        </div>
-        <!-- 三等奖 -->
-        <div class="first">
-          <div class="left">
-            <img src="assets/image/activity/jb3.svg" class="jb" />
-            <div class="mid">获奖名单：</div>
-            <div
-              *ngFor="let item of sandeng;index as i"
-              (click)="skipUser(item)"
-            >
-              <img [src]="sandengav[i]" class="avatar" />
-              <span class="name">{{sandengname[i]}}</span>
-            </div>
-          </div>
-          <div class="show">
-            <div class="display">
-              <img
-                (click)="skip(10349)"
-                src="assets/image/activity/work/三等奖1.jpg"
-              />
-              <div class="title">月夜雨</div>
-            </div>
-            <div class="display">
-              <img
-                (click)="skip(10268)"
-                src="assets/image/activity/work/三等奖2.jpg"
-              />
-              <div class="title">可可爱爱的唱诗班木偶</div>
-            </div>
-            <div class="display">
-              <img
-                (click)="skip(10308)"
-                src="assets/image/activity/work/三等奖3.jpg"
-              />
-              <div class="title">popo</div>
-            </div>
-          </div>
-        </div>
-        <!-- 优秀 -->
-        <div class="second">
-          <div class="left">
-            <img src="assets/image/activity/jb4.svg" class="jb" />
-            <div class="mid">获奖名单：</div>
-            <div
-              *ngFor="let item of ten.slice(0,10);index as i"
-              (click)="skipUser(item)"
-            >
-              <img [src]="tenav[i]" class="avatar" />
-              <span class="name">{{tenname[i]}}</span>
-            </div>
-          </div>
-          <div class="show">
-            <div *ngFor="let item of ten;index as i" class="display">
-              <img
-                (click)="skip(youxiuzuop[i])"
-                src="assets/image/activity/work/y{{i+1}}.jpg"
-              />
-              <div class="title">{{title[i]}}</div>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-    </div>
+	<img src="assets/image/activity/abgc.jpg" alt="" style="max-width: 1900px" />
+	<div class="button-group">
+		<button (click)="but=0" [ngClass]="{buttonClick: but==0}">背景故事</button>
+		<button (click)="but=1" [ngClass]="{buttonClick: but==1}">活动规则</button>
+		<button (click)="but=2" [ngClass]="{buttonClick: but==2}">活动奖品</button>
+		<button (click)="but=3" [ngClass]="{buttonClick: but==3}">获奖作品</button>
+	</div>
+	<div class="notice">
+		<div class="left">
+			<img class="img1" *ngIf="but!=3" src="assets/image/activity/列三.svg" alt="" />
+			<img class="img2" src="assets/image/activity/左圆.png" alt="" />
+			<img class="img3" *ngIf="but===1" src="assets/image/activity/列三.svg" alt="" />
+		</div>
+		<div class="center" *ngIf="but==0">
+			<div>
+				人类因为对Plasma技术的深度开采，成功实现将其作为新能源运用。不久，”EFE“计划正式启动，名为“伊莉斯”太空站顺利发射，作为地球的卫星开始了旅程。许多年后……
+			</div>
+			<div>
+				现在，空间站里的成员，来自不同的世界和时空，但是他们都因为对科技的向往和痴迷而来到这里。他们的外貌或奇异或怪诞或可爱或平凡，但他们都拥有与众不同的大脑，在这一方空间里，实现了许多不敢想象的科技尝试。作为科学圣地的“伊莉斯”，许多人来了又离开。
+			</div>
+			<div>这一次，“伊莉斯”又要打开大门，迎接一波新鲜血液，你，会是其中一员吗？</div>
+		</div>
+		<div class="center1" *ngIf="but==1">
+			<span>活动时间</span>
+			<div>
+				征集时间：2020.11.26~2020.12.31
+				<br />
+				评比时间：2021.01.01~2021.01.07
+				<br />
+				结果公布：2021.01.07
+				<br />
+			</div>
+			<span>活动规则</span>
+			<div>
+				1.参赛者可寻找画师或建模师组队参与或者单人参与，进行Live2D形象创作（仅限Live2D模型），主题不限，风格不限。保证作品原创性，完整且清晰。
+				<br />
+				<br />
+				2.参赛者在活动规定有效征集时间内，将作品以规定格式、样式等，发送至主办方官网参赛渠道，上传成功后，主办方会在三个工作日内予以有效站内信回复。如未及时收到回复，请及时检查作品是否符合要求格式、法规等，如有疑问可与主办方沟通咨询。
+				<br />
+				<br />
+				3.活动期间，参赛者不得将参赛作品及相关设计转让或授权任何第三方，不得以参赛作品参与任何与本活动无关的任何活动。且每组参赛者只允许上传一幅作品，若多次上传则以最初上传的作品为准。
+				<br />
+				<br />
+				4.参赛作品一经投稿，则视为在活动期间内同意该作品版权与Peacha官方共享版权，主办方有权使用作品进行包括但不限于专题活动、官网、微博、B站推广等署名宣传，但作品版权在活动结束后，仍归作者所有，主办方仅保留作品展示权。
+				<br />
+				<br />
+				5.参赛作品必须遵守相关法律法规，不得盗用、剽窃、抄袭他人作品，不得过度宣扬包括但不限于色情、暴力、血腥等不良内容。
+				<br />
+				<br />
+				6.任何参赛作品均不得侵犯第三方知识产权专利等。如版权归属多人或作品有其他设计借鉴的情况下，参赛者需获得其他共有版权人的同意及授权，如有违反，主办方将取消该作品参赛权利，产生的相关任何纠纷及法律问题由参赛者承担，与主办方无关，情节严重者，主办方将保留法律追责权。
+				<br />
+				<br />
+				7.一经投稿，则视为参赛者已知悉并认同该活动相关规定。最终解释权归主办方所有。
+				<br />
+			</div>
+			<span>参赛方式</span>
+			<div>
+				登录Peacha官网https://www.peacha.net/，进入作品上传页面，上传不大于200MB大小的Live2D作品。
+				<br />
+				格式要求：
+				<br />
+				作品标题：作品名称
+				<br />
+				作品简介：300字以内人物形象介绍以及创作人员名单。
+				<br />
+				作品标签：第一届人物设计大赛
+				<br />
+				版权声明：选择“此作品为原创作品”，需注意，此次活动仅限原创作品参与。
+				<br />
+				<br />
+				注：作品类型需为仅展示类型作品，请不要开启提供模型文件下载
+				<br />
+			</div>
+			<span>其他活动</span>
+			<div>
+				关注Peacha官方微博，转发+关注并@三个好友，在活动期间内，会随机转抽3名幸运小伙伴，赠送《赛博朋克2077》Steam兑换码一个。
+			</div>
+			<span>联系方式</span>
+			<div>
+				客服QQ：2504129961（尘尘）&nbsp;&nbsp;微博：PeachaNet
+				<br />
+				B站官方账号：PeachaNet&nbsp;&nbsp;&nbsp;&nbsp;电话：0571-82153627
+				<br />
+			</div>
+		</div>
+		<div class="center2" *ngIf="but==2">
+			<div>
+				一等奖 1名 提供11英寸128G iPad Pro + 256G iPad Mini
+				<br />
+				三等奖 2名 每名提供Nintendo Switch一台 + Nintendo Switch Lite一台
+				<br />
+				三等奖 3名 每名提供任选两款价值400以内的3A游戏
+				<br />
+				优秀奖 10名 每名提供立牌+抱枕一套
+				<br />
+				参与奖 不限 每名参赛者提供徽章一个
+				<br />
+				备注：各奖项奖品不予累积。
+				<br />
+			</div>
+		</div>
+		<div class="center3" *ngIf="but==3">
+			<ng-container *ngrxLet="id$;let id">
+				<!-- 一等奖 -->
+				<div class="first">
+					<div class="left">
+						<img src="assets/image/activity/jb1.svg" class="jb" />
+						<div class="mid">获奖名单：</div>
+						<div (click)="skipUser(12227)">
+							<img src="//p0.peacha.net/user/avatar/67dee41c-cc52-4348-841d-bb2201f86fd4.jpg" class="avatar" />
+							<span class="name">草莓奶兔</span>
+						</div>
+					</div>
+					<div class="show">
+						<div class="display">
+							<img (click)="skip(10246)" src="assets/image/activity/work/一等奖.jpg" />
+							<div class="title">【立春】Ano奈建模展示</div>
+						</div>
+					</div>
+				</div>
+				<!-- 二等奖 -->
+				<div class="second">
+					<div class="left">
+						<img src="assets/image/activity/jb2.svg" class="jb" />
+						<div class="mid">获奖名单：</div>
+						<div (click)="skipUser(12959)">
+							<img src="//p0.peacha.net/user/avatar/9bd21e98-7fd6-4bd5-af4b-94d9ad36d93a.jpg" class="avatar" />
+							<span class="name">chakun</span>
+						</div>
+						<div (click)="skipUser(16654)">
+							<img src="//p0.peacha.net/user/avatar/24788990-18a6-4968-b6dc-65d18f5419be.jpg" class="avatar" />
+							<span class="name">友尽的幽鬼兔</span>
+						</div>
+					</div>
+					<div class="show">
+						<div class="display">
+							<img (click)="skip(10290)" src="assets/image/activity/work/二等奖1.jpg" />
+							<div class="title">Chakun-大角度人物</div>
+						</div>
+						<div class="display">
+							<img (click)="skip(10385)" src="assets/image/activity/work/二等奖2.jpg" />
+							<div class="title">友尽的幽鬼兔-活蹦乱跳的vtb你见过吗</div>
+						</div>
+					</div>
+				</div>
+				<!-- 三等奖 -->
+				<div class="first">
+					<div class="left">
+						<img src="assets/image/activity/jb3.svg" class="jb" />
+						<div class="mid">获奖名单：</div>
+						<div *ngFor="let item of sandeng;index as i" (click)="skipUser(item)">
+							<img [src]="sandengav[i]" class="avatar" />
+							<span class="name">{{sandengname[i]}}</span>
+						</div>
+					</div>
+					<div class="show">
+						<div class="display">
+							<img (click)="skip(10349)" src="assets/image/activity/work/三等奖1.jpg" />
+							<div class="title">月夜雨</div>
+						</div>
+						<div class="display">
+							<img (click)="skip(10268)" src="assets/image/activity/work/三等奖2.jpg" />
+							<div class="title">可可爱爱的唱诗班木偶</div>
+						</div>
+						<div class="display">
+							<img (click)="skip(10308)" src="assets/image/activity/work/三等奖3.jpg" />
+							<div class="title">popo</div>
+						</div>
+					</div>
+				</div>
+				<!-- 优秀 -->
+				<div class="second">
+					<div class="left">
+						<img src="assets/image/activity/jb4.svg" class="jb" />
+						<div class="mid">获奖名单：</div>
+						<div *ngFor="let item of ten.slice(0,10);index as i" (click)="skipUser(item)">
+							<img [src]="tenav[i]" class="avatar" />
+							<span class="name">{{tenname[i]}}</span>
+						</div>
+					</div>
+					<div class="show">
+						<div *ngFor="let item of ten;index as i" class="display">
+							<img (click)="skip(youxiuzuop[i])" src="assets/image/activity/work/y{{i+1}}.jpg" />
+							<div class="title">{{title[i]}}</div>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</div>
 
-    <div class="right">
-      <img class="img1" src="assets/image/activity/右圆.png" alt="" />
-      <img
-        *ngIf="but!=3"
-        class="img2"
-        src="assets/image/activity/列三.svg"
-        alt=""
-      />
-      <img
-        *ngIf="but===1"
-        class="img3"
-        src="assets/image/activity/右圆.png"
-        alt=""
-      />
-    </div>
-  </div>
+		<div class="right">
+			<img class="img1" src="assets/image/activity/右圆.png" alt="" />
+			<img *ngIf="but!=3" class="img2" src="assets/image/activity/列三.svg" alt="" />
+			<img *ngIf="but===1" class="img3" src="assets/image/activity/右圆.png" alt="" />
+		</div>
+	</div>
 
-  <button class="go" disabled>活动已结束</button>
+	<button class="go" disabled>活动已结束</button>
 
-  <img src="assets/image/activity/点点点.svg" alt="" />
+	<img src="assets/image/activity/点点点.svg" alt="" />
 </div>
 
 <ivo-comment-area [aid]="aid"></ivo-comment-area>

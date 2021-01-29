@@ -1,199 +1,180 @@
 * {
-    outline: none;
+	outline: none;
 }
 
 .work {
-    width: 224px;
-    border-radius: 4px;
-    display: inline-block;
-    // margin-right: 30px;
-    margin-bottom: 30px;
-    position: relative;
-    transition: all ease 0.4s;
-    // height: 350px;
-    background-color: #ffffff;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
+	width: 224px;
+	border-radius: 4px;
+	display: inline-block;
+	// margin-right: 30px;
+	margin-bottom: 30px;
+	position: relative;
+	transition: all ease 0.4s;
+	// height: 350px;
+	background-color: #ffffff;
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
 
+	& > .first {
+		display: flex;
+		justify-content: space-between;
+		// margin-top: 8px;
+		padding: 0 10px;
 
-    &>.first {
-        display: flex;
-        justify-content: space-between;
-        // margin-top: 8px;
-        padding: 0 10px;
+		& > .type {
+			color: #999999;
+			font-size: 12px;
+			font-weight: bold;
+		}
+	}
 
-        &>.type {
-            color: #999999;
-            font-size: 12px;
-            font-weight: bold;
-        }
+	& > a {
+		& > .empty {
+			width: 224px;
+			height: 224px;
+			border-top-left-radius: 4px;
+			border-top-right-radius: 4px;
+			background: rgba(0, 0, 0, 0.02);
+			position: absolute;
+			// z-index: 2;
+			cursor: pointer;
+			transition: ease-in 0.15s;
+		}
 
+		& > .empty:hover {
+			transition: ease-in 0.15s;
+			background: rgba(255, 255, 255, 0.08);
+		}
 
-    }
+		& > .good-icon {
+			position: absolute;
+			margin-top: -11px;
+			width: 85px;
+			height: 107px;
+		}
 
-    &>a {
+		& > ivo-lazy-img {
+			width: 224px;
+			height: 224px;
+			cursor: pointer;
+			outline: none;
+			overflow: hidden;
+		}
 
-        &>.empty {
-            width: 224px;
-            height: 224px;
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-            background: rgba(0, 0, 0, 0.02);
-            position: absolute;
-            // z-index: 2;
-            cursor: pointer;
-            transition: ease-in 0.15s;
-        }
+		& > .name:hover {
+			color: #ff6398;
+		}
 
-        &>.empty:hover {
-            transition: ease-in 0.15s;
-            background: rgba(255, 255, 255, 0.08);
+		& > .name {
+			color: #333333;
+			font-size: 14px;
+			display: block;
+			margin: 5px 0 3px 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			cursor: pointer;
+			padding: 0 10px;
+			font-weight: bold;
+			height: 20px;
+		}
 
-        }
+		& > .sad {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			padding: 0 10px;
+			cursor: pointer;
+			height: 30px;
 
+			& > .like-count {
+				color: #999999;
+				font-size: 12px;
+				margin-top: 5px;
 
+				& > img {
+					width: 14px;
+					margin-right: 0px;
+					margin-top: -4px;
+				}
+			}
 
-        &>.good-icon {
-            position: absolute;
-            margin-top: -11px;
-            width: 85px;
-            height: 107px;
-        }
+			& > .price {
+				display: inline-block;
+				color: #ff6398;
+				font-size: 14px;
+				// margin-top: 2px;
+				// margin-bottom: 10px;
+				padding: 0 8px;
+				line-height: 30px;
+				height: 30px;
+				font-weight: bold;
 
+				& > a {
+					color: #ff6398;
+					margin-right: 5px;
+					cursor: auto;
+				}
 
-        &>ivo-lazy-img {
-            width: 224px;
-            height: 224px;
-            cursor: pointer;
-            outline: none;
-            overflow: hidden;
-        }
+				& > .free {
+					color: #5a8be6;
+				}
 
-        &>.name:hover {
-            color: #FF6398;
-        }
+				& > .no {
+					color: #999999;
+				}
+			}
+		}
 
-        &>.name {
-            color: #333333;
-            font-size: 14px;
-            display: block;
-            margin: 5px 0 3px 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            cursor: pointer;
-            padding: 0 10px;
-            font-weight: bold;
-            height: 20px;
-        }
+		& > .user:hover {
+			color: #ff6398;
+		}
+	}
 
-        &>.sad {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 10px;
-            cursor: pointer;
-            height: 30px;
+	& > .work-buttom {
+		border-top: 1px solid #f7f7f7;
+		display: flex;
+		justify-content: space-between;
 
-            &>.like-count {
-                color: #999999;
-                font-size: 12px;
-                margin-top: 5px;
+		& > a {
+			margin: 8px 0;
 
-                &>img {
-                    width: 14px;
-                    margin-right: 0px;
-                    margin-top: -4px;
-                }
-            }
+			& > .user {
+				display: block;
+				color: #666666;
+				font-size: 12px;
+				// margin-bottom: 10px;
+				cursor: pointer;
+				padding: 0 10px;
+				height: 24px;
+				line-height: 24px;
+				width: 160px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				& > img {
+					width: 22px;
+					height: 22px;
+					margin-right: 8px;
+					margin-top: -3px;
+					border-radius: 50%;
+				}
+			}
+		}
 
-            &>.price {
-                display: inline-block;
-                color: #FF6398;
-                font-size: 14px;
-                // margin-top: 2px;
-                // margin-bottom: 10px;
-                padding: 0 8px;
-                line-height: 30px;
-                height: 30px;
-                font-weight: bold;
+		& > .publishtime {
+			padding-right: 10px;
+			line-height: 40px;
+			font-size: 12px;
+		}
+	}
 
-
-                &>a {
-                    color: #FF6398;
-                    margin-right: 5px;
-                    cursor: auto;
-                }
-
-                &>.free {
-                    color: #5A8BE6;
-                }
-
-                &>.no {
-                    color: #999999;
-                }
-            }
-
-        }
-
-        &>.user:hover {
-            color: #FF6398;
-        }
-
-
-    }
-
-    &>.work-buttom {
-        border-top: 1px solid #F7F7F7;
-        ;
-        display: flex;
-        justify-content: space-between;
-
-        &>a {
-            margin: 8px 0;
-
-            &>.user {
-                display: block;
-                color: #666666;
-                font-size: 12px;
-                // margin-bottom: 10px;
-                cursor: pointer;
-                padding: 0 10px;
-                height: 24px;
-                line-height: 24px;
-                width: 160px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                &>img {
-                    width: 22px;
-                    height: 22px;
-                    margin-right: 8px;
-                    margin-top: -3px;
-                    border-radius: 50%;
-                }
-
-               
-            }
-        }
-
-        &>.publishtime {
-            padding-right: 10px;
-            line-height: 40px;
-            font-size: 12px;
-        }
-    }
-
-
-
-    &>.type {
-        width: 50px;
-        display: inline-block;
-    }
-
-
+	& > .type {
+		width: 50px;
+		display: inline-block;
+	}
 }
 
 .work:hover {
-    box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.06);
-    transform: translateY(-4px);
+	box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.06);
+	transform: translateY(-4px);
 }

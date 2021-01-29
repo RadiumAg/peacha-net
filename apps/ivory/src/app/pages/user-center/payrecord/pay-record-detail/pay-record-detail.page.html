@@ -1,51 +1,50 @@
 <div class="main" *ngrxLet="detail$;let detail">
-
-
-    <div class="pay">
-        <li>
-            <span class="title">支付详情</span>
-            <span class="return" [routerLink]="['/setting/pay']">&lt;返回列表</span>
-        </li>
-        <li>
-            <span>名称：{{detail.title}}</span>
-            <span>支付方式：{{detail.channel}}</span>
-        </li>
-        <li>
-            <span class="spe">支付总金额：¥{{detail.amount}}</span>
-            <span>支付时间：{{detail.startTime|date:"yyyy-MM-dd hh:mm"}}</span>
-        </li>
-        <li class="border">
-            <span>支付交易号：{{detail.payId}}</span>
-            <span>支付流水号：{{detail.thirdId}}</span>
-        </li>
-        <div class="list border" *ngFor="let item of detail.orders">
-            <li>
-                <span>订单名称：{{item.name}}</span>
-                <span>订单金额：¥{{item.price}}</span>
-            </li>
-            <li>
-                <span>订单号：{{item.orderId}}</span>
-                <a (click)="toOrderDetail(detail.title,item.page,item.orderId)">查看订单详情</a>
-                <!-- <span class="spe"  >查看订单详情</span> -->
-            </li>
-        </div>
-    </div>
-    <div class="refund" *ngIf="detail.refunds.length>0">
-        <li class="title">退款详情</li>
-        <ng-container *ngFor="let refund of detail.refunds">
-            <li><span class="spe">
-                    退款金额：¥{{refund.amount}}</span><span>退款时间：{{refund.startTime|date:"yyyy-MM-dd hh:mm"}}</span></li>
-            <li class="border"><span>退款渠道：{{detail.channel}}</span><span>退款流水号：{{detail.thirdId}}</span></li>
-            <div class="list border" *ngFor="let order of refund.orders">
-                <li>
-                    <span>订单名称：{{order.name}}</span>
-                    <span>退款金额：¥{{order.price}}</span>
-                </li>
-                <li>
-                    <span>订单号：{{order.orderId}}</span>
-                    <a (click)="toOrderDetail(detail.title,order.page,order.orderId)">查看订单详情</a>
-                </li>
-            </div>
-        </ng-container>
-    </div>
+	<div class="pay">
+		<li>
+			<span class="title">支付详情</span>
+			<span class="return" [routerLink]="['/setting/pay']">&lt;返回列表</span>
+		</li>
+		<li>
+			<span>名称：{{detail.title}}</span>
+			<span>支付方式：{{detail.channel}}</span>
+		</li>
+		<li>
+			<span class="spe">支付总金额：¥{{detail.amount}}</span>
+			<span>支付时间：{{detail.startTime|date:"yyyy-MM-dd hh:mm"}}</span>
+		</li>
+		<li class="border">
+			<span>支付交易号：{{detail.payId}}</span>
+			<span>支付流水号：{{detail.thirdId}}</span>
+		</li>
+		<div class="list border" *ngFor="let item of detail.orders">
+			<li>
+				<span>订单名称：{{item.name}}</span>
+				<span>订单金额：¥{{item.price}}</span>
+			</li>
+			<li>
+				<span>订单号：{{item.orderId}}</span>
+				<a (click)="toOrderDetail(detail.title,item.page,item.orderId)">查看订单详情</a>
+				<!-- <span class="spe"  >查看订单详情</span> -->
+			</li>
+		</div>
+	</div>
+	<div class="refund" *ngIf="detail.refunds.length>0">
+		<li class="title">退款详情</li>
+		<ng-container *ngFor="let refund of detail.refunds">
+			<li>
+				<span class="spe"> 退款金额：¥{{refund.amount}}</span><span>退款时间：{{refund.startTime|date:"yyyy-MM-dd hh:mm"}}</span>
+			</li>
+			<li class="border"><span>退款渠道：{{detail.channel}}</span><span>退款流水号：{{detail.thirdId}}</span></li>
+			<div class="list border" *ngFor="let order of refund.orders">
+				<li>
+					<span>订单名称：{{order.name}}</span>
+					<span>退款金额：¥{{order.price}}</span>
+				</li>
+				<li>
+					<span>订单号：{{order.orderId}}</span>
+					<a (click)="toOrderDetail(detail.title,order.page,order.orderId)">查看订单详情</a>
+				</li>
+			</div>
+		</ng-container>
+	</div>
 </div>

@@ -1,163 +1,158 @@
 @import '../../../components.less';
 @margin-width1: 30px;
-@release-background-color: #F6F6F6;
-@release-font-color1: #C1C1C1;
-@release-font-color2:#FA5F93;
-@release-border-color1: #E2E2E2;
+@release-background-color: #f6f6f6;
+@release-font-color1: #c1c1c1;
+@release-font-color2: #fa5f93;
+@release-border-color1: #e2e2e2;
 
 :host {
+	// 表单样式K
+	// 通用表单样式1
+	.form {
+		div.title {
+			font-size: 20px;
+			font-weight: bold;
+			color: #666666;
+			padding: 20px 0 20px 40px;
+			position: relative;
+			top: 0;
 
-    // 表单样式K
-    // 通用表单样式1
-    .form {
-        div.title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #666666;
-            padding: 20px 0 20px 40px;
-            position: relative;
-            top: 0;
+			span.download {
+				position: absolute;
+				right: 40px;
+				top: 50%;
+				transform: translateY(-50%);
+				font-size: 14px;
+				color: @release-font-color2;
+				cursor: pointer;
+			}
+		}
 
-            span.download {
-                position: absolute;
-                right: 40px;
-                top: 50%;
-                transform: translateY(-50%);
-                font-size: 14px;
-                color: @release-font-color2;
-                cursor: pointer;
-            }
-        }
+		.word-count {
+			position: absolute;
+			font-size: 16px;
+			transform: translateX(-100%);
+			color: @release-font-color1;
+		}
 
-        .word-count {
-            position: absolute;
-            font-size: 16px;
-            transform: translateX(-100%);
-            color: @release-font-color1;
-        }
+		textarea,
+		input {
+			border: none;
+			outline: none;
+		}
 
-        textarea,
-        input {
-            border: none;
-            outline: none;
-        }
+		div.form-item {
+			background-color: @background-white-color1;
+			width: 1193px;
+			box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+			border-radius: 6px;
+			margin-bottom: @margin-width1;
 
-        div.form-item {
-            background-color: @background-white-color1;
-            width: 1193px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
-            border-radius: 6px;
-            margin-bottom: @margin-width1;
+			div.form-controller {
+				position: relative;
+				width: 100%;
+				height: max-content;
+				border-top: 1px solid #ececec;
+				padding: 20px 0 20px 40px;
+			}
+		}
 
-            div.form-controller {
-                position: relative;
-                width: 100%;
-                height: max-content;
-                border-top: 1px solid #ECECEC;
-                padding: 20px 0 20px 40px;
-            }
+		input::-ms-input-placeholder {
+			font-size: 16px;
+			color: #c1c1c1;
+		}
 
+		input::-moz-input-placeholder {
+			font-size: 16px;
+			color: #c1c1c1;
+		}
 
-        }
+		input::-webkit-input-placeholder {
+			font-size: 16px;
+			line-height: 27px;
+			color: #c1c1c1;
+		}
 
-        input::-ms-input-placeholder {
-            font-size: 16px;
-            color: #C1C1C1;
-        }
+		textarea::-ms-input-placeholder {
+			font-size: 16px;
+			color: #c1c1c1;
+		}
 
-        input::-moz-input-placeholder {
-            font-size: 16px;
-            color: #C1C1C1;
-        }
+		textarea::-moz-input-placeholder {
+			font-size: 16px;
+			font-weight: bold;
+			color: #c1c1c1;
+		}
 
-        input::-webkit-input-placeholder {
-            font-size: 16px;
-            line-height: 27px;
-            color: #C1C1C1;
-        }
+		textarea::-webkit-input-placeholder {
+			font-size: 16px;
+			line-height: 27px;
+			color: #c1c1c1;
+		}
 
-        textarea::-ms-input-placeholder {
-            font-size: 16px;
-            color: #C1C1C1;
-        }
+		.input,
+		.textarea {
+			width: 1113px;
+			background: @release-background-color;
+			border: 1px solid #e2e2e2;
+			opacity: 1;
+			border-radius: 6px;
+			padding-left: 15px;
+		}
 
-        textarea::-moz-input-placeholder {
-            font-size: 16px;
-            font-weight: bold;
-            color: #C1C1C1;
-        }
+		.input {
+			height: 40px;
+		}
 
-        textarea::-webkit-input-placeholder {
-            font-size: 16px;
-            line-height: 27px;
-            color: #C1C1C1;
-        }
+		.textarea {
+			padding-top: 12px;
+			height: 182px;
+		}
 
-        .input,
-        .textarea {
-            width: 1113px;
-            background: @release-background-color ;
-            border: 1px solid #E2E2E2;
-            opacity: 1;
-            border-radius: 6px;
-            padding-left: 15px;
-        }
+		.required {
+			position: relative;
+			display: flex;
+			align-items: center;
 
-        .input {
-            height: 40px;
-        }
+			&::before {
+				position: absolute;
+				display: inline-block;
+				top: 37px;
+				content: '';
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background: #ff6398;
+				left: 26px;
+			}
+		}
 
-        .textarea {
-            padding-top: 12px;
-            height: 182px;
-        }
+		input[ivo-button] {
+			color: inherit;
+			background: transparent;
+			outline: none;
+			border: none;
+			user-select: none;
+			cursor: pointer;
+			box-sizing: border-box;
+			position: relative;
+			padding: 0;
+			width: 300px;
+			height: 40px;
+			background-color: #ff6398;
+			color: white;
+			font-weight: bold;
+			border-radius: 4px;
+			transition: background-color 0.2s ease 0s;
+		}
 
-        .required {
-            position: relative;
-            display: flex;
-            align-items: center;
+		.form-item-controller-tip {
+			display: inline-block;
+			margin-left: 10px;
+		}
+	}
 
-            &::before {
-                position: absolute;
-                display: inline-block;
-                top: 37px;
-                content: '';
-                width: 6px;
-                height: 6px;
-                border-radius: 50%;
-                background: #FF6398;
-                left: 26px;
-            }
+	// 表单样式K
 
-        }
-
-        input[ivo-button] {
-            color: inherit;
-            background: transparent;
-            outline: none;
-            border: none;
-            user-select: none;
-            cursor: pointer;
-            box-sizing: border-box;
-            position: relative;
-            padding: 0;
-            width: 300px;
-            height: 40px;
-            background-color: #FF6398;
-            color: white;
-            font-weight: bold;
-            border-radius: 4px;
-            transition: background-color 0.2s ease 0s;
-        }
-
-        .form-item-controller-tip{
-            display: inline-block;
-            margin-left: 10px;
-        }
-    }
-
-    // 表单样式K
-
-    // 通用表单样式2
-
+	// 通用表单样式2
 }

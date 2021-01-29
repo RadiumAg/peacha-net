@@ -1,28 +1,28 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "rootDir": ".",
-    "noImplicitThis": true,
-    "noFallthroughCasesInSwitch": true,
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "downlevelIteration": true,
-    "importHelpers": true,
-    "target": "es5",
-    "module": "es2020",
-    "lib": ["esnext", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@peacha-core": ["libs/peacha-core/src/index.ts"],
-      "@peacha-core/components": ["libs/peacha-core/src/lib/components"],
-      "@peacha-core/services": ["libs/peacha-core/src/lib/core/service"],
-      "@peacha-studio-core": ["libs/peacha-studio-core/src/index.ts"]
-    }
-  },
-  "exclude": ["node_modules", "tmp"]
+	"compileOnSave": false,
+	"compilerOptions": {
+		"rootDir": ".",
+		"noImplicitThis": true,
+		"noFallthroughCasesInSwitch": true,
+		"sourceMap": true,
+		"declaration": false,
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"downlevelIteration": true,
+		"importHelpers": true,
+		"target": "es5",
+		"module": "es2020",
+		"lib": ["esnext", "dom"],
+		"skipLibCheck": true,
+		"skipDefaultLibCheck": true,
+		"baseUrl": ".",
+		"paths": {
+			"@peacha-core": ["libs/peacha-core/src/index.ts"],
+			"@peacha-core/components": ["libs/peacha-core/src/lib/components"],
+			"@peacha-core/services": ["libs/peacha-core/src/lib/core/service"],
+			"@peacha-studio-core": ["libs/peacha-studio-core/src/index.ts"]
+		}
+	},
+	"exclude": ["node_modules", "tmp"]
 }

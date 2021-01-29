@@ -25,26 +25,26 @@
 
 button,
 input[type='button'] {
-  border: none;
-  outline: none;
+	border: none;
+	outline: none;
 }
 
 input[type='button']:disabled,
 button:disabled {
-  filter: grayscale(100%);
+	filter: grayscale(100%);
 }
 
 .@{prefix} {
-  &-delete {
-    &:after {
-      content: '';
-      width: 26px;
-      height: 26px;
-      display: inline-block;
-      background-image: url(/assets/image/icons/01.png);
-      background-repeat: no-repeat;
-      left: 0;
-      top: 0;
-    }
-  }
+	&-delete {
+		&:after {
+			content: '';
+			width: 26px;
+			height: 26px;
+			display: inline-block;
+			background-image: url(/assets/image/icons/01.png);
+			background-repeat: no-repeat;
+			left: 0;
+			top: 0;
+		}
+	}
 }

@@ -4,15 +4,16 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
-
 function computeHash(v: string): number {
-    let hash = 0, i, chr;
-    for (i = 0; i < v.length; i++) {
-        chr = v.charCodeAt(i);
-        hash = ((hash << 5) - hash) + chr;
-        hash |= 0; // Convert to 32bit integer
-    }
-    return hash;
+	let hash = 0,
+		i,
+		chr;
+	for (i = 0; i < v.length; i++) {
+		chr = v.charCodeAt(i);
+		hash = (hash << 5) - hash + chr;
+		hash |= 0; // Convert to 32bit integer
+	}
+	return hash;
 }
 
 const code = String.raw`
@@ -20,16 +21,16 @@ const code = String.raw`
   `;
 
 if (environment.production) {
-    // tslint:disable-next-line: no-eval
-    eval(code);
-    if (computeHash(code) !== -1166513008) {
-        for (; ;) {
-            const _ = new ArrayBuffer(1024 ^ 4);
-        }
-    }
-    enableProdMode();
+	// tslint:disable-next-line: no-eval
+	eval(code);
+	if (computeHash(code) !== -1166513008) {
+		for (;;) {
+			const _ = new ArrayBuffer(1024 ^ 4);
+		}
+	}
+	enableProdMode();
 }
 
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-    .catch(err => console.error(err));
+platformBrowserDynamic()
+	.bootstrapModule(AppModule)
+	.catch(err => console.error(err));

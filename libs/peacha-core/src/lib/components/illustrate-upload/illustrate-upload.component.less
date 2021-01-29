@@ -5,70 +5,70 @@
 @release-border-color1: #e2e2e2;
 
 :host {
-  display: flex;
-  justify-content: flex-start;
-  width: 1200px;
-  > div:nth-child(1) {
-    display: flex;
-  }
+	display: flex;
+	justify-content: flex-start;
+	width: 1200px;
+	> div:nth-child(1) {
+		display: flex;
+	}
 }
 
 .illust-box {
-  height: 135px;
-  width: 135px;
-  background-color: @release-background-color;
-  position: relative;
-  margin-right: 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  background-image: url('/assets/image/release/illustrate-upload/01.png');
-  background-position: center;
-  border: 1px solid @release-border-color1;
-  background-repeat: no-repeat;
-  background-size: 36% 36%;
-  left: 0;
-  top: 0;
-  .process-body {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(51, 51, 51, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    & > .outer {
-      position: relative;
-      top: 0;
-      width: 100px;
-      height: 4px;
-      background: rgba(102, 102, 102, 1);
-      border: 1px solid rgba(255, 255, 255, 1);
-      border-radius: 4px;
-      .mask {
-        width: 60px;
-        height: 2px;
-        background: rgba(255, 255, 255, 1);
-        opacity: 1;
-        border-radius: 4px;
-      }
-    }
-  }
-  .delete {
-    background-image: url(/assets/image/draw/delete.png);
-    width: 26px;
-    height: 26px;
-    right: 0;
-    top: 0;
-    position: absolute;
-    transform: translate(50%, -50%);
-  }
-  & > img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 4px;
-    // border:solid 1px #999;
-  }
+	height: 135px;
+	width: 135px;
+	background-color: @release-background-color;
+	position: relative;
+	margin-right: 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	background-image: url('/assets/image/release/illustrate-upload/01.png');
+	background-position: center;
+	border: 1px solid @release-border-color1;
+	background-repeat: no-repeat;
+	background-size: 36% 36%;
+	left: 0;
+	top: 0;
+	.process-body {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background-color: rgba(51, 51, 51, 0.8);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		& > .outer {
+			position: relative;
+			top: 0;
+			width: 100px;
+			height: 4px;
+			background: rgba(102, 102, 102, 1);
+			border: 1px solid rgba(255, 255, 255, 1);
+			border-radius: 4px;
+			.mask {
+				width: 60px;
+				height: 2px;
+				background: rgba(255, 255, 255, 1);
+				opacity: 1;
+				border-radius: 4px;
+			}
+		}
+	}
+	.delete {
+		background-image: url(/assets/image/draw/delete.png);
+		width: 26px;
+		height: 26px;
+		right: 0;
+		top: 0;
+		position: absolute;
+		transform: translate(50%, -50%);
+	}
+	& > img {
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		border-radius: 4px;
+		// border:solid 1px #999;
+	}
 }

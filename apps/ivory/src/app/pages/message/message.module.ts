@@ -18,66 +18,66 @@ import { MessageResolve } from './message.guard';
 import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 
 @NgModule({
-  declarations: [
-    MessagePage,
-    ChatPage,
-    ReceiveReplyPage,
-    ReceiveLikePage,
-    SystemNoticePage,
-    SystemInstallPage,
-    Subreply,
-    CustomerServicePage,
-    BlacklistPage,
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    PeachaComponentsModule,
-    NzRadioModule,
-    FormsModule,
-    ScrollingModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: MessagePage,
-        canActivate: [MessageResolve],
-        children: [
-          {
-            path: 'chat',
-            component: ChatPage,
-            resolve: {
-              chat: ChatResolve,
-            },
-          },
-          {
-            path: 'reply',
-            component: ReceiveReplyPage,
-          },
-          {
-            path: 'likeme',
-            component: ReceiveLikePage,
-          },
-          {
-            path: 'system',
-            component: SystemNoticePage,
-          },
-          {
-            path: 'install',
-            component: SystemInstallPage,
-          },
-          {
-            path: 'customer-service',
-            component: CustomerServicePage,
-          },
-          {
-            path: 'blacklist',
-            component: BlacklistPage,
-          },
-        ],
-      },
-    ]),
-    ReactiveComponentModule,
-  ],
-  providers: [ChatResolve, MessageResolve],
+	declarations: [
+		MessagePage,
+		ChatPage,
+		ReceiveReplyPage,
+		ReceiveLikePage,
+		SystemNoticePage,
+		SystemInstallPage,
+		Subreply,
+		CustomerServicePage,
+		BlacklistPage,
+	],
+	imports: [
+		CommonModule,
+		ReactiveFormsModule,
+		PeachaComponentsModule,
+		NzRadioModule,
+		FormsModule,
+		ScrollingModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				component: MessagePage,
+				canActivate: [MessageResolve],
+				children: [
+					{
+						path: 'chat',
+						component: ChatPage,
+						resolve: {
+							chat: ChatResolve,
+						},
+					},
+					{
+						path: 'reply',
+						component: ReceiveReplyPage,
+					},
+					{
+						path: 'likeme',
+						component: ReceiveLikePage,
+					},
+					{
+						path: 'system',
+						component: SystemNoticePage,
+					},
+					{
+						path: 'install',
+						component: SystemInstallPage,
+					},
+					{
+						path: 'customer-service',
+						component: CustomerServicePage,
+					},
+					{
+						path: 'blacklist',
+						component: BlacklistPage,
+					},
+				],
+			},
+		]),
+		ReactiveComponentModule,
+	],
+	providers: [ChatResolve, MessageResolve],
 })
 export class MessageModule {}

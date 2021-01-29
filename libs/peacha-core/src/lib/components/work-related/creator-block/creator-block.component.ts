@@ -5,29 +5,29 @@ import { Observable } from 'rxjs';
 import { UserState } from '../../../core';
 import { ChatStartService } from '../../../core/service/chat.service';
 @Component({
-  selector: 'ivo-creator-block',
-  templateUrl: './creator-block.component.html',
-  styleUrls: ['./creator-block.component.less'],
+	selector: 'ivo-creator-block',
+	templateUrl: './creator-block.component.html',
+	styleUrls: ['./creator-block.component.less'],
 })
 export class CreatorBlockComponent {
-  @Select(UserState.id)
-  id$: Observable<number>;
+	@Select(UserState.id)
+	id$: Observable<number>;
 
-  @Input() userName: string;
-  @Input() userId: number;
-  @Input() userAvatar: string;
-  @Input() followState: number;
-  @Input() role: Array<number>;
+	@Input() userName: string;
+	@Input() userId: number;
+	@Input() userAvatar: string;
+	@Input() followState: number;
+	@Input() role: Array<number>;
 
-  constructor(private router: Router, private chat: ChatStartService) {}
+	constructor(private router: Router, private chat: ChatStartService) {}
 
-  click() {
-    this.router.navigateByUrl('/user/' + this.userId);
-  }
+	click() {
+		this.router.navigateByUrl('/user/' + this.userId);
+	}
 
-  toDialog(id: number, nickname: string, avatar: string) {
-    this.id$.subscribe((i) => {
-      this.chat.openNewRoom(id, i, nickname, avatar);
-    });
-  }
+	toDialog(id: number, nickname: string, avatar: string) {
+		this.id$.subscribe(i => {
+			this.chat.openNewRoom(id, i, nickname, avatar);
+		});
+	}
 }

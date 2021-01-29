@@ -1,186 +1,234 @@
 <div class="box">
-    <div class="stop" *ngIf="status===4||status===6">
-        <p>企划已发起中止，阶段节点暂停，请前往“中止企划/历史”页面中查看或处理。<a routerLink="/commission/detail/discontinue"
-                [queryParams]="{id:commissionId}">查看</a></p>
-    </div>
-    <div class="box-node">
-        <div class="show-title">
-            “{{indexNode?.name}}”阶段节点
-        </div>
-        <div class="steps">
-            <span class="step" *ngFor="let item of dataList;let i=index">
+	<div class="stop" *ngIf="status===4||status===6">
+		<p>
+			企划已发起中止，阶段节点暂停，请前往“中止企划/历史”页面中查看或处理。<a
+				routerLink="/commission/detail/discontinue"
+				[queryParams]="{id:commissionId}"
+				>查看</a
+			>
+		</p>
+	</div>
+	<div class="box-node">
+		<div class="show-title">“{{indexNode?.name}}”阶段节点</div>
+		<div class="steps">
+			<span class="step" *ngFor="let item of dataList;let i=index">
+				<span class="show-step" (click)="select(active,item.name,item.status,item.type,i,item.id,item.fileType)">
+					<span
+						class="point"
+						[class.doing]="i<=active "
+						[class.finshed]="i+1<=active|| active===-1"
+						[class.show-pointer]="i<=active|| active===-1"
+						[class.selected]="showIndex===i && (i+1<=active || active===-1)"
+					>
+						<span
+							class="side"
+							[class.side-active]="i<=active"
+							*ngIf="i==0"
+							[class.step-finished]="(i+1<=active) || active===-1 "
+							>START</span
+						>
+						<span
+							class="number"
+							[class.number-active]="i<=active|| active===-1"
+							*ngIf="i>0 && i<dataList.length-1"
+							[class.step-finished]="(i+1<=active) || active===-1"
+							>{{i}}</span
+						>
+						<span
+							class="side"
+							[class.side-active]="active===dataList.length-1"
+							*ngIf="i==dataList.length-1"
+							[class.step-finished]="active===-1"
+							>END</span
+						>
+					</span>
+					<!-- <img *ngIf="(i+1<=active) || active===-1" class="icon" src="/assets/image/commission/true.svg"> -->
+				</span>
+				<span #line *ngIf="i+1<dataList.length " class="line" [class.act]="i<active|| active===-1"></span>
+			</span>
+		</div>
 
-                <span class="show-step"
-                    (click)="select(active,item.name,item.status,item.type,i,item.id,item.fileType)">
-                    <span class="point" [class.doing]="i<=active " [class.finshed]="i+1<=active|| active===-1"
-                        [class.show-pointer]="i<=active|| active===-1"
-                        [class.selected]="showIndex===i && (i+1<=active || active===-1)">
-                        <span class="side" [class.side-active]="i<=active" *ngIf="i==0"
-                            [class.step-finished]="(i+1<=active) || active===-1 ">START</span>
-                        <span class="number" [class.number-active]="i<=active|| active===-1"
-                            *ngIf="i>0 && i<dataList.length-1"
-                            [class.step-finished]="(i+1<=active) || active===-1">{{i}}</span>
-                        <span class="side" [class.side-active]="active===dataList.length-1" *ngIf="i==dataList.length-1"
-                            [class.step-finished]="active===-1">END</span>
-                    </span>
-                    <!-- <img *ngIf="(i+1<=active) || active===-1" class="icon" src="/assets/image/commission/true.svg"> -->
-                </span>
-                <span #line *ngIf="i+1<dataList.length " class='line' [class.act]="i<active|| active===-1"></span>
-            </span>
-        </div>
+		<div class="show-status">
+			<div class="status" *ngFor="let font of showNodeList">
+				<ng-container *ngIf="indexNode?.type==font.type && indexNode?.status==font.status && index_c!=font.c">
+					<a>当前阶段状态：</a> {{font.key}}
+					<div class="update-file" *ngIf="font?.isShowUpload">
+						<div
+							class="op-box"
+							*ngIf="(identity===2 && indexNode?.type===2 && (indexNode?.status==0 ||indexNode?.status==4)) || (identity===1 && indexNode?.type==1 && indexNode?.status===0 )"
+						>
+							<ng-container [ngSwitch]="indexNode?.fileType">
+								<ng-container *ngSwitchCase="1">
+									上传图片：
+									<button ivo-button (click)="inputOne.click()" *ngIf="imageList.length<5">
+										<img src="/assets/image/commission/upload.svg" />上传
+									</button>
+									<button *ngIf="imageList.length===5" class="not">
+										<img src="/assets/image/commission/upload.svg" />上传
+									</button>
+									<input
+										uploadImage
+										#u="uploadimage"
+										type="file"
+										hidden
+										(change)="updatePic($event.target.files[0],inputOne,u)"
+										#inputOne
+										(result)="r($event)"
+									/>
+									<span class="file-num">({{imageList.length}}/5)</span>
+									<span class="op-tip">需要上传{{indexNode?.name}}图片进行阶段节点验收</span>
+								</ng-container>
+								<ng-container *ngSwitchCase="2">
+									上传文件：
+									<button ivo-button *ngIf="fileList.length<5" (click)="input.click()">
+										<img src="/assets/image/commission/upload.svg" />上传
+									</button>
+									<button *ngIf="fileList.length===5" class="not">
+										<img src="/assets/image/commission/upload.svg" />上传
+									</button>
+									<input
+										uploadImage
+										#w="uploadimage"
+										type="file"
+										hidden
+										(change)="updateFile($event.target.files[0],input,w)"
+										#input
+										(result)="result($event)"
+									/>
+									<span class="file-num">({{fileList.length}}/5)</span>
+								</ng-container>
+							</ng-container>
+						</div>
+						<div class="op-box" *ngIf="identity===1 && indexNode?.type===1 && (indexNode?.status==1 ||indexNode?.status===4)">
+							绑定文件：
+							<button ivo-button (click)="input.click()"><img src="/assets/image/commission/upload.svg" />上传</button>
+							<input
+								uploadImage
+								#x="uploadimage"
+								type="file"
+								hidden
+								(change)="updateFile($event.target.files[0],input,x)"
+								#input
+								(result)="result($event)"
+							/>
+						</div>
 
-        <div class="show-status">
+						<div class="show-box" *ngIf="imageList.length>0||fileList.length>0">
+							<div class="image-box" *ngIf="imageList.length>0">
+								<li *ngFor="let image of imageList;let i =index">
+									<img class="delete" src="/assets/image/commission/delete.svg" (click)="delete(i,1)" />
+									<img class="update-img" [src]="image.url" (click)="showDetail(image.url)" />
+								</li>
+							</div>
+							<div class="file-box" *ngIf="fileList.length>0">
+								<li *ngFor="let file of fileList;let i =index">
+									<img class="delete" src="/assets/image/commission/waste.svg" (click)="delete(i,2)" />
+									<span><img src="/assets/image/commission/file-icon.svg" />{{file.name}}</span>
+								</li>
+							</div>
+						</div>
+						<span class="pre">
+							<ng-container *ngIf="isShowReportProgress"> 上传进度({{p}}) </ng-container>
+						</span>
+					</div>
+					<div
+						class="download-file"
+						*ngIf="(indexNode?.status==1 || indexNode?.status===3) && (indexNode?.type===2 || indexNode?.type===1)"
+					>
+						<ng-container [ngSwitch]="indexNode?.fileType">
+							<ng-container *ngSwitchCase="1">
+								<span class="down-title">提交审核图片：</span>
+								<div class="submit-img">
+									<ng-container *ngFor="let file of indexNodeDetail?.recordlist.list[0]?.submitFiles;let i=index">
+										<ivo-lazy-img
+											class="avatar"
+											[ngLazyLoad]="file"
+											[border]="5"
+											[objectFit]="true"
+											(click)="showDetail(file)"
+										></ivo-lazy-img>
+									</ng-container>
+								</div>
+							</ng-container>
+							<ng-container *ngSwitchCase="2">
+								<span class="down-title">提交审核文件：<span>点击右侧图标下载文件</span></span>
+								<span class="choice">
+									<span
+										class="file-name"
+										*ngFor="let file of indexNodeDetail?.recordlist.list[0]?.submitFiles;let i=index"
+									>
+										<img src="/assets/image/commission/file-icon.svg" />
+										文件{{i+1}}.{{file.split('.')[file.split('.').length-1]}}
+										<a [href]="file+'?response-content-type=application/octet-stream'" download target="_block">
+											<img src="/assets/image/commission/commission-nodelist/file-download.svg" />
+										</a>
+									</span>
+								</span>
+							</ng-container>
+						</ng-container>
+					</div>
 
-            <div class="status" *ngFor="let font of showNodeList">
+					<div class="btns">
+						<div class="showNodeDetail" *ngIf="font.express">
+							<span *ngFor="let a of font.express"
+								>{{a.p}}
+								<ng-container [ngSwitch]="a.t">
+									<ng-container *ngSwitchCase="1">
+										{{indexNodeDetail?.recordlist.list[0]?.submitTime |date:'yyyy-MM-dd HH:mm'}}
+									</ng-container>
+									<ng-container *ngSwitchCase="0">
+										{{indexNodeDetail?.recordlist.list[0]?.audit.auditTime |date:'yyyy-MM-dd HH:mm'}}
+									</ng-container>
+									<ng-container *ngSwitchCase="2"> {{commissionStarttime|date:'yyyy-MM-dd HH:mm'}} </ng-container>
+								</ng-container>
+							</span>
+						</div>
 
-                <ng-container *ngIf="indexNode?.type==font.type && indexNode?.status==font.status && index_c!=font.c">
-                    <a>当前阶段状态：</a> {{font.key}}
-                    <div class="update-file" *ngIf="font?.isShowUpload">
-                        <div class="op-box"
-                            *ngIf="(identity===2 && indexNode?.type===2 && (indexNode?.status==0 ||indexNode?.status==4)) || (identity===1 && indexNode?.type==1 && indexNode?.status===0 )">
-                            <ng-container [ngSwitch]="indexNode?.fileType">
-                                <ng-container *ngSwitchCase="1">
-                                    上传图片：
-                                    <button ivo-button (click)="inputOne.click()" 
-                                        *ngIf="imageList.length<5"><img
-                                            src="/assets/image/commission/upload.svg">上传</button>
-                                    <button *ngIf="imageList.length===5" class="not"><img
-                                            src="/assets/image/commission/upload.svg">上传</button>
-                                    <input uploadImage #u='uploadimage' type="file" hidden (change)="updatePic($event.target.files[0],inputOne,u)" #inputOne (result)="r($event)">
-                                    <span class="file-num">({{imageList.length}}/5)</span>
-                                    <span class="op-tip">需要上传{{indexNode?.name}}图片进行阶段节点验收</span>
-                                </ng-container>
-                                <ng-container *ngSwitchCase="2">
-                                    上传文件：
-                                    <button ivo-button *ngIf="fileList.length<5" (click)="input.click()"><img
-                                            src="/assets/image/commission/upload.svg">上传</button>
-                                    <button *ngIf="fileList.length===5" class="not"><img
-                                            src="/assets/image/commission/upload.svg">上传</button>
-                                    <input uploadImage #w='uploadimage' type="file" hidden (change)="updateFile($event.target.files[0],input,w)" #input (result)="result($event)">
-                                    <span class="file-num">({{fileList.length}}/5)</span>
-                                </ng-container>
-                            </ng-container>
-                        </div>
-                        <div class="op-box"
-                            *ngIf="identity===1 && indexNode?.type===1 && (indexNode?.status==1 ||indexNode?.status===4)">
-                            绑定文件：
-                            <button ivo-button (click)="input.click()"><img src="/assets/image/commission/upload.svg">上传</button>
-                            <input uploadImage #x='uploadimage' type="file" hidden (change)="updateFile($event.target.files[0],input,x)" #input (result)="result($event)">
-                        </div>
-
-                        <div class="show-box" *ngIf="imageList.length>0||fileList.length>0">
-                            <div class="image-box" *ngIf="imageList.length>0">
-                                <li *ngFor="let image of imageList;let i =index">
-                                    <img class="delete" src="/assets/image/commission/delete.svg" (click)="delete(i,1)">
-                                    <img class="update-img" [src]="image.url" (click)="showDetail(image.url)">
-                                </li>
-                            </div>
-                            <div class="file-box" *ngIf="fileList.length>0">
-                                <li *ngFor="let file of fileList;let i =index">
-                                    <img class="delete" src="/assets/image/commission/waste.svg" (click)="delete(i,2)">
-                                    <span><img src="/assets/image/commission/file-icon.svg">{{file.name}}</span>
-                                </li>
-                            </div>
-                        </div>
-                        <span class="pre">
-                            <ng-container *ngIf="isShowReportProgress">
-                                上传进度({{p}})
-                            </ng-container>
-                        </span>
-                    </div>
-                    <div class="download-file"
-                        *ngIf="(indexNode?.status==1 || indexNode?.status===3) && (indexNode?.type===2 || indexNode?.type===1)">
-                        <ng-container [ngSwitch]="indexNode?.fileType">
-                            <ng-container *ngSwitchCase="1">
-                                <span class="down-title">提交审核图片：</span>
-                                <div class="submit-img">
-                                    <ng-container
-                                        *ngFor="let file of indexNodeDetail?.recordlist.list[0]?.submitFiles;let i=index">
-                                        <ivo-lazy-img class="avatar" [ngLazyLoad]="file" [border]="5" [objectFit]="true"
-                                            (click)="showDetail(file)"></ivo-lazy-img>
-                                    </ng-container>
-                                </div>
-
-                            </ng-container>
-                            <ng-container *ngSwitchCase="2">
-                                <span class="down-title">提交审核文件：<span>点击右侧图标下载文件</span></span>
-                                <span class="choice">
-                                    <span class="file-name"
-                                        *ngFor="let file of indexNodeDetail?.recordlist.list[0]?.submitFiles;let i=index">
-                                        <img src="/assets/image/commission/file-icon.svg">
-                                        文件{{i+1}}.{{file.split('.')[file.split('.').length-1]}}
-                                        <a [href]="file+'?response-content-type=application/octet-stream'" download
-                                            target="_block">
-                                            <img src="/assets/image/commission/commission-nodelist/file-download.svg">
-                                        </a>
-                                    </span>
-
-                                </span>
-                            </ng-container>
-                        </ng-container>
-
-                    </div>
-
-                    <div class="btns">
-                        <div class="showNodeDetail" *ngIf="font.express">
-                            <span *ngFor="let a of font.express">{{a.p}}
-                                <ng-container [ngSwitch]="a.t">
-                                    <ng-container *ngSwitchCase="1">
-                                        {{indexNodeDetail?.recordlist.list[0]?.submitTime |date:'yyyy-MM-dd HH:mm'}}
-                                    </ng-container>
-                                    <ng-container *ngSwitchCase="0">
-                                        {{indexNodeDetail?.recordlist.list[0]?.audit.auditTime |date:'yyyy-MM-dd HH:mm'}}
-                                    </ng-container>
-                                    <ng-container *ngSwitchCase="2">
-                                        {{commissionStarttime|date:'yyyy-MM-dd HH:mm'}}
-                                    </ng-container>
-                                </ng-container>
-                            </span>
-                        </div>
-
-                        <div class="line-top">
-                            <!-- <a class="note" *ngIf="font?.note" [routerLink]="['/commission/detail/doing/note']"
+						<div class="line-top">
+							<!-- <a class="note" *ngIf="font?.note" [routerLink]="['/commission/detail/doing/note']"
                                 [queryParams]="{nodeId:nodeId}">{{font?.note}}({{indexNodeDetail?.recordlist.count}})</a> -->
 
-                            <!-- 企划方按钮 -->
-                            <ng-container *ngIf="identity===1">
-                                <ng-container *ngFor="let f of font?.cbtn">
-                                    <ng-container
-                                        *ngIf="(f.fun!='nine' && f.fun!='eight') || (f.fun=='nine' && showIndex!=lastNode) || (f.fun=='eight' && showIndex===lastNode) ">
-                                        <button ivo-button [buttonType]="f.color===1?1:0" appDebounceClick (debounceClick)="func(f.fun,f?.p)">
-                                            {{f.t}}
-                                            <ng-container *ngIf="f.fun=='five' && f.p===3 && index_c===1">
-                                                ({{modifyCount}})
-                                            </ng-container>
-                                            <ng-container *ngIf="f.fun=='five' && f.p===2 && indexNode.rejectCount<11">
-                                                ({{indexNode.rejectCount}})
-                                            </ng-container>
-                                        </button>
-                                    </ng-container>
+							<!-- 企划方按钮 -->
+							<ng-container *ngIf="identity===1">
+								<ng-container *ngFor="let f of font?.cbtn">
+									<ng-container
+										*ngIf="(f.fun!='nine' && f.fun!='eight') || (f.fun=='nine' && showIndex!=lastNode) || (f.fun=='eight' && showIndex===lastNode) "
+									>
+										<button
+											ivo-button
+											[buttonType]="f.color===1?1:0"
+											appDebounceClick
+											(debounceClick)="func(f.fun,f?.p)"
+										>
+											{{f.t}}
+											<ng-container *ngIf="f.fun=='five' && f.p===3 && index_c===1"> ({{modifyCount}}) </ng-container>
+											<ng-container *ngIf="f.fun=='five' && f.p===2 && indexNode.rejectCount<11">
+												({{indexNode.rejectCount}})
+											</ng-container>
+										</button>
+									</ng-container>
+								</ng-container>
+							</ng-container>
 
-                                </ng-container>
-
-                            </ng-container>
-
-                            <!-- 画师按钮 -->
-                            <ng-container *ngIf="identity===2">
-                                <ng-container *ngFor="let f of font?.pbtn">
-                                    <ng-container *ngIf="!f?.time || (f?.time && (isSponsorTimeout$|async))">
-                                        <button ivo-button [buttonType]="f.color===1?1:0" appDebounceClick (debounceClick)="func(f.fun,f?.p)">
-                                            {{f.t}}
-                                        </button>
-                                    </ng-container>
-                                </ng-container>
-                            </ng-container>
-                        </div>
-                    </div>
-                </ng-container>
-
-            </div>
-        </div>
-    </div>
-
-
-
-
+							<!-- 画师按钮 -->
+							<ng-container *ngIf="identity===2">
+								<ng-container *ngFor="let f of font?.pbtn">
+									<ng-container *ngIf="!f?.time || (f?.time && (isSponsorTimeout$|async))">
+										<button
+											ivo-button
+											[buttonType]="f.color===1?1:0"
+											appDebounceClick
+											(debounceClick)="func(f.fun,f?.p)"
+										>
+											{{f.t}}
+										</button>
+									</ng-container>
+								</ng-container>
+							</ng-container>
+						</div>
+					</div>
+				</ng-container>
+			</div>
+		</div>
+	</div>
 </div>

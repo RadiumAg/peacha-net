@@ -1,5 +1,5 @@
 export interface AdditionalGoods {
-    price: number;
-    title: string;
-    goods: any[];
+	price: number;
+	title: string;
+	goods: any[];
 }

@@ -6,18 +6,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 
 @NgModule({
-  declarations: [StorePage],
-  imports: [
-    ReactiveFormsModule,
-    PeachaComponentsModule,
-    ReactiveComponentModule,
-    CommonModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: StorePage,
-      },
-    ]),
-  ],
+	declarations: [StorePage],
+	imports: [
+		ReactiveFormsModule,
+		PeachaComponentsModule,
+		ReactiveComponentModule,
+		CommonModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				component: StorePage,
+			},
+		]),
+	],
 })
 export class StoreModule {}

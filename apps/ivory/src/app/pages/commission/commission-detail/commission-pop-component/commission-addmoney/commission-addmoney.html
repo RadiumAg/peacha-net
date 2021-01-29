@@ -1,43 +1,33 @@
 <div class="box">
-    <li class="title">
-        <img src="/assets/image/commission/red-flag.svg">
-        增加稿酬
-    </li>
-    <form class="content" [formGroup]="addMoneyForm">
-        <li class="item">
-            <span>增加稿酬金额：</span>
-            <input placeholder="请输入金额" formControlName="money">
-            <span class="unit">元</span>
-        </li>
-        <div class="error-inset error-top" [errorDisplay]="money">
-            <ng-container *errorCase="'required'">
-                稿酬金额必填
-            </ng-container>
-            <ng-container *errorCase="'pattern'">
-                金额需是10的倍数
-            </ng-container>
-        </div>
-        <li class="item">
-            <span>需求：</span>
-            <textarea placeholder="请输入需求" formControlName="text"></textarea>
-        </li>
-        <div class="error-inset" [errorDisplay]="text">
-            <ng-container *errorCase="'required'">
-                需求必填
-            </ng-container>
-            <ng-container *errorCase="'maxlength'">
-                需求最多能输入100字
-            </ng-container>
-        </div>
-    </form>
+	<li class="title">
+		<img src="/assets/image/commission/red-flag.svg" />
+		增加稿酬
+	</li>
+	<form class="content" [formGroup]="addMoneyForm">
+		<li class="item">
+			<span>增加稿酬金额：</span>
+			<input placeholder="请输入金额" formControlName="money" />
+			<span class="unit">元</span>
+		</li>
+		<div class="error-inset error-top" [errorDisplay]="money">
+			<ng-container *errorCase="'required'"> 稿酬金额必填 </ng-container>
+			<ng-container *errorCase="'pattern'"> 金额需是10的倍数 </ng-container>
+		</div>
+		<li class="item">
+			<span>需求：</span>
+			<textarea placeholder="请输入需求" formControlName="text"></textarea>
+		</li>
+		<div class="error-inset" [errorDisplay]="text">
+			<ng-container *errorCase="'required'"> 需求必填 </ng-container>
+			<ng-container *errorCase="'maxlength'"> 需求最多能输入100字 </ng-container>
+		</div>
+	</form>
 
-    <div class="btn">
-        <button ivo-button [buttonType]="1" (click)="cancel()">取消</button>
-        <button ivo-button appDebounceClick (debounceClick)="sure()">确定</button>
-    </div>
-    <div class="error-inset err-bottom" [errorDisplay]="addMoneyForm">
-        <ng-container *errorCase="'invaild'">
-            稿酬金额与需求必填
-        </ng-container>
-    </div>
+	<div class="btn">
+		<button ivo-button [buttonType]="1" (click)="cancel()">取消</button>
+		<button ivo-button appDebounceClick (debounceClick)="sure()">确定</button>
+	</div>
+	<div class="error-inset err-bottom" [errorDisplay]="addMoneyForm">
+		<ng-container *errorCase="'invaild'"> 稿酬金额与需求必填 </ng-container>
+	</div>
 </div>

@@ -1,12 +1,15 @@
-<div class="zoom-sider" [attr.has]="pics.index>0?true:null" (click)="previous()">
-    <img src="/assets/image/previous@2x.png" alt="">
+<div class="zoom-sider" [attr.has]="pics.index > 0 ? true : null" (click)="previous()">
+	<img src="/assets/image/previous@2x.png" alt="" />
 </div>
 
-<img [style]="'left:' +imgConfig.left + ';top:'+imgConfig.top+';transform:'+imgConfig.transform+';'"
-    [src]="pics.assets[pics.index]" #ill />
+<img
+	[style]="'left:' + imgConfig.left + ';top:' + imgConfig.top + ';transform:' + imgConfig.transform + ';'"
+	[src]="pics.assets[pics.index]"
+	#ill
+/>
 
-<div class="zoom-sider" [attr.has]="(pics.index<pics.assets.length-1)?true:null" (click)="next()">
-    <img src="/assets/image/next@2x.png" alt="">
+<div class="zoom-sider" [attr.has]="pics.index < pics.assets.length - 1 ? true : null" (click)="next()">
+	<img src="/assets/image/next@2x.png" alt="" />
 </div>
 
 <div class="tips" #tips>按ESC退出</div>

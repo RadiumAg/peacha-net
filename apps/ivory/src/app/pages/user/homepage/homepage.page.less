@@ -1,465 +1,446 @@
 .works {
-
-
-    &>li {
-        width: 1200px;
-        margin: 0 auto;
-        font-size: 20px;
-        font-weight: bold;
-        color: #333333;
-        margin-top: 50px;
-        margin-bottom: 20px;
-        list-style: none;
-
-        &>button {
-            width: 116px;
-            display: block;
-            margin: 0 auto;
-            height: 34px;
-            line-height: 34px;
-            background-color: #5C5E66;
-            color: #ffffff;
-            font-size: 14px;
-            border: none;
-            outline: none;
-            border-radius: 22px;
-        }
-    }
-
-    &>.bg {
-        background-color: #F7F9FA;
-        padding-top: 30px;
-        margin-top: 30px;
-
-        &>li {
-            width: 1200px;
-            margin: 0 auto;
-            font-size: 20px;
-            font-weight: bold;
-            color: #333333;
-            margin-bottom: 20px;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-
-            &>a {
-                font-size: 14px;
-                font-weight: normal;
-                color: #999999;
-                margin-top: 5px;
-
-                &:hover {
-                    color: #ff6398;
-                }
-            }
-        }
-
-        &>.bestli {
-            width: 1200px;
-            margin: 0 auto;
-            font-size: 20px;
-            font-weight: bold;
-            color: #333333;
-            margin-bottom: 20px;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-
-            &>span {
-                &>a {
-                    font-size: 14px;
-                    font-weight: normal;
-                    color: #999999;
-                    margin-top: 5px;
-                    margin-left: 20px;
-
-                }
-
-                &>.save {
-                    color: #ff6398;
-                }
-            }
-
-        }
-
-        &>.best {
-            width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 285px);
-            grid-column-gap: 20px;
-
-            &>.best-work2 {
-                outline: none;
-                list-style: none;
-                border-radius: 4px;
-                width: 285px;
-                margin-bottom: 50px;
-                position: relative;
-                transition: all ease 0.4s;
-                box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
-                background-color: #ffffff;
-                cursor: pointer;
-                color: #CCCCCC;
-                height: 378px;
-
-                &>.add {
-                    display: block;
-                    width: 67px;
-                    height: 67px;
-                    margin: 0 auto;
-                    margin-top: 134px;
-                    opacity: 1;
-                    transition: all 0.15s ease;
-                }
-
-                &>.add-hover {
-                    display: block;
-                    width: 67px;
-                    height: 67px;
-                    position: absolute;
-                    margin-top: -67px;
-                    margin-left: 109px;
-                    opacity: 1;
-                    transition: all 0.15s ease;
-                }
-
-                &>.opa {
-                    opacity: 0;
-                    transition: all 0.15s ease;
-                }
-
-                &>.tips {
-                    display: block;
-                    width: 100%;
-                    text-align: center;
-                    font-size: 14px;
-                    line-height: 20px;
-                    margin-top: 30px;
-                }
-
-            }
-
-            &>.best-work2:hover {
-                color: #999999;
-                transition: all 0.15s ease;
-            }
-
-            &>.best-work {
-                outline: none;
-                list-style: none;
-                border-radius: 4px;
-                width: 285px;
-                margin-bottom: 50px;
-                position: relative;
-                transition: all ease 0.4s;
-                box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
-                background-color: #ffffff;
-                height: 378px;
-                &>.delete-pic {
-                    display: block;
-                    width: 26px;
-                    height: 26px;
-                    position: absolute;
-                    margin-left: 272px;
-                    margin-top: -12px;
-                    cursor: pointer;
-                }
-
-                &>a{
-
-                    &>.good-icon {
-                        position: absolute;
-                        margin-top: -96px;
-                        width: 92px;
-                        cursor: pointer;
-                    }
-
-                    &>img {
-                        width: 285px;
-                        height: 285px;
-                        border-radius: 4px;
-                        cursor: pointer;
-                    }
-
-                    &>.first {
-                        display: flex;
-                        justify-content: space-between;
-                        margin: 8px 0;
-                        padding: 0 8px;
-
-                        &>.type {
-                            color: #999999;
-                            font-size: 12px;
-                            line-height: 12px;
-                            font-weight: bold;
-                        }
-
-                    }
-
-                    &>.name {
-                        color: #333333;
-                        font-size: 14px;
-                        display: block;
-                        margin-bottom: 11px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        font-weight: bold;
-                        line-height: 23px;
-                        cursor: pointer;
-                        padding: 0 8px;
-                    }
-
-                    &>.name:hover {
-                        color: #FF6398;
-                    }
-
-                    &>.sad {
-                        width: 100%;
-                        display: flex;
-                        justify-content: space-between;
-                        padding: 0 8px;
-                        margin-bottom: 13px;
-                        cursor: pointer;
-                        height: 18px !important;
-
-                        &>.like-count {
-                            color: #999999;
-                            font-size: 14px;
-                            line-height: 14px;
-                            padding-top: 2px;
-
-                            &>img {
-                                width: 18px;
-                                margin-right: 0px;
-                                margin-top: -3px;
-                            }
-                        }
-
-                        &>.price {
-                            display: block;
-                            color: #FF6398;
-                            font-size: 14px;
-                            // margin-top: 2px;
-                            // margin-bottom: 10px;
-                            line-height: 16px;
-                            font-weight: bold;
-                            padding: 0 8px;
-
-                            &>a {
-                                color: #FF6398;
-                                margin-right: 5px;
-                            }
-
-                            &>.free {
-                                color: #5A8BE6;
-                            }
-
-                            &>.no {
-                                color: #999999;
-                            }
-                        }
-
-                    }
-                }
-
-
-
-            }
-
-            &>.best-work:hover {
-                box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.08);
-                // transform: scale(1.05);
-            }
-        }
-
-        &>.empty-one {
-            width: 100%;
-            height: 340px;
-            padding-top: 20px;
-
-            &>img {
-                width: 240px;
-                display: block;
-                margin: 0 auto;
-            }
-
-            &>span {
-                font-size: 14px;
-                display: block;
-                text-align: center;
-                font-weight: bold;
-                font-size: 14px;
-
-            }
-        }
-    }
-
-
-
-    &>.mywork {
-        width: 1200px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: repeat(5, 224px);
-        grid-column-gap: 20px;
-    }
-
-    &>.empty-two {
-        width: 1200px;
-        margin: 0 auto;
-        height: 300px;
-    }
-
-
-    &>.collection {
-        display: flex;
-
-        &>.collect {
-            background-color: #ffffff;
-            margin: 0 7px 0 7px;
-
-            &>img {
-                width: 210px;
-                height: 157px;
-                border-top-left-radius: 8px;
-                border-top-right-radius: 8px;
-            }
-
-            &>span {
-                margin-left: 10px;
-                display: block;
-                height: 30px;
-                line-height: 30px;
-            }
-
-            &>.name {
-                font-size: 14px;
-            }
-
-            &>.message {
-                font-size: 12px;
-
-                &>a {
-                    color: #666666;
-                    display: inline-block;
-                    width: 60px;
-
-                    &>img {
-                        width: 14px;
-                        height: 14px;
-                        margin-top: -3px;
-                    }
-                }
-            }
-        }
-    }
-
-
-
-    &>.else {
-        &>.different {
-            float: left;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333333;
-        }
-
-        &>.show-edit {
-            display: inline-block;
-            height: 40px
-        }
-    }
-
-    &>.like {
-        display: flex;
-
-        &>.likework {
-            background-color: #ffffff;
-            border-radius: 8px;
-            margin: 0 4px 30px 4px;
-            width: 169px;
-            border: 1px solid #E6E6E6;
-
-            &>.commodity {
-                position: absolute;
-                margin-left: 125px;
-
-                &>img {
-                    width: 25px;
-                }
-            }
-
-            &>img {
-                display: block;
-                width: 167px;
-                height: 112px;
-                border-top-left-radius: 8px;
-                border-top-right-radius: 8px;
-            }
-
-            &>span {
-                display: block;
-                height: 20px;
-                line-height: 20px;
-                margin-left: 10px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-
-                &>.type {
-                    font-size: 12px;
-                    color: #FA89AF;
-                }
-
-                &>.name {
-                    font-size: 14px;
-                    color: #333333;
-                }
-            }
-
-            &>.message {
-                font-size: 12px;
-                height: 35px;
-                line-height: 35px;
-
-                &>a {
-                    color: #666666;
-                    display: inline-block;
-                    width: 60px;
-
-                    &>img {
-                        width: 14px;
-                        height: 14px;
-                        margin-top: -3px;
-                    }
-                }
-            }
-        }
-    }
-
-
+	& > li {
+		width: 1200px;
+		margin: 0 auto;
+		font-size: 20px;
+		font-weight: bold;
+		color: #333333;
+		margin-top: 50px;
+		margin-bottom: 20px;
+		list-style: none;
+
+		& > button {
+			width: 116px;
+			display: block;
+			margin: 0 auto;
+			height: 34px;
+			line-height: 34px;
+			background-color: #5c5e66;
+			color: #ffffff;
+			font-size: 14px;
+			border: none;
+			outline: none;
+			border-radius: 22px;
+		}
+	}
+
+	& > .bg {
+		background-color: #f7f9fa;
+		padding-top: 30px;
+		margin-top: 30px;
+
+		& > li {
+			width: 1200px;
+			margin: 0 auto;
+			font-size: 20px;
+			font-weight: bold;
+			color: #333333;
+			margin-bottom: 20px;
+			list-style: none;
+			display: flex;
+			justify-content: space-between;
+
+			& > a {
+				font-size: 14px;
+				font-weight: normal;
+				color: #999999;
+				margin-top: 5px;
+
+				&:hover {
+					color: #ff6398;
+				}
+			}
+		}
+
+		& > .bestli {
+			width: 1200px;
+			margin: 0 auto;
+			font-size: 20px;
+			font-weight: bold;
+			color: #333333;
+			margin-bottom: 20px;
+			list-style: none;
+			display: flex;
+			justify-content: space-between;
+
+			& > span {
+				& > a {
+					font-size: 14px;
+					font-weight: normal;
+					color: #999999;
+					margin-top: 5px;
+					margin-left: 20px;
+				}
+
+				& > .save {
+					color: #ff6398;
+				}
+			}
+		}
+
+		& > .best {
+			width: 1200px;
+			margin: 0 auto;
+			display: grid;
+			grid-template-columns: repeat(4, 285px);
+			grid-column-gap: 20px;
+
+			& > .best-work2 {
+				outline: none;
+				list-style: none;
+				border-radius: 4px;
+				width: 285px;
+				margin-bottom: 50px;
+				position: relative;
+				transition: all ease 0.4s;
+				box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
+				background-color: #ffffff;
+				cursor: pointer;
+				color: #cccccc;
+				height: 378px;
+
+				& > .add {
+					display: block;
+					width: 67px;
+					height: 67px;
+					margin: 0 auto;
+					margin-top: 134px;
+					opacity: 1;
+					transition: all 0.15s ease;
+				}
+
+				& > .add-hover {
+					display: block;
+					width: 67px;
+					height: 67px;
+					position: absolute;
+					margin-top: -67px;
+					margin-left: 109px;
+					opacity: 1;
+					transition: all 0.15s ease;
+				}
+
+				& > .opa {
+					opacity: 0;
+					transition: all 0.15s ease;
+				}
+
+				& > .tips {
+					display: block;
+					width: 100%;
+					text-align: center;
+					font-size: 14px;
+					line-height: 20px;
+					margin-top: 30px;
+				}
+			}
+
+			& > .best-work2:hover {
+				color: #999999;
+				transition: all 0.15s ease;
+			}
+
+			& > .best-work {
+				outline: none;
+				list-style: none;
+				border-radius: 4px;
+				width: 285px;
+				margin-bottom: 50px;
+				position: relative;
+				transition: all ease 0.4s;
+				box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.08);
+				background-color: #ffffff;
+				height: 378px;
+				& > .delete-pic {
+					display: block;
+					width: 26px;
+					height: 26px;
+					position: absolute;
+					margin-left: 272px;
+					margin-top: -12px;
+					cursor: pointer;
+				}
+
+				& > a {
+					& > .good-icon {
+						position: absolute;
+						margin-top: -96px;
+						width: 92px;
+						cursor: pointer;
+					}
+
+					& > img {
+						width: 285px;
+						height: 285px;
+						border-radius: 4px;
+						cursor: pointer;
+					}
+
+					& > .first {
+						display: flex;
+						justify-content: space-between;
+						margin: 8px 0;
+						padding: 0 8px;
+
+						& > .type {
+							color: #999999;
+							font-size: 12px;
+							line-height: 12px;
+							font-weight: bold;
+						}
+					}
+
+					& > .name {
+						color: #333333;
+						font-size: 14px;
+						display: block;
+						margin-bottom: 11px;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						font-weight: bold;
+						line-height: 23px;
+						cursor: pointer;
+						padding: 0 8px;
+					}
+
+					& > .name:hover {
+						color: #ff6398;
+					}
+
+					& > .sad {
+						width: 100%;
+						display: flex;
+						justify-content: space-between;
+						padding: 0 8px;
+						margin-bottom: 13px;
+						cursor: pointer;
+						height: 18px !important;
+
+						& > .like-count {
+							color: #999999;
+							font-size: 14px;
+							line-height: 14px;
+							padding-top: 2px;
+
+							& > img {
+								width: 18px;
+								margin-right: 0px;
+								margin-top: -3px;
+							}
+						}
+
+						& > .price {
+							display: block;
+							color: #ff6398;
+							font-size: 14px;
+							// margin-top: 2px;
+							// margin-bottom: 10px;
+							line-height: 16px;
+							font-weight: bold;
+							padding: 0 8px;
+
+							& > a {
+								color: #ff6398;
+								margin-right: 5px;
+							}
+
+							& > .free {
+								color: #5a8be6;
+							}
+
+							& > .no {
+								color: #999999;
+							}
+						}
+					}
+				}
+			}
+
+			& > .best-work:hover {
+				box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.08);
+				// transform: scale(1.05);
+			}
+		}
+
+		& > .empty-one {
+			width: 100%;
+			height: 340px;
+			padding-top: 20px;
+
+			& > img {
+				width: 240px;
+				display: block;
+				margin: 0 auto;
+			}
+
+			& > span {
+				font-size: 14px;
+				display: block;
+				text-align: center;
+				font-weight: bold;
+				font-size: 14px;
+			}
+		}
+	}
+
+	& > .mywork {
+		width: 1200px;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: repeat(5, 224px);
+		grid-column-gap: 20px;
+	}
+
+	& > .empty-two {
+		width: 1200px;
+		margin: 0 auto;
+		height: 300px;
+	}
+
+	& > .collection {
+		display: flex;
+
+		& > .collect {
+			background-color: #ffffff;
+			margin: 0 7px 0 7px;
+
+			& > img {
+				width: 210px;
+				height: 157px;
+				border-top-left-radius: 8px;
+				border-top-right-radius: 8px;
+			}
+
+			& > span {
+				margin-left: 10px;
+				display: block;
+				height: 30px;
+				line-height: 30px;
+			}
+
+			& > .name {
+				font-size: 14px;
+			}
+
+			& > .message {
+				font-size: 12px;
+
+				& > a {
+					color: #666666;
+					display: inline-block;
+					width: 60px;
+
+					& > img {
+						width: 14px;
+						height: 14px;
+						margin-top: -3px;
+					}
+				}
+			}
+		}
+	}
+
+	& > .else {
+		& > .different {
+			float: left;
+			font-size: 18px;
+			font-weight: bold;
+			color: #333333;
+		}
+
+		& > .show-edit {
+			display: inline-block;
+			height: 40px;
+		}
+	}
+
+	& > .like {
+		display: flex;
+
+		& > .likework {
+			background-color: #ffffff;
+			border-radius: 8px;
+			margin: 0 4px 30px 4px;
+			width: 169px;
+			border: 1px solid #e6e6e6;
+
+			& > .commodity {
+				position: absolute;
+				margin-left: 125px;
+
+				& > img {
+					width: 25px;
+				}
+			}
+
+			& > img {
+				display: block;
+				width: 167px;
+				height: 112px;
+				border-top-left-radius: 8px;
+				border-top-right-radius: 8px;
+			}
+
+			& > span {
+				display: block;
+				height: 20px;
+				line-height: 20px;
+				margin-left: 10px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+
+				& > .type {
+					font-size: 12px;
+					color: #fa89af;
+				}
+
+				& > .name {
+					font-size: 14px;
+					color: #333333;
+				}
+			}
+
+			& > .message {
+				font-size: 12px;
+				height: 35px;
+				line-height: 35px;
+
+				& > a {
+					color: #666666;
+					display: inline-block;
+					width: 60px;
+
+					& > img {
+						width: 14px;
+						height: 14px;
+						margin-top: -3px;
+					}
+				}
+			}
+		}
+	}
 }
 
 .hello {
-    width: 100px;
-    background-color: #ffffff;
-    border-radius: 4px;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.16);
+	width: 100px;
+	background-color: #ffffff;
+	border-radius: 4px;
+	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.16);
 
-    &>li:hover {
-        color: #FA89AF;
-    }
+	& > li:hover {
+		color: #fa89af;
+	}
 
-    &>li {
-        width: 100px;
-        height: 40px;
-        line-height: 40px;
-        text-align: center;
-    }
+	& > li {
+		width: 100px;
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
+	}
 
-    &>.like-display {
-        color: #FA89AF;
-    }
+	& > .like-display {
+		color: #fa89af;
+	}
 }

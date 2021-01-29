@@ -1,21 +1,26 @@
 <div class="box">
-    <li class="title">
-        <img src="/assets/image/commission/red-flag.svg">
-        企划超时规则
-    </li>
-    <span class="small-title">企划方超时：</span>
-    <span class="text">若“企划所需时长”小于等于10天时，企划方超过3天未处理企划，则画师/模型师可发起企划方超时中止，根据当前阶段节点比例结算稿酬，源文件提交至平台审核。</span>
-    <span class="text">若“企划所需时长”大于10天时，企划方超过5天未处理企划，则画师/模型师可发起企划方超时中止，根据当前阶段节点比例结算稿酬，源文件提交至平台审核。</span>
-    <span class="small-title empty">画师/模型师超时：</span>
-    <span
-        class="text">若画师/模型师超时完成企划则会扣除一定比例的稿酬，扣除部分退回至企划方账户中。若企划超时大于7天，企划方可发起超时中止企划，画师/模型师扣除全部稿酬。（超时天数小于等于3天则扣除3%稿酬，超时天数大于3天-小于等于5天则扣除6%稿酬，超时天数大于5天-小于等于6天则扣除10%稿酬，超时天数大于6天则扣除15%稿酬。超时天数大于7天，企划方可以发起超时中止，扣除全部稿酬。）</span>
-    <span class="tip">{{tips}}</span>
-    <span class="tip" *ngIf="rate">获得稿酬比例：{{rate}}%</span>
-    <div class="btn" *ngIf="key.type===-1 || !isDiscontinue">
-        <button ivo-button (click)="cancel()">关闭</button>
-    </div>
-    <div class="btn" *ngIf="key.type!=-1 && isDiscontinue">
-        <button ivo-button [buttonType]="1" (click)="cancel()">取消</button>
-        <button ivo-button (click)="sure()">发起超时中止</button>
-    </div>
+	<li class="title">
+		<img src="/assets/image/commission/red-flag.svg" />
+		企划超时规则
+	</li>
+	<span class="small-title">企划方超时：</span>
+	<span class="text"
+		>若“企划所需时长”小于等于10天时，企划方超过3天未处理企划，则画师/模型师可发起企划方超时中止，根据当前阶段节点比例结算稿酬，源文件提交至平台审核。</span
+	>
+	<span class="text"
+		>若“企划所需时长”大于10天时，企划方超过5天未处理企划，则画师/模型师可发起企划方超时中止，根据当前阶段节点比例结算稿酬，源文件提交至平台审核。</span
+	>
+	<span class="small-title empty">画师/模型师超时：</span>
+	<span class="text"
+		>若画师/模型师超时完成企划则会扣除一定比例的稿酬，扣除部分退回至企划方账户中。若企划超时大于7天，企划方可发起超时中止企划，画师/模型师扣除全部稿酬。（超时天数小于等于3天则扣除3%稿酬，超时天数大于3天-小于等于5天则扣除6%稿酬，超时天数大于5天-小于等于6天则扣除10%稿酬，超时天数大于6天则扣除15%稿酬。超时天数大于7天，企划方可以发起超时中止，扣除全部稿酬。）</span
+	>
+	<span class="tip">{{tips}}</span>
+	<span class="tip" *ngIf="rate">获得稿酬比例：{{rate}}%</span>
+	<div class="btn" *ngIf="key.type===-1 || !isDiscontinue">
+		<button ivo-button (click)="cancel()">关闭</button>
+	</div>
+	<div class="btn" *ngIf="key.type!=-1 && isDiscontinue">
+		<button ivo-button [buttonType]="1" (click)="cancel()">取消</button>
+		<button ivo-button (click)="sure()">发起超时中止</button>
+	</div>
 </div>

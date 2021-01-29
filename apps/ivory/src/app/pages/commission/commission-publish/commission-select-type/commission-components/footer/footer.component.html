@@ -1,6 +1,18 @@
 <div class="footer-container">
-    <input *ngIf="select_data_token.getValue().pre" class="pre-step" type="button" [routerLink]="[select_data_token.getValue().pre]"
-        value="取消">
-    <input *ngIf="select_data_token.getValue().next" class="next-step" type="button" [routerLink]="[select_data_token.getValue().next]" router
-        value="确定" [disabled]="(select_token |async)">
+	<input
+		*ngIf="select_data_token.getValue().pre"
+		class="pre-step"
+		type="button"
+		[routerLink]="[select_data_token.getValue().pre]"
+		value="取消"
+	/>
+	<input
+		*ngIf="select_data_token.getValue().next"
+		class="next-step"
+		type="button"
+		[routerLink]="[select_data_token.getValue().next]"
+		router
+		value="确定"
+		[disabled]="select_token | async"
+	/>
 </div>

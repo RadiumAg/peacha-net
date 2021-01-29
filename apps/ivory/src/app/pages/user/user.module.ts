@@ -18,109 +18,105 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserinfoComponent } from './follow-list/userinfo/userinfo.component';
 import { FollowingComponent } from './follow-list/following/following.component';
 import { FollowerComponent } from './follow-list/follower/follower.component';
-import {
-  PeachaComponentsModule,
-  ReactiveComponentModule,
-  WorkApiService,
-} from '@peacha-core';
+import { PeachaComponentsModule, ReactiveComponentModule, WorkApiService } from '@peacha-core';
 import { FollowModule } from 'libs/peacha-core/src/lib/features/follow/follow.module';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 @NgModule({
-  declarations: [
-    UserPage,
-    FollowerComponent,
-    FollowingComponent,
-    UserinfoComponent,
-    CollectionPage,
-    HomepagePage,
-    CreatedPage,
-    CollectionIntroducePage,
-    SubscribedPage,
-    WorksPage,
-    ChangeRepresentComponent,
-    Complain,
-    DeleteTip,
-    NewCollection,
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    PeachaComponentsModule,
-    RouterModule.forChild([
-      {
-        path: ':id',
-        component: UserPage,
-        children: [
-          // {
-          //   path: 'follow',
-          //   component: FollowListPage,
-          //   children: [
-          //     {
-          //       path: 'follower',
-          //       component: FollowerComponent
-          //     },
-          //     {
-          //       path: 'following',
-          //       component: FollowingComponent
-          //     },
-          //     // {
-          //     //   path:'**',
-          //     //   redirectTo:'follower'
-          //     // }
-          //   ]
-          // },
-          {
-            path: 'follower',
-            component: FollowerComponent,
-          },
-          {
-            path: 'following',
-            component: FollowingComponent,
-          },
-          {
-            path: '',
-            component: HomepagePage,
-          },
-          {
-            path: 'works',
-            component: WorksPage,
-          },
-          {
-            path: 'collection',
-            component: CollectionPage,
-          },
-          {
-            path: 'collection/created',
-            component: CreatedPage,
-          },
-          {
-            path: 'collection/subscribed',
-            component: SubscribedPage,
-          },
-          {
-            path: 'collection/:id',
-            component: CollectionIntroducePage,
-          },
-          {
-            path: '**',
-            redirectTo: '',
-          },
-        ],
-        canActivate: [UserGuard],
-        resolve: {
-          user: UserResolve,
-        },
-      },
-      {
-        path: '**',
-        redirectTo: '/user/',
-      },
-    ]),
-    FollowModule,
-    ReactiveComponentModule,
-    NzDropDownModule,
-  ],
-  providers: [UserGuard, UserResolve, WorkApiService],
+	declarations: [
+		UserPage,
+		FollowerComponent,
+		FollowingComponent,
+		UserinfoComponent,
+		CollectionPage,
+		HomepagePage,
+		CreatedPage,
+		CollectionIntroducePage,
+		SubscribedPage,
+		WorksPage,
+		ChangeRepresentComponent,
+		Complain,
+		DeleteTip,
+		NewCollection,
+	],
+	imports: [
+		CommonModule,
+		ReactiveFormsModule,
+		PeachaComponentsModule,
+		RouterModule.forChild([
+			{
+				path: ':id',
+				component: UserPage,
+				children: [
+					// {
+					//   path: 'follow',
+					//   component: FollowListPage,
+					//   children: [
+					//     {
+					//       path: 'follower',
+					//       component: FollowerComponent
+					//     },
+					//     {
+					//       path: 'following',
+					//       component: FollowingComponent
+					//     },
+					//     // {
+					//     //   path:'**',
+					//     //   redirectTo:'follower'
+					//     // }
+					//   ]
+					// },
+					{
+						path: 'follower',
+						component: FollowerComponent,
+					},
+					{
+						path: 'following',
+						component: FollowingComponent,
+					},
+					{
+						path: '',
+						component: HomepagePage,
+					},
+					{
+						path: 'works',
+						component: WorksPage,
+					},
+					{
+						path: 'collection',
+						component: CollectionPage,
+					},
+					{
+						path: 'collection/created',
+						component: CreatedPage,
+					},
+					{
+						path: 'collection/subscribed',
+						component: SubscribedPage,
+					},
+					{
+						path: 'collection/:id',
+						component: CollectionIntroducePage,
+					},
+					{
+						path: '**',
+						redirectTo: '',
+					},
+				],
+				canActivate: [UserGuard],
+				resolve: {
+					user: UserResolve,
+				},
+			},
+			{
+				path: '**',
+				redirectTo: '/user/',
+			},
+		]),
+		FollowModule,
+		ReactiveComponentModule,
+		NzDropDownModule,
+	],
+	providers: [UserGuard, UserResolve, WorkApiService],
 })
 export class UserModule {}

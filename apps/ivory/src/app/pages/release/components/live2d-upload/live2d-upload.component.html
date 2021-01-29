@@ -1,91 +1,80 @@
-<div
-  class="live2d-upload-box"
-  *ngrxLet="live2dLoadStatus$; let live2dLoadStatus"
->
-  <ng-container *ngrxLet="uploadStatus$; let uploadStatus">
-    <div
-      class="upload-item-box"
-      *ngIf="live2dLoadStatus === 2 || live2dLoadStatus === 3"
-    >
-      <div>
-        <div class="upload-container">
-          <img src="/assets/image/live2d-upload-toolbar-icon.png" />
-          <span class="file-name">{{ this.file?.name }}</span>
-        </div>
-        <a class="re-upload" (click)="resetLoadStatus()">重新上传</a>
-      </div>
-      <button type="button" (click)="saveTransformData()" *ngIf="!isGood">
-        <span>保存预设位置参数</span>
-      </button>
-      <button
-        type="button"
-        [attr.disabled]="
-          live2dLoadStatus === 2 && uploadStatus === 0 ? null : true
-        "
-        [attr.error]="live2dLoadStatus === 3 ? true : null"
-        [attr.loading]="uploadStatus === 1 ? true : null"
-        [attr.success]="uploadStatus === 2 ? true : null"
-        [attr.fail]="uploadStatus === 3 ? true : null"
-        (click)="upload()"
-      >
-        <span>{{
-          uploadStatus === 1
-            ? '正在上传 ' + (uploadProgress$ | async).toFixed(1) + ' %'
-            : uploadStatus === 2
-            ? '上传成功'
-            : uploadStatus === 3
-            ? '上传失败'
-            : '确认上传'
-        }}</span>
-      </button>
-    </div>
-  </ng-container>
-  <div class="live2d-not-loaded" *ngIf="live2dLoadStatus === 0">
-    <div>
-      <img src="/assets/image/upload.svg" />
-      <span class="tips-top">将文件拖动至此处也可以进行加载</span>
-      <input type="file" hidden #filesMulti accept=".zip" (change)="onFile()" />
-      <button ivo-button type="button" (click)="filesMulti.click()">
-        <span>点击加载模型文件</span>
-      </button>
+<div class="live2d-upload-box" *ngrxLet="live2dLoadStatus$; let live2dLoadStatus">
+	<ng-container *ngrxLet="uploadStatus$; let uploadStatus">
+		<div class="upload-item-box" *ngIf="live2dLoadStatus === 2 || live2dLoadStatus === 3">
+			<div>
+				<div class="upload-container">
+					<img src="/assets/image/live2d-upload-toolbar-icon.png" />
+					<span class="file-name">{{ this.file?.name }}</span>
+				</div>
+				<a class="re-upload" (click)="resetLoadStatus()">重新上传</a>
+			</div>
+			<button type="button" (click)="saveTransformData()" *ngIf="!isGood">
+				<span>保存预设位置参数</span>
+			</button>
+			<button
+				type="button"
+				[attr.disabled]="live2dLoadStatus === 2 && uploadStatus === 0 ? null : true"
+				[attr.error]="live2dLoadStatus === 3 ? true : null"
+				[attr.loading]="uploadStatus === 1 ? true : null"
+				[attr.success]="uploadStatus === 2 ? true : null"
+				[attr.fail]="uploadStatus === 3 ? true : null"
+				(click)="upload()"
+			>
+				<span>{{
+					uploadStatus === 1
+						? '正在上传 ' + (uploadProgress$ | async).toFixed(1) + ' %'
+						: uploadStatus === 2
+						? '上传成功'
+						: uploadStatus === 3
+						? '上传失败'
+						: '确认上传'
+				}}</span>
+			</button>
+		</div>
+	</ng-container>
+	<div class="live2d-not-loaded" *ngIf="live2dLoadStatus === 0">
+		<div>
+			<img src="/assets/image/upload.svg" />
+			<span class="tips-top">将文件拖动至此处也可以进行加载</span>
+			<input type="file" hidden #filesMulti accept=".zip" (change)="onFile()" />
+			<button ivo-button type="button" (click)="filesMulti.click()">
+				<span>点击加载模型文件</span>
+			</button>
 
-      <span class="tips-center" *ngIf="!isGood"
-        >为了让您避免不必要的损失，请您在上传之前进行必要的防侵权措施
-        例如：添加水印、添加签名、降低清晰度、上传不可编辑版本等，您可以参考<a
-          target="_blank"
-          href="/assets/download_files/模型水印添加指南.pdf"
-          >《水印添加指南》</a
-        >
-      </span>
-    </div>
-    <!-- <span class="tips-bottom">上传作品视为您已同意
+			<span class="tips-center" *ngIf="!isGood"
+				>为了让您避免不必要的损失，请您在上传之前进行必要的防侵权措施
+				例如：添加水印、添加签名、降低清晰度、上传不可编辑版本等，您可以参考<a
+					target="_blank"
+					href="/assets/download_files/模型水印添加指南.pdf"
+					>《水印添加指南》</a
+				>
+			</span>
+		</div>
+		<!-- <span class="tips-bottom">上传作品视为您已同意
             <a target="_blank" href="/useragreement">《Peacha用户协议》</a>
             和
             <a target="_blank" href="/convention">《Peacha创作者公约》</a>
         </span> -->
-  </div>
-  <div
-    class="live2d-loaded"
-    *ngIf="live2dLoadStatus === 1 || live2dLoadStatus === 2"
-  >
-    <peacha-live2d-preview
-      [enableFaceTracker]="true"
-      [enableSettingPanel]="true"
-      [fileType]="fileType"
-      [vfs]="vfs"
-      [transformData]="transformData"
-      (error)="onLive2dLoadError($event)"
-      (ok)="onLive2dLoadOk()"
-      [width]="width"
-      [height]="height"
-    ></peacha-live2d-preview>
-  </div>
-  <div class="live2d-load-error" *ngIf="live2dLoadStatus === 3">
-    <div class="upload-error-box">
-      <img src="/assets/image/error.png" />
-      <span>
-        {{ error }}
-      </span>
-    </div>
-  </div>
+	</div>
+	<div class="live2d-loaded" *ngIf="live2dLoadStatus === 1 || live2dLoadStatus === 2">
+		<peacha-live2d-preview
+			[enableFaceTracker]="true"
+			[enableSettingPanel]="true"
+			[fileType]="fileType"
+			[vfs]="vfs"
+			[transformData]="transformData"
+			(error)="onLive2dLoadError($event)"
+			(ok)="onLive2dLoadOk()"
+			[width]="width"
+			[height]="height"
+		></peacha-live2d-preview>
+	</div>
+	<div class="live2d-load-error" *ngIf="live2dLoadStatus === 3">
+		<div class="upload-error-box">
+			<img src="/assets/image/error.png" />
+			<span>
+				{{ error }}
+			</span>
+		</div>
+	</div>
 </div>

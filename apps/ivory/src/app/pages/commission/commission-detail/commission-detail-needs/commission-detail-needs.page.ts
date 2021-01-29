@@ -6,49 +6,46 @@ import { CommissionDetail } from '../../model/commission-detail';
 import { CommissionDetailService } from '../../service/detail.service';
 
 @Component({
-  selector: 'ivo-commission-detail-needs',
-  templateUrl: './commission-detail-needs.page.html',
-  styleUrls: ['./commission-detail-needs.page.less'],
+	selector: 'ivo-commission-detail-needs',
+	templateUrl: './commission-detail-needs.page.html',
+	styleUrls: ['./commission-detail-needs.page.less'],
 })
 export class CommissionDetailNeedsPage implements OnInit, AfterViewInit {
-  @ViewChild('node') node: CommissionNodeComponent;
+	@ViewChild('node') node: CommissionNodeComponent;
 
-  detail: CommissionDetail;
+	detail: CommissionDetail;
 
-  category: number;
+	category: number;
 
-  commissionId: number;
+	commissionId: number;
 
-  constructor(
-    private stateDetail: CommissionDetailService,
-    private zoom: ZoomService
-  ) {}
+	constructor(private stateDetail: CommissionDetailService, private zoom: ZoomService) {}
 
-  ngOnInit(): void {
-    this.detail = this.stateDetail.getDetailValue();
-    this.category = this.stateDetail.getDetailValue().commission.category;
-    this.commissionId = this.stateDetail.getCommissionId();
-  }
+	ngOnInit(): void {
+		this.detail = this.stateDetail.getDetailValue();
+		this.category = this.stateDetail.getDetailValue().commission.category;
+		this.commissionId = this.stateDetail.getCommissionId();
+	}
 
-  ngAfterViewInit(): void {
-    if (this.detail.commission.category === 1) {
-      const arr = [];
-      this.stateDetail.getDetailValue().nodeList.forEach((l) => {
-        const i = { n: l.name, r: l.rate * 100 };
-        arr.push(i);
-      });
-      this.node.writeValue(arr);
-    }
-  }
+	ngAfterViewInit(): void {
+		if (this.detail.commission.category === 1) {
+			const arr = [];
+			this.stateDetail.getDetailValue().nodeList.forEach(l => {
+				const i = { n: l.name, r: l.rate * 100 };
+				arr.push(i);
+			});
+			this.node.writeValue(arr);
+		}
+	}
 
-  toUpdate(u: string): void {
-    window.open(u);
-  }
+	toUpdate(u: string): void {
+		window.open(u);
+	}
 
-  showDetail(data: string): void {
-    this.zoom.open(IllustZoomModalComponent, {
-      assets: [data],
-      index: 0,
-    });
-  }
+	showDetail(data: string): void {
+		this.zoom.open(IllustZoomModalComponent, {
+			assets: [data],
+			index: 0,
+		});
+	}
 }

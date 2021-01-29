@@ -1,8 +1,8 @@
 <div>
-    <li>
-        <img src="/assets/image/svg/checked.svg">
-        <span *ngrxLet="tips$;let tips">{{tips}}</span>
-    </li>
-    <button (click)="sure()">确定({{count$ | async}})</button>
-    <!-- <button (click)="cancel()">确定{{count$ | async}}</button> -->
+	<li>
+		<img src="/assets/image/svg/checked.svg" />
+		<span *ngrxLet="tips$;let tips">{{tips}}</span>
+	</li>
+	<button (click)="sure()">确定({{count$ | async}})</button>
+	<!-- <button (click)="cancel()">确定{{count$ | async}}</button> -->
 </div>

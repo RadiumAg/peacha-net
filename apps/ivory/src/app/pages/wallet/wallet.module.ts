@@ -8,32 +8,27 @@ import { WalletWithdrawPage } from './wallet-withdraw/wallet-withdraw.page';
 import { SubmitSuccess } from './wallet-withdraw/submit-success/submit-success';
 import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 @NgModule({
-  declarations: [
-    WalletPayPage,
-    WalletBindPage,
-    WalletWithdrawPage,
-    SubmitSuccess,
-  ],
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    PeachaComponentsModule,
-    ReactiveComponentModule,
-    CommonModule,
-    RouterModule.forChild([
-      {
-        path: 'pay',
-        component: WalletPayPage,
-      },
-      {
-        path: 'bind',
-        component: WalletBindPage,
-      },
-      {
-        path: 'withdraw',
-        component: WalletWithdrawPage,
-      },
-    ]),
-  ],
+	declarations: [WalletPayPage, WalletBindPage, WalletWithdrawPage, SubmitSuccess],
+	imports: [
+		FormsModule,
+		ReactiveFormsModule,
+		PeachaComponentsModule,
+		ReactiveComponentModule,
+		CommonModule,
+		RouterModule.forChild([
+			{
+				path: 'pay',
+				component: WalletPayPage,
+			},
+			{
+				path: 'bind',
+				component: WalletBindPage,
+			},
+			{
+				path: 'withdraw',
+				component: WalletWithdrawPage,
+			},
+		]),
+	],
 })
 export class WalletModule {}

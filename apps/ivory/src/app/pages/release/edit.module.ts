@@ -6,23 +6,23 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    ReleaseModule,
-    RouterModule.forChild([
-      {
-        path: 'live2d/:id',
-        component: Live2dFreeComponent,
-      },
-      {
-        path: 'live2d/paid/:id',
-        component: Live2dPaidComponent,
-      },
-      {
-        path: 'illust/:id',
-        component: IllustrateComponent,
-      },
-    ]),
-  ],
+	declarations: [],
+	imports: [
+		ReleaseModule,
+		RouterModule.forChild([
+			{
+				path: 'live2d/:id',
+				component: Live2dFreeComponent,
+			},
+			{
+				path: 'live2d/paid/:id',
+				component: Live2dPaidComponent,
+			},
+			{
+				path: 'illust/:id',
+				component: IllustrateComponent,
+			},
+		]),
+	],
 })
 export class EditModule {}

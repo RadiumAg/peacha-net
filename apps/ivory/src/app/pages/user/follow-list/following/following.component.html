@@ -1,22 +1,26 @@
-<ng-container *ngrxLet="current$;let current">
-    <ng-container *ngIf="current.count>0;else empty">
-        <div class="all">
-            <div class="list">
-                <ng-container *ngFor="let user of current?.list">
-                    <ivo-userinfo class="one" ivo-image-shadow [user]="user"></ivo-userinfo>
-                </ng-container>
-            </div>
-        </div>
-        <ng-container *ngrxLet="currentPage$;let currentPage">
-            <div class="page" *ngIf="current.count>10">
-                <ivo-pagination [total]="current.count" [currentPage]="currentPage" [pageSize]="10"
-                    (onPageChange)="toPage($event)"></ivo-pagination>
-            </div>
-        </ng-container>
-    </ng-container>
-   <ng-template #empty>
-       <div>
-           <ivo-lack-image></ivo-lack-image>
-       </div>
-   </ng-template>
+<ng-container *ngrxLet="current$; let current">
+	<ng-container *ngIf="current.count > 0; else empty">
+		<div class="all">
+			<div class="list">
+				<ng-container *ngFor="let user of current?.list">
+					<ivo-userinfo class="one" ivo-image-shadow [user]="user"></ivo-userinfo>
+				</ng-container>
+			</div>
+		</div>
+		<ng-container *ngrxLet="currentPage$; let currentPage">
+			<div class="page" *ngIf="current.count > 10">
+				<ivo-pagination
+					[total]="current.count"
+					[currentPage]="currentPage"
+					[pageSize]="10"
+					(onPageChange)="toPage($event)"
+				></ivo-pagination>
+			</div>
+		</ng-container>
+	</ng-container>
+	<ng-template #empty>
+		<div>
+			<ivo-lack-image></ivo-lack-image>
+		</div>
+	</ng-template>
 </ng-container>

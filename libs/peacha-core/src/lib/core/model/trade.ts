@@ -1,15 +1,15 @@
 export type TradeChannel = {
-    list: {
-        id: number,
-        name: string,
-        isEnable: boolean,
-        channelParamsDefines: {
-            key: string,
-            show: string,
-            tips: string
-        }[]
-    }[],
-    count: number
+	list: {
+		id: number;
+		name: string;
+		isEnable: boolean;
+		channelParamsDefines: {
+			key: string;
+			show: string;
+			tips: string;
+		}[];
+	}[];
+	count: number;
 };
 
 // export type TradeInfo = {
@@ -24,14 +24,14 @@ export type TradeChannel = {
 // };
 
 export type TradeInfo = {
-    amount: number,
-    title: string,
-    startTime: number,
-    status: number,
-    orders: {
-        orderId: string,
-        name: string,
-        price: string,
-        page: string
-    }[]
+	amount: number;
+	title: string;
+	startTime: number;
+	status: number;
+	orders: {
+		orderId: string;
+		name: string;
+		price: string;
+		page: string;
+	}[];
 };

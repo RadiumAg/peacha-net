@@ -6,8 +6,8 @@ import { RouterModule } from '@angular/router';
 import { PeachaComponentsModule } from '@peacha-core';
 
 @NgModule({
-  declarations: [NavbarFragment],
-  imports: [CommonModule, OverlayModule, RouterModule, PeachaComponentsModule],
-  exports: [NavbarFragment],
+	declarations: [NavbarFragment],
+	imports: [CommonModule, OverlayModule, RouterModule, PeachaComponentsModule],
+	exports: [NavbarFragment],
 })
 export class NavbarModule {}

@@ -1,4 +1,4 @@
 export interface Process {
-    success: boolean;
-    progress: number;
+	success: boolean;
+	progress: number;
 }

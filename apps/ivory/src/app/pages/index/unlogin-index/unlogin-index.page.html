@@ -1,115 +1,108 @@
 <div class="index">
-  <!-- <img class="top-img" src="/assets/image/index/top.png"> -->
-  <img class="top-img" src="/assets/image/index/top2.png" />
-  <img class="back-image" src="/assets/image/index/back-one.jpg" />
-  <!-- <img class="back-image back-two" src="/assets/image/index/back-two.png"> -->
-  <div class="introduce">
-    <div class="introduce-tip">
-      <li>
-        <div class="goal">
-          <p class="introduce-title">与他人分享你的作品</p>
-          <p class="introduce-title">欣赏他人的作品</p>
-          <p class="introduce-des">帮你寻找创作的伙伴</p>
-          <p class="introduce-des">让你的创作之路不再孤单</p>
-          <button (click)="toPublish()" ivo-button>发布你的作品</button>
-        </div>
-      </li>
-      <li>
-        <div class="goal">
-          <!-- <p class="introduce-title">购买/出售你的作品</p>
+	<!-- <img class="top-img" src="/assets/image/index/top.png"> -->
+	<img class="top-img" src="/assets/image/index/top2.png" />
+	<img class="back-image" src="/assets/image/index/back-one.jpg" />
+	<!-- <img class="back-image back-two" src="/assets/image/index/back-two.png"> -->
+	<div class="introduce">
+		<div class="introduce-tip">
+			<li>
+				<div class="goal">
+					<p class="introduce-title">与他人分享你的作品</p>
+					<p class="introduce-title">欣赏他人的作品</p>
+					<p class="introduce-des">帮你寻找创作的伙伴</p>
+					<p class="introduce-des">让你的创作之路不再孤单</p>
+					<button (click)="toPublish()" ivo-button>发布你的作品</button>
+				</div>
+			</li>
+			<li>
+				<div class="goal">
+					<!-- <p class="introduce-title">购买/出售你的作品</p>
                     <p class="introduce-title">让你的购买/出售不需要等待</p>
                     <p class="introduce-des">上架销售，价格规范</p>
                     <p class="introduce-des">让你不怕买贵，不用愁买</p>
                     <button ivo-button [routerLink]="['../hotgood']"
                         [queryParams]="{page:1,o:6,ss:-1,dd:0}">马上前去购买</button> -->
 
-          <p class="introduce-title">Live2D在线预览</p>
-          <p class="introduce-title">展现所有细节</p>
-          <p class="introduce-des">在线面捕，无需下载</p>
-          <p class="introduce-des">让你看到Live2D的全部内容</p>
-          <button ivo-button [routerLink]="['/login']">马上登录查看</button>
-        </div>
-      </li>
-      <li>
-        <div class="goal">
-          <p class="introduce-title">与PrprLive搭配</p>
-          <p class="introduce-title">实现更快上播</p>
-          <p class="introduce-des">即买即用，多人联动，一键上播，节点互动</p>
-          <p class="introduce-des">让你轻松开始直播</p>
-          <button ivo-button (click)="toOutside()">下载PrprLive</button>
-        </div>
-      </li>
-    </div>
-    <div class="introduce-anchor">
-      <div class="anchor-left">
-        <h1>开启你的虚拟世界！</h1>
-        <p>Peacha</p>
-        <p>是一个Live2D的创作分享与交易平台</p>
-        <p class="aa">是沟通虚拟与现实的桥梁</p>
-        <p>在虚拟世界</p>
-        <p>你可以扔掉现实中的烦恼</p>
-        <p>通过虚拟形象</p>
-        <p>开始一段不一样的虚拟生活</p>
-      </div>
-      <div class="live2d-float">
-        <peacha-live2d-preview-min
-          class="live2d"
-          width="720"
-          height="2000"
-          [vfs]="vfs$|async"
-        ></peacha-live2d-preview-min>
-      </div>
-    </div>
-  </div>
-  <div class="part-two">
-    <div class="why">
-      <h1>为什么要选择Peacha</h1>
-      <div class="keys">
-        <li>
-          <img src="/assets/image/index/unindex-focus.png" />
-          <span class="summary">资源集中</span>
-          <span class="explain">从创作立绘到Live2D制作</span>
-          <span class="explain">再到人物绑定，一站解决所有问题</span>
-        </li>
-        <li>
-          <img src="/assets/image/index/unindex-exchange.png" />
-          <span class="summary">质量保障</span>
-          <span class="explain">所有交易进程由平台进行</span>
-          <span class="explain">统一监管，切实保障您的交易安全</span>
-        </li>
-        <li>
-          <img src="/assets/image/index/unindex-seek.png" />
-          <span class="summary">企划招募</span>
-          <span class="explain">让想法从产出到落地无需</span>
-          <span class="explain">四处招募，全程都可在平台上解决</span>
-        </li>
-        <li>
-          <img src="/assets/image/index/unindex-play.png" />
-          <span class="summary">联动Prprlive</span>
-          <span class="explain">搭配PrprLive使用</span>
-          <span class="explain">节点互动，多人联动，轻松开始直播</span>
-        </li>
-      </div>
-    </div>
+					<p class="introduce-title">Live2D在线预览</p>
+					<p class="introduce-title">展现所有细节</p>
+					<p class="introduce-des">在线面捕，无需下载</p>
+					<p class="introduce-des">让你看到Live2D的全部内容</p>
+					<button ivo-button [routerLink]="['/login']">马上登录查看</button>
+				</div>
+			</li>
+			<li>
+				<div class="goal">
+					<p class="introduce-title">与PrprLive搭配</p>
+					<p class="introduce-title">实现更快上播</p>
+					<p class="introduce-des">即买即用，多人联动，一键上播，节点互动</p>
+					<p class="introduce-des">让你轻松开始直播</p>
+					<button ivo-button (click)="toOutside()">下载PrprLive</button>
+				</div>
+			</li>
+		</div>
+		<div class="introduce-anchor">
+			<div class="anchor-left">
+				<h1>开启你的虚拟世界！</h1>
+				<p>Peacha</p>
+				<p>是一个Live2D的创作分享与交易平台</p>
+				<p class="aa">是沟通虚拟与现实的桥梁</p>
+				<p>在虚拟世界</p>
+				<p>你可以扔掉现实中的烦恼</p>
+				<p>通过虚拟形象</p>
+				<p>开始一段不一样的虚拟生活</p>
+			</div>
+			<div class="live2d-float">
+				<peacha-live2d-preview-min class="live2d" width="720" height="2000" [vfs]="vfs$|async"></peacha-live2d-preview-min>
+			</div>
+		</div>
+	</div>
+	<div class="part-two">
+		<div class="why">
+			<h1>为什么要选择Peacha</h1>
+			<div class="keys">
+				<li>
+					<img src="/assets/image/index/unindex-focus.png" />
+					<span class="summary">资源集中</span>
+					<span class="explain">从创作立绘到Live2D制作</span>
+					<span class="explain">再到人物绑定，一站解决所有问题</span>
+				</li>
+				<li>
+					<img src="/assets/image/index/unindex-exchange.png" />
+					<span class="summary">质量保障</span>
+					<span class="explain">所有交易进程由平台进行</span>
+					<span class="explain">统一监管，切实保障您的交易安全</span>
+				</li>
+				<li>
+					<img src="/assets/image/index/unindex-seek.png" />
+					<span class="summary">企划招募</span>
+					<span class="explain">让想法从产出到落地无需</span>
+					<span class="explain">四处招募，全程都可在平台上解决</span>
+				</li>
+				<li>
+					<img src="/assets/image/index/unindex-play.png" />
+					<span class="summary">联动Prprlive</span>
+					<span class="explain">搭配PrprLive使用</span>
+					<span class="explain">节点互动，多人联动，轻松开始直播</span>
+				</li>
+			</div>
+		</div>
 
-    <div class="work">
-      <h1>一起加入虚拟形象的创作</h1>
-      <span>为你提供灵感，我们一起创作</span>
+		<div class="work">
+			<h1>一起加入虚拟形象的创作</h1>
+			<span>为你提供灵感，我们一起创作</span>
 
-      <div>
-        <div class="load" *ngIf="load">loading...</div>
-        <ng-container *ngrxLet="unloginWork$;let unloginWork">
-          <li *ngFor="let work of unloginWork?.list">
-            <ivo-work-card [work]="work"></ivo-work-card>
-          </li>
-        </ng-container>
-      </div>
-    </div>
+			<div>
+				<div class="load" *ngIf="load">loading...</div>
+				<ng-container *ngrxLet="unloginWork$;let unloginWork">
+					<li *ngFor="let work of unloginWork?.list">
+						<ivo-work-card [work]="work"></ivo-work-card>
+					</li>
+				</ng-container>
+			</div>
+		</div>
 
-    <div class="bottom-button">
-      <button ivo-button [routerLink]="['../passport/login']">
-        开启你的虚拟之旅
-      </button>
-    </div>
-  </div>
+		<div class="bottom-button">
+			<button ivo-button [routerLink]="['../passport/login']">开启你的虚拟之旅</button>
+		</div>
+	</div>
 </div>

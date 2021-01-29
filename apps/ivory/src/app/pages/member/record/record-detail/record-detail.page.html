@@ -1,41 +1,48 @@
 <div class="main" *ngrxLet="order$;let order">
-    <div class="title">
-        出售详情
-        <span class="return" (click)="goback()"> &lt;返回列表</span>
-    </div>
-    <div class="show">
-        <img [src]="order.cover +'?x-oss-process=image/resize,m_fixed,w_102,h_102'" (click)="toWork
-        (order.workid,order.category)">
-        <div class="kuang">
-            <div class="left">
-                <span class="workname" (click)="toWork
-                (order.workid,order.category)">{{order.work_name}}</span>
-                <span class="name">买家：{{order.buyer_name}}</span>
-                <div class="type" *ngIf="order.maxstock==1;else duo">单次出售</div>
-                <ng-template #duo>多次出售</ng-template>
-            </div>
-        </div>
-    </div>
-    <div class="center">
-        <li>收入金额： ¥ {{order.price|number}}</li>
-        <li>
-            <span>出售时间：{{order.completetime|date:"yyyy-MM-dd HH:mm"}}</span>
-            <span>订单号：{{order.orderid}}</span>
-        </li>
-    </div>
-    <div class="bottom">
-        <li>
-            <span>总金额：</span>
-            <span>+ ¥ {{order.price|number}}</span>
-        </li>
-        <li>
-            <span>手续费（总金额{{order.rate*100}}%）</span>
-            <span>- ¥ {{order.rate_amount|number}}</span>
-        </li>
-        <li style="color: #FF7FA9;">
-            <span>最终收入：</span>
-            <span>¥ {{order.amount|number}}</span>
-        </li>
-    </div>
-    <!-- <div class="final">最终收入：¥{{order.amount}}</div> -->
+	<div class="title">
+		出售详情
+		<span class="return" (click)="goback()"> &lt;返回列表</span>
+	</div>
+	<div class="show">
+		<img
+			[src]="order.cover +'?x-oss-process=image/resize,m_fixed,w_102,h_102'"
+			(click)="toWork
+        (order.workid,order.category)"
+		/>
+		<div class="kuang">
+			<div class="left">
+				<span
+					class="workname"
+					(click)="toWork
+                (order.workid,order.category)"
+					>{{order.work_name}}</span
+				>
+				<span class="name">买家：{{order.buyer_name}}</span>
+				<div class="type" *ngIf="order.maxstock==1;else duo">单次出售</div>
+				<ng-template #duo>多次出售</ng-template>
+			</div>
+		</div>
+	</div>
+	<div class="center">
+		<li>收入金额： ¥ {{order.price|number}}</li>
+		<li>
+			<span>出售时间：{{order.completetime|date:"yyyy-MM-dd HH:mm"}}</span>
+			<span>订单号：{{order.orderid}}</span>
+		</li>
+	</div>
+	<div class="bottom">
+		<li>
+			<span>总金额：</span>
+			<span>+ ¥ {{order.price|number}}</span>
+		</li>
+		<li>
+			<span>手续费（总金额{{order.rate*100}}%）</span>
+			<span>- ¥ {{order.rate_amount|number}}</span>
+		</li>
+		<li style="color: #ff7fa9">
+			<span>最终收入：</span>
+			<span>¥ {{order.amount|number}}</span>
+		</li>
+	</div>
+	<!-- <div class="final">最终收入：¥{{order.amount}}</div> -->
 </div>

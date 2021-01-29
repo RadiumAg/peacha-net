@@ -1,25 +1,17 @@
-import {
-  ChangeDetectorRef,
-  Directive,
-  Input,
-  NgZone,
-  OnDestroy,
-  TemplateRef,
-  ViewContainerRef,
-} from '@angular/core';
+import { ChangeDetectorRef, Directive, Input, NgZone, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
 
 import { NextObserver, ObservableInput, Observer, Unsubscribable } from 'rxjs';
 import { CdAware, createCdAware, createRender } from '../core';
 
 export interface LetViewContext<T> {
-  // to enable `let` syntax we have to use $implicit (var; let v = var)
-  $implicit?: T;
-  // to enable `as` syntax we have to assign the directives selector (var as v)
-  ngrxLet?: T;
-  // set context var complete to true (var$; let e = $error)
-  $error?: boolean;
-  // set context var complete to true (var$; let c = $complete)
-  $complete?: boolean;
+	// to enable `let` syntax we have to use $implicit (var; let v = var)
+	$implicit?: T;
+	// to enable `as` syntax we have to assign the directives selector (var as v)
+	ngrxLet?: T;
+	// set context var complete to true (var$; let e = $error)
+	$error?: boolean;
+	// set context var complete to true (var$; let c = $complete)
+	$complete?: boolean;
 }
 
 /**
@@ -90,89 +82,83 @@ export interface LetViewContext<T> {
  */
 @Directive({ selector: '[ngrxLet]' })
 export class LetDirective<U> implements OnDestroy {
-  private embeddedView: any;
-  private readonly ViewContext: LetViewContext<U | undefined | null> = {
-    $implicit: undefined,
-    ngrxLet: undefined,
-    $error: false,
-    $complete: false,
-  };
+	private embeddedView: any;
+	private readonly ViewContext: LetViewContext<U | undefined | null> = {
+		$implicit: undefined,
+		ngrxLet: undefined,
+		$error: false,
+		$complete: false,
+	};
 
-  protected readonly subscription: Unsubscribable;
-  private readonly cdAware: CdAware<U | null | undefined>;
-  private readonly resetContextObserver: NextObserver<void> = {
-    next: () => {
-      // if not initialized no need to set undefined
-      if (this.embeddedView) {
-        this.ViewContext.$implicit = undefined;
-        this.ViewContext.ngrxLet = undefined;
-        this.ViewContext.$error = false;
-        this.ViewContext.$complete = false;
-      }
-    },
-  };
-  private readonly updateViewContextObserver: Observer<U | null | undefined> = {
-    next: (value: U | null | undefined) => {
-      // to have init lazy
-      if (!this.embeddedView) {
-        this.createEmbeddedView();
-      }
-      this.ViewContext.$implicit = value;
-      this.ViewContext.ngrxLet = value;
-    },
-    error: (error: Error) => {
-      // to have init lazy
-      if (!this.embeddedView) {
-        this.createEmbeddedView();
-      }
-      this.ViewContext.$error = true;
-    },
-    complete: () => {
-      // to have init lazy
-      if (!this.embeddedView) {
-        this.createEmbeddedView();
-      }
-      this.ViewContext.$complete = true;
-    },
-  };
+	protected readonly subscription: Unsubscribable;
+	private readonly cdAware: CdAware<U | null | undefined>;
+	private readonly resetContextObserver: NextObserver<void> = {
+		next: () => {
+			// if not initialized no need to set undefined
+			if (this.embeddedView) {
+				this.ViewContext.$implicit = undefined;
+				this.ViewContext.ngrxLet = undefined;
+				this.ViewContext.$error = false;
+				this.ViewContext.$complete = false;
+			}
+		},
+	};
+	private readonly updateViewContextObserver: Observer<U | null | undefined> = {
+		next: (value: U | null | undefined) => {
+			// to have init lazy
+			if (!this.embeddedView) {
+				this.createEmbeddedView();
+			}
+			this.ViewContext.$implicit = value;
+			this.ViewContext.ngrxLet = value;
+		},
+		error: (error: Error) => {
+			// to have init lazy
+			if (!this.embeddedView) {
+				this.createEmbeddedView();
+			}
+			this.ViewContext.$error = true;
+		},
+		complete: () => {
+			// to have init lazy
+			if (!this.embeddedView) {
+				this.createEmbeddedView();
+			}
+			this.ViewContext.$complete = true;
+		},
+	};
 
-  static ngTemplateContextGuard<U>(
-    dir: LetDirective<U>,
-    ctx: unknown | null | undefined
-  ): ctx is LetViewContext<U> {
-    return true;
-  }
+	static ngTemplateContextGuard<U>(dir: LetDirective<U>, ctx: unknown | null | undefined): ctx is LetViewContext<U> {
+		return true;
+	}
 
-  static ngTemplateGuard_ngrxLet: 'binding';
+	static ngTemplateGuard_ngrxLet: 'binding';
 
-  @Input()
-  set ngrxLet(potentialObservable: ObservableInput<U> | null | undefined) {
-    this.cdAware.nextPotentialObservable(potentialObservable);
-  }
+	@Input()
+	set ngrxLet(potentialObservable: ObservableInput<U> | null | undefined) {
+		this.cdAware.nextPotentialObservable(potentialObservable);
+	}
 
-  constructor(
-    cdRef: ChangeDetectorRef,
-    ngZone: NgZone,
-    private readonly templateRef: TemplateRef<LetViewContext<U>>,
-    private readonly viewContainerRef: ViewContainerRef
-  ) {
-    this.cdAware = createCdAware<U>({
-      render: createRender({ cdRef, ngZone }),
-      resetContextObserver: this.resetContextObserver,
-      updateViewContextObserver: this.updateViewContextObserver,
-    });
-    this.subscription = this.cdAware.subscribe();
-  }
+	constructor(
+		cdRef: ChangeDetectorRef,
+		ngZone: NgZone,
+		private readonly templateRef: TemplateRef<LetViewContext<U>>,
+		private readonly viewContainerRef: ViewContainerRef
+	) {
+		this.cdAware = createCdAware<U>({
+			render: createRender({ cdRef, ngZone }),
+			resetContextObserver: this.resetContextObserver,
+			updateViewContextObserver: this.updateViewContextObserver,
+		});
+		this.subscription = this.cdAware.subscribe();
+	}
 
-  createEmbeddedView() {
-    this.embeddedView = this.viewContainerRef.createEmbeddedView(
-      this.templateRef,
-      this.ViewContext
-    );
-  }
+	createEmbeddedView() {
+		this.embeddedView = this.viewContainerRef.createEmbeddedView(this.templateRef, this.ViewContext);
+	}
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-    this.viewContainerRef.clear();
-  }
+	ngOnDestroy() {
+		this.subscription.unsubscribe();
+		this.viewContainerRef.clear();
+	}
 }

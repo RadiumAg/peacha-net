@@ -8,18 +8,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveComponentModule, PeachaComponentsModule } from '@peacha-core';
 
 @NgModule({
-  declarations: [
-    CommentAreaFragment,
-    CommentEntryComponent,
-    CommentInputComponent,
-    CommentSubentryComponent,
-  ],
-  imports: [
-    CommonModule,
-    ReactiveComponentModule,
-    ReactiveFormsModule,
-    PeachaComponentsModule,
-  ],
-  exports: [CommentAreaFragment],
+	declarations: [CommentAreaFragment, CommentEntryComponent, CommentInputComponent, CommentSubentryComponent],
+	imports: [CommonModule, ReactiveComponentModule, ReactiveFormsModule, PeachaComponentsModule],
+	exports: [CommentAreaFragment],
 })
 export class CommentModule {}

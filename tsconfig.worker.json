@@ -1,12 +1,9 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "./dist/out-tsc/worker",
-    "lib": ["es2018", "webworker"],
-    "types": []
-  },
-  "include": [
-    "libs/peacha-studio-core/**/*.worker.ts",
-    "libs/peacha-studio-core/**/*.instance.ts"
-  ]
+	"extends": "./tsconfig.base.json",
+	"compilerOptions": {
+		"outDir": "./dist/out-tsc/worker",
+		"lib": ["es2018", "webworker"],
+		"types": []
+	},
+	"include": ["libs/peacha-studio-core/**/*.worker.ts", "libs/peacha-studio-core/**/*.instance.ts"]
 }

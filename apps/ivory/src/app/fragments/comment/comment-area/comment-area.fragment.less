@@ -1,97 +1,95 @@
 :host {
-    display: block;
+	display: block;
 }
 
-.all{
-    .input-group{
-        display: flex;
-    
-        &>img {
-            display: block;
-            height:60px;
-            width:60px;
-            margin-right: 20px;
-            border-radius: 50%;
-        }
-    
-        &>textarea {
-            width: 720px;
-            height: 60px;
-            display: block;
-            flex:1;
-            background:#f8f8f8;
-            border:1px solid rgba(204,204,204,1);
-            opacity:1;
-            border-radius:4px;
-            padding:5px 10px;
-            font-size:12px;
-            line-height:18px;
-            color:rgba(102,102,102,1);
-            resize: none;
-            &:focus{
-                background-color: white;
-                outline: none;
-            }
-        }
-        &>.kong{
-            width: 720px;
-            height: 60px;
-            display: block;
-            flex:1;
-            background:rgba(242,242,242,1);
-            border:1px solid rgba(204,204,204,1);
-            opacity:1;
-            border-radius:4px;
-            padding: 10px;
-            font-size:12px;
-            line-height:18px;
-            color:rgba(102,102,102,1);
-            resize: none;
-            text-align: center;
-            padding-top: 15px;
-            &>button{
-                background-color: #FF6398;
-                border: none;
-                border-radius: 4px;
-                color: #ffffff;
-                padding: 5px 10px;
-                margin: 0 5px;
-                cursor: pointer;
-            }
-        }
-    }
-    
-    .send {
-        float:right;
-        &>button{
-            width: 80px;
-            height: 32px;
-            border: none;
-            border-radius: 4px;
-            background-color:#FF6398 ;
-            font-size: 14px;
-            color: #ffffff;
-            margin-top: 10px;
-        }
-        &>.close{
-            background-color: #CCCCCC;
-        }
-    }
-    
+.all {
+	.input-group {
+		display: flex;
 
-    &>.comment-list{
-       margin-top: 80px;
-       margin-bottom: 100px;
-       &>.loading{
-           text-align: center;
-       }
-       &>.bottom{
-           margin-top: 30px;
-       }
-       &>.page{
-           text-align: center;
-           margin-top: 16px;
-       }
-  
-    }
+		& > img {
+			display: block;
+			height: 60px;
+			width: 60px;
+			margin-right: 20px;
+			border-radius: 50%;
+		}
+
+		& > textarea {
+			width: 720px;
+			height: 60px;
+			display: block;
+			flex: 1;
+			background: #f8f8f8;
+			border: 1px solid rgba(204, 204, 204, 1);
+			opacity: 1;
+			border-radius: 4px;
+			padding: 5px 10px;
+			font-size: 12px;
+			line-height: 18px;
+			color: rgba(102, 102, 102, 1);
+			resize: none;
+			&:focus {
+				background-color: white;
+				outline: none;
+			}
+		}
+		& > .kong {
+			width: 720px;
+			height: 60px;
+			display: block;
+			flex: 1;
+			background: rgba(242, 242, 242, 1);
+			border: 1px solid rgba(204, 204, 204, 1);
+			opacity: 1;
+			border-radius: 4px;
+			padding: 10px;
+			font-size: 12px;
+			line-height: 18px;
+			color: rgba(102, 102, 102, 1);
+			resize: none;
+			text-align: center;
+			padding-top: 15px;
+			& > button {
+				background-color: #ff6398;
+				border: none;
+				border-radius: 4px;
+				color: #ffffff;
+				padding: 5px 10px;
+				margin: 0 5px;
+				cursor: pointer;
+			}
+		}
+	}
+
+	.send {
+		float: right;
+		& > button {
+			width: 80px;
+			height: 32px;
+			border: none;
+			border-radius: 4px;
+			background-color: #ff6398;
+			font-size: 14px;
+			color: #ffffff;
+			margin-top: 10px;
+		}
+		& > .close {
+			background-color: #cccccc;
+		}
+	}
+
+	& > .comment-list {
+		margin-top: 80px;
+		margin-bottom: 100px;
+		& > .loading {
+			text-align: center;
+		}
+		& > .bottom {
+			margin-top: 30px;
+		}
+		& > .page {
+			text-align: center;
+			margin-top: 16px;
+		}
+	}
 }

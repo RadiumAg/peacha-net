@@ -1,19 +1,19 @@
 <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="report()" [@modalEnterLeaveTrigger]>
-    <div class="report-modal-box">
-        <div class="report-head">
-            <span class="title">用户举报</span>
-        </div>
-        <div class="report-body">
-            <span>举报内容 （可多选）</span>
-            <nz-form-item>
-                <nz-form-control nzErrorTip="请选择举报内容">
-                    <nz-checkbox-group formControlName="option"></nz-checkbox-group>
-                </nz-form-control>
-            </nz-form-item>
-        </div>
-        <div class="btn-group">
-            <button type="button" cancel (click)="cancel()">取消</button>
-            <button type="submit" ok>举报</button>
-        </div>
-    </div>
+	<div class="report-modal-box">
+		<div class="report-head">
+			<span class="title">用户举报</span>
+		</div>
+		<div class="report-body">
+			<span>举报内容 （可多选）</span>
+			<nz-form-item>
+				<nz-form-control nzErrorTip="请选择举报内容">
+					<nz-checkbox-group formControlName="option"></nz-checkbox-group>
+				</nz-form-control>
+			</nz-form-item>
+		</div>
+		<div class="btn-group">
+			<button type="button" cancel (click)="cancel()">取消</button>
+			<button type="submit" ok>举报</button>
+		</div>
+	</div>
 </form>

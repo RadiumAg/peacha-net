@@ -1,4 +1,4 @@
 export interface Tag {
-    symbol: symbol;
-    value: string;
+	symbol: symbol;
+	value: string;
 }

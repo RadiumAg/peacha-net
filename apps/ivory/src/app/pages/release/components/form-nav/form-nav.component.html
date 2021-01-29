@@ -1,10 +1,7 @@
 <div class="nav-container">
-  <ul>
-    <ng-container
-      class="nav-container"
-      *ngFor="let item of form_nav_token | async; let i = index"
-    >
-      <li class="nav-item" [ngClass]="{ active: item }">{{ titleList[i] }}</li>
-    </ng-container>
-  </ul>
+	<ul>
+		<ng-container class="nav-container" *ngFor="let item of form_nav_token | async; let i = index">
+			<li class="nav-item" [ngClass]="{ active: item }">{{ titleList[i] }}</li>
+		</ng-container>
+	</ul>
 </div>

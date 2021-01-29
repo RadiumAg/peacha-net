@@ -1,17 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ivo-member',
-  templateUrl: './member.page.html',
-  styleUrls: ['./member.page.less']
+	selector: 'ivo-member',
+	templateUrl: './member.page.html',
+	styleUrls: ['./member.page.less'],
 })
 export class MemberPage implements OnInit {
+	constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-    
-  } 
-
-
+	ngOnInit(): void {}
 }

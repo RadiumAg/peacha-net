@@ -1,18 +1,13 @@
 <div>
-    <p>设置合作者的收益分成</p>
-   
-    <li class="input"> 
-      
-        <ivo-ingredient class="slide" [disabled]="false" [process]="shownum" (update)="setPrecent($event)">
-        </ivo-ingredient>
-        <div class="box">
-            {{shownum}}%
-        </div>
-  
-    </li>
-    
-    <li class="btn">
-        <span class="cancel" (click)="cancel()">取消</span>
-        <span class="sure" (click)="sure()">确定</span>
-    </li>
+	<p>设置合作者的收益分成</p>
+
+	<li class="input">
+		<ivo-ingredient class="slide" [disabled]="false" [process]="shownum" (update)="setPrecent($event)"> </ivo-ingredient>
+		<div class="box">{{shownum}}%</div>
+	</li>
+
+	<li class="btn">
+		<span class="cancel" (click)="cancel()">取消</span>
+		<span class="sure" (click)="sure()">确定</span>
+	</li>
 </div>

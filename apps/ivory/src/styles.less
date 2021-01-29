@@ -6,9 +6,9 @@
 
 @import '~ng-zorro-antd/form/style/entry.less';
 
-@import "~ng-zorro-antd/button/style/entry.less";
+@import '~ng-zorro-antd/button/style/entry.less';
 
-@import "~ng-zorro-antd/upload/style/entry.less";
+@import '~ng-zorro-antd/upload/style/entry.less';
 
 @import '~ng-zorro-antd/radio/style/entry.less';
 
@@ -24,52 +24,51 @@
 @primary-color: rgba(255, 99, 152, 1);
 
 .footer-position {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 }
 
 button {
-    outline: none;
+	outline: none;
 }
 
 ul,
 li {
-    list-style: none;
+	list-style: none;
 }
-
 
 input:disabled {
-    background-color: #F6F6F6;
+	background-color: #f6f6f6;
 }
 
-.commission-errors{
-    position: absolute;
-    right: -10px;
-    transform: translateX(100%) translateY(-50%);
-    top: 50%;
-    color:#DB0000;
-    font-size: 14px;
-    display: flex !important;
-    align-items: center;
-    margin: 0 !important;
-    width: max-content;
-    &::before{
-        content: "";
-        display: inline-block;
-        width: 14px;
-        height: 14px;
-        background-image: url(/assets/image/error-tips-two/01.svg);
-        background-repeat: no-repeat;
-        background-size: contain;
-        margin-right: 2px;
-    }
+.commission-errors {
+	position: absolute;
+	right: -10px;
+	transform: translateX(100%) translateY(-50%);
+	top: 50%;
+	color: #db0000;
+	font-size: 14px;
+	display: flex !important;
+	align-items: center;
+	margin: 0 !important;
+	width: max-content;
+	&::before {
+		content: '';
+		display: inline-block;
+		width: 14px;
+		height: 14px;
+		background-image: url(/assets/image/error-tips-two/01.svg);
+		background-repeat: no-repeat;
+		background-size: contain;
+		margin-right: 2px;
+	}
 }
 
-@mobile: ~"only screen and (max-width: 529px)";
-@tablet: ~"only screen and (min-width: 530px) and (max-width: 949px)";
-@desktop: ~"only screen and (min-width: 950px) and (max-width: 1279px)";
-@desktop-xl: ~"only screen and (min-width: 1280px)";
+@mobile: ~'only screen and (max-width: 529px)';
+@tablet: ~'only screen and (min-width: 530px) and (max-width: 949px)';
+@desktop: ~'only screen and (min-width: 950px) and (max-width: 1279px)';
+@desktop-xl: ~'only screen and (min-width: 1280px)';
 
 a,
 abbr,
@@ -142,35 +141,34 @@ tr,
 ul,
 var,
 video {
-    margin: 0;
-    padding: 0;
-    border: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
 }
 
-
-input[type=number] {
-    -moz-appearance: textfield;
+input[type='number'] {
+	-moz-appearance: textfield;
 }
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
 
 .container {
-    margin: 0 auto;
+	margin: 0 auto;
 
-    @media @tablet {
-        width: 760px;
-    }
+	@media @tablet {
+		width: 760px;
+	}
 
-    @media @desktop {
-        width: 900px;
-    }
+	@media @desktop {
+		width: 900px;
+	}
 
-    @media @desktop-xl {
-        width: 1200px;
-    }
+	@media @desktop-xl {
+		width: 1200px;
+	}
 }
 
 // html{

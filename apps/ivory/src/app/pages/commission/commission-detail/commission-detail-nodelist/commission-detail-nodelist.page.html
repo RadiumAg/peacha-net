@@ -2,139 +2,119 @@
 <ivo-commission-detail-steps (update)="update($event)"></ivo-commission-detail-steps>
 
 <div class="box" *ngIf="nodeList?.length>0">
-    <li class="title">
-        <span class="name">退回/驳回记录</span>
-        <!-- <a class="back"> <img src="/assets/image/commission/goback.svg">返回列表</a> -->
-    </li>
-    <div class="list" *ngFor="let item of nodeList">
-        <li class="file">
-            <div class="one" *ngFor="let file of item?.submitFiles;let i=index">
-                <span class="name">审核文件{{i+1}}</span>
-                <span class="show">审核文件.{{file.split('.')[file.split('.').length-1]}}<a
-                        [href]="file+'?response-content-type=application/octet-stream'" download
-                        target="_block">下载</a></span>
-            </div>
-        </li>
-        <li class="time">
-            <div>
-                <span class="name">
-                    记录类型：
-                </span>
-                <span class="show" [ngSwitch]="item.status">
-                    <ng-container *ngSwitchCase="2">
-                        驳回
-                    </ng-container>
-                    <ng-container *ngSwitchCase="3">
-                        退回修改
-                    </ng-container>
-                </span>
-            </div>
-            <div>
-                <span class="name">
-                    <ng-container *ngIf="currentNode[0]?.type===0||currentNode[0]?.type===1">
-                        企划方提交时间
-                    </ng-container>
-                    <ng-container *ngIf="currentNode[0]?.type===2">
-                        <ng-container *ngIf="commissionType===1">
-                            画师提交时间
-                        </ng-container>
-                        <ng-container *ngIf="commissionType===0">
-                            模型师提交时间
-                        </ng-container>
-                    </ng-container>
-                </span>
-                <span class="show">{{item?.submitTime|date:'yyyy-MM-dd HH:mm'}}</span>
-            </div>
-            <div>
-                <span class="name">
-                    <ng-container *ngIf="currentNode[0]?.type===2">
-                        企划方驳回时间
-                    </ng-container>
-                    <ng-container *ngIf="currentNode[0]?.type===1||currentNode[0]?.type===0">
-                        <ng-container *ngIf="commissionType===1">
-                            画师驳回时间
-                        </ng-container>
-                        <ng-container *ngIf="commissionType===0">
-                            模型师驳回时间
-                        </ng-container>
-                    </ng-container>
-                </span>
-                <span class="show">{{item.audit?.auditTime |date:'yyyy-MM-dd HH:mm'}}</span>
-            </div>
+	<li class="title">
+		<span class="name">退回/驳回记录</span>
+		<!-- <a class="back"> <img src="/assets/image/commission/goback.svg">返回列表</a> -->
+	</li>
+	<div class="list" *ngFor="let item of nodeList">
+		<li class="file">
+			<div class="one" *ngFor="let file of item?.submitFiles;let i=index">
+				<span class="name">审核文件{{i+1}}</span>
+				<span class="show"
+					>审核文件.{{file.split('.')[file.split('.').length-1]}}<a
+						[href]="file+'?response-content-type=application/octet-stream'"
+						download
+						target="_block"
+						>下载</a
+					></span
+				>
+			</div>
+		</li>
+		<li class="time">
+			<div>
+				<span class="name"> 记录类型： </span>
+				<span class="show" [ngSwitch]="item.status">
+					<ng-container *ngSwitchCase="2"> 驳回 </ng-container>
+					<ng-container *ngSwitchCase="3"> 退回修改 </ng-container>
+				</span>
+			</div>
+			<div>
+				<span class="name">
+					<ng-container *ngIf="currentNode[0]?.type===0||currentNode[0]?.type===1"> 企划方提交时间 </ng-container>
+					<ng-container *ngIf="currentNode[0]?.type===2">
+						<ng-container *ngIf="commissionType===1"> 画师提交时间 </ng-container>
+						<ng-container *ngIf="commissionType===0"> 模型师提交时间 </ng-container>
+					</ng-container>
+				</span>
+				<span class="show">{{item?.submitTime|date:'yyyy-MM-dd HH:mm'}}</span>
+			</div>
+			<div>
+				<span class="name">
+					<ng-container *ngIf="currentNode[0]?.type===2"> 企划方驳回时间 </ng-container>
+					<ng-container *ngIf="currentNode[0]?.type===1||currentNode[0]?.type===0">
+						<ng-container *ngIf="commissionType===1"> 画师驳回时间 </ng-container>
+						<ng-container *ngIf="commissionType===0"> 模型师驳回时间 </ng-container>
+					</ng-container>
+				</span>
+				<span class="show">{{item.audit?.auditTime |date:'yyyy-MM-dd HH:mm'}}</span>
+			</div>
+		</li>
 
-        </li>
-
-        <li *ngIf="item.audit?.description">
-            <span class="name" [ngSwitch]="item.status">
-                <ng-container *ngSwitchCase="2">
-                    驳回理由
-                </ng-container>
-                <ng-container *ngSwitchCase="3">
-                    退回修改理由
-                </ng-container>
-            </span>
-            <span class="show">{{item.audit?.description}}</span>
-        </li>
-        <li *ngIf="item.audit?.images.length>0">
-            <span class="name">附加图片</span>
-            <span class="show-pic">
-                <!-- <img *ngFor="let url of item.audit?.images" [src]="url" (click)="showDetail(url)"> -->
-                <ivo-lazy-img *ngFor="let url of item.audit?.images" class="avatar" [ngLazyLoad]="url" [border]="5"
-                    [objectFit]="true" (click)="showDetail(url)"></ivo-lazy-img>
-            </span>
-        </li>
-        <ng-container *ngIf="item.appeal?.applyTime>0">
-            <li class="result">
-                <div class="result-tip">
-                    <span class="name">画师发起平台介入时间</span>
-                    <span class="show">
-                        {{item.appeal?.applyTime|date:'yyyy-MM-dd HH:mm'}}
-                    </span>
-                </div>
-                <div class="result-tip" *ngIf="item.appeal?.status!=0">
-                    <span class="name">平台介入判定时间</span>
-                    <span class="show">
-                        {{item.appeal?.auditTime|date:'yyyy-MM-dd HH:mm'}}
-                    </span>
-                </div>
-                <div class="result-tip">
-                    <span class="name">平台介入结果</span>
-                    <span class="show" [ngSwitch]="item.appeal?.status">
-                        <ng-container *ngSwitchCase="0">
-                            等待审核
-                        </ng-container>
-                        <ng-container *ngSwitchCase="1">
-                            有效
-                        </ng-container>
-                        <ng-container *ngSwitchCase="2">
-                            无效
-                        </ng-container>
-                    </span>
-                </div>
-            </li>
-            <li class="description" *ngIf="item.appeal?.auditDescription">
-                <div class="result-tip">
-                    <span class="name">平台处理理由</span>
-                    <span class="show">
-                        {{item.appeal?.auditDescription}}
-                    </span>
-                </div>
-            </li>
-            <ng-container *ngIf="item.status===2 ||item.status===3">
-                <img class="result-img"
-                    [src]="item.appeal?.status===0?'/assets/image/commission/commission-nodelist/waitting.png':item.appeal?.status===1?'/assets/image/commission/commission-nodelist/success.png':'/assets/image/commission/commission-nodelist/fail.png'">
-            </ng-container>
-
-        </ng-container>
-        <a class="kefu" appDebounceClick
-            *ngIf="currentNodeId == commissionNodeList[commissionNodeList.length-1].id && identity===2 && item.id==nodeList[0].id && isShowAppeal"
-            (debounceClick)="discontinue()">对此驳回/退回有异议，申请平台介入</a>
-        <!-- <ng-container *ngIf="!item.appeal">
+		<li *ngIf="item.audit?.description">
+			<span class="name" [ngSwitch]="item.status">
+				<ng-container *ngSwitchCase="2"> 驳回理由 </ng-container>
+				<ng-container *ngSwitchCase="3"> 退回修改理由 </ng-container>
+			</span>
+			<span class="show">{{item.audit?.description}}</span>
+		</li>
+		<li *ngIf="item.audit?.images.length>0">
+			<span class="name">附加图片</span>
+			<span class="show-pic">
+				<!-- <img *ngFor="let url of item.audit?.images" [src]="url" (click)="showDetail(url)"> -->
+				<ivo-lazy-img
+					*ngFor="let url of item.audit?.images"
+					class="avatar"
+					[ngLazyLoad]="url"
+					[border]="5"
+					[objectFit]="true"
+					(click)="showDetail(url)"
+				></ivo-lazy-img>
+			</span>
+		</li>
+		<ng-container *ngIf="item.appeal?.applyTime>0">
+			<li class="result">
+				<div class="result-tip">
+					<span class="name">画师发起平台介入时间</span>
+					<span class="show"> {{item.appeal?.applyTime|date:'yyyy-MM-dd HH:mm'}} </span>
+				</div>
+				<div class="result-tip" *ngIf="item.appeal?.status!=0">
+					<span class="name">平台介入判定时间</span>
+					<span class="show"> {{item.appeal?.auditTime|date:'yyyy-MM-dd HH:mm'}} </span>
+				</div>
+				<div class="result-tip">
+					<span class="name">平台介入结果</span>
+					<span class="show" [ngSwitch]="item.appeal?.status">
+						<ng-container *ngSwitchCase="0"> 等待审核 </ng-container>
+						<ng-container *ngSwitchCase="1"> 有效 </ng-container>
+						<ng-container *ngSwitchCase="2"> 无效 </ng-container>
+					</span>
+				</div>
+			</li>
+			<li class="description" *ngIf="item.appeal?.auditDescription">
+				<div class="result-tip">
+					<span class="name">平台处理理由</span>
+					<span class="show"> {{item.appeal?.auditDescription}} </span>
+				</div>
+			</li>
+			<ng-container *ngIf="item.status===2 ||item.status===3">
+				<img
+					class="result-img"
+					[src]="item.appeal?.status===0?'/assets/image/commission/commission-nodelist/waitting.png':item.appeal?.status===1?'/assets/image/commission/commission-nodelist/success.png':'/assets/image/commission/commission-nodelist/fail.png'"
+				/>
+			</ng-container>
+		</ng-container>
+		<a
+			class="kefu"
+			appDebounceClick
+			*ngIf="currentNodeId == commissionNodeList[commissionNodeList.length-1].id && identity===2 && item.id==nodeList[0].id && isShowAppeal"
+			(debounceClick)="discontinue()"
+			>对此驳回/退回有异议，申请平台介入</a
+		>
+		<!-- <ng-container *ngIf="!item.appeal">
             <img *ngIf="item.status===3" class="result-img"
                 src="/assets/image/commission/commission-nodelist/revise.png">
             <img *ngIf="item.status===2" class="result-img"
                 src="/assets/image/commission/commission-nodelist/reject.png">
         </ng-container> -->
-
-    </div>
+	</div>
 </div>

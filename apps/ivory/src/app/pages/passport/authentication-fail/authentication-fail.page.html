@@ -1,13 +1,9 @@
 <div class="all" *ngrxLet="result$;let result">
-    <div class="top"><span  [routerLink]="['/setting/security']" >
-        安全设置
-    </span>-<span class="oo">实名认证</span></div>
-        <div class="six">
-            <img src="/assets/image/svg/i-logo.svg">
-            <span class="title">审核失败</span>
-            <span class="tip">
-                {{result.remarks}}
-            </span>
-            <span class='btn'> <button ivo-button [routerLink]="['/passport/authenticate']">再次认证</button></span>
-        </div>
+	<div class="top"><span [routerLink]="['/setting/security']"> 安全设置 </span>-<span class="oo">实名认证</span></div>
+	<div class="six">
+		<img src="/assets/image/svg/i-logo.svg" />
+		<span class="title">审核失败</span>
+		<span class="tip"> {{result.remarks}} </span>
+		<span class="btn"> <button ivo-button [routerLink]="['/passport/authenticate']">再次认证</button></span>
+	</div>
 </div>

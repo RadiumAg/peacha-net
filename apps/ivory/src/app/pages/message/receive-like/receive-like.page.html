@@ -1,37 +1,33 @@
-<div class="all" >
-   <div class="more" cdkScrollable>
-      <div class="one">
-         <div class="hello" *ngFor="let item of likeList;">
-            <img class="avatar" [attr.src]="item.public_useravatar" [routerLink]="['/user',item.public_userid]">
-            <div class="no">
-               <span class="left">
-                  <span class="name" [routerLink]="['/user',item.public_userid]">
-                     {{item.public_username}}
-                  </span>
-                  <span class="tip" *ngIf="item.news_type==200;else com">
-                     {{item.one}}
-                     <a [routerLink]="[item.catenation]">{{item.two}}</a>
-                  </span>
-                  <ng-template #com>
-                     <span class="tip">
-                        {{item.details?.split('{')[0]}}
-                        <a (click)="toDetail(item.catenation,item.source_id)">{{item.details?.split('>')[1]?.split('}')[0]}}</a>
-                     </span>
-                  </ng-template>
-                  <span class='time'>{{item.public_time|date:"yyyy-MM-dd HH:mm"}}</span>
-               </span>
-            </div>
-         </div>
-         <ng-container *ngIf="(likeCount$|async)===null">
-            <div class="empty">
-               loading...
-            </div>
-        </ng-container>
-         <ng-container *ngIf="(likeCount$|async)===0 && (page$|async)===0">
-            <div class="empty">
-                <ivo-lack-image></ivo-lack-image>
-            </div>
-        </ng-container>
-      </div>
-   </div>
+<div class="all">
+	<div class="more" cdkScrollable>
+		<div class="one">
+			<div class="hello" *ngFor="let item of likeList;">
+				<img class="avatar" [attr.src]="item.public_useravatar" [routerLink]="['/user',item.public_userid]" />
+				<div class="no">
+					<span class="left">
+						<span class="name" [routerLink]="['/user',item.public_userid]"> {{item.public_username}} </span>
+						<span class="tip" *ngIf="item.news_type==200;else com">
+							{{item.one}}
+							<a [routerLink]="[item.catenation]">{{item.two}}</a>
+						</span>
+						<ng-template #com>
+							<span class="tip">
+								{{item.details?.split('{')[0]}}
+								<a (click)="toDetail(item.catenation,item.source_id)">{{item.details?.split('>')[1]?.split('}')[0]}}</a>
+							</span>
+						</ng-template>
+						<span class="time">{{item.public_time|date:"yyyy-MM-dd HH:mm"}}</span>
+					</span>
+				</div>
+			</div>
+			<ng-container *ngIf="(likeCount$|async)===null">
+				<div class="empty">loading...</div>
+			</ng-container>
+			<ng-container *ngIf="(likeCount$|async)===0 && (page$|async)===0">
+				<div class="empty">
+					<ivo-lack-image></ivo-lack-image>
+				</div>
+			</ng-container>
+		</div>
+	</div>
 </div>

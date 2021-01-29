@@ -6,19 +6,19 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class LoginResolve implements CanActivate {
-  constructor(private store: Store, private router: Router) {}
+	constructor(private store: Store, private router: Router) {}
 
-  canActivate(): Observable<boolean | UrlTree> {
-    return this.store
-      .selectOnce<number>((s) => s.user.id)
-      .pipe(
-        map((id) => {
-          if (id > 0) {
-            return this.router.parseUrl('/homepage');
-          } else {
-            return true;
-          }
-        })
-      );
-  }
+	canActivate(): Observable<boolean | UrlTree> {
+		return this.store
+			.selectOnce<number>(s => s.user.id)
+			.pipe(
+				map(id => {
+					if (id > 0) {
+						return this.router.parseUrl('/homepage');
+					} else {
+						return true;
+					}
+				})
+			);
+	}
 }

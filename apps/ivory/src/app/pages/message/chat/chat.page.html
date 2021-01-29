@@ -1,101 +1,84 @@
 <div class="all">
-    <ng-container *ngrxLet="now$;let now">
-        <div class="list">
-            <p>近期消息</p>
-            <div class="item-group" (scroll)="getMoreList($event)" #showbox>
-                <ng-container *ngrxLet="showRoomList$;let list">
-                    <li class="item" *ngFor="let item of list;let i=index" [class.check]="item.sender_id==now.i"
-                        (click)="item.sender_id!=now.i && select(item.sender_id,item.sender_avatar,item.sender_nickname,item.roomid,item?.unread)">
-                        <img class="item-avatar" [attr.src]="item.sender_avatar">
-                        <div class="item-des">
-                            <span class="item-nickname">{{item.sender_nickname}}</span>
-                            <span class="item-last" [ngSwitch]="item.message?.type">
-                                <ng-container *ngSwitchCase="0">
-                                    {{item.message?.content}}
-                                </ng-container>
-                                <ng-container *ngSwitchCase="1">
-                                    [图片]
-                                </ng-container>
-                            </span>
-                        </div>
-                        <span class="unread" [class.red]="item.unread">
-                            <ng-container *ngIf="item.unread<100 && item.unread>0">
-                                {{item.unread}}
-                            </ng-container>
-                            <ng-container *ngIf="item.unread>=100">
-                                +99
-                            </ng-container>
-                            <ng-container *ngIf="!item.unread || item.unread==0"></ng-container>
-                        </span>
+	<ng-container *ngrxLet="now$;let now">
+		<div class="list">
+			<p>近期消息</p>
+			<div class="item-group" (scroll)="getMoreList($event)" #showbox>
+				<ng-container *ngrxLet="showRoomList$;let list">
+					<li
+						class="item"
+						*ngFor="let item of list;let i=index"
+						[class.check]="item.sender_id==now.i"
+						(click)="item.sender_id!=now.i && select(item.sender_id,item.sender_avatar,item.sender_nickname,item.roomid,item?.unread)"
+					>
+						<img class="item-avatar" [attr.src]="item.sender_avatar" />
+						<div class="item-des">
+							<span class="item-nickname">{{item.sender_nickname}}</span>
+							<span class="item-last" [ngSwitch]="item.message?.type">
+								<ng-container *ngSwitchCase="0"> {{item.message?.content}} </ng-container>
+								<ng-container *ngSwitchCase="1"> [图片] </ng-container>
+							</span>
+						</div>
+						<span class="unread" [class.red]="item.unread">
+							<ng-container *ngIf="item.unread<100 && item.unread>0"> {{item.unread}} </ng-container>
+							<ng-container *ngIf="item.unread>=100"> +99 </ng-container>
+							<ng-container *ngIf="!item.unread || item.unread==0"></ng-container>
+						</span>
 
-                        <img class="item-close" src="/assets/image/svg/close.svg"
-                            (click)="close($event,item.roomid,item,i)">
-                    </li>
+						<img class="item-close" src="/assets/image/svg/close.svg" (click)="close($event,item.roomid,item,i)" />
+					</li>
+				</ng-container>
+			</div>
+		</div>
 
-                </ng-container>
-            </div>
+		<div class="opera" *ngIf="ischeck">
+			<ng-container *ngrxLet="id$;let id">
+				<p>
+					{{now.n}}
+					<span class="dot-pic" (click)="openMenu()">
+						<img src="/assets/image/svg/i-three-dot.svg" #dot />
+					</span>
+				</p>
+				<ng-template #menuTemp>
+					<button class="black-btn" *ngIf="!isBlack" (click)="block(now.i)">拉至黑名单</button>
+					<button class="black-btn" *ngIf="isBlack" routerLink="/message/blacklist">已拉入黑名单</button>
+				</ng-template>
+				<div class="opera-histroy" #hellobox (scroll)="getmore($event,now.r)">
+					<div class="histroy-box" #box>
+						<div class="show-time" *ngIf="noMoreHistroy$|async">无更多消息...</div>
+						<ng-container *ngrxLet="showhistroy$;let showhistroy">
+							<ng-container *ngFor="let msg of showhistroy">
+								<ng-container *ngIf="msg.showtime || msg==showhistroy[0]">
+									<div class="show-time">{{msg.speaktime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+								</ng-container>
+								<li [ngClass]="msg.sender_id==id?'me':'ta'">
+									<ivo-lazy-img
+										[ngLazyLoad]="msg.sender_id==now.i?now.a:(avatar$|async)"
+										(click)="toUser(msg.sender_id==now.i,msg.sender_id)"
+									>
+									</ivo-lazy-img>
+									<span class="words" [ngSwitch]="msg.type">
+										<ng-container *ngSwitchCase="0"> {{msg.message}} </ng-container>
+										<ng-container *ngSwitchCase="1">
+											<ivo-lazy-img [ngLazyLoad]="msg.message" (click)="showDetail(msg.message)"> </ivo-lazy-img>
+										</ng-container>
+									</span>
+								</li>
+							</ng-container>
+						</ng-container>
+					</div>
+				</div>
 
-        </div>
-
-        <div class="opera" *ngIf="ischeck">
-            <ng-container *ngrxLet="id$;let id">
-                <p>
-                    {{now.n}}
-                    <span class="dot-pic" (click)="openMenu()">
-                        <img src="/assets/image/svg/i-three-dot.svg" #dot>
-                    </span>
-                </p>
-                <ng-template #menuTemp>
-                    <button class="black-btn" *ngIf="!isBlack" (click)="block(now.i)">拉至黑名单</button>
-                    <button class="black-btn" *ngIf="isBlack" routerLink="/message/blacklist">已拉入黑名单</button>
-                </ng-template>
-                <div class="opera-histroy" #hellobox (scroll)="getmore($event,now.r)">
-                    <div class="histroy-box" #box>
-                        <div class="show-time" *ngIf="noMoreHistroy$|async">
-                           无更多消息...
-                        </div>
-                        <ng-container *ngrxLet="showhistroy$;let showhistroy">
-                            <ng-container *ngFor="let msg of showhistroy">
-                                <ng-container *ngIf="msg.showtime || msg==showhistroy[0]">
-                                    <div class="show-time">{{msg.speaktime | date:'yyyy-MM-dd HH:mm:ss'}}</div>
-                                </ng-container>
-                                <li [ngClass]="msg.sender_id==id?'me':'ta'">
-
-                                    <ivo-lazy-img [ngLazyLoad]="msg.sender_id==now.i?now.a:(avatar$|async)" (click)="toUser(msg.sender_id==now.i,msg.sender_id)">
-                                    </ivo-lazy-img>
-                                    <span class="words" [ngSwitch]="msg.type">
-                                        <ng-container *ngSwitchCase="0">
-                                            {{msg.message}}
-                                        </ng-container>
-                                        <ng-container *ngSwitchCase="1">
-                                            <ivo-lazy-img [ngLazyLoad]="msg.message" (click)="showDetail(msg.message)">
-                                            </ivo-lazy-img>
-                                        </ng-container>
-                                    </span>
-
-                                </li>
-                            </ng-container>
-                        </ng-container>
-                    </div>
-                </div>
-
-                <div class="opera-input" (drop)="onDrop($event,now.r,id,input,content)">
-                    <li>
-                        <img src="/assets/image/svg/pic.svg" (click)="input.click()">
-                        <input type="file" hidden #input
-                            (change)="sendPic($event.target.files[0],now.r,id,input,content)">
-                            <span class="progress" *ngIf="isShowReportProgress">
-                                图片上传进度({{p}})
-                            </span>
-                    </li>
-                    <textarea placeholder="输入消息" #content
-                        (keydown.Enter)="send(now.r,content,0,id,$event,content)"></textarea>
-                    <button appDebounceClick (debounceClick)="send(now.r,content,0,id,$event,content)">发送</button>
-                </div>
-            </ng-container>
-        </div>
-        <div class="opera-empty" *ngIf="!ischeck"></div>
-
-
-    </ng-container>
+				<div class="opera-input" (drop)="onDrop($event,now.r,id,input,content)">
+					<li>
+						<img src="/assets/image/svg/pic.svg" (click)="input.click()" />
+						<input type="file" hidden #input (change)="sendPic($event.target.files[0],now.r,id,input,content)" />
+						<span class="progress" *ngIf="isShowReportProgress"> 图片上传进度({{p}}) </span>
+					</li>
+					<textarea placeholder="输入消息" #content (keydown.Enter)="send(now.r,content,0,id,$event,content)"></textarea>
+					<button appDebounceClick (debounceClick)="send(now.r,content,0,id,$event,content)">发送</button>
+				</div>
+			</ng-container>
+		</div>
+		<div class="opera-empty" *ngIf="!ischeck"></div>
+	</ng-container>
 </div>

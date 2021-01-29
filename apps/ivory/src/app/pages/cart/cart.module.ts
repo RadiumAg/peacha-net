@@ -6,18 +6,18 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 
 @NgModule({
-  declarations: [CartPage],
-  imports: [
-    NzCheckboxModule,
-    CommonModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: CartPage,
-      },
-    ]),
-    ReactiveComponentModule,
-    PeachaComponentsModule,
-  ],
+	declarations: [CartPage],
+	imports: [
+		NzCheckboxModule,
+		CommonModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				component: CartPage,
+			},
+		]),
+		ReactiveComponentModule,
+		PeachaComponentsModule,
+	],
 })
 export class CartModule {}

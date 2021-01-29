@@ -15,79 +15,75 @@ import { PayrecordPage } from './payrecord/payrecord.page';
 import { PayRecordDetailPage } from './payrecord/pay-record-detail/pay-record-detail.page';
 import { TradeApiService } from '../pay/trade-api.service';
 import { WalletDrawPage } from './wallet/wallet-withdraw/walletdraw.page';
-import {
-  PeachaComponentsModule,
-  ReactiveComponentModule,
-  RoleApiService,
-} from '@peacha-core';
+import { PeachaComponentsModule, ReactiveComponentModule, RoleApiService } from '@peacha-core';
 import { ComponentsModule } from '../commission/components/components.module';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @NgModule({
-  declarations: [
-    UserCenterPage,
-    UserProfilePage,
-    UserSecurityPage,
-    WalletPage,
-    WalletDrawPage,
-    OrderListPage,
-    OrderDetailPage,
-    CdComponent,
-    OrderDetailPage,
-    MydatepickerPage,
-    PayrecordPage,
-    PayRecordDetailPage,
-  ],
-  imports: [
-    ReactiveComponentModule,
-    CommonModule,
-    PeachaComponentsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ComponentsModule,
-    NzDatePickerModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: UserCenterPage,
-        canActivate: [SettingResolve],
-        children: [
-          {
-            path: '',
-            component: UserProfilePage,
-          },
-          {
-            path: 'security',
-            component: UserSecurityPage,
-          },
-          {
-            path: 'wallet',
-            component: WalletPage,
-          },
-          {
-            path: 'wallet/:id',
-            component: WalletDrawPage,
-          },
-          {
-            path: 'order',
-            component: OrderListPage,
-          },
-          {
-            path: 'order/:id',
-            component: OrderDetailPage,
-          },
-          {
-            path: 'pay',
-            component: PayrecordPage,
-          },
-          {
-            path: 'pay/:payid',
-            component: PayRecordDetailPage,
-          },
-        ],
-      },
-    ]),
-  ],
-  providers: [SettingResolve, TradeApiService, RoleApiService],
+	declarations: [
+		UserCenterPage,
+		UserProfilePage,
+		UserSecurityPage,
+		WalletPage,
+		WalletDrawPage,
+		OrderListPage,
+		OrderDetailPage,
+		CdComponent,
+		OrderDetailPage,
+		MydatepickerPage,
+		PayrecordPage,
+		PayRecordDetailPage,
+	],
+	imports: [
+		ReactiveComponentModule,
+		CommonModule,
+		PeachaComponentsModule,
+		FormsModule,
+		ReactiveFormsModule,
+		ComponentsModule,
+		NzDatePickerModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				component: UserCenterPage,
+				canActivate: [SettingResolve],
+				children: [
+					{
+						path: '',
+						component: UserProfilePage,
+					},
+					{
+						path: 'security',
+						component: UserSecurityPage,
+					},
+					{
+						path: 'wallet',
+						component: WalletPage,
+					},
+					{
+						path: 'wallet/:id',
+						component: WalletDrawPage,
+					},
+					{
+						path: 'order',
+						component: OrderListPage,
+					},
+					{
+						path: 'order/:id',
+						component: OrderDetailPage,
+					},
+					{
+						path: 'pay',
+						component: PayrecordPage,
+					},
+					{
+						path: 'pay/:payid',
+						component: PayRecordDetailPage,
+					},
+				],
+			},
+		]),
+	],
+	providers: [SettingResolve, TradeApiService, RoleApiService],
 })
 export class UserCenterModule {}

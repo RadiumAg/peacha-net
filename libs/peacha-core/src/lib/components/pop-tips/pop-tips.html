@@ -1,13 +1,12 @@
 <div>
-    <li class="tip">
-        <img [src]="icon">
-        <span>{{tips}}</span>
-    </li>
-    <li class="hello">
-        <ng-container>
-            <button ivo-button [buttonType]="1" *ngIf="bool" (click)="cancel()">取消</button>
-        </ng-container>
-        <button ivo-button (click)="sure()">{{sureText}}</button>
-    </li>
-
+	<li class="tip">
+		<img [src]="icon" />
+		<span>{{tips}}</span>
+	</li>
+	<li class="hello">
+		<ng-container>
+			<button ivo-button [buttonType]="1" *ngIf="bool" (click)="cancel()">取消</button>
+		</ng-container>
+		<button ivo-button (click)="sure()">{{sureText}}</button>
+	</li>
 </div>

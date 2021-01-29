@@ -1,40 +1,39 @@
 @import '../../../../../../components.less';
 
-:host{
-   div.footer-container{
-     width: 100%;
-     height: 100%;
-     display: flex;
-     justify-content: flex-end;
+:host {
+	div.footer-container {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: flex-end;
 
-     input[type=button].next-step{
-         padding: 14px 66px;
-         background-color: @theme-color ;
-         display: inline-block;
-         color: @font-color3;
-         font-size:  20px;
-         border-radius: 4px;
-         outline: none;
-         border: none;
-         cursor: pointer;
-     }
+		input[type='button'].next-step {
+			padding: 14px 66px;
+			background-color: @theme-color;
+			display: inline-block;
+			color: @font-color3;
+			font-size: 20px;
+			border-radius: 4px;
+			outline: none;
+			border: none;
+			cursor: pointer;
+		}
 
-     input[type=button].pre-step{
-        padding: 14px 30px;
-        display: inline-block;
-        color: @font-color2;
-        font-size:  20px;
-        background-color: transparent;
-        border-radius: 4px;
-        outline: none;
-        border: none;
-        cursor: pointer;
-    }
+		input[type='button'].pre-step {
+			padding: 14px 30px;
+			display: inline-block;
+			color: @font-color2;
+			font-size: 20px;
+			background-color: transparent;
+			border-radius: 4px;
+			outline: none;
+			border: none;
+			cursor: pointer;
+		}
 
-
-    input[type=button]:disabled{
-        background-color:rgba(255, 99, 152,0.5);
-        cursor: not-allowed;
-    }
-   }
+		input[type='button']:disabled {
+			background-color: rgba(255, 99, 152, 0.5);
+			cursor: not-allowed;
+		}
+	}
 }

@@ -5,58 +5,50 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'ivo-goodsearch',
-  templateUrl: './goodsearch.page.html',
-  styleUrls: ['./goodsearch.page.less'],
+	selector: 'ivo-goodsearch',
+	templateUrl: './goodsearch.page.html',
+	styleUrls: ['./goodsearch.page.less'],
 })
 export class GoodsearchPage {
-  constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient,
-    private router: Router
-  ) {}
+	constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
-  page$ = new BehaviorSubject<number>(1);
+	page$ = new BehaviorSubject<number>(1);
 
-  workdata$: Observable<{
-    count: number;
-    list: {};
-  }> = this.route.queryParams.pipe(
-    switchMap((r) => {
-      const key: string = encodeURIComponent(r.keyword ?? '');
-      return this.http
-        .get<any>(
-          `/work/search_goods?k=${key ?? ''}&p=${r.p ? r.p - 1 : 0}&s=20&o=${
-            r.o ? r.o : key ? 0 : 1
-          }&dd=${r.dd ?? 0}`
-        )
-        .pipe(
-          tap((s) => {
-            this.page$.next(r.p ?? 1);
-          }),
-          catchError((err) => of({ count: 0 }))
-        );
-    })
-  );
+	workdata$: Observable<{
+		count: number;
+		list: {};
+	}> = this.route.queryParams.pipe(
+		switchMap(r => {
+			const key: string = encodeURIComponent(r.keyword ?? '');
+			return this.http
+				.get<any>(`/work/search_goods?k=${key ?? ''}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ? r.o : key ? 0 : 1}&dd=${r.dd ?? 0}`)
+				.pipe(
+					tap(s => {
+						this.page$.next(r.p ?? 1);
+					}),
+					catchError(err => of({ count: 0 }))
+				);
+		})
+	);
 
-  toWork(id: number, c: number): void {
-    if (c == 1) {
-      this.router.navigate(['illust', id]);
-    } else {
-      this.router.navigate(['live2d', id]);
-    }
-  }
+	toWork(id: number, c: number): void {
+		if (c == 1) {
+			this.router.navigate(['illust', id]);
+		} else {
+			this.router.navigate(['live2d', id]);
+		}
+	}
 
-  toUser(id: number): void {
-    this.router.navigate(['user', id]);
-  }
-  page(data: number): void {
-    this.router.navigate([], {
-      queryParams: {
-        p: data,
-      },
-      queryParamsHandling: 'merge',
-    });
-    document.documentElement.scrollTop = 0;
-  }
+	toUser(id: number): void {
+		this.router.navigate(['user', id]);
+	}
+	page(data: number): void {
+		this.router.navigate([], {
+			queryParams: {
+				p: data,
+			},
+			queryParamsHandling: 'merge',
+		});
+		document.documentElement.scrollTop = 0;
+	}
 }

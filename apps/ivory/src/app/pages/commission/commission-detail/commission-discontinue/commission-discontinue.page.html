@@ -1,169 +1,140 @@
 <ivo-commission-top-nav [isShowDetail]="true" [isShowRight]="true"></ivo-commission-top-nav>
 <!-- 中止操作卡片 -->
 <div class="box top" *ngIf="latestRecord">
-    <div class="top-one">
-        <span class="state">
-            {{showTitle}}
-        </span>
-        <span
-            *ngIf="latestRecord.type===0 || (latestRecord.type===3 && latestRecord.status===1)">中止稿酬比例：{{(latestRecord?.rate*100).toFixed(0)}}%</span>
-    </div>
-    <div class="top-two">
-        {{showTip}}
-    </div>
+	<div class="top-one">
+		<span class="state"> {{showTitle}} </span>
+		<span *ngIf="latestRecord.type===0 || (latestRecord.type===3 && latestRecord.status===1)"
+			>中止稿酬比例：{{(latestRecord?.rate*100).toFixed(0)}}%</span
+		>
+	</div>
+	<div class="top-two">{{showTip}}</div>
 
-    <div class="update"
-        *ngIf="((latestRecord.type===3 && receiver.id === latestRecord.userid ) || latestRecord.type===0) && latestRecord.status===1 && identity===2 && (latestSubmit?.list.length==0 || latestSubmit.list[0]?.status===2) && ((status$|async)!=6) ">
-        上传文件：
-        <button ivo-button *ngIf="fileList.length<5" (click)="input.click()"><img
-                src="/assets/image/commission/upload.svg">上传</button>
-        <button *ngIf="fileList.length===5" class="not"><img src="/assets/image/commission/upload.svg">上传</button>
-        <input type="file" hidden (change)="updateFile($event.target.files[0])" #input>
-        <span class="file-num">({{fileList.length}}/5)</span>
-    </div>
+	<div
+		class="update"
+		*ngIf="((latestRecord.type===3 && receiver.id === latestRecord.userid ) || latestRecord.type===0) && latestRecord.status===1 && identity===2 && (latestSubmit?.list.length==0 || latestSubmit.list[0]?.status===2) && ((status$|async)!=6) "
+	>
+		上传文件：
+		<button ivo-button *ngIf="fileList.length<5" (click)="input.click()"><img src="/assets/image/commission/upload.svg" />上传</button>
+		<button *ngIf="fileList.length===5" class="not"><img src="/assets/image/commission/upload.svg" />上传</button>
+		<input type="file" hidden (change)="updateFile($event.target.files[0])" #input />
+		<span class="file-num">({{fileList.length}}/5)</span>
+	</div>
 
-    <div class="show-box"
-        *ngIf="fileList.length>0 && (latestSubmit?.list.length==0 || latestSubmit.list[0]?.status===2)">
-        <li *ngFor="let file of fileList;let i =index">
-            <img class="delete" src="/assets/image/commission/waste.svg" (click)="delete(i)">
-            <img class="file-icon" src="/assets/image/commission/file-icon.svg">
-            <span>{{file.name}}</span>
-        </li>
-    </div>
-    <div class="show-update-box" *ngIf="latestSubmit?.list.length>0 && isShowFile">
-        <span>源文件：点击右侧图标下载文件</span>
-        <div class="update-file">
-            <li *ngFor="let file of latestSubmit?.list[0].submitFiles;let i =index">
-                <a [href]="file+'?response-content-type=application/octet-stream'" download target="_block">
-                    <img class="file-icon" src="/assets/image/commission/file-icon.svg">
-                    文件{{i+1}}
-                    <img class="file-download" src="/assets/image/commission/commission-nodelist/file-download.svg">
-                </a>
-
-            </li>
-        </div>
-    </div>
-    <div class="top-three">
-        <span>
-            {{timeWord}}{{time|date:'yyyy-MM-dd HH:mm'}}
-        </span>
-        <div class="btn">
-            <ng-container *ngIf="(status$|async)!=6">
-                <ng-container
-                    *ngIf="latestRecord.type===0 &&  latestRecord.status===0 && ((sponsor.id === latestRecord.userid && receiver.id===(id$|async)) ||(receiver.id === latestRecord.userid && sponsor.id===(id$|async)))">
-                    <button ivo-button [buttonType]="1" appDebounceClick (debounceClick)="confirm(latestRecord.id,2)">拒绝中止</button>
-                    <button ivo-button appDebounceClick (debounceClick)="confirm(latestRecord.id,1)">同意中止</button>
-                </ng-container>
-                <ng-container>
-                    <a appDebounceClick *ngIf="isReject>0" (debounceClick)="toFileRecord()">驳回记录</a>
-                    <ng-container
-                        *ngIf="(latestRecord.type===0||(latestRecord.type===3&& receiver.id === latestRecord.userid)) &&latestRecord.status===1&& (latestSubmit?.list.length==0 || latestSubmit.list[0]?.status===2) && identity===2">
-                        <button ivo-button appDebounceClick (debounceClick)="submitFile()">提交审核</button>
-                    </ng-container>
-                    <ng-container *ngIf="latestSubmit?.list[0]?.status===0 && identity===1 && latestRecord.type===0">
-                        <button ivo-button [buttonType]="1" appDebounceClick
-                            (debounceClick)="auditFile(latestRecord.id,2)">源文件有误</button>
-                        <button ivo-button appDebounceClick (debounceClick)="auditFile(latestRecord.id,1)">源文件无误</button>
-                    </ng-container>
-                </ng-container>
-            </ng-container>
-
-        </div>
-
-    </div>
-
-
+	<div class="show-box" *ngIf="fileList.length>0 && (latestSubmit?.list.length==0 || latestSubmit.list[0]?.status===2)">
+		<li *ngFor="let file of fileList;let i =index">
+			<img class="delete" src="/assets/image/commission/waste.svg" (click)="delete(i)" />
+			<img class="file-icon" src="/assets/image/commission/file-icon.svg" />
+			<span>{{file.name}}</span>
+		</li>
+	</div>
+	<div class="show-update-box" *ngIf="latestSubmit?.list.length>0 && isShowFile">
+		<span>源文件：点击右侧图标下载文件</span>
+		<div class="update-file">
+			<li *ngFor="let file of latestSubmit?.list[0].submitFiles;let i =index">
+				<a [href]="file+'?response-content-type=application/octet-stream'" download target="_block">
+					<img class="file-icon" src="/assets/image/commission/file-icon.svg" />
+					文件{{i+1}}
+					<img class="file-download" src="/assets/image/commission/commission-nodelist/file-download.svg" />
+				</a>
+			</li>
+		</div>
+	</div>
+	<div class="top-three">
+		<span> {{timeWord}}{{time|date:'yyyy-MM-dd HH:mm'}} </span>
+		<div class="btn">
+			<ng-container *ngIf="(status$|async)!=6">
+				<ng-container
+					*ngIf="latestRecord.type===0 &&  latestRecord.status===0 && ((sponsor.id === latestRecord.userid && receiver.id===(id$|async)) ||(receiver.id === latestRecord.userid && sponsor.id===(id$|async)))"
+				>
+					<button ivo-button [buttonType]="1" appDebounceClick (debounceClick)="confirm(latestRecord.id,2)">拒绝中止</button>
+					<button ivo-button appDebounceClick (debounceClick)="confirm(latestRecord.id,1)">同意中止</button>
+				</ng-container>
+				<ng-container>
+					<a appDebounceClick *ngIf="isReject>0" (debounceClick)="toFileRecord()">驳回记录</a>
+					<ng-container
+						*ngIf="(latestRecord.type===0||(latestRecord.type===3&& receiver.id === latestRecord.userid)) &&latestRecord.status===1&& (latestSubmit?.list.length==0 || latestSubmit.list[0]?.status===2) && identity===2"
+					>
+						<button ivo-button appDebounceClick (debounceClick)="submitFile()">提交审核</button>
+					</ng-container>
+					<ng-container *ngIf="latestSubmit?.list[0]?.status===0 && identity===1 && latestRecord.type===0">
+						<button ivo-button [buttonType]="1" appDebounceClick (debounceClick)="auditFile(latestRecord.id,2)">
+							源文件有误
+						</button>
+						<button ivo-button appDebounceClick (debounceClick)="auditFile(latestRecord.id,1)">源文件无误</button>
+					</ng-container>
+				</ng-container>
+			</ng-container>
+		</div>
+	</div>
 </div>
-
 
 <!-- 中止记录 -->
 <div class="box">
-    <li class="title">
-        <span class="name">中止历史</span>
-        <!-- <a class="back"> <img src="/assets/image/commission/goback.svg">返回列表</a> -->
-    </li>
-    <div class="list">
-        <ng-container *ngrxLet="discontinueList$;let discontinueList">
-            <div class="show-list" *ngFor="let item of discontinueList?.list">
-                <div class="item">
-                    <span class="one">
-                        <span class="name">中止类型</span>
-                        <span class="state" [ngSwitch]="item.type">
-                            <ng-container *ngSwitchCase="0">
-                                协商中止
-                            </ng-container>
-                            <ng-container *ngSwitchCase="1">
-                                强行中止
-                            </ng-container>
-                            <ng-container *ngSwitchCase="2">
-                                平台介入中止
-                            </ng-container>
-                            <ng-container *ngSwitchCase="3">
-                                超时中止
-                            </ng-container>
-                        </span>
-                    </span>
-                    <span class="one">
-                        <span class="name">中止状态</span>
-                        <span class="state" [ngSwitch]="item.status">
-                            <ng-container *ngSwitchCase="0">
-                                等待处理
-                            </ng-container>
-                            <ng-container *ngSwitchCase="1">
-                                <ng-container
-                                    *ngIf="(item.type===0 || item.type===3) && (status$|async)===4 ;else other">
-                                    中止中
-                                </ng-container>
-                                <ng-template #other>
-                                    中止完成
-                                </ng-template>
+	<li class="title">
+		<span class="name">中止历史</span>
+		<!-- <a class="back"> <img src="/assets/image/commission/goback.svg">返回列表</a> -->
+	</li>
+	<div class="list">
+		<ng-container *ngrxLet="discontinueList$;let discontinueList">
+			<div class="show-list" *ngFor="let item of discontinueList?.list">
+				<div class="item">
+					<span class="one">
+						<span class="name">中止类型</span>
+						<span class="state" [ngSwitch]="item.type">
+							<ng-container *ngSwitchCase="0"> 协商中止 </ng-container>
+							<ng-container *ngSwitchCase="1"> 强行中止 </ng-container>
+							<ng-container *ngSwitchCase="2"> 平台介入中止 </ng-container>
+							<ng-container *ngSwitchCase="3"> 超时中止 </ng-container>
+						</span>
+					</span>
+					<span class="one">
+						<span class="name">中止状态</span>
+						<span class="state" [ngSwitch]="item.status">
+							<ng-container *ngSwitchCase="0"> 等待处理 </ng-container>
+							<ng-container *ngSwitchCase="1">
+								<ng-container *ngIf="(item.type===0 || item.type===3) && (status$|async)===4 ;else other">
+									中止中
+								</ng-container>
+								<ng-template #other> 中止完成 </ng-template>
+							</ng-container>
+							<ng-container *ngSwitchCase="2"> 中止失败 </ng-container>
+						</span>
+					</span>
+					<span class="one">
+						<span class="name">中止稿酬比例</span>
+						<span class="state">{{(item.rate*100).toFixed(0)}}%</span>
+					</span>
+					<span class="one">
+						<span class="name">发起用户</span>
+						<span class="state">
+							<ng-container *ngIf="item.userId===receiver.id"> {{receiver.nickName}} </ng-container>
+							<ng-container *ngIf="item.userId===sponsor.id"> {{sponsor.nickName}} </ng-container>
+						</span>
+					</span>
+					<span class="one">
+						<span class="name">发起时间</span>
+						<span class="state">{{item.applyTime|date:'yyyy-MM-dd HH:mm'}}</span>
+					</span>
+					<span class="one" *ngIf="item.status!=0">
+						<span class="name">对方处理时间</span>
+						<span class="state">{{item.replyTime|date:'yyyy-MM-dd HH:mm'}}</span>
+					</span>
+				</div>
+				<div class="show-result" *ngIf="item?.replyDescription">
+					<span class="one">
+						<span class="name">平台介入结果</span>
+						<span class="state">{{item?.replyDescription}}</span>
+					</span>
+				</div>
+			</div>
 
-                            </ng-container>
-                            <ng-container *ngSwitchCase="2">
-                                中止失败
-                            </ng-container>
-                        </span>
-                    </span>
-                    <span class="one">
-                        <span class="name">中止稿酬比例</span>
-                        <span class="state">{{(item.rate*100).toFixed(0)}}%</span>
-                    </span>
-                    <span class="one">
-                        <span class="name">发起用户</span>
-                        <span class="state">
-                            <ng-container *ngIf="item.userId===receiver.id">
-                                {{receiver.nickName}}
-                            </ng-container>
-                            <ng-container *ngIf="item.userId===sponsor.id">
-                                {{sponsor.nickName}}
-                            </ng-container>
-                        </span>
-                    </span>
-                    <span class="one">
-                        <span class="name">发起时间</span>
-                        <span class="state">{{item.applyTime|date:'yyyy-MM-dd HH:mm'}}</span>
-                    </span>
-                    <span class="one" *ngIf="item.status!=0">
-                        <span class="name">对方处理时间</span>
-                        <span class="state">{{item.replyTime|date:'yyyy-MM-dd HH:mm'}}</span>
-                    </span>
-                </div>
-                <div class="show-result" *ngIf="item?.replyDescription">
-                    <span class="one">
-                        <span class="name">平台介入结果</span>
-                        <span class="state">{{item?.replyDescription}}</span>
-                    </span>
-                </div>
-            </div>
+			<ivo-lack-image *ngIf="discontinueList.list.length===0"></ivo-lack-image>
+		</ng-container>
+	</div>
 
-            <ivo-lack-image *ngIf="discontinueList.list.length===0"></ivo-lack-image>
-        </ng-container>
-
-    </div>
-
-    <div class="bottom">
-        <button ivo-button [buttonType]="1" appDebounceClick (debounceClick)="discontinue(2)">平台介入</button>
-        <button ivo-button appDebounceClick (debounceClick)="discontinue(3)">超时中止</button>
-        <button ivo-button appDebounceClick (debounceClick)="discontinue(0)">协商中止</button>
-    </div>
+	<div class="bottom">
+		<button ivo-button [buttonType]="1" appDebounceClick (debounceClick)="discontinue(2)">平台介入</button>
+		<button ivo-button appDebounceClick (debounceClick)="discontinue(3)">超时中止</button>
+		<button ivo-button appDebounceClick (debounceClick)="discontinue(0)">协商中止</button>
+	</div>
 </div>

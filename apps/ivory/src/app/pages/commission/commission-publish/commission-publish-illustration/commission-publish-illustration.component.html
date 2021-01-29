@@ -1,838 +1,709 @@
 <div class="container">
-  <!-- nav -->
-  <div class="nav">
-    <div class="nodes">
-      <div class="node-item active">
-        <div class="node active">
-          <div class="node-inner"></div>
-        </div>
-        <span class="tips active">约稿类型</span>
-      </div>
+	<!-- nav -->
+	<div class="nav">
+		<div class="nodes">
+			<div class="node-item active">
+				<div class="node active">
+					<div class="node-inner"></div>
+				</div>
+				<span class="tips active">约稿类型</span>
+			</div>
 
-      <div class="node-item" [ngClass]="{ active: navActiveList[0] }">
-        <div
-          class="node"
-          [ngClass]="{ active: navActiveList[0], pre_active: !activeList[0] }"
-        >
-          1
-          <div class="node-inner"></div>
-        </div>
-        <span
-          class="tips"
-          [ngClass]="{ active: !activeList[0] || navActiveList[0] }"
-          >基本信息</span
-        >
-      </div>
+			<div class="node-item" [ngClass]="{ active: navActiveList[0] }">
+				<div class="node" [ngClass]="{ active: navActiveList[0], pre_active: !activeList[0] }">
+					1
+					<div class="node-inner"></div>
+				</div>
+				<span class="tips" [ngClass]="{ active: !activeList[0] || navActiveList[0] }">基本信息</span>
+			</div>
 
-      <div class="node-item" [ngClass]="{ active: navActiveList[1] }">
-        <div
-          class="node"
-          [ngClass]="{ active: navActiveList[1], pre_active: !activeList[1] }"
-        >
-          2
-          <div class="node-inner"></div>
-        </div>
-        <span
-          class="tips"
-          [ngClass]="{ active: !activeList[1] || navActiveList[1] }"
-          >具体需求</span
-        >
-      </div>
+			<div class="node-item" [ngClass]="{ active: navActiveList[1] }">
+				<div class="node" [ngClass]="{ active: navActiveList[1], pre_active: !activeList[1] }">
+					2
+					<div class="node-inner"></div>
+				</div>
+				<span class="tips" [ngClass]="{ active: !activeList[1] || navActiveList[1] }">具体需求</span>
+			</div>
 
-      <div class="node-item" [ngClass]="{ active: navActiveList[2] }">
-        <div
-          class="node"
-          [ngClass]="{ active: navActiveList[2], pre_active: !activeList[2] }"
-        >
-          3
-          <div class="node-inner"></div>
-        </div>
-        <span
-          class="tips"
-          [ngClass]="{ active: !activeList[2] || navActiveList[2] }"
-          >验收节点</span
-        >
-      </div>
+			<div class="node-item" [ngClass]="{ active: navActiveList[2] }">
+				<div class="node" [ngClass]="{ active: navActiveList[2], pre_active: !activeList[2] }">
+					3
+					<div class="node-inner"></div>
+				</div>
+				<span class="tips" [ngClass]="{ active: !activeList[2] || navActiveList[2] }">验收节点</span>
+			</div>
 
-      <div class="node-item" [ngClass]="{ active: navActiveList[3] }">
-        <div
-          class="node"
-          [ngClass]="{ active: navActiveList[3], pre_active: !activeList[3] }"
-        >
-          4
-          <div class="node-inner"></div>
-        </div>
-        <span
-          class="tips"
-          [ngClass]="{ active: !activeList[3] || navActiveList[3] }"
-          >整体预览</span
-        >
-      </div>
+			<div class="node-item" [ngClass]="{ active: navActiveList[3] }">
+				<div class="node" [ngClass]="{ active: navActiveList[3], pre_active: !activeList[3] }">
+					4
+					<div class="node-inner"></div>
+				</div>
+				<span class="tips" [ngClass]="{ active: !activeList[3] || navActiveList[3] }">整体预览</span>
+			</div>
 
-      <div class="node-item" [ngClass]="{ active: navActiveList[4] }">
-        <div
-          class="node"
-          [ngClass]="{ active: navActiveList[4], pre_active: !activeList[4] }"
-        >
-          5
-          <div class="node-inner"></div>
-        </div>
-        <span
-          class="tips"
-          [ngClass]="{ active: !activeList[4] || navActiveList[4] }"
-          >发布须知</span
-        >
-      </div>
-    </div>
-  </div>
-  <!-- nav -->
+			<div class="node-item" [ngClass]="{ active: navActiveList[4] }">
+				<div class="node" [ngClass]="{ active: navActiveList[4], pre_active: !activeList[4] }">
+					5
+					<div class="node-inner"></div>
+				</div>
+				<span class="tips" [ngClass]="{ active: !activeList[4] || navActiveList[4] }">发布须知</span>
+			</div>
+		</div>
+	</div>
+	<!-- nav -->
 
-  <!-- forms -->
-  <div class="forms">
-    <!-- basicform -->
-    <form
-      class="commission-form"
-      [ngClass]="{ hidden: activeList[0] }"
-      [formGroup]="basicInfoForm"
-    >
-      <h2 class="commission-title">
-        <span class="title-blod">完善基本信息，</span>
-        让合适的画师更快发现您的需求：
-      </h2>
+	<!-- forms -->
+	<div class="forms">
+		<!-- basicform -->
+		<form class="commission-form" [ngClass]="{ hidden: activeList[0] }" [formGroup]="basicInfoForm">
+			<h2 class="commission-title">
+				<span class="title-blod">完善基本信息，</span>
+				让合适的画师更快发现您的需求：
+			</h2>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>约稿标题</span>
-        </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>约稿标题</span>
+				</div>
 
-        <div class="commission-form-item-controller">
-          <div class="commission-form-item-controller-title">
-            起一个比较有吸引力的标题，能让更多人关注到你的企划
-          </div>
-          <div class="controller">
-            <input
-              [attr.disabled]="isEdit ? true : null"
-              ivoErroTipTwo
-              ivoErroTipTwo
-              [ivoErrorTipString]="{
-                required: '请填写约稿标题!',
-                empty: '不能含空字符'
-              }"
-              formControlName="n"
-              type="text"
-              #title1
-              class="commission-input"
-              maxlength="20"
-              placeholder="请输入"
-            />
-            <span class="word-count">{{ title1.value.length }}/20</span>
-          </div>
-        </div>
-      </div>
+				<div class="commission-form-item-controller">
+					<div class="commission-form-item-controller-title">起一个比较有吸引力的标题，能让更多人关注到你的企划</div>
+					<div class="controller">
+						<input
+							[attr.disabled]="isEdit ? true : null"
+							ivoErroTipTwo
+							ivoErroTipTwo
+							[ivoErrorTipString]="{
+								required: '请填写约稿标题!',
+								empty: '不能含空字符'
+							}"
+							formControlName="n"
+							type="text"
+							#title1
+							class="commission-input"
+							maxlength="20"
+							placeholder="请输入"
+						/>
+						<span class="word-count">{{ title1.value.length }}/20</span>
+					</div>
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>整体构思</span>
-        </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>整体构思</span>
+				</div>
 
-        <div class="commission-form-item-controller">
-          <div class="controller">
-            <ivo-select
-              [disabled]="isEdit"
-              height="36px"
-              fontSize="12px"
-              formControlName="de"
-              ivoErroTipTwo
-              [ivoErrorTipString]="'选择整体构思!'"
-            >
-              <ivo-option
-                value="0"
-                text="已有整体构思"
-                borderStyle="1"
-              ></ivo-option>
-              <ivo-option
-                value="1"
-                text="已有大概有构思,需要与画师讨论后确定"
-                borderStyle="1"
-              ></ivo-option>
-              <ivo-option
-                value="2"
-                text="没有构思，需画师帮助构思"
-                borderStyle="1"
-              ></ivo-option>
-            </ivo-select>
-          </div>
-        </div>
-      </div>
+				<div class="commission-form-item-controller">
+					<div class="controller">
+						<ivo-select
+							[disabled]="isEdit"
+							height="36px"
+							fontSize="12px"
+							formControlName="de"
+							ivoErroTipTwo
+							[ivoErrorTipString]="'选择整体构思!'"
+						>
+							<ivo-option value="0" text="已有整体构思" borderStyle="1"></ivo-option>
+							<ivo-option value="1" text="已有大概有构思,需要与画师讨论后确定" borderStyle="1"></ivo-option>
+							<ivo-option value="2" text="没有构思，需画师帮助构思" borderStyle="1"></ivo-option>
+						</ivo-select>
+					</div>
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>稿件保密</span>
-        </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>稿件保密</span>
+				</div>
 
-        <div class="commission-form-item-controller">
-          <div class="controller">
-            <ivo-select
-              fontSize="12px"
-              height="36px"
-              formControlName="s"
-              ivoErroTipTwo
-              [ivoErrorTipString]="'请选择稿件保密类型!'"
-            >
-              <ivo-option value="0" text="可公开"></ivo-option>
-              <ivo-option value="1" text="约定公开"></ivo-option>
-              <ivo-option value="2" text="不可公开"></ivo-option>
-            </ivo-select>
-          </div>
-        </div>
-      </div>
+				<div class="commission-form-item-controller">
+					<div class="controller">
+						<ivo-select
+							fontSize="12px"
+							height="36px"
+							formControlName="s"
+							ivoErroTipTwo
+							[ivoErrorTipString]="'请选择稿件保密类型!'"
+						>
+							<ivo-option value="0" text="可公开"></ivo-option>
+							<ivo-option value="1" text="约定公开"></ivo-option>
+							<ivo-option value="2" text="不可公开"></ivo-option>
+						</ivo-select>
+					</div>
+				</div>
+			</div>
 
-      <div
-        class="commission-form-item"
-        [ngStyle]="{ display: isScrict ? 'none' : 'grid' }"
-      >
-        <div class="commission-form-item-title">
-          <span>公开要求</span>
-        </div>
+			<div class="commission-form-item" [ngStyle]="{ display: isScrict ? 'none' : 'grid' }">
+				<div class="commission-form-item-title">
+					<span>公开要求</span>
+				</div>
 
-        <div class="commission-form-item-controller">
-          <div class="commission-form-item-controller-title">
-            画师需要根据你的要求公开企划（例：企划结束后可公开）
-          </div>
-          <div class="controller">
-            <input
-              type="text"
-              ivoErroTipTwo
-              [ivoErrorTipString]="{
-                empty: '公开要求不能有空字符',
-                required: '公开要求必填'
-              }"
-              formControlName="sd"
-              #title2
-              class="commission-input"
-              maxlength="10"
-              placeholder="请输入"
-              [value]="isScrict ? '' : title2.value"
-            />
-            <span class="word-count">{{ title2.value.length }}/10</span>
-          </div>
-        </div>
-      </div>
+				<div class="commission-form-item-controller">
+					<div class="commission-form-item-controller-title">画师需要根据你的要求公开企划（例：企划结束后可公开）</div>
+					<div class="controller">
+						<input
+							type="text"
+							ivoErroTipTwo
+							[ivoErrorTipString]="{
+								empty: '公开要求不能有空字符',
+								required: '公开要求必填'
+							}"
+							formControlName="sd"
+							#title2
+							class="commission-input"
+							maxlength="10"
+							placeholder="请输入"
+							[value]="isScrict ? '' : title2.value"
+						/>
+						<span class="word-count">{{ title2.value.length }}/10</span>
+					</div>
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>所需时长</span>
-        </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>所需时长</span>
+				</div>
 
-        <div class="commission-form-item-controller">
-          <div class="controller">
-            <input
-              type="number"
-              ivoErroTipTwo
-              [ivoErrorTipString]="{
-                nullTime: '请填写所需时长',
-                negativeTime: '所需时长不能为负数',
-                floatTime: '时间不能为小数',
-                max: '不能超过999'
-              }"
-              formControlName="d"
-              class="commission-input"
-              placeholder="请输入"
-            />
-            <span class="word-unit">天</span>
-          </div>
-        </div>
-      </div>
+				<div class="commission-form-item-controller">
+					<div class="controller">
+						<input
+							type="number"
+							ivoErroTipTwo
+							[ivoErrorTipString]="{
+								nullTime: '请填写所需时长',
+								negativeTime: '所需时长不能为负数',
+								floatTime: '时间不能为小数',
+								max: '不能超过999'
+							}"
+							formControlName="d"
+							class="commission-input"
+							placeholder="请输入"
+						/>
+						<span class="word-unit">天</span>
+					</div>
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>约稿稿酬</span>
-        </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>约稿稿酬</span>
+				</div>
 
-        <div class="commission-form-item-controller">
-          <div class="controller">
-            <input
-              type="number"
-              #minPrice
-              ivoErroTipTwo
-              [ivoErrorTipString]="[
-                { endWidthZero: { error: '请以00结尾', order: 6 } },
-                { zeroPrice: { error: '不能小于0', order: 4 } },
-                { nullPrice: { error: '请填写', order: 3 } },
-                { moreThan: { error: '不能等于或超过最高价格', order: 2 } },
-                { floatPrice: { error: '价格不能为小数', order: 1 } },
-                { min: { error: '不能小于100', order: 5 } }
-              ]"
-              formControlName="sp"
-              class="commission-input"
-              placeholder="请输入"
-            />
-            <span class="word-unit">元</span>
-          </div>
+				<div class="commission-form-item-controller">
+					<div class="controller">
+						<input
+							type="number"
+							#minPrice
+							ivoErroTipTwo
+							[ivoErrorTipString]="[
+								{ endWidthZero: { error: '请以00结尾', order: 6 } },
+								{ zeroPrice: { error: '不能小于0', order: 4 } },
+								{ nullPrice: { error: '请填写', order: 3 } },
+								{ moreThan: { error: '不能等于或超过最高价格', order: 2 } },
+								{ floatPrice: { error: '价格不能为小数', order: 1 } },
+								{ min: { error: '不能小于100', order: 5 } }
+							]"
+							formControlName="sp"
+							class="commission-input"
+							placeholder="请输入"
+						/>
+						<span class="word-unit">元</span>
+					</div>
 
-          <span class="no-use">至</span>
+					<span class="no-use">至</span>
 
-          <div class="controller">
-            <input
-              type="number"
-              #maxPrice
-              ivoErroTipTwo
-              [ivoErrorTipString]="[
-                { endWidthZero: { error: '请以00结尾', order: 6 } },
-                { zeroPrice: { error: '不能小于0', order: 4 } },
-                { nullPrice: { error: '请填写', order: 3 } },
-                { moreThan: { error: '不能等于或超过最高价格', order: 2 } },
-                { floatPrice: { error: '价格不能为小数', order: 1 } },
-                { max: { error: '不能大于99900', order: 5 } }
-              ]"
-              formControlName="mp"
-              class="commission-input"
-              placeholder="请输入"
-            />
-            <span class="word-unit">元</span>
-          </div>
-        </div>
-      </div>
-    </form>
-    <!-- basicform -->
+					<div class="controller">
+						<input
+							type="number"
+							#maxPrice
+							ivoErroTipTwo
+							[ivoErrorTipString]="[
+								{ endWidthZero: { error: '请以00结尾', order: 6 } },
+								{ zeroPrice: { error: '不能小于0', order: 4 } },
+								{ nullPrice: { error: '请填写', order: 3 } },
+								{ moreThan: { error: '不能等于或超过最高价格', order: 2 } },
+								{ floatPrice: { error: '价格不能为小数', order: 1 } },
+								{ max: { error: '不能大于99900', order: 5 } }
+							]"
+							formControlName="mp"
+							class="commission-input"
+							placeholder="请输入"
+						/>
+						<span class="word-unit">元</span>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!-- basicform -->
 
-    <!-- detailform -->
-    <form
-      class="commission-form"
-      [ngClass]="{ hidden: activeList[1] }"
-      [formGroup]="detailInfoForm"
-    >
-      <h2 class="commission-title">
-        <span class="title-blod"> 完善具体需求， </span>
-        便于画师更好地报价及完成稿件：
-      </h2>
+		<!-- detailform -->
+		<form class="commission-form" [ngClass]="{ hidden: activeList[1] }" [formGroup]="detailInfoForm">
+			<h2 class="commission-title">
+				<span class="title-blod"> 完善具体需求， </span>
+				便于画师更好地报价及完成稿件：
+			</h2>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>具体需求</span>
-        </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>具体需求</span>
+				</div>
 
-        <div class="commission-form-item-controller">
-          <div class="commission-form-item-controller-title">
-            写出详情的需求，让画师能更好的了解到全部想法。
-          </div>
-          <div class="commission-form-item-controller-title">
-            也可以写下具体的人设（人设举例：姓名/性别/年龄/身高/爱好/兴趣/职业/性格）
-          </div>
-          <div class="controller">
-            <textarea
-              ivoErroTipTwo
-              [ivoErrorTipString]="'请填写具体需求!'"
-              class="commission-textarea"
-              #detail
-              maxlength="1000"
-              formControlName="det"
-              placeholder="请输入您对企划的具体需求…"
-            ></textarea>
-            <span class="word-count">{{ detail.value.length }}/1000</span>
-          </div>
-        </div>
-      </div>
+				<div class="commission-form-item-controller">
+					<div class="commission-form-item-controller-title">写出详情的需求，让画师能更好的了解到全部想法。</div>
+					<div class="commission-form-item-controller-title">
+						也可以写下具体的人设（人设举例：姓名/性别/年龄/身高/爱好/兴趣/职业/性格）
+					</div>
+					<div class="controller">
+						<textarea
+							ivoErroTipTwo
+							[ivoErrorTipString]="'请填写具体需求!'"
+							class="commission-textarea"
+							#detail
+							maxlength="1000"
+							formControlName="det"
+							placeholder="请输入您对企划的具体需求…"
+						></textarea>
+						<span class="word-count">{{ detail.value.length }}/1000</span>
+					</div>
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>表情需求</span>
-        </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>表情需求</span>
+				</div>
 
-        <div class="commission-form-item-controller">
-          <div class="controller">
-            <input
-              type="number"
-              ivoErroTipTwo
-              [attr.disabled]="isEdit ? true : null"
-              [ivoErrorTipString]="{
-                negativeEnAndAn: '不能小于0',
-                nullEnAndAn: '请填写表情需求！',
-                floatEnAndAn: '表情需求不能为小数',
-                max: '最大99'
-              }"
-              formControlName="en"
-              max="99"
-              min="0"
-              #title2
-              class="commission-input"
-              placeholder=""
-            />
-            <span class="word-unit">个</span>
-          </div>
-        </div>
-      </div>
+				<div class="commission-form-item-controller">
+					<div class="controller">
+						<input
+							type="number"
+							ivoErroTipTwo
+							[attr.disabled]="isEdit ? true : null"
+							[ivoErrorTipString]="{
+								negativeEnAndAn: '不能小于0',
+								nullEnAndAn: '请填写表情需求！',
+								floatEnAndAn: '表情需求不能为小数',
+								max: '最大99'
+							}"
+							formControlName="en"
+							max="99"
+							min="0"
+							#title2
+							class="commission-input"
+							placeholder=""
+						/>
+						<span class="word-unit">个</span>
+					</div>
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>动作需求</span>
-        </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>动作需求</span>
+				</div>
 
-        <div class="commission-form-item-controller">
-          <div class="controller">
-            <input
-              type="number"
-              ivoErroTipTwo
-              [attr.disabled]="isEdit ? true : null"
-              [ivoErrorTipString]="{
-                negativeEnAndAn: '不能小于0',
-                nullEnAndAn: '请填写动作需求！',
-                floatEnAndAn: '动作需求不能为小数',
-                max: '最大99'
-              }"
-              formControlName="an"
-              max="99"
-              min="0"
-              #title2
-              class="commission-input"
-              placeholder=""
-            />
-            <span class="word-unit">个</span>
-          </div>
+				<div class="commission-form-item-controller">
+					<div class="controller">
+						<input
+							type="number"
+							ivoErroTipTwo
+							[attr.disabled]="isEdit ? true : null"
+							[ivoErrorTipString]="{
+								negativeEnAndAn: '不能小于0',
+								nullEnAndAn: '请填写动作需求！',
+								floatEnAndAn: '动作需求不能为小数',
+								max: '最大99'
+							}"
+							formControlName="an"
+							max="99"
+							min="0"
+							#title2
+							class="commission-input"
+							placeholder=""
+						/>
+						<span class="word-unit">个</span>
+					</div>
 
-          <div class="commission-form-item-controller-title">
-            如果需要额外制作表情与动作的话，请在此填写数量，具体的表情/动作内容请写在具体需求中。
-          </div>
-          <div class="commission-form-item-controller-title">
-            无需表情/动作可不填写
-          </div>
-        </div>
-      </div>
+					<div class="commission-form-item-controller-title">
+						如果需要额外制作表情与动作的话，请在此填写数量，具体的表情/动作内容请写在具体需求中。
+					</div>
+					<div class="commission-form-item-controller-title">无需表情/动作可不填写</div>
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>稿件尺寸</span>
-        </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>稿件尺寸</span>
+				</div>
 
-        <div class="commission-form-item-controller">
-          <div class="controller">
-            <input
-              type="number"
-              ivoErroTipTwo
-              [ivoErrorTipString]="{
-                zeroPrice: '稿件宽不能小于0！',
-                nullPrice: '请填写',
-                floatPrice: '不能为小数',
-                max: '最大为9999'
-              }"
-              formControlName="wi"
-              max="99"
-              min="0"
-              class="commission-input"
-              placeholder=""
-            />
-          </div>
-          <span class="multiply">×</span>
-          <div class="controller">
-            <input
-              type="number"
-              ivoErroTipTwo
-              [ivoErrorTipString]="{
-                zeroPrice: '稿件高不能小于0！',
-                nullPrice: '请填写',
-                floatPrice: '不能为小数',
-                max: '最大为9999'
-              }"
-              formControlName="hi"
-              max="99"
-              min="0"
-              class="commission-input"
-              placeholder=""
-            />
+				<div class="commission-form-item-controller">
+					<div class="controller">
+						<input
+							type="number"
+							ivoErroTipTwo
+							[ivoErrorTipString]="{
+								zeroPrice: '稿件宽不能小于0！',
+								nullPrice: '请填写',
+								floatPrice: '不能为小数',
+								max: '最大为9999'
+							}"
+							formControlName="wi"
+							max="99"
+							min="0"
+							class="commission-input"
+							placeholder=""
+						/>
+					</div>
+					<span class="multiply">×</span>
+					<div class="controller">
+						<input
+							type="number"
+							ivoErroTipTwo
+							[ivoErrorTipString]="{
+								zeroPrice: '稿件高不能小于0！',
+								nullPrice: '请填写',
+								floatPrice: '不能为小数',
+								max: '最大为9999'
+							}"
+							formControlName="hi"
+							max="99"
+							min="0"
+							class="commission-input"
+							placeholder=""
+						/>
 
-            <span class="word-unit">像素</span>
-          </div>
-        </div>
-      </div>
+						<span class="word-unit">像素</span>
+					</div>
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>拆分需求</span>
-        </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>拆分需求</span>
+				</div>
 
-        <div class="commission-form-item-controller">
-          <div class="controller">
-            <ivo-select
-              fontSize="12px"
-              height="36px"
-              [disabled]="isEdit"
-              formControlName="spi"
-              ivoErroTipTwo
-              [ivoErrorTipString]="'请选择拆分需求'"
-            >
-              <ivo-option value="0" text="需要画师拆分"></ivo-option>
-              <ivo-option value="1" text="无需画师拆分"></ivo-option>
-            </ivo-select>
-          </div>
-        </div>
-      </div>
+				<div class="commission-form-item-controller">
+					<div class="controller">
+						<ivo-select
+							fontSize="12px"
+							height="36px"
+							[disabled]="isEdit"
+							formControlName="spi"
+							ivoErroTipTwo
+							[ivoErrorTipString]="'请选择拆分需求'"
+						>
+							<ivo-option value="0" text="需要画师拆分"></ivo-option>
+							<ivo-option value="1" text="无需画师拆分"></ivo-option>
+						</ivo-select>
+					</div>
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>上传附件</span>
-        </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>上传附件</span>
+				</div>
 
-        <div class="commission-form-item-controller">
-          <div class="commission-form-item-controller-title">
-            可以上传文件，更加详情的说明您的企划，文件不限任何格式，大小不得超过15M
-          </div>
-          <div class="commission-form-item-controller-title warning">
-            (企划发布后所有用户都可下载此附件，请谨慎上传)
-          </div>
-          <div class="controller">
-            <ivo-upload
-              [fileSize]="15728640"
-              formControlName="f"
-              buttonWord="上传文件"
-              [canDelete]="true"
-              [fileNumber]="1"
-              [isResertBeforeUpload]="true"
-            >
-            </ivo-upload
-            ><span class="upload-fileName">{{ uploadFile['name'] }}</span>
-          </div>
-        </div>
-      </div>
+				<div class="commission-form-item-controller">
+					<div class="commission-form-item-controller-title">
+						可以上传文件，更加详情的说明您的企划，文件不限任何格式，大小不得超过15M
+					</div>
+					<div class="commission-form-item-controller-title warning">(企划发布后所有用户都可下载此附件，请谨慎上传)</div>
+					<div class="controller">
+						<ivo-upload
+							[fileSize]="15728640"
+							formControlName="f"
+							buttonWord="上传文件"
+							[canDelete]="true"
+							[fileNumber]="1"
+							[isResertBeforeUpload]="true"
+						>
+						</ivo-upload
+						><span class="upload-fileName">{{ uploadFile['name'] }}</span>
+					</div>
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>参考图片</span>
-        </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>参考图片</span>
+				</div>
 
-        <div class="commission-form-item-controller">
-          <div class="commission-form-item-controller-title">
-            上传与你想法中最相似的图片，可增加画师创作的符合度
-          </div>
-          <div class="commission-form-item-controller-title warning">
-            (企划发布后所有用户都可查看此图片，请谨慎上传。)
-          </div>
-          <div class="controller">
-            <div>
-              <ivo-illustrate-upload
-                maxCount="4"
-                [maxSize]="4194304"
-                [allowType]="['jpg', 'gif', 'png']"
-                formControlName="ft"
-              >
-              </ivo-illustrate-upload>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-    <!-- detailform -->
+				<div class="commission-form-item-controller">
+					<div class="commission-form-item-controller-title">上传与你想法中最相似的图片，可增加画师创作的符合度</div>
+					<div class="commission-form-item-controller-title warning">(企划发布后所有用户都可查看此图片，请谨慎上传。)</div>
+					<div class="controller">
+						<div>
+							<ivo-illustrate-upload
+								maxCount="4"
+								[maxSize]="4194304"
+								[allowType]="['jpg', 'gif', 'png']"
+								formControlName="ft"
+							>
+							</ivo-illustrate-upload>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!-- detailform -->
 
-    <!-- nodeform -->
-    <form
-      class="commission-form"
-      [ngClass]="{ hidden: activeList[2] }"
-      [formGroup]="nodeForm"
-    >
-      <h2 class="commission-title">
-        <span class="title-blod"> 设置验收节点， </span>
-        便于您审查画师进度：
-      </h2>
+		<!-- nodeform -->
+		<form class="commission-form" [ngClass]="{ hidden: activeList[2] }" [formGroup]="nodeForm">
+			<h2 class="commission-title">
+				<span class="title-blod"> 设置验收节点， </span>
+				便于您审查画师进度：
+			</h2>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-controller">
-          <div class="commission-form-item-controller-title">
-            在与画师进行企划合作时，画师需在设定的阶段节点提交节点审核，企划方验收通过后才可继续创作。稿酬比例是指画师完成当前阶
-          </div>
-          <div class="commission-form-item-controller-title">
-            段节点可获取的总稿酬比例，若企划中止，则阶段节点稿酬比例作为中止稿酬比例的参考。
-          </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-controller">
+					<div class="commission-form-item-controller-title">
+						在与画师进行企划合作时，画师需在设定的阶段节点提交节点审核，企划方验收通过后才可继续创作。稿酬比例是指画师完成当前阶
+					</div>
+					<div class="commission-form-item-controller-title">
+						段节点可获取的总稿酬比例，若企划中止，则阶段节点稿酬比例作为中止稿酬比例的参考。
+					</div>
 
-          <div class="controller">
-            <ivo-commission-node
-              [isEdit]="isEdit"
-              [IsCute]="param.spi == 0 ? true : false"
-              formControlName="fl"
-            >
-            </ivo-commission-node>
-          </div>
-          <div class="commission-form-item-controller-title no-use">
-            阶段节点总数量不得少于3个，最多添加6个阶段节点。相邻的阶段节点间稿酬比例最低不得低于10%，最大不得超过40%
-          </div>
-        </div>
-      </div>
+					<div class="controller">
+						<ivo-commission-node [isEdit]="isEdit" [IsCute]="param.spi == 0 ? true : false" formControlName="fl">
+						</ivo-commission-node>
+					</div>
+					<div class="commission-form-item-controller-title no-use">
+						阶段节点总数量不得少于3个，最多添加6个阶段节点。相邻的阶段节点间稿酬比例最低不得低于10%，最大不得超过40%
+					</div>
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>修改次数:</span>
-        </div>
-        <div class="commission-form-item-controller">
-          <div class="commission-form-item-controller-title">
-            （最终验收阶段前可提出修改的次数，请谨慎填写）
-          </div>
-          <div class="controller">
-            <input
-              ivoErroTipTwo
-              [attr.disabled]="isEdit ? true : null"
-              [ivoErrorTipString]="{
-                nullPrice: '请填写修改次数！',
-                negativePrice: '修改次数不能为负数',
-                zeroPrice: '修改次数不能为0！',
-                floatPrice: '修改次数不能为小数',
-                max: '最大99'
-              }"
-              formControlName="mc"
-              type="number"
-              class="commission-input"
-              placeholder="请输入"
-            />
-            <span class="word-unit">次</span>
-          </div>
-        </div>
-      </div>
-    </form>
-    <!-- nodeform -->
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>修改次数:</span>
+				</div>
+				<div class="commission-form-item-controller">
+					<div class="commission-form-item-controller-title">（最终验收阶段前可提出修改的次数，请谨慎填写）</div>
+					<div class="controller">
+						<input
+							ivoErroTipTwo
+							[attr.disabled]="isEdit ? true : null"
+							[ivoErrorTipString]="{
+								nullPrice: '请填写修改次数！',
+								negativePrice: '修改次数不能为负数',
+								zeroPrice: '修改次数不能为0！',
+								floatPrice: '修改次数不能为小数',
+								max: '最大99'
+							}"
+							formControlName="mc"
+							type="number"
+							class="commission-input"
+							placeholder="请输入"
+						/>
+						<span class="word-unit">次</span>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!-- nodeform -->
 
-    <!-- preimage -->
-    <div class="commission-form" [ngClass]="{ hidden: activeList[3] }">
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>约稿标题:</span>
-        </div>
-        <div class="controller">
-          {{ param.n }}
-        </div>
-      </div>
+		<!-- preimage -->
+		<div class="commission-form" [ngClass]="{ hidden: activeList[3] }">
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>约稿标题:</span>
+				</div>
+				<div class="controller">
+					{{ param.n }}
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>整体构思:</span>
-        </div>
-        <div class="controller">
-          {{
-            param.de == 0
-              ? '已有整体构思'
-              : param.de == 1
-              ? '有大概构思，需与画师讨论后确定'
-              : param.de == 2
-              ? '没有构思，需画师帮助构思'
-              : ''
-          }}
-        </div>
-      </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>整体构思:</span>
+				</div>
+				<div class="controller">
+					{{
+						param.de == 0
+							? '已有整体构思'
+							: param.de == 1
+							? '有大概构思，需与画师讨论后确定'
+							: param.de == 2
+							? '没有构思，需画师帮助构思'
+							: ''
+					}}
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>稿件保密:</span>
-        </div>
-        <div class="controller">
-          {{
-            param.s == 0
-              ? '公开'
-              : param.s == 1
-              ? '约定公开'
-              : param.s == 2
-              ? '不公开'
-              : ''
-          }}
-        </div>
-      </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>稿件保密:</span>
+				</div>
+				<div class="controller">
+					{{ param.s == 0 ? '公开' : param.s == 1 ? '约定公开' : param.s == 2 ? '不公开' : '' }}
+				</div>
+			</div>
 
-      <div
-        class="commission-form-item"
-        [ngStyle]="{ display: isScrict ? 'none' : 'grid' }"
-      >
-        <div class="commission-form-item-title">
-          <span>公开要求:</span>
-        </div>
-        <div class="controller">
-          {{ param.sd }}
-        </div>
-      </div>
+			<div class="commission-form-item" [ngStyle]="{ display: isScrict ? 'none' : 'grid' }">
+				<div class="commission-form-item-title">
+					<span>公开要求:</span>
+				</div>
+				<div class="controller">
+					{{ param.sd }}
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>所需时长:</span>
-        </div>
-        <div class="controller">{{ param.d }}天</div>
-      </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>所需时长:</span>
+				</div>
+				<div class="controller">{{ param.d }}天</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>支付稿酬:</span>
-        </div>
-        <div class="controller">
-          ¥ {{ param.sp * 100 }} ~ ¥ {{ param.mp * 100 }}
-        </div>
-      </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>支付稿酬:</span>
+				</div>
+				<div class="controller">¥ {{ param.sp * 100 }} ~ ¥ {{ param.mp * 100 }}</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>具体需求:</span>
-        </div>
-        <div class="controller pre-line">
-          {{ param.det }}
-        </div>
-      </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>具体需求:</span>
+				</div>
+				<div class="controller pre-line">
+					{{ param.det }}
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>表情需求:</span>
-        </div>
-        <div class="controller">{{ param.en }}个</div>
-      </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>表情需求:</span>
+				</div>
+				<div class="controller">{{ param.en }}个</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>动作需求:</span>
-        </div>
-        <div class="controller">{{ param.an }}个</div>
-      </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>动作需求:</span>
+				</div>
+				<div class="controller">{{ param.an }}个</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>稿件尺寸:</span>
-        </div>
-        <div class="controller">{{ param.wi }} * {{ param.hi }} 像素</div>
-      </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>稿件尺寸:</span>
+				</div>
+				<div class="controller">{{ param.wi }} * {{ param.hi }} 像素</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>拆分需求:</span>
-        </div>
-        <div class="controller">
-          {{
-            param.spi == 0
-              ? '需要画师拆分'
-              : param.spi == 1
-              ? '无需画师拆分'
-              : ''
-          }}
-        </div>
-      </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>拆分需求:</span>
+				</div>
+				<div class="controller">
+					{{ param.spi == 0 ? '需要画师拆分' : param.spi == 1 ? '无需画师拆分' : '' }}
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>上传附件:</span>
-        </div>
-        <div class="controller">
-          <div class="down-item" *ngFor="let file of previewFileUrl">
-            <span>{{ file.name }}</span>
-            <a download="download" [href]="urlProxy(file.url)">
-              <img src="/assets/image/commission-live2d/01.png" />
-            </a>
-          </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>上传附件:</span>
+				</div>
+				<div class="controller">
+					<div class="down-item" *ngFor="let file of previewFileUrl">
+						<span>{{ file.name }}</span>
+						<a download="download" [href]="urlProxy(file.url)">
+							<img src="/assets/image/commission-live2d/01.png" />
+						</a>
+					</div>
 
-          <div class="down-item" *ngIf="previewFileUrl.length === 0">无</div>
-        </div>
-      </div>
+					<div class="down-item" *ngIf="previewFileUrl.length === 0">无</div>
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>参考图片:</span>
-        </div>
-        <div class="controller">
-          <div class="upload-imgs">
-            <div class="img-item" *ngFor="let imgUrl of previewImgsUrl">
-              <img [src]="imgUrl" (click)="showDetail(imgUrl)" />
-            </div>
-            <div *ngIf="previewImgsUrl.length === 0">无</div>
-          </div>
-        </div>
-      </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>参考图片:</span>
+				</div>
+				<div class="controller">
+					<div class="upload-imgs">
+						<div class="img-item" *ngFor="let imgUrl of previewImgsUrl">
+							<img [src]="imgUrl" (click)="showDetail(imgUrl)" />
+						</div>
+						<div *ngIf="previewImgsUrl.length === 0">无</div>
+					</div>
+				</div>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>验收节点:</span>
-        </div>
-        <form [formGroup]="showNodeForm">
-          <div class="commission-form-item-controller">
-            <div class="commission-form-item-controller-title">
-              画师进行约稿合作时，需在约定好的验收节点上传作品，完成该阶段验收后才可继续进行创作。
-            </div>
-            <div class="commission-form-item-controller-title">
-              若约稿中途结束，则按照设置的费用比例支付至画师。
-            </div>
-            <div class="controller">
-              <ivo-commission-node
-                [isEdit]="true"
-                [IsCute]="param.spi == 0 ? true : false"
-                formControlName="fl"
-              >
-              </ivo-commission-node>
-            </div>
-          </div>
-        </form>
-      </div>
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>验收节点:</span>
+				</div>
+				<form [formGroup]="showNodeForm">
+					<div class="commission-form-item-controller">
+						<div class="commission-form-item-controller-title">
+							画师进行约稿合作时，需在约定好的验收节点上传作品，完成该阶段验收后才可继续进行创作。
+						</div>
+						<div class="commission-form-item-controller-title">若约稿中途结束，则按照设置的费用比例支付至画师。</div>
+						<div class="controller">
+							<ivo-commission-node [isEdit]="true" [IsCute]="param.spi == 0 ? true : false" formControlName="fl">
+							</ivo-commission-node>
+						</div>
+					</div>
+				</form>
+			</div>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-title">
-          <span>修改次数:</span>
-        </div>
-        <div class="controller">{{ param.mc }}次</div>
-      </div>
-    </div>
-    <!-- preimage -->
+			<div class="commission-form-item">
+				<div class="commission-form-item-title">
+					<span>修改次数:</span>
+				</div>
+				<div class="controller">{{ param.mc }}次</div>
+			</div>
+		</div>
+		<!-- preimage -->
 
-    <!-- publish forms -->
-    <form
-      class="commission-form publish"
-      [formGroup]="statementForm"
-      [ngClass]="{ hidden: activeList[4] }"
-    >
-      <h2 class="commission-title">
-        <span class="title-blod"> 发布须知: </span>
-      </h2>
+		<!-- publish forms -->
+		<form class="commission-form publish" [formGroup]="statementForm" [ngClass]="{ hidden: activeList[4] }">
+			<h2 class="commission-title">
+				<span class="title-blod"> 发布须知: </span>
+			</h2>
 
-      <div class="commission-form-item">
-        <div class="commission-form-item-controller">
-          <div class="commission-form-item-controller-title">
-            1.发布企划后，平台将会展示该企划10天，企划超过10天未开始后，将会自动取消展示。若仍需招募，需要再次重新发布企划。
-          </div>
-          <div class="commission-form-item-controller-title">
-            2.当选定画师准备开始企划流程时，发起方需要预先支付全部企划费用，在企划期间平台会保管此费用，当企划完成后支付至画师账户。若画师存在违约情况，企划费用将会退还至发起方账户中。
-          </div>
-          <div class="commission-form-item-controller-title">3.企划协议</div>
-          <div class="controller">
-            <!-- <label for="statement"><input id="statement" formControlName='x' type="checkbox" ivoErroTipTwo
+			<div class="commission-form-item">
+				<div class="commission-form-item-controller">
+					<div class="commission-form-item-controller-title">
+						1.发布企划后，平台将会展示该企划10天，企划超过10天未开始后，将会自动取消展示。若仍需招募，需要再次重新发布企划。
+					</div>
+					<div class="commission-form-item-controller-title">
+						2.当选定画师准备开始企划流程时，发起方需要预先支付全部企划费用，在企划期间平台会保管此费用，当企划完成后支付至画师账户。若画师存在违约情况，企划费用将会退还至发起方账户中。
+					</div>
+					<div class="commission-form-item-controller-title">3.企划协议</div>
+					<div class="controller">
+						<!-- <label for="statement"><input id="statement" formControlName='x' type="checkbox" ivoErroTipTwo
                                 ivoErrorTipString='请勾选企业协议' />
                             我已阅读并同意
                             <a>《企划协议》</a>
                         </label> -->
-            <label
-              ivo-checkbox
-              formControlName="x"
-              type="checkbox"
-              ivoErroTip
-              ivoErrorTipString="请勾选企业协议"
-            >
-              我已阅读并同意
-            </label>
-            <a target="_blank" href="/planning-agreement">《企划协议》</a>
-          </div>
-        </div>
-      </div>
-    </form>
-    <!-- publish forms -->
+						<label ivo-checkbox formControlName="x" type="checkbox" ivoErroTip ivoErrorTipString="请勾选企业协议">
+							我已阅读并同意
+						</label>
+						<a target="_blank" href="/planning-agreement">《企划协议》</a>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!-- publish forms -->
 
-    <footer class="commission-form-footer" (click)="changeForm($event)">
-      <input
-        type="button"
-        class="pre-button"
-        data-flag="1"
-        [value]="CurrentActive === 0 ? '取消' : '上一步'"
-      />
-      <input
-        type="button"
-        ivo-button
-        [ngClass]="{ hidden: !activeList[4] }"
-        class="next-button"
-        data-flag="2"
-        value="下一步"
-      />
-      <input
-        type="button"
-        ivo-button
-        [ngClass]="{ hidden: activeList[4] }"
-        class="next-button"
-        data-flag="3"
-        [value]="isEdit ? '确认编辑' : '发布企划'"
-      />
-    </footer>
-  </div>
-  <!-- forms -->
+		<footer class="commission-form-footer" (click)="changeForm($event)">
+			<input type="button" class="pre-button" data-flag="1" [value]="CurrentActive === 0 ? '取消' : '上一步'" />
+			<input type="button" ivo-button [ngClass]="{ hidden: !activeList[4] }" class="next-button" data-flag="2" value="下一步" />
+			<input
+				type="button"
+				ivo-button
+				[ngClass]="{ hidden: activeList[4] }"
+				class="next-button"
+				data-flag="3"
+				[value]="isEdit ? '确认编辑' : '发布企划'"
+			/>
+		</footer>
+	</div>
+	<!-- forms -->
 </div>

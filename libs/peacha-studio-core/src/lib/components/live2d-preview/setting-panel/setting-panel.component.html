@@ -1,59 +1,53 @@
 <div class="panel-head">
-  <div class="lock-label" (click)="lockAll()">
-    <img
-      [src]="
-        allParamsLock
-          ? '/assets/image/lock-on.svg'
-          : '/assets/image/lock-off.svg'
-      "
-    />
-    <span>全部锁定</span>
-  </div>
-  <button
-    type="button"
-    (click)="setSelectSettingOption('parameterValues')"
-    [attr.select]="selectSettingOption === 'parameterValues' ? true : null"
-  >
-    <span>参数</span>
-  </button>
-  <button
-    type="button"
-    (click)="setSelectSettingOption('partOpacities')"
-    [attr.select]="selectSettingOption === 'partOpacities' ? true : null"
-  >
-    <span>透明度</span>
-  </button>
+	<div class="lock-label" (click)="lockAll()">
+		<img [src]="allParamsLock ? '/assets/image/lock-on.svg' : '/assets/image/lock-off.svg'" />
+		<span>全部锁定</span>
+	</div>
+	<button
+		type="button"
+		(click)="setSelectSettingOption('parameterValues')"
+		[attr.select]="selectSettingOption === 'parameterValues' ? true : null"
+	>
+		<span>参数</span>
+	</button>
+	<button
+		type="button"
+		(click)="setSelectSettingOption('partOpacities')"
+		[attr.select]="selectSettingOption === 'partOpacities' ? true : null"
+	>
+		<span>透明度</span>
+	</button>
 </div>
 <div class="line"></div>
 <div class="setting-box">
-  <ng-container *ngIf="selectSettingOption === 'parameterValues'">
-    <peacha-live2d-slider
-      *ngFor="let params of parameterValues.values()"
-      [id]="params.id"
-      [index]="params.index"
-      [min]="params.min"
-      [max]="params.max"
-      [default]="params.default"
-      [name]="params.name"
-      [lock]="params.lock"
-      [value]="params.value"
-      (update)="onParameterValuesUpdate($event)"
-    >
-    </peacha-live2d-slider>
-  </ng-container>
-  <ng-container *ngIf="selectSettingOption === 'partOpacities'">
-    <peacha-live2d-slider
-      *ngFor="let params of partOpacities.values()"
-      [id]="params.id"
-      [index]="params.index"
-      [min]="params.min"
-      [max]="params.max"
-      [default]="params.default"
-      [name]="params.name"
-      [lock]="params.lock"
-      [value]="params.value"
-      (update)="onPartOpacitiesUpdateUpdate($event)"
-    >
-    </peacha-live2d-slider>
-  </ng-container>
+	<ng-container *ngIf="selectSettingOption === 'parameterValues'">
+		<peacha-live2d-slider
+			*ngFor="let params of parameterValues.values()"
+			[id]="params.id"
+			[index]="params.index"
+			[min]="params.min"
+			[max]="params.max"
+			[default]="params.default"
+			[name]="params.name"
+			[lock]="params.lock"
+			[value]="params.value"
+			(update)="onParameterValuesUpdate($event)"
+		>
+		</peacha-live2d-slider>
+	</ng-container>
+	<ng-container *ngIf="selectSettingOption === 'partOpacities'">
+		<peacha-live2d-slider
+			*ngFor="let params of partOpacities.values()"
+			[id]="params.id"
+			[index]="params.index"
+			[min]="params.min"
+			[max]="params.max"
+			[default]="params.default"
+			[name]="params.name"
+			[lock]="params.lock"
+			[value]="params.value"
+			(update)="onPartOpacitiesUpdateUpdate($event)"
+		>
+		</peacha-live2d-slider>
+	</ng-container>
 </div>

@@ -1,38 +1,28 @@
 <div class="tixian" *ngrxLet="cashout$;let cashout">
-  <li class="index">
-    <span class="title">提现详情</span>
-    <span class="return" [routerLink]="['/setting/wallet']">&lt;返回列表</span>
-  </li>
-  <span
-    >提现金额：
-    <span style="font-size: 24px; color: #ff6398"
-      >¥ {{cashout.amount|number}}</span
-    >
-  </span>
-  <li>
-    <span>提现状态：{{cashout.status}}</span>
-    <span>提现订单号：{{cashout.orderId}}</span>
-  </li>
-  <li>
-    <span>提现发起时间：{{cashout.startTime|date:"yyyy-MM-dd hh:mm:ss"}}</span>
-    <span>提现渠道：{{cashout.channel}}</span>
-  </li>
-  <div>
-    <div>
-      <li *ngIf="cashout.status=='提现失败'">
-        提现失败时间：{{cashout.endTime}}
-      </li>
-      <li *ngIf="cashout.status=='提现成功'">
-        提现成功时间：{{cashout.endTime}}
-      </li>
-      <li *ngIf="cashout.status=='提现失败'">
-        提现失败原因：{{cashout.error}}
-      </li>
-    </div>
-    <div class="right">
-      <li *ngFor="let item of cashout.channelParams">
-        {{item.show}}：{{item.value}}
-      </li>
-    </div>
-  </div>
+	<li class="index">
+		<span class="title">提现详情</span>
+		<span class="return" [routerLink]="['/setting/wallet']">&lt;返回列表</span>
+	</li>
+	<span
+		>提现金额：
+		<span style="font-size: 24px; color: #ff6398">¥ {{cashout.amount|number}}</span>
+	</span>
+	<li>
+		<span>提现状态：{{cashout.status}}</span>
+		<span>提现订单号：{{cashout.orderId}}</span>
+	</li>
+	<li>
+		<span>提现发起时间：{{cashout.startTime|date:"yyyy-MM-dd hh:mm:ss"}}</span>
+		<span>提现渠道：{{cashout.channel}}</span>
+	</li>
+	<div>
+		<div>
+			<li *ngIf="cashout.status=='提现失败'">提现失败时间：{{cashout.endTime}}</li>
+			<li *ngIf="cashout.status=='提现成功'">提现成功时间：{{cashout.endTime}}</li>
+			<li *ngIf="cashout.status=='提现失败'">提现失败原因：{{cashout.error}}</li>
+		</div>
+		<div class="right">
+			<li *ngFor="let item of cashout.channelParams">{{item.show}}：{{item.value}}</li>
+		</div>
+	</div>
 </div>

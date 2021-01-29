@@ -1,133 +1,132 @@
 nz-form-item {
-    margin: 0;
+	margin: 0;
 }
 
 &.report-modal-box {
-    display: flex;
-    flex-direction: column;
-    width: 600px;
-    padding: 30px 0px;
-    background: rgba(255, 255, 255, 1);
-    border-radius: 12px;
+	display: flex;
+	flex-direction: column;
+	width: 600px;
+	padding: 30px 0px;
+	background: rgba(255, 255, 255, 1);
+	border-radius: 12px;
 
-    &>.report-head {
-        width: 100%;
-        padding: 0px 50px 20px 50px;
-        border-bottom: 1px dashed rgba(204, 204, 204, 1);
+	& > .report-head {
+		width: 100%;
+		padding: 0px 50px 20px 50px;
+		border-bottom: 1px dashed rgba(204, 204, 204, 1);
 
-        &>.title {
-            width: 80px;
-            height: 26px;
-            font-size: 20px;
-            font-weight: bold;
-            line-height: 26px;
-            color: rgba(51, 51, 51, 1);
-        }
-    }
+		& > .title {
+			width: 80px;
+			height: 26px;
+			font-size: 20px;
+			font-weight: bold;
+			line-height: 26px;
+			color: rgba(51, 51, 51, 1);
+		}
+	}
 
-    &>.report-body {
-        width: 100%;
-        padding: 30px 50px 30px 50px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+	& > .report-body {
+		width: 100%;
+		padding: 30px 50px 30px 50px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 
-        &>span {
-            width: 336px;
-            height: 21px;
-            font-size: 16px;
-            font-weight: bold;
-            line-height: 21px;
-            color: rgba(102, 102, 102, 1);
-        }
+		& > span {
+			width: 336px;
+			height: 21px;
+			font-size: 16px;
+			font-weight: bold;
+			line-height: 21px;
+			color: rgba(102, 102, 102, 1);
+		}
 
-        .radio-box {
-            width: 500px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            padding-bottom: 20px;
+		.radio-box {
+			width: 500px;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			padding-bottom: 20px;
 
-            &>div {
-                &>label {
-                    position: relative;
-                    display: inline-block;
-                    width: 120px;
-                    cursor: pointer;
-                    padding-top: 20px;
-                }
-            }
-        }
+			& > div {
+				& > label {
+					position: relative;
+					display: inline-block;
+					width: 120px;
+					cursor: pointer;
+					padding-top: 20px;
+				}
+			}
+		}
 
-        textarea {
-            margin: 10px 0px;
-            height: 119px;
-            border: 1px solid rgba(204, 204, 204, 1);
-            border-radius: 4px;
-            resize: none;
+		textarea {
+			margin: 10px 0px;
+			height: 119px;
+			border: 1px solid rgba(204, 204, 204, 1);
+			border-radius: 4px;
+			resize: none;
 
-            &::-webkit-scrollbar {
-                width: 8px;
-                height: 100%;
-            }
+			&::-webkit-scrollbar {
+				width: 8px;
+				height: 100%;
+			}
 
-            &::-webkit-scrollbar-thumb {
-                width: 8px;
-                height: 82px;
-                background: rgba(216, 216, 216, 1);
-                opacity: 1;
-                border-radius: 5px;
-            }
-        }
+			&::-webkit-scrollbar-thumb {
+				width: 8px;
+				height: 82px;
+				background: rgba(216, 216, 216, 1);
+				opacity: 1;
+				border-radius: 5px;
+			}
+		}
 
-        &>.pic-upload-tips {
-            width: 315px;
-            height: 19px;
-            font-size: 14px;
-            line-height: 19px;
-            color: rgba(153, 153, 153, 1);
-        }
+		& > .pic-upload-tips {
+			width: 315px;
+			height: 19px;
+			font-size: 14px;
+			line-height: 19px;
+			color: rgba(153, 153, 153, 1);
+		}
 
-        ivo-report-upload {
-            width: 500px;
-        }
-    }
+		ivo-report-upload {
+			width: 500px;
+		}
+	}
 
-    &>.btn-group {
-        padding: 0px 50px;
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
+	& > .btn-group {
+		padding: 0px 50px;
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
 
-        &>button {
-            width: 88px;
-            height: 36px;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-        }
+		& > button {
+			width: 88px;
+			height: 36px;
+			border-radius: 4px;
+			border: none;
+			cursor: pointer;
+		}
 
-        &>button[cancel] {
-            background: none;
-            font-size: 14px;
-            font-weight: bold;
-            line-height: 19px;
-            color: rgba(153, 153, 153, 1);
+		& > button[cancel] {
+			background: none;
+			font-size: 14px;
+			font-weight: bold;
+			line-height: 19px;
+			color: rgba(153, 153, 153, 1);
+		}
 
-        }
+		& > button[ok] {
+			margin-left: 20px;
+			background: rgba(255, 99, 152, 1);
+			font-size: 14px;
+			font-weight: bold;
+			line-height: 19px;
+			color: rgba(255, 255, 255, 1);
 
-        &>button[ok] {
-            margin-left: 20px;
-            background: rgba(255, 99, 152, 1);
-            font-size: 14px;
-            font-weight: bold;
-            line-height: 19px;
-            color: rgba(255, 255, 255, 1);
+			transition: background-color 0.2s ease 0s;
 
-            transition: background-color 0.2s ease 0s;
-
-            &:hover {
-                background-color: #FFA5C3;
-            }
-        }
-    }
+			&:hover {
+				background-color: #ffa5c3;
+			}
+		}
+	}
 }

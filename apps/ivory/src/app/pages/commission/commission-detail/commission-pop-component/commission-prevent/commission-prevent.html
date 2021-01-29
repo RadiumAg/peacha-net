@@ -1,95 +1,58 @@
 <div class="box">
-    <li class="title">
-        <img src="/assets/image/commission/red-flag.svg">
-        <ng-container [ngSwitch]="key.type">
-            <ng-container *ngSwitchCase="0">
-                协商中止企划
-            </ng-container>
-            <ng-container *ngSwitchCase="1">
-                强行中止
-            </ng-container>
-            <ng-container *ngSwitchCase="2">
-                平台介入中止
-            </ng-container>
-            <ng-container *ngSwitchCase="3">
-                超时中止
-            </ng-container>
-        </ng-container>
+	<li class="title">
+		<img src="/assets/image/commission/red-flag.svg" />
+		<ng-container [ngSwitch]="key.type">
+			<ng-container *ngSwitchCase="0"> 协商中止企划 </ng-container>
+			<ng-container *ngSwitchCase="1"> 强行中止 </ng-container>
+			<ng-container *ngSwitchCase="2"> 平台介入中止 </ng-container>
+			<ng-container *ngSwitchCase="3"> 超时中止 </ng-container>
+		</ng-container>
+	</li>
+	<div class="show-rate">
+		<ng-container *ngIf="!next">
+			<ng-container *ngIf="key.type===0">
+				<li>企划协商中止双方确认稿酬比例后，画师/绑定师需提交截止当前的企划源文件，企划方审核通过后企划协商中止完成。</li>
+				<li>若中止稿酬比例为0%，则画师/绑定师无需提交任何文件，企划将在双方确认稿酬比例后自动中止完成。</li>
+				<li class="rate">
+					<span>输入企划方需要支付的稿酬比例</span>
+					<span> <input [formControl]="rate" /> % </span>
+				</li>
 
-    </li>
-    <div class="show-rate">
-        <ng-container *ngIf="!next">
-            <ng-container *ngIf="key.type===0">
-                <li>
-                    企划协商中止双方确认稿酬比例后，画师/绑定师需提交截止当前的企划源文件，企划方审核通过后企划协商中止完成。
-                </li>
-                <li>
-                    若中止稿酬比例为0%，则画师/绑定师无需提交任何文件，企划将在双方确认稿酬比例后自动中止完成。
-                </li>
-                <li class="rate">
-                    <span>输入企划方需要支付的稿酬比例</span>
-                    <span>
-                        <input [formControl]="rate"> %
-                    </span>
-                </li>
-               
-                <!-- <ivo-ingredient [process]="rate.value" (update)="update($event)"></ivo-ingredient> -->
-                <div class="error-inset" [errorDisplay]="rate">
-                    <ng-container *errorCase="'required'">
-                        请填写稿酬比例
-                    </ng-container>
-                    <ng-container *errorCase="'pattern'">
-                        请输入0-100间的整数
-                    </ng-container>
-                </div>
-            </ng-container>
-            <ng-container *ngIf="key.type===2">
-                <li class="tip">
-                    <span>
-                        若企划双方对于企划中止的稿酬比例无法达成一致，可申请平台介入中止。
-                    </span>
-                    <span>
-                        平台介入中，网站可能会通过客服对双方进行调查取证，企划双方应积极配合网站调查取证。
-                    </span>
-                    <span>
-                        最终调查结束后，将在中止历史中给出平台介入中止的中止比例。
-                    </span>
-                </li>
-            </ng-container>
-        </ng-container>
-        <ng-container *ngIf="next">
-            <li class="rate">
-                <span>{{result}}</span>
-            </li>
-        </ng-container>
+				<!-- <ivo-ingredient [process]="rate.value" (update)="update($event)"></ivo-ingredient> -->
+				<div class="error-inset" [errorDisplay]="rate">
+					<ng-container *errorCase="'required'"> 请填写稿酬比例 </ng-container>
+					<ng-container *errorCase="'pattern'"> 请输入0-100间的整数 </ng-container>
+				</div>
+			</ng-container>
+			<ng-container *ngIf="key.type===2">
+				<li class="tip">
+					<span> 若企划双方对于企划中止的稿酬比例无法达成一致，可申请平台介入中止。 </span>
+					<span> 平台介入中，网站可能会通过客服对双方进行调查取证，企划双方应积极配合网站调查取证。 </span>
+					<span> 最终调查结束后，将在中止历史中给出平台介入中止的中止比例。 </span>
+				</li>
+			</ng-container>
+		</ng-container>
+		<ng-container *ngIf="next">
+			<li class="rate">
+				<span>{{result}}</span>
+			</li>
+		</ng-container>
+	</div>
 
-    </div>
-
-    <div class="btn">
-        <ng-container *ngIf="!next">
-            <button ivo-button [buttonType]="1" (click)="cancel()">取消</button>
-            <button ivo-button (click)="sure()">
-                <ng-container [ngSwitch]="key.type">
-                    <ng-container *ngSwitchCase="0">
-                        发起协商中止企划
-                    </ng-container>
-                    <ng-container *ngSwitchCase="1">
-                        发起强行中止
-                    </ng-container>
-                    <ng-container *ngSwitchCase="2">
-                        发起平台介入中止
-                    </ng-container>
-                    <ng-container *ngSwitchCase="3">
-                        发起超时中止
-                    </ng-container>
-                </ng-container>
-            </button>
-        </ng-container>
-        <ng-container *ngIf="next">
-            <button ivo-button (click)="sure()">
-                确定
-            </button>
-        </ng-container>
-        
-    </div>
+	<div class="btn">
+		<ng-container *ngIf="!next">
+			<button ivo-button [buttonType]="1" (click)="cancel()">取消</button>
+			<button ivo-button (click)="sure()">
+				<ng-container [ngSwitch]="key.type">
+					<ng-container *ngSwitchCase="0"> 发起协商中止企划 </ng-container>
+					<ng-container *ngSwitchCase="1"> 发起强行中止 </ng-container>
+					<ng-container *ngSwitchCase="2"> 发起平台介入中止 </ng-container>
+					<ng-container *ngSwitchCase="3"> 发起超时中止 </ng-container>
+				</ng-container>
+			</button>
+		</ng-container>
+		<ng-container *ngIf="next">
+			<button ivo-button (click)="sure()">确定</button>
+		</ng-container>
+	</div>
 </div>

@@ -4,14 +4,13 @@ import { CubismModelComponent } from './model';
 
 @Injectable()
 export class CubismModelEmulateSystem extends SystemBase {
+	constructor() {
+		super([CubismModelComponent]);
+	}
 
-    constructor() {
-        super([CubismModelComponent]);
-    }
-
-    update(entity: Entity): void {
-        const model = CubismModelComponent.oneFrom(entity).data;
-        model.native.update();
-        model.native.drawables.resetDynamicFlags();
-    }
+	update(entity: Entity): void {
+		const model = CubismModelComponent.oneFrom(entity).data;
+		model.native.update();
+		model.native.drawables.resetDynamicFlags();
+	}
 }

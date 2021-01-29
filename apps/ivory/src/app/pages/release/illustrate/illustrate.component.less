@@ -2,116 +2,113 @@
 @import '../common.less';
 
 :host {
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-    background-color: @background-grey-color1;
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	background-color: @background-grey-color1;
 
-    div.illust-free-container {
-        width: 1193px;
-        margin: 60px auto;
-        position: relative;
+	div.illust-free-container {
+		width: 1193px;
+		margin: 60px auto;
+		position: relative;
 
-        nz-row.readme {
-            font-size: 16px;
-            color: @font-color1;
+		nz-row.readme {
+			font-size: 16px;
+			color: @font-color1;
 
-            label {
-                font-size: 16px;
-                color: @font-color1;
-            }
+			label {
+				font-size: 16px;
+				color: @font-color1;
+			}
 
-            a {
-                font-size: 16px;
-            }
-        }
+			a {
+				font-size: 16px;
+			}
+		}
 
-        nz-row.releaseNotice {
-            span{
-                margin-left: 0 !important;
-                margin-bottom: 10px !important;
-                font-size: 14px !important;
-            }
-        }
+		nz-row.releaseNotice {
+			span {
+				margin-left: 0 !important;
+				margin-bottom: 10px !important;
+				font-size: 14px !important;
+			}
+		}
 
-        div.form-item:nth-child(2) {
-            div.form-controller:nth-child(3),
-            div.form-controller:nth-child(2) {
-                border-top: none;
+		div.form-item:nth-child(2) {
+			div.form-controller:nth-child(3),
+			div.form-controller:nth-child(2) {
+				border-top: none;
 
-                textarea {
-                    resize: none;
-                }
+				textarea {
+					resize: none;
+				}
 
-                div.title {
-                    margin: 0px 0px 15px 0px;
-                    padding: 0px 20px 0px 15px;
-                    font-size: 16px;
+				div.title {
+					margin: 0px 0px 15px 0px;
+					padding: 0px 20px 0px 15px;
+					font-size: 16px;
 
-                    span.word-count {
-                        // top: -70px;
-                        transform: translateX(-100%);
-                        top: 50%;
-                        transform: translateY(-50%);
-                        right: 55px;
-                    }
+					span.word-count {
+						// top: -70px;
+						transform: translateX(-100%);
+						top: 50%;
+						transform: translateY(-50%);
+						right: 55px;
+					}
 
-                    &::before {
-                        top: 50%;
-                        left: -14px;
-                        transform: translateY(-50%);
-                    }
-                }
+					&::before {
+						top: 50%;
+						left: -14px;
+						transform: translateY(-50%);
+					}
+				}
+			}
+		}
 
+		div.form-item:nth-child(5) {
+			div.form-controller:nth-child(3) {
+				border-top: none;
 
-            }
-        }
+				label {
+					margin-bottom: 16px;
+					font-size: 16px;
+					color: @font-color1;
+				}
+			}
+		}
 
-        div.form-item:nth-child(5) {
-            div.form-controller:nth-child(3) {
-                border-top: none;
+		div.form-item:nth-child(6) {
+			div.form-controller:nth-child(2) {
+				nz-radio-group {
+					display: block;
+				}
 
-                label {
-                    margin-bottom: 16px;
-                    font-size: 16px;
-                    color: @font-color1;
-                }
-            }
-        }
+				[nz-radio] {
+					display: block;
+				}
 
-        div.form-item:nth-child(6) {
-            div.form-controller:nth-child(2) {
-                nz-radio-group {
-                    display: block;
-                }
+				input {
+					width: 100px;
+					margin-left: 10px;
+				}
 
-                [nz-radio] {
-                    display: block;
-                }
+				label {
+					margin-bottom: 16px;
+					font-size: 16px;
+					color: @font-color1;
+				}
+			}
+		}
 
-                input {
-                    width: 100px;
-                    margin-left: 10px;
-                }
+		.ant-form-item {
+			margin-bottom: @margin-width1;
+		}
 
-                label {
-                    margin-bottom: 16px;
-                    font-size: 16px;
-                    color: @font-color1;
-                }
-            }
-        }
-
-        .ant-form-item {
-            margin-bottom: @margin-width1;
-        }
-
-        .nav {
-            position: absolute;
-            top: 23px;
-            left: -42px;
-            transform: translate(-100%);
-        }
-
-    }
+		.nav {
+			position: absolute;
+			top: 23px;
+			left: -42px;
+			transform: translate(-100%);
+		}
+	}
 }

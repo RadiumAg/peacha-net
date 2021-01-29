@@ -1,29 +1,20 @@
 {
-  "extends": ["../../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*"],
-  "overrides": [
-    {
-      "files": ["*.ts"],
-      "extends": [
-        "plugin:@nrwl/nx/angular",
-        "plugin:@angular-eslint/template/process-inline-templates"
-      ],
-      "parserOptions": { "project": ["libs/peacha/core/tsconfig.*?.json"] },
-      "rules": {
-        "@angular-eslint/directive-selector": [
-          "error",
-          { "type": "attribute", "prefix": "peacha-net", "style": "camelCase" }
-        ],
-        "@angular-eslint/component-selector": [
-          "error",
-          { "type": "element", "prefix": "peacha-net", "style": "kebab-case" }
-        ]
-      }
-    },
-    {
-      "files": ["*.html"],
-      "extends": ["plugin:@nrwl/nx/angular-template"],
-      "rules": {}
-    }
-  ]
+	"extends": ["../../.eslintrc.json"],
+	"ignorePatterns": ["!**/*"],
+	"overrides": [
+		{
+			"files": ["*.ts"],
+			"extends": ["plugin:@nrwl/nx/angular", "plugin:@angular-eslint/template/process-inline-templates"],
+			"parserOptions": { "project": ["libs/peacha/core/tsconfig.*?.json"] },
+			"rules": {
+				"@angular-eslint/directive-selector": ["error", { "type": "attribute", "prefix": "peacha-net", "style": "camelCase" }],
+				"@angular-eslint/component-selector": ["error", { "type": "element", "prefix": "peacha-net", "style": "kebab-case" }]
+			}
+		},
+		{
+			"files": ["*.html"],
+			"extends": ["plugin:@nrwl/nx/angular-template"],
+			"rules": {}
+		}
+	]
 }

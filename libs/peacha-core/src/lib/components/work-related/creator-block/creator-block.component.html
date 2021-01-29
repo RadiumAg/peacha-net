@@ -1,34 +1,33 @@
-<div [ngClass]="{'avatar':true}">
-    <div class="face">
-        <img [src]="userAvatar" (click)="click()">
-    </div>
-  
+<div [ngClass]="{ avatar: true }">
+	<div class="face">
+		<img [src]="userAvatar" (click)="click()" />
+	</div>
 </div>
 
 <div class="remain">
-    <span (click)="click()">
-        {{userName}}
-        <div class="label" *ngIf="role?.length>0">
-            <!-- role类型变为array，下面部分可能需要修改 -->
-            <img  *ngIf="role.includes(11002)" [src]="'/assets/image/role/lllustrator.svg'">
-            <img  *ngIf="role.includes(11001)" [src]="'/assets/image/role/live2d.svg'">
-        </div>
-    </span>
+	<span (click)="click()">
+		{{ userName }}
+		<div class="label" *ngIf="role?.length > 0">
+			<!-- role类型变为array，下面部分可能需要修改 -->
+			<img *ngIf="role.includes(11002)" [src]="'/assets/image/role/lllustrator.svg'" />
+			<img *ngIf="role.includes(11001)" [src]="'/assets/image/role/live2d.svg'" />
+		</div>
+	</span>
 
-    <div class="actions">
-        <ng-container ivo-follow [follow-id]="userId" [follow-state]="followState" #fffff="follow">
-            <ng-container *ngrxLet="fffff.follow$;let f" [ngSwitch]="f">
-                <button ivo-button class="follow" [class.followed]="f!=0"  (click)="fffff.request()">
-                    <ng-container *ngSwitchCase="0"><img src="/assets/image/svg/i-add.svg">关注</ng-container>
-                    <ng-container *ngSwitchCase="1"><img src="/assets/image/svg/i-follow-check.svg">已关注</ng-container>
-                    <ng-container *ngSwitchCase="2"><img src="/assets/image/svg/i-circle.svg">互相关注</ng-container>
-                    <ng-container *ngSwitchCase="3"><img src="/assets/image/svg/black.svg">已拉黑</ng-container>
-                </button>
-            </ng-container>
-        </ng-container>
-        <button class="pm" (click)="toDialog(userId,userName,userAvatar)" *ngIf="(id$|async)!=userId">
-            <img class="chat" src="/assets/image/commission/chat.svg">
-            私信
-        </button>
-    </div>
+	<div class="actions">
+		<ng-container ivo-follow [follow-id]="userId" [follow-state]="followState" #fffff="follow">
+			<ng-container *ngrxLet="fffff.follow$; let f" [ngSwitch]="f">
+				<button ivo-button class="follow" [class.followed]="f != 0" (click)="fffff.request()">
+					<ng-container *ngSwitchCase="0"><img src="/assets/image/svg/i-add.svg" />关注</ng-container>
+					<ng-container *ngSwitchCase="1"><img src="/assets/image/svg/i-follow-check.svg" />已关注</ng-container>
+					<ng-container *ngSwitchCase="2"><img src="/assets/image/svg/i-circle.svg" />互相关注</ng-container>
+					<ng-container *ngSwitchCase="3"><img src="/assets/image/svg/black.svg" />已拉黑</ng-container>
+				</button>
+			</ng-container>
+		</ng-container>
+		<button class="pm" (click)="toDialog(userId, userName, userAvatar)" *ngIf="(id$ | async) != userId">
+			<img class="chat" src="/assets/image/commission/chat.svg" />
+			私信
+		</button>
+	</div>
 </div>

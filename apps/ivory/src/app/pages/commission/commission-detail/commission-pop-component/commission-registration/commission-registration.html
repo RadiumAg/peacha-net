@@ -1,82 +1,67 @@
 <ng-container *ngrxLet="next$;let next">
-    <ng-container *ngIf="!next">
-        <div class="box">
-            <li class="title"><img src="/assets/image/commission/red-flag.svg">应征企划</li>
+	<ng-container *ngIf="!next">
+		<div class="box">
+			<li class="title"><img src="/assets/image/commission/red-flag.svg" />应征企划</li>
 
-            <form class="content" [formGroup]="registrationForm">
-                <div class="item">请输入应征此企划相关信息，企划方可根据此信息判断是否选定您参与企划。</div>
-                <div class="item">
-                    <span class="item-name">预计开始时间：</span>
-                    <input class="small" formControlName="start_year">
-                    <span class="time-unit">年</span>
-                    <input class="small" formControlName="start_month">
-                    <span class="time-unit"> 月</span>
-                    <input class="small" formControlName="start_day">
-                    <span class="time-unit"> 日</span>
-                </div>
-                <div class="error-inset" [errorDisplay]="registrationForm">
-                    <ng-container *errorCase="'invaild'">
-                        请输入正确时间
-                    </ng-container>
-                </div>
-                <div class="item">
-                    <span class="item-name">企划所需时长：</span>
-                    <input class="fill" placeholder="请输入时长" formControlName="time">
-                    <span class="unit">天</span>
-                </div>
-                <div class="error-inset" [errorDisplay]="time">
-                    <ng-container *errorCase="'required'">
-                        请填写企划所需时长
-                    </ng-container>
-                    <ng-container *errorCase="'pattern'">
-                        请输入1-99间的整数
-                    </ng-container>
-                </div>
-                <div class="item">
-                    <span class="item-name">企划所需酬金：</span>
-                    <input class="fill" placeholder="请输入金额" formControlName="money">
-                    <span class="unit">元</span>
-                </div>
-                <div class="error-inset" [errorDisplay]="money">
-                    <ng-container *errorCase="'required'">
-                        请填写企划所需酬金
-                    </ng-container>
-                    <ng-container *errorCase="'max'">
-                        企划所需酬金过大
-                    </ng-container>
-                    <ng-container *errorCase="'pattern'">
-                        企划所需酬金必须是10的正整数倍
-                    </ng-container>
-                </div>
-                <div class="item">
-                    <span class="item-name">备注：</span>
-                    <textarea placeholder="" formControlName="tips"></textarea>
-                </div>
-                <div class="error-inset last" [errorDisplay]="tips">
-                    <ng-container *errorCase="'maxlength'">
-                        备注最多只能输入100字
-                    </ng-container>
-                </div>
-            </form>
+			<form class="content" [formGroup]="registrationForm">
+				<div class="item">请输入应征此企划相关信息，企划方可根据此信息判断是否选定您参与企划。</div>
+				<div class="item">
+					<span class="item-name">预计开始时间：</span>
+					<input class="small" formControlName="start_year" />
+					<span class="time-unit">年</span>
+					<input class="small" formControlName="start_month" />
+					<span class="time-unit"> 月</span>
+					<input class="small" formControlName="start_day" />
+					<span class="time-unit"> 日</span>
+				</div>
+				<div class="error-inset" [errorDisplay]="registrationForm">
+					<ng-container *errorCase="'invaild'"> 请输入正确时间 </ng-container>
+				</div>
+				<div class="item">
+					<span class="item-name">企划所需时长：</span>
+					<input class="fill" placeholder="请输入时长" formControlName="time" />
+					<span class="unit">天</span>
+				</div>
+				<div class="error-inset" [errorDisplay]="time">
+					<ng-container *errorCase="'required'"> 请填写企划所需时长 </ng-container>
+					<ng-container *errorCase="'pattern'"> 请输入1-99间的整数 </ng-container>
+				</div>
+				<div class="item">
+					<span class="item-name">企划所需酬金：</span>
+					<input class="fill" placeholder="请输入金额" formControlName="money" />
+					<span class="unit">元</span>
+				</div>
+				<div class="error-inset" [errorDisplay]="money">
+					<ng-container *errorCase="'required'"> 请填写企划所需酬金 </ng-container>
+					<ng-container *errorCase="'max'"> 企划所需酬金过大 </ng-container>
+					<ng-container *errorCase="'pattern'"> 企划所需酬金必须是10的正整数倍 </ng-container>
+				</div>
+				<div class="item">
+					<span class="item-name">备注：</span>
+					<textarea placeholder="" formControlName="tips"></textarea>
+				</div>
+				<div class="error-inset last" [errorDisplay]="tips">
+					<ng-container *errorCase="'maxlength'"> 备注最多只能输入100字 </ng-container>
+				</div>
+			</form>
 
-
-            <div class="btn btn-style">
-                <button ivo-button [buttonType]="1" (click)="close()">取消</button>
-                <button ivo-button [disabled]="registrationForm.valid?false:true" (click)="next$.next(1)">下一步</button>
-            </div>
-        </div>
-    </ng-container>
-    <ng-container *ngIf="next">
-        <div class="box">
-            <li class="title"><img src="/assets/image/commission/red-flag.svg">企划须知</li>
-            <div class="content">
-                <div class="item">
-                    当您参与企划后，需按照企划的需求创作，提交每个阶段节点审核。若超时完成则会扣除一定比例的稿酬。（超时天数小于等于3天则扣除3%稿酬，超时天数大于3天-小于等于5天则扣除6%稿酬，超时天数大于5天-小于等于6天则扣除10%稿酬，超时天数大于6天则扣除15%稿酬。超时天数大于7天，企划方可以发起超时中止，扣除全部稿酬）。<br>
-                    企划完成后，平台将收取您所得稿酬的5%作为服务费。
-                </div>
-                <div class="item">
-                    <div class="line" [formGroup]="statementForm">
-                        <!-- <input class="ckeckbox" type="checkbox" #ckeck >
+			<div class="btn btn-style">
+				<button ivo-button [buttonType]="1" (click)="close()">取消</button>
+				<button ivo-button [disabled]="registrationForm.valid?false:true" (click)="next$.next(1)">下一步</button>
+			</div>
+		</div>
+	</ng-container>
+	<ng-container *ngIf="next">
+		<div class="box">
+			<li class="title"><img src="/assets/image/commission/red-flag.svg" />企划须知</li>
+			<div class="content">
+				<div class="item">
+					当您参与企划后，需按照企划的需求创作，提交每个阶段节点审核。若超时完成则会扣除一定比例的稿酬。（超时天数小于等于3天则扣除3%稿酬，超时天数大于3天-小于等于5天则扣除6%稿酬，超时天数大于5天-小于等于6天则扣除10%稿酬，超时天数大于6天则扣除15%稿酬。超时天数大于7天，企划方可以发起超时中止，扣除全部稿酬）。<br />
+					企划完成后，平台将收取您所得稿酬的5%作为服务费。
+				</div>
+				<div class="item">
+					<div class="line" [formGroup]="statementForm">
+						<!-- <input class="ckeckbox" type="checkbox" #ckeck >
                         <span>
                             我已阅读并同意
                             <a>
@@ -84,18 +69,17 @@
                             </a>
                         </span>
                         <span class="error" *ngIf="isShowTip">请勾选协议</span> -->
-                        <label ivo-checkbox formControlName='x' type="checkbox" ivoErroTip ivoErrorTipString='请勾选企业协议'>
-                            我已阅读并同意
-                        </label>
-                        <a target="_blank" href="/planning-agreement">《企划协议》</a>
-                    </div>
-
-                </div>
-            </div>
-            <div class="btn btn-style">
-                <button ivo-button [buttonType]="1" (click)="pre()">取消</button>
-                <button ivo-button (click)="sure()">应征约稿</button>
-            </div>
-        </div>
-    </ng-container>
+						<label ivo-checkbox formControlName="x" type="checkbox" ivoErroTip ivoErrorTipString="请勾选企业协议">
+							我已阅读并同意
+						</label>
+						<a target="_blank" href="/planning-agreement">《企划协议》</a>
+					</div>
+				</div>
+			</div>
+			<div class="btn btn-style">
+				<button ivo-button [buttonType]="1" (click)="pre()">取消</button>
+				<button ivo-button (click)="sure()">应征约稿</button>
+			</div>
+		</div>
+	</ng-container>
 </ng-container>

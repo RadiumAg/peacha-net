@@ -1,156 +1,156 @@
 {
-  "version": 1,
-  "projects": {
-    "peacha-core": {
-      "projectType": "library",
-      "root": "libs/peacha-core",
-      "sourceRoot": "libs/peacha-core/src",
-      "prefix": "ivo",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/peacha-core/src/**/*.ts",
-              "libs/peacha-core/src/**/*.html"
-            ]
-          }
-        }
-      }
-    },
-    "ivory": {
-      "projectType": "application",
-      "root": "apps/ivory",
-      "sourceRoot": "apps/ivory/src",
-      "prefix": "ivo",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/apps/ivory",
-            "index": "apps/ivory/src/index.html",
-            "main": "apps/ivory/src/main.ts",
-            "polyfills": "apps/ivory/src/polyfills.ts",
-            "tsConfig": "apps/ivory/tsconfig.app.json",
-            "webWorkerTsConfig": "tsconfig.worker.json",
-            "aot": true,
-            "assets": [
-              "apps/ivory/src/favicon.ico",
-              "apps/ivory/src/assets",
-              {
-                "glob": "**/*",
-                "input": "libs/peacha-studio-core/src/lib/core/devkit/brf5/assets",
-                "output": "/assets/"
-              }
-            ],
-            "styles": [
-              "apps/ivory/src/styles.less"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/ivory/src/environments/environment.ts",
-                  "with": "apps/ivory/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "ivory:build",
-            "proxyConfig": "proxy.config.json"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "ivory:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "ivory:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/ivory/src/**/*.ts",
-              "apps/ivory/src/**/*.html"
-            ]
-          }
-        }
-      }
-    },
-    "peacha-studio-core": {
-      "projectType": "library",
-      "root": "libs/peacha-studiocore",
-      "sourceRoot": "libs/peacha-studiocore/src",
-      "prefix": "peacha",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/peacha-studio-core/src/**/*.ts",
-              "libs/peacha-studio-core/src/**/*.html"
-            ]
-          }
-        }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "schematics": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest",
-      "strict": true
-    },
-    "@nrwl/angular:component": {
-      "style": "less"
-    }
-  },
-  "defaultProject": "ivory"
+	"version": 1,
+	"projects": {
+		"peacha-core": {
+			"projectType": "library",
+			"root": "libs/peacha-core",
+			"sourceRoot": "libs/peacha-core/src",
+			"prefix": "ivo",
+			"architect": {
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/peacha-core/src/**/*.ts",
+							"libs/peacha-core/src/**/*.html"
+						]
+					}
+				}
+			}
+		},
+		"ivory": {
+			"projectType": "application",
+			"root": "apps/ivory",
+			"sourceRoot": "apps/ivory/src",
+			"prefix": "ivo",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:browser",
+					"options": {
+						"outputPath": "dist/apps/ivory",
+						"index": "apps/ivory/src/index.html",
+						"main": "apps/ivory/src/main.ts",
+						"polyfills": "apps/ivory/src/polyfills.ts",
+						"tsConfig": "apps/ivory/tsconfig.app.json",
+						"webWorkerTsConfig": "tsconfig.worker.json",
+						"aot": true,
+						"assets": [
+							"apps/ivory/src/favicon.ico",
+							"apps/ivory/src/assets",
+							{
+								"glob": "**/*",
+								"input": "libs/peacha-studio-core/src/lib/core/devkit/brf5/assets",
+								"output": "/assets/"
+							}
+						],
+						"styles": [
+							"apps/ivory/src/styles.less"
+						],
+						"scripts": []
+					},
+					"configurations": {
+						"production": {
+							"fileReplacements": [
+								{
+									"replace": "apps/ivory/src/environments/environment.ts",
+									"with": "apps/ivory/src/environments/environment.prod.ts"
+								}
+							],
+							"optimization": true,
+							"outputHashing": "all",
+							"sourceMap": false,
+							"namedChunks": false,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"buildOptimizer": true,
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "2mb",
+									"maximumError": "5mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "6kb",
+									"maximumError": "10kb"
+								}
+							]
+						}
+					}
+				},
+				"serve": {
+					"builder": "@angular-devkit/build-angular:dev-server",
+					"options": {
+						"browserTarget": "ivory:build",
+						"proxyConfig": "proxy.config.json"
+					},
+					"configurations": {
+						"production": {
+							"browserTarget": "ivory:build:production"
+						}
+					}
+				},
+				"extract-i18n": {
+					"builder": "@angular-devkit/build-angular:extract-i18n",
+					"options": {
+						"browserTarget": "ivory:build"
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"apps/ivory/src/**/*.ts",
+							"apps/ivory/src/**/*.html"
+						]
+					}
+				}
+			}
+		},
+		"peacha-studio-core": {
+			"projectType": "library",
+			"root": "libs/peacha-studiocore",
+			"sourceRoot": "libs/peacha-studiocore/src",
+			"prefix": "peacha",
+			"architect": {
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": [
+							"libs/peacha-studio-core/src/**/*.ts",
+							"libs/peacha-studio-core/src/**/*.html"
+						]
+					}
+				}
+			}
+		}
+	},
+	"cli": {
+		"defaultCollection": "@nrwl/angular"
+	},
+	"schematics": {
+		"@nrwl/angular": {
+			"application": {
+				"linter": "eslint"
+			},
+			"library": {
+				"linter": "eslint"
+			},
+			"storybook-configuration": {
+				"linter": "eslint"
+			}
+		},
+		"@nrwl/angular:application": {
+			"unitTestRunner": "jest",
+			"e2eTestRunner": "cypress"
+		},
+		"@nrwl/angular:library": {
+			"unitTestRunner": "jest",
+			"strict": true
+		},
+		"@nrwl/angular:component": {
+			"style": "less"
+		}
+	},
+	"defaultProject": "ivory"
 }

@@ -1,105 +1,75 @@
 <div class="temp">
-  <ng-container *ngIf="!isHideLeft">
-    <div class="left">
-      <div class="left-top">
-        <a class="goback" (click)="goback()">
-          <img src="/assets/image/commission/goback.svg" />返回列表
-        </a>
-        <div class="title">发起方：</div>
+	<ng-container *ngIf="!isHideLeft">
+		<div class="left">
+			<div class="left-top">
+				<a class="goback" (click)="goback()"> <img src="/assets/image/commission/goback.svg" />返回列表 </a>
+				<div class="title">发起方：</div>
 
-        <div class="owner">
-          <ivo-lazy-img
-            class="avatar"
-            [ngLazyLoad]="detail?.sponsor.avatar"
-            [border]="6"
-            [routerLink]="['/user/' + detail?.sponsor.id]"
-          >
-          </ivo-lazy-img>
-          <div class="owner-detail">
-            <span class="nick" [routerLink]="['/user/' + detail?.sponsor.id]">{{
-              detail?.sponsor.nickName
-            }}</span>
-            <span class="bottom">
-              <span class="identity">
-                <img
-                  *ngIf="sponsor?.role.includes(11001)"
-                  src="/assets/image/role/live2d-icon.svg"
-                />
-                <img
-                  *ngIf="sponsor?.role.includes(11002)"
-                  src="/assets/image/role/lllustrator-icon.svg"
-                />
-              </span>
+				<div class="owner">
+					<ivo-lazy-img
+						class="avatar"
+						[ngLazyLoad]="detail?.sponsor.avatar"
+						[border]="6"
+						[routerLink]="['/user/' + detail?.sponsor.id]"
+					>
+					</ivo-lazy-img>
+					<div class="owner-detail">
+						<span class="nick" [routerLink]="['/user/' + detail?.sponsor.id]">{{ detail?.sponsor.nickName }}</span>
+						<span class="bottom">
+							<span class="identity">
+								<img *ngIf="sponsor?.role.includes(11001)" src="/assets/image/role/live2d-icon.svg" />
+								<img *ngIf="sponsor?.role.includes(11002)" src="/assets/image/role/lllustrator-icon.svg" />
+							</span>
 
-              <a
-                *ngIf="Identity != 0"
-                class="chat"
-                (click)="
-                  toChat(
-                    detail?.sponsor.id,
-                    detail?.sponsor.avatar,
-                    detail?.sponsor.nickName
-                  )
-                "
-              >
-                <img src="/assets/image/commission/chat.svg" />私聊
-              </a>
-            </span>
-          </div>
-        </div>
-        <div class="line"></div>
-        <div class="row">
-          <span> 企划类型： </span>
-          <span [ngSwitch]="detail?.commission?.category">
-            <ng-container *ngSwitchCase="0">Live2D</ng-container>
-            <ng-container *ngSwitchCase="1">立绘创作</ng-container>
-          </span>
-        </div>
-        <div class="row">
-          <span>发布时间：</span>
-          <span>{{
-            detail?.commission?.publishTime | date: 'yyyy-MM-dd HH:mm'
-          }}</span>
-        </div>
+							<a
+								*ngIf="Identity != 0"
+								class="chat"
+								(click)="toChat(detail?.sponsor.id, detail?.sponsor.avatar, detail?.sponsor.nickName)"
+							>
+								<img src="/assets/image/commission/chat.svg" />私聊
+							</a>
+						</span>
+					</div>
+				</div>
+				<div class="line"></div>
+				<div class="row">
+					<span> 企划类型： </span>
+					<span [ngSwitch]="detail?.commission?.category">
+						<ng-container *ngSwitchCase="0">Live2D</ng-container>
+						<ng-container *ngSwitchCase="1">立绘创作</ng-container>
+					</span>
+				</div>
+				<div class="row">
+					<span>发布时间：</span>
+					<span>{{ detail?.commission?.publishTime | date: 'yyyy-MM-dd HH:mm' }}</span>
+				</div>
 
-        <div class="row">
-          <span>
-            <ng-container *ngIf="detail?.commission?.category === 1">
-              画师：
-            </ng-container>
-            <ng-container *ngIf="detail?.commission?.category === 0">
-              模型师：
-            </ng-container>
-          </span>
-          <a
-            class="count"
-            routerLink="registrationlist"
-            queryParamsHandling="merge"
-            >已有{{ registrationCount }}人报名</a
-          >
-        </div>
-        <div class="row">
-          <span>稿酬：</span>
-          <a class="money"
-            >¥ {{ detail?.commission?.minPrice }}～ ¥
-            {{ detail?.commission?.maxPrice }}</a
-          >
-        </div>
-        <div class="state">
-          <img src="/assets/image/commission/flag.svg" />
-          <ng-container [ngSwitch]="commissionStatus$.value">
-            <ng-container *ngSwitchCase="5"> 企划已关闭 </ng-container>
-            <ng-container *ngSwitchCase="7"> 停止招募 </ng-container>
-            <ng-container *ngSwitchDefault> 企划招募中... </ng-container>
-          </ng-container>
-        </div>
-        <ng-container *ngFor="let btn of btnIconList; let i = index">
-          <button class="big" (click)="selectFun(btn.fun)">
-            <img [src]="btn.i" />
-            {{ btn.text }}
-          </button>
-        </ng-container>
-        <!-- <ng-container *ngIf="commissionStatus$.value!=5">
+				<div class="row">
+					<span>
+						<ng-container *ngIf="detail?.commission?.category === 1"> 画师： </ng-container>
+						<ng-container *ngIf="detail?.commission?.category === 0"> 模型师： </ng-container>
+					</span>
+					<a class="count" routerLink="registrationlist" queryParamsHandling="merge">已有{{ registrationCount }}人报名</a>
+				</div>
+				<div class="row">
+					<span>稿酬：</span>
+					<a class="money">¥ {{ detail?.commission?.minPrice }}～ ¥ {{ detail?.commission?.maxPrice }}</a>
+				</div>
+				<div class="state">
+					<img src="/assets/image/commission/flag.svg" />
+					<ng-container [ngSwitch]="commissionStatus$.value">
+						<ng-container *ngSwitchCase="5"> 企划已关闭 </ng-container>
+						<ng-container *ngSwitchCase="7"> 停止招募 </ng-container>
+						<ng-container *ngSwitchDefault> 企划招募中... </ng-container>
+					</ng-container>
+				</div>
+				<ng-container *ngFor="let btn of btnIconList; let i = index">
+					<button class="big" (click)="selectFun(btn.fun)">
+						<img [src]="btn.i" />
+						{{ btn.text }}
+					</button>
+				</ng-container>
+				<!-- <ng-container *ngIf="commissionStatus$.value!=5">
                     <ng-container *ngIf="detail?.sponsor.id==(id$|async)">
                         <ng-container
                             *ngIf="commissionStatus$.value===7 && detail.commission.expireTime<nowTime;else sponsorBtn">
@@ -132,178 +102,125 @@
                     </ng-template>
                
                 </ng-container> -->
-      </div>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="isHideLeft">
-    <div class="left">
-      <div class="left-top">
-        <a class="goback" [routerLink]="['/commission']">
-          <img src="/assets/image/commission/goback.svg" />返回列表
-        </a>
-        <div class="title">发起方：</div>
+			</div>
+		</div>
+	</ng-container>
+	<ng-container *ngIf="isHideLeft">
+		<div class="left">
+			<div class="left-top">
+				<a class="goback" [routerLink]="['/commission']"> <img src="/assets/image/commission/goback.svg" />返回列表 </a>
+				<div class="title">发起方：</div>
 
-        <div class="owner">
-          <ivo-lazy-img
-            class="avatar"
-            [ngLazyLoad]="detail?.sponsor.avatar"
-            [border]="6"
-            [routerLink]="['/user/' + detail?.sponsor.id]"
-          >
-          </ivo-lazy-img>
-          <div class="owner-detail">
-            <span class="nick" [routerLink]="['/user/' + detail?.sponsor.id]">{{
-              sponsor?.nickname
-            }}</span>
-            <span class="bottom">
-              <span class="identity">
-                <img
-                  *ngIf="sponsor?.role.includes(11001)"
-                  src="/assets/image/role/live2d-icon.svg"
-                />
-                <img
-                  *ngIf="sponsor?.role.includes(11002)"
-                  src="/assets/image/role/lllustrator-icon.svg"
-                />
-              </span>
+				<div class="owner">
+					<ivo-lazy-img
+						class="avatar"
+						[ngLazyLoad]="detail?.sponsor.avatar"
+						[border]="6"
+						[routerLink]="['/user/' + detail?.sponsor.id]"
+					>
+					</ivo-lazy-img>
+					<div class="owner-detail">
+						<span class="nick" [routerLink]="['/user/' + detail?.sponsor.id]">{{ sponsor?.nickname }}</span>
+						<span class="bottom">
+							<span class="identity">
+								<img *ngIf="sponsor?.role.includes(11001)" src="/assets/image/role/live2d-icon.svg" />
+								<img *ngIf="sponsor?.role.includes(11002)" src="/assets/image/role/lllustrator-icon.svg" />
+							</span>
 
-              <a
-                *ngIf="Identity === 2"
-                class="chat"
-                (click)="toChat(sponsor.id, sponsor.avatar, sponsor.nickname)"
-              >
-                <img src="/assets/image/commission/chat.svg" />私聊
-              </a>
-            </span>
-          </div>
-        </div>
-        <div class="line"></div>
-        <div class="title">
-          <ng-container *ngIf="detail.commission.category === 1">
-            画师：
-          </ng-container>
-          <ng-container *ngIf="detail.commission.category === 0">
-            模型师：
-          </ng-container>
-        </div>
+							<a *ngIf="Identity === 2" class="chat" (click)="toChat(sponsor.id, sponsor.avatar, sponsor.nickname)">
+								<img src="/assets/image/commission/chat.svg" />私聊
+							</a>
+						</span>
+					</div>
+				</div>
+				<div class="line"></div>
+				<div class="title">
+					<ng-container *ngIf="detail.commission.category === 1"> 画师： </ng-container>
+					<ng-container *ngIf="detail.commission.category === 0"> 模型师： </ng-container>
+				</div>
 
-        <div class="owner">
-          <ivo-lazy-img
-            class="avatar"
-            [ngLazyLoad]="receiver?.avatar"
-            [border]="6"
-            [routerLink]="['/user/' + receiver?.id]"
-          >
-          </ivo-lazy-img>
-          <div class="owner-detail">
-            <span class="nick" [routerLink]="['/user/' + receiver?.id]">{{
-              receiver?.nickname
-            }}</span>
-            <span class="bottom">
-              <span class="identity">
-                <img
-                  *ngIf="receiver?.role.includes(11001)"
-                  src="/assets/image/role/live2d-icon.svg"
-                />
-                <img
-                  *ngIf="receiver?.role.includes(11002)"
-                  src="/assets/image/role/lllustrator-icon.svg"
-                />
-              </span>
+				<div class="owner">
+					<ivo-lazy-img class="avatar" [ngLazyLoad]="receiver?.avatar" [border]="6" [routerLink]="['/user/' + receiver?.id]">
+					</ivo-lazy-img>
+					<div class="owner-detail">
+						<span class="nick" [routerLink]="['/user/' + receiver?.id]">{{ receiver?.nickname }}</span>
+						<span class="bottom">
+							<span class="identity">
+								<img *ngIf="receiver?.role.includes(11001)" src="/assets/image/role/live2d-icon.svg" />
+								<img *ngIf="receiver?.role.includes(11002)" src="/assets/image/role/lllustrator-icon.svg" />
+							</span>
 
-              <a
-                *ngIf="Identity === 1"
-                class="chat"
-                (click)="
-                  toChat(receiver?.id, receiver?.avatar, receiver?.nickname)
-                "
-              >
-                <img src="/assets/image/commission/chat.svg" />私聊
-              </a>
-            </span>
-          </div>
-        </div>
-        <div class="line"></div>
-        <div class="row">
-          <span>
-            企划类型：
-            <ng-container [ngSwitch]="detail.commission.category">
-              <ng-container *ngSwitchCase="0">Live2D</ng-container>
-              <ng-container *ngSwitchCase="1">立绘创作</ng-container>
-            </ng-container>
-          </span>
-          <span class="change" (click)="changeState(changebox)" #changebox
-            ><img src="/assets/image/commission/change.svg"
-          /></span>
-        </div>
-        <div class="row">
-          <span [ngSwitch]="commissionStatus$.value">
-            企划状态：
-            <ng-container *ngSwitchCase="3"> 完成 </ng-container>
-            <ng-container *ngSwitchCase="6"> 中止 </ng-container>
-            <ng-container *ngSwitchCase="2"> 进行中 </ng-container>
-            <ng-container *ngSwitchCase="4"> 待中止 </ng-container>
-            <ng-container *ngSwitchCase="1"> 待确认 </ng-container>
-            <ng-container *ngSwitchCase="7"> 停止 </ng-container>
-          </span>
-        </div>
+							<a *ngIf="Identity === 1" class="chat" (click)="toChat(receiver?.id, receiver?.avatar, receiver?.nickname)">
+								<img src="/assets/image/commission/chat.svg" />私聊
+							</a>
+						</span>
+					</div>
+				</div>
+				<div class="line"></div>
+				<div class="row">
+					<span>
+						企划类型：
+						<ng-container [ngSwitch]="detail.commission.category">
+							<ng-container *ngSwitchCase="0">Live2D</ng-container>
+							<ng-container *ngSwitchCase="1">立绘创作</ng-container>
+						</ng-container>
+					</span>
+					<span class="change" (click)="changeState(changebox)" #changebox
+						><img src="/assets/image/commission/change.svg"
+					/></span>
+				</div>
+				<div class="row">
+					<span [ngSwitch]="commissionStatus$.value">
+						企划状态：
+						<ng-container *ngSwitchCase="3"> 完成 </ng-container>
+						<ng-container *ngSwitchCase="6"> 中止 </ng-container>
+						<ng-container *ngSwitchCase="2"> 进行中 </ng-container>
+						<ng-container *ngSwitchCase="4"> 待中止 </ng-container>
+						<ng-container *ngSwitchCase="1"> 待确认 </ng-container>
+						<ng-container *ngSwitchCase="7"> 停止 </ng-container>
+					</span>
+				</div>
 
-        <div class="row">
-          <span
-            >发布时间：{{
-              detail?.commission.publishTime | date: 'yyyy-MM-dd'
-            }}</span
-          >
-        </div>
-        <div class="row" *ngIf="detail.commission.status === 2">
-          <span
-            >企划开始时间 ：{{
-              detail?.commission.startTime | date: 'yyyy-MM-dd HH:mm'
-            }}</span
-          >
-        </div>
-        <div class="row">
-          <span>企划所需时长：{{ commissionDay }}天</span>
-        </div>
-      </div>
+				<div class="row">
+					<span>发布时间：{{ detail?.commission.publishTime | date: 'yyyy-MM-dd' }}</span>
+				</div>
+				<div class="row" *ngIf="detail.commission.status === 2">
+					<span>企划开始时间 ：{{ detail?.commission.startTime | date: 'yyyy-MM-dd HH:mm' }}</span>
+				</div>
+				<div class="row">
+					<span>企划所需时长：{{ commissionDay }}天</span>
+				</div>
+			</div>
 
-      <!-- <div class="state">
+			<!-- <div class="state">
                 <img src="/assets/image/commission/flag.svg">
                 企划进行中...
             </div> -->
-      <div class="left-buttom">
-        <span class="money">稿酬：¥ {{ finalPrice }}</span>
-        <span class="stop-time" *ngIf="detail.commission.status === 2"
-          >企划截稿时间：{{ lasttime | date: 'yyyy-MM-dd HH:mm' }}</span
-        >
+			<div class="left-buttom">
+				<span class="money">稿酬：¥ {{ finalPrice }}</span>
+				<span class="stop-time" *ngIf="detail.commission.status === 2"
+					>企划截稿时间：{{ lasttime | date: 'yyyy-MM-dd HH:mm' }}</span
+				>
 
-        <div class="btnlist">
-          <ng-container *ngFor="let btn of showBtn; let i = index">
-            <span
-              class="btn"
-              (click)="(i != 1 || (Identity === 1 && i === 1)) && func(i)"
-            >
-              <img class="not-hover" [src]="btn.i" />
-              <img class="hover" [src]="btn.hover" />
-              <span class="font">
-                {{ btn.word[0] }}
-              </span>
-              <span
-                *ngIf="
-                  i === 1 &&
-                  (Identity === 2 ||
-                    (Identity === 1 &&
-                      [4, 6].includes(commissionStatus$ | async)))
-                "
-                class="invalid"
-                ><a class="xie"></a
-              ></span>
-            </span>
-          </ng-container>
-        </div>
-      </div>
-    </div>
-  </ng-container>
+				<div class="btnlist">
+					<ng-container *ngFor="let btn of showBtn; let i = index">
+						<span class="btn" (click)="(i != 1 || (Identity === 1 && i === 1)) && func(i)">
+							<img class="not-hover" [src]="btn.i" />
+							<img class="hover" [src]="btn.hover" />
+							<span class="font">
+								{{ btn.word[0] }}
+							</span>
+							<span
+								*ngIf="i === 1 && (Identity === 2 || (Identity === 1 && [4, 6].includes(commissionStatus$ | async)))"
+								class="invalid"
+								><a class="xie"></a
+							></span>
+						</span>
+					</ng-container>
+				</div>
+			</div>
+		</div>
+	</ng-container>
 
-  <router-outlet></router-outlet>
+	<router-outlet></router-outlet>
 </div>
