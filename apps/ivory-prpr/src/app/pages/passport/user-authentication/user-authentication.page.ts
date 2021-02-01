@@ -7,9 +7,11 @@ import { take, switchMap, tap, catchError, startWith, map } from 'rxjs/operators
 import { Select, Store } from '@ngxs/store';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
-import { UserState, ModalService, Toast, IvoryError } from '@peacha-core';
 import { SubmitInformation, SubmitCardImage } from 'libs/peacha-core/src/lib/core/state/user.action';
 import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { UserState } from '../../../core/state/user.state';
+import { ModalService } from '../../../core/service/modals.service';
+import { Toast } from '../../../core/toast/toast.service';
 
 @Component({
     selector: 'ivo-user-authentication',
