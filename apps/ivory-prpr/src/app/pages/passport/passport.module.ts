@@ -19,7 +19,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { ReactiveComponentModule, VerifyModule, PeachaComponentsModule } from '@peacha-core';
+import { ReactiveComponentModule } from 'libs/peacha-core/src/lib/core';
+import { PeachaComponentsModule } from 'libs/peacha-core/src/lib/components/peacha-components.module';
+import { VerifyModule } from 'libs/peacha-core/src/lib/features';
 
 
 @NgModule({

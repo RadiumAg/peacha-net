@@ -3,9 +3,10 @@ import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { Router } from '@angular/router';
-import { UserState, ModalService } from '@peacha-core';
+import { UserState, } from '@peacha-core';
 import { UserStateModel } from 'libs/peacha-core/src/lib/core/state/user.state';
 import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { ModalService } from '../../../core/service/modals.service';
 
 @Component({
   selector: 'ivo-user-security',

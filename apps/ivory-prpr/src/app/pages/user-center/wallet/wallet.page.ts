@@ -14,9 +14,10 @@ import { switchMap, map, startWith, filter, tap, take } from 'rxjs/operators';
 import { FormControl, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Store, Select } from '@ngxs/store';
-import { UserState, ModalService } from '@peacha-core';
 import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
 import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { UserState } from '../../../core/state/user.state';
+import { ModalService } from '../../../core/service/modals.service';
 
 type walletInfo = {
     amount: number;

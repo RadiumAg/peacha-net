@@ -3,11 +3,10 @@ import { BehaviorSubject, combineLatest, empty, Subject, Observable } from 'rxjs
 import { HttpClient } from '@angular/common/http';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { Store, Select } from '@ngxs/store';
-import { UserState } from 'src/app/core';
 import { Router } from '@angular/router';
 import { PlatformLocation } from '@angular/common';
-import { ModalService } from 'src/app/core/service/modals.service';
 import { PopTips } from 'src/app/components/pop-tips/pop-tips';
+import { UserState } from '../../core/state/user.state';
 
 @Directive({
     selector: '*[ivo-follow]',

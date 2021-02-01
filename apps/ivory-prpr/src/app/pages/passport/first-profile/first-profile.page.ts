@@ -9,9 +9,9 @@ import {
 import { Store, Select, State } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserState, IvoryError } from '@peacha-core';
-import { UserStateModel } from 'libs/peacha-core/src/lib/core/state/user.state';
+import { UserStateModel, UserState } from 'libs/peacha-core/src/lib/core/state/user.state';
 import { UpdatePublicInformation } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { IvoryError } from '../../../core/error';
 
 @Component({
     selector: 'ivo-user-profile',

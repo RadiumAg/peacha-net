@@ -5,7 +5,8 @@ import { Store, Select } from '@ngxs/store';
 import { Router, ActivatedRoute, RouterStateSnapshot, ActivatedRouteSnapshot, RoutesRecognized } from '@angular/router';
 import { Subject, combineLatest, empty, merge, Observable, BehaviorSubject } from 'rxjs';
 import { map, tap, filter, pairwise, take } from 'rxjs/operators';
-import { UserState, Toast, IvoryError, Login } from '@peacha-core';
+import { UserState } from '../../../core/state/user.state';
+import { Toast } from '../../../core/toast/toast.service';
 
 @Component({
   selector: 'ivo-login',
