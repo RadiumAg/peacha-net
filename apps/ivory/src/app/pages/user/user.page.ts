@@ -4,11 +4,13 @@ import { map, tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { UserState, ModalService, DropDownService, ChatStartService, OpalUser } from '@peacha-core';
-import { CropBanner } from 'libs/peacha-core/src/lib/components/crop-banner/crop-banner';
 import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
 import { UserReportModalComponent } from 'libs/peacha-core/src/lib/components/user-report-modal/user-report-modal.component';
 import { dataURLtoBlob } from 'libs/peacha-core/src/lib/core/commom/common';
 import { UpdateBanner } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { CropBanner } from 'libs/peacha-core/src/lib/components/crop-banner/crop-banner';
+
+
 
 @Component({
 	selector: 'ivo-user',
@@ -72,12 +74,10 @@ export class UserPage {
 						}
 					});
 			} else {
-				let a = '你上传的图片尺寸过大！最大为5M';
-				this.modal.open(PopTips, [a, false]);
+				this.modal.open(PopTips, ['你上传的图片尺寸过大！最大为5M', false]);
 			}
 		} else {
-			let a = '图片格式不正确，背景图仅支持.png,.jpg,.jpeg';
-			this.modal.open(PopTips, [a, false]);
+			this.modal.open(PopTips, ['图片格式不正确，背景图仅支持.png,.jpg,.jpeg', false]);
 		}
 	}
 

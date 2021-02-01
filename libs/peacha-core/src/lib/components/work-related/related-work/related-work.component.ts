@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
 
 @Component({
 	selector: 'ivo-related-work',
@@ -7,7 +6,7 @@ import { Router } from '@angular/router';
 	styleUrls: ['./related-work.component.less'],
 })
 export class RelatedWorkComponent {
-	constructor() {}
+	constructor() { }
 
 	@Input() cover: string;
 

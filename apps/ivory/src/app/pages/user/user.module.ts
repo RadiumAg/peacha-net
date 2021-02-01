@@ -37,7 +37,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 		ChangeRepresentComponent,
 		Complain,
 		DeleteTip,
-		NewCollection,
+		NewCollection
 	],
 	imports: [
 		CommonModule,
@@ -115,8 +115,8 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 		]),
 		FollowModule,
 		ReactiveComponentModule,
-		NzDropDownModule,
+		NzDropDownModule
 	],
 	providers: [UserGuard, UserResolve, WorkApiService],
 })
-export class UserModule {}
+export class UserModule { }

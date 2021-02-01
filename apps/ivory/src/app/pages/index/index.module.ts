@@ -17,9 +17,10 @@ import { UnloginIndexPage } from './unlogin-index/unlogin-index.page';
 import { UnindexResolve } from './unindex.guard';
 import { RecommendWorkCarousel } from './login-index/recommendWork-carousel/recommendWork-carousel';
 import { PeachaComponentsModule, ReactiveComponentModule, WorkRelatedModule } from '@peacha-core';
-import { FollowModule } from 'libs/peacha-core/src/lib/features/follow/follow.module';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { PeachaStudioCoreModule } from '@peacha-studio-core';
+import { FollowModule } from 'libs/peacha-core/src/lib/features/follow/follow.module';
+import { Carousel } from './login-index/carousel/carousel';
 
 @NgModule({
 	declarations: [
@@ -33,6 +34,7 @@ import { PeachaStudioCoreModule } from '@peacha-studio-core';
 		HotTagPage,
 		HotGoodPage,
 		RecommendWorkCarousel,
+		Carousel
 	],
 	imports: [
 		ReactiveFormsModule,
@@ -88,4 +90,4 @@ import { PeachaStudioCoreModule } from '@peacha-studio-core';
 	],
 	providers: [IndexResolve, UnindexResolve],
 })
-export class IndexModule {}
+export class IndexModule { }

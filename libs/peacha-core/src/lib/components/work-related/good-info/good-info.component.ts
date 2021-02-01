@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -42,15 +42,17 @@ export class GoodInfoComponent {
 	fileList$ = new BehaviorSubject({});
 	fileListShow = false;
 
+	showWorkDetail = [];
+	showGoodDetail = [];
+
 	constructor(
 		private store: Store,
 		private router: Router,
 		private platform: PlatformLocation,
 		private http: HttpClient,
 		private modal: ModalService
-	) {}
+	) { }
 
-	ngAfterViewInit(): void {}
 
 	isInCart(goodId: number) {
 		return this.list$.pipe(
@@ -83,7 +85,7 @@ export class GoodInfoComponent {
 								next: () => {
 									this.own = true;
 								},
-								error: e => {
+								error: () => {
 									//console.log(e)
 								},
 							});
@@ -103,8 +105,7 @@ export class GoodInfoComponent {
 		this.router.navigateByUrl('/store?id=' + this.workId);
 	}
 
-	showWorkDetail = [];
-	showGoodDetail = [];
+
 
 	showFileList() {
 		this.showWorkDetail = [];
@@ -115,7 +116,7 @@ export class GoodInfoComponent {
 				take(1),
 				tap(x => {
 					x.work_list?.forEach(l => {
-						let a: { font: string; type: number } = { font: '', type: -1 };
+						const a: { font: string; type: number } = { font: '', type: -1 };
 						a.font = l;
 						if (l.split('.png').length > 1 || l.split('.jpg').length > 1 || l.split('.psd').length > 1) {
 							a.type = 0;
@@ -130,7 +131,7 @@ export class GoodInfoComponent {
 					});
 
 					x.goods_list?.forEach(l => {
-						let a: { font: string; type: number } = { font: '', type: -1 };
+						const a: { font: string; type: number } = { font: '', type: -1 };
 						a.font = l;
 						if (l.split('.png').length > 1 || l.split('.jpg').length > 1 || l.split('.psd').length > 1) {
 							a.type = 0;

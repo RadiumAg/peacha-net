@@ -8,9 +8,10 @@ import { filter, map } from 'rxjs/operators';
 })
 export class UploadImageDirective {
 	@Input() event: any;
+	// eslint-disable-next-line @angular-eslint/no-output-native
 	@Output() result = new EventEmitter();
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	upload(event: any) {
 		const form = new FormData();

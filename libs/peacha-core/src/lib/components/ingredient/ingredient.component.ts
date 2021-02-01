@@ -20,12 +20,23 @@ export interface SliderParam {
 	],
 })
 export class IngredientComponent implements OnDestroy, ControlValueAccessor, OnInit {
-	constructor(private re2: Renderer2) {
-		document.body.onselectstart = document.body.ondrag = () => {
-			return false;
-		};
-	}
+	@ViewChild('dothead', { read: ElementRef })
+	dotHead: ElementRef<any>;
 
+	@ViewChild('ngredientbody', { read: ElementRef })
+	ngredientBody: ElementRef<any>;
+
+	@ViewChild('ingredientprocess', { read: ElementRef })
+	ingredientProcess: ElementRef<any>;
+
+	@Output()
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	update: EventEmitter<object> = new EventEmitter();
+
+	@Input()
+	disabled: false;
+
+	// eslint-disable-next-line @angular-eslint/no-input-rename
 	@Input('process')
 	set Process(value: number) {
 		this.init();
@@ -37,6 +48,12 @@ export class IngredientComponent implements OnDestroy, ControlValueAccessor, OnI
 			this.setProcess(width);
 			this.updata?.(value / 100);
 		}
+	}
+
+	constructor(private re2: Renderer2) {
+		document.body.onselectstart = document.body.ondrag = () => {
+			return false;
+		};
 	}
 
 	sliderWidth: number;
@@ -52,13 +69,13 @@ export class IngredientComponent implements OnDestroy, ControlValueAccessor, OnI
 		innerStart: number;
 		end: number;
 	} = {
-		start: 0,
-		max: 0,
-		min: 0,
-		width: 0,
-		innerStart: 0,
-		end: 0,
-	};
+			start: 0,
+			max: 0,
+			min: 0,
+			width: 0,
+			innerStart: 0,
+			end: 0,
+		};
 
 	/**
 	 * @description 文档是否已经绑定mouseup,mousemove事件
@@ -66,22 +83,9 @@ export class IngredientComponent implements OnDestroy, ControlValueAccessor, OnI
 	isBind = false;
 	isPress = false;
 
-	updata: (o: number) => void = () => {};
+	updata: (o: number) => void = () => { };
 
-	@ViewChild('dothead', { read: ElementRef })
-	dotHead: ElementRef<any>;
 
-	@ViewChild('ngredientbody', { read: ElementRef })
-	ngredientBody: ElementRef<any>;
-
-	@ViewChild('ingredientprocess', { read: ElementRef })
-	ingredientProcess: ElementRef<any>;
-
-	@Output()
-	update: EventEmitter<object> = new EventEmitter();
-
-	@Input()
-	disabled: false;
 
 	writeValue(pro: number): void {
 		this.Process = pro;
@@ -103,9 +107,9 @@ export class IngredientComponent implements OnDestroy, ControlValueAccessor, OnI
 		this.updata = fn;
 	}
 
-	registerOnTouched(fn: any): void {}
+	registerOnTouched(fn: any): void { }
 
-	setDisabledState?(isDisabled: boolean): void {}
+	setDisabledState?(isDisabled: boolean): void { }
 
 	ngOnDestroy(): void {
 		document.removeEventListener('mousemove', this.mouseMove.bind(this));

@@ -1,9 +1,9 @@
 import { ModalRef, ModalService } from './../../core/service/modals.service';
-import { Component, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, Inject, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { PopTips } from '../pop-tips/pop-tips';
 import { MODAL_ANIMATION } from '../../core/animations/modal-animation';
 import { MODAL_DATA_TOKEN } from '../../core/tokens';
@@ -15,7 +15,7 @@ import { validator } from '../../core/commom/common';
 	styleUrls: ['./comment-report-modal-component.less'],
 	animations: [MODAL_ANIMATION],
 })
-export class CommentReportModalComponent {
+export class CommentReportModalComponent implements AfterContentChecked {
 	options$ = new BehaviorSubject<string[]>([
 		'违法违禁',
 		'色情',
@@ -38,7 +38,7 @@ export class CommentReportModalComponent {
 		private modal: ModalService,
 		@Inject(MODAL_DATA_TOKEN)
 		public id: number
-	) {}
+	) { }
 
 	otherChecked$ = new BehaviorSubject(false);
 
@@ -96,23 +96,25 @@ export class CommentReportModalComponent {
 			})
 			.pipe(take(1))
 			.subscribe({
-				next: _ => {
+				next: () => {
 					this.modal
 						.open(PopTips, ['举报成功', 0, 1])
 						.afterClosed()
 						.pipe(take(1))
 						.subscribe(_ => {
+							// eslint-disable-next-line no-extra-boolean-cast
 							if (!!_) {
 								this.modalRef.close();
 							}
 						});
 				},
-				error: _ => {
+				error: () => {
 					this.modal
 						.open(PopTips, ['举报失败', 1, 0])
 						.afterClosed()
 						.pipe(take(1))
 						.subscribe(_ => {
+							// eslint-disable-next-line no-extra-boolean-cast
 							if (!!_) {
 								this.modalRef.close();
 							}

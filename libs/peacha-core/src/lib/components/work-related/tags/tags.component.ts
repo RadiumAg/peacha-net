@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 	styleUrls: ['./tags.component.less'],
 })
 export class TagsComponent {
-	constructor(private router: Router) {}
+	constructor(private router: Router) { }
 
 	colors = [
 		'#BDAD79',
@@ -48,7 +48,7 @@ export class TagsComponent {
 	curColor = '';
 
 	computeHash(v: string) {
-		var hash = 0,
+		let hash = 0,
 			i,
 			chr;
 		for (i = 0; i < v.length; i++) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, HostBinding, HostListener, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, HostListener, Input, ChangeDetectorRef } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -48,6 +48,7 @@ export class Carousel {
 	@Input() imgs: any;
 
 	current: number;
+	clear: any;
 
 	constructor(private cdr: ChangeDetectorRef) {
 		this.current = 0;
@@ -70,26 +71,26 @@ export class Carousel {
 				return index === 0
 					? 'on'
 					: index === 1
-					? 'next'
-					: index === 2
-					? 'rtwo'
-					: index === 3
-					? 'rthree'
-					: index === this.imgs.length - 1
-					? 'prev'
-					: 'off';
+						? 'next'
+						: index === 2
+							? 'rtwo'
+							: index === 3
+								? 'rthree'
+								: index === this.imgs.length - 1
+									? 'prev'
+									: 'off';
 			} else if (this.current === this.imgs.length - 1) {
 				return index === this.imgs.length - 1
 					? 'on'
 					: index === this.imgs.length - 2
-					? 'prev'
-					: index === this.imgs.length - 3
-					? 'ltwo'
-					: index === this.imgs.length - 4
-					? 'lthree'
-					: index === 0
-					? 'next'
-					: 'off';
+						? 'prev'
+						: index === this.imgs.length - 3
+							? 'ltwo'
+							: index === this.imgs.length - 4
+								? 'lthree'
+								: index === 0
+									? 'next'
+									: 'off';
 			}
 			switch (index - this.current) {
 				case 0:
@@ -137,7 +138,7 @@ export class Carousel {
 		}, 5000);
 	}
 
-	clear: any;
+
 
 	is_active(index: number) {
 		return index == this.current;

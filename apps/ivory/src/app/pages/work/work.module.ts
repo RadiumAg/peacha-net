@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { WorkPage } from './work.page';
 import { RouterModule } from '@angular/router';
 import { IllustZoomModalComponent } from './illust-zoom-modal/illust-zoom-modal.component';
-import { PeachaComponentsModule, ReactiveComponentModule, WorkRelatedModule, WorkResolve } from '@peacha-core';
+import { PeachaComponentsModule, ReactiveComponentModule, WorkRelatedModule } from '@peacha-core';
 import { CommentModule } from '../../fragments/comment/comment.module';
+import { WorkResolve } from './work.resolve';
 
 @NgModule({
 	declarations: [WorkPage, IllustZoomModalComponent],
@@ -26,4 +27,4 @@ import { CommentModule } from '../../fragments/comment/comment.module';
 	],
 	providers: [WorkResolve],
 })
-export class WorkModule {}
+export class WorkModule { }

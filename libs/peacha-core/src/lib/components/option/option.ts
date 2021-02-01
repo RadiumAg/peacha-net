@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input, Inject } from '@angular/core';
+import { Component, HostListener, Input, Inject } from '@angular/core';
 import { SelectFather, SELECT_FATHER } from '../select/selectfather';
 
 @Component({
@@ -6,13 +6,12 @@ import { SelectFather, SELECT_FATHER } from '../select/selectfather';
 	templateUrl: './option.html',
 	styleUrls: ['./option.less'],
 })
-export class Option implements OnInit {
-	constructor(@Inject(SELECT_FATHER) public select: SelectFather) {}
+export class Option {
+	constructor(@Inject(SELECT_FATHER) public select: SelectFather) { }
 	@Input() value: number;
 	@Input() text: string;
 	@Input() selected?: boolean;
 	@Input() borderStyle?: number;
-	ngOnInit(): void {}
 
 	@HostListener('click')
 	click() {

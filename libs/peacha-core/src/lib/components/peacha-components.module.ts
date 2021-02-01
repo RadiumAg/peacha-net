@@ -13,7 +13,6 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { Cropper } from './cropper/cropper';
 import { CropImage } from './cropper/cropper.component';
 import { ReactiveComponentModule } from '../core/reactive';
-import { Carousel } from './carousel/carousel';
 import { PopTips } from './pop-tips/pop-tips';
 import { PaginationComponent } from './pagination/pagination.component';
 import { Select } from './select/select';
@@ -45,11 +44,10 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
 import { DebounceClickDirective } from './debounce-click.directive';
 import { WorkSelectorComponent } from './work-selector/work-selector.component';
 import { UploadImageDirective } from './uploadImage/uploadImage.directive';
-import { IvoNameFriendlyPipe } from './pipes/app-name-friendly.pipe';
 import { ChangeUnitPipe } from './pipes/change-unit.pipe';
 import { MydatePipe } from './pipes/mydate.pipe';
-import { SavePipe } from './pipes/save.pipe';
 import { TimerDatePipe } from './pipes/timer-date.pipe';
+import { IvoNameFriendlyPipe } from './upload/app-name-friendly.pipe';
 
 @NgModule({
 	declarations: [
@@ -62,14 +60,12 @@ import { TimerDatePipe } from './pipes/timer-date.pipe';
 		Cropper,
 		CropImage,
 		PaginationComponent,
-		Carousel,
 		MydatePipe,
 		PopTips,
 		ChangeUnitPipe,
 		Select,
 		Option,
 		CropBanner,
-		SavePipe,
 		SubcommentPagination,
 		ReportModalComponent,
 		UserReportModalComponent,
@@ -86,12 +82,12 @@ import { TimerDatePipe } from './pipes/timer-date.pipe';
 		ErroTipDirective,
 		IllustrateUploadComponent,
 		UploadComponent,
-		IvoNameFriendlyPipe,
 		ErroTipDirectiveTwo,
 		CheckboxComponent,
 		DebounceClickDirective,
 		WorkSelectorComponent,
 		UploadImageDirective,
+		IvoNameFriendlyPipe
 	],
 	exports: [
 		ErrorDisplay,
@@ -103,14 +99,12 @@ import { TimerDatePipe } from './pipes/timer-date.pipe';
 		Cropper,
 		CropImage,
 		PaginationComponent,
-		Carousel,
 		MydatePipe,
 		PopTips,
 		ChangeUnitPipe,
 		Select,
 		Option,
 		CropBanner,
-		SavePipe,
 		SubcommentPagination,
 		LackImage,
 		TimerDatePipe,
@@ -124,12 +118,12 @@ import { TimerDatePipe } from './pipes/timer-date.pipe';
 		ErroTipDirective,
 		IllustrateUploadComponent,
 		UploadComponent,
-		IvoNameFriendlyPipe,
 		ErroTipDirectiveTwo,
 		CheckboxComponent,
 		DebounceClickDirective,
 		WorkSelectorComponent,
 		UploadImageDirective,
+		IvoNameFriendlyPipe
 	],
 	imports: [
 		CommonModule,
@@ -148,4 +142,4 @@ import { TimerDatePipe } from './pipes/timer-date.pipe';
 		RouterModule,
 	],
 })
-export class PeachaComponentsModule {}
+export class PeachaComponentsModule { }
