@@ -1,0 +1,80 @@
+<div class="reset">
+
+    <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
+
+
+        <h3>修改密码</h3>
+
+        <div class="form-control">
+            <label>
+                输入旧密码:
+            </label>
+            <!-- <input> -->
+            <input formControlName="password" type="password" autocomplete="current-password">
+
+            <div [errorDisplay]="password">
+                <ng-container *errorCase="'required'">
+                    密码是必填项
+                </ng-container>
+                <ng-container *errorCase="'pattern'">
+                    请输入正确格式的密码
+                </ng-container>
+                <ng-container *errorCase="'minLength'">
+                    密码长度不得小于6字符
+                </ng-container>
+                <ng-container *errorCase="'maxLength'">
+                    密码长度不得大于24字符
+                </ng-container>
+            </div>
+        </div>
+
+
+
+        <div class="form-control">
+            <label>
+                输入新密码:
+            </label>
+            <input formControlName="passwordNew" type="password" autocomplete="new-password">
+
+            <div [errorDisplay]="passwordNew">
+                <ng-container *errorCase="'required'">
+                    密码是必填项
+                </ng-container>
+                <ng-container *errorCase="'pattern'">
+                    请输入正确格式的密码
+                </ng-container>
+                <ng-container *errorCase="'minLength'">
+                    密码长度不得小于6字符
+                </ng-container>
+                <ng-container *errorCase="'maxLength'">
+                    密码长度不得大于24字符
+                </ng-container>
+                <ng-container *errorCase="'confirm'">
+                    两次密码不一致
+                </ng-container>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label>
+                再次输入新密码: </label>
+            <input formControlName="passwordAgain" type="password" autocomplete="new-password">
+
+
+            <div [errorDisplay]="passwordAgain">
+                <ng-container *errorCase="'required'">
+                    密码是必填项
+                </ng-container>
+                <ng-container *errorCase="'confirm'">
+                    两次密码不一致
+                </ng-container>
+            </div>
+        </div>
+
+        <button>确认修改</button>
+
+    </form>
+
+
+
+</div>

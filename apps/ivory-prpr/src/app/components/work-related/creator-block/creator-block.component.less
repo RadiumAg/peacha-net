@@ -1,0 +1,143 @@
+:host {
+    display: flex;
+    flex-direction: row;
+
+    &>.avatar{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &>.face{
+            width: 56px;
+            height: 56px;
+            padding: 1px;
+            clip-path: circle();
+            &>img {
+                height: 100%;
+                width: 100%;
+                clip-path: circle();
+                cursor: pointer;
+            }
+        }
+
+        margin-right: 20px;
+
+        &.binder{
+            &>.face{
+                background-color: rgba(255, 99, 152, 1);
+            }
+
+            &>.label {
+                width: 52px;
+                height: 18px;
+                background: rgba(255, 255, 255, 1);
+                border: 1px solid rgba(255, 99, 152, 1);
+                opacity: 1;
+                border-radius: 9px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &>span {
+                    text-align: center;
+                    width: 36px;
+                    height: 18px;
+                    font-size: 12px;
+                    font-family: Source Han Sans SC;
+                    font-weight: 400;
+                    line-height: 18px;
+                    color: rgba(255, 99, 152, 1);
+                    opacity: 1;
+                }
+            }
+        }
+
+        &.drawer{
+            &>.face{
+                background-color: rgba(90, 139, 230, 1);
+            }
+            &>.label {
+                width: 52px;
+                height: 18px;
+                background: rgba(255, 255, 255, 1);
+                border: 1px solid rgba(90, 139, 230, 1);
+                opacity: 1;
+                border-radius: 9px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &>span {
+                    text-align: center;
+                    width: 36px;
+                    height: 18px;
+                    font-size: 12px;
+                    font-family: Source Han Sans SC;
+                    font-weight: 400;
+                    line-height: 18px;
+                    color: rgba(90, 139, 230, 1);
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    &>.remain {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &>span {
+            width: 160px;
+            height: 24px;
+            font-size: 16px;
+            font-family: Source Han Sans SC;
+            font-weight: 500;
+            line-height: 24px;
+            color: rgba(51, 51, 51, 1);
+        }
+
+        &>.actions {
+            &>button {
+                background-color: #ffffff;
+                color: #FF6398;
+                border-radius: 4px;
+                cursor: pointer;
+
+                &>img {
+                    margin-right: 4px;
+                    margin-bottom: 4px;
+                    width: 12px;
+                    height: 12px;
+                }
+            }
+
+            &>.follow {
+                width: 176px;
+                height: 28px;
+                box-sizing: border-box;
+                margin-right: 20px;
+                text-align: center;
+                color: #FFFFFF;
+                border: none;
+                background-color: #FF6398;
+
+                &.followed {
+                    background-color: #999999;
+                }
+
+                &.followed-each {
+                    background-color: #CCCCCC;
+                }
+            }
+
+            &>.pm {
+                width: 88px;
+                height: 28px;
+                box-sizing: border-box;
+                text-align: center;
+                border: solid 1px #FF6398;
+            }
+        }
+    }
+}

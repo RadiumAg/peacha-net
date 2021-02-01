@@ -1,0 +1,107 @@
+<div class="main">
+    <div class="setting">
+        <span *ngIf="!titleShow">{{"forget.forget_password" | translate}}</span>
+        <ng-container  *ngIf="titleShow">
+            <a [routerLink]="['/setting/security']" class="safe-setting">安全设置-</a>
+            <span>{{"forget.change_password" | translate}}</span>
+        </ng-container>
+
+    </div>
+    <div class="body" >
+        <img class="logo" src="/assets/image/svg/i-logo.svg" />
+        <div ivoStepper #step>
+            <!-- 输入账号 -->
+            <div *ivoStep>
+                <div class="description">
+                    <span>{{"forget.forget_input_account" | translate}}</span>
+                </div>
+                <div class="inputWithVerifycode">
+                    <input  type="text" [placeholder]="'forget.the_want_seach_account' | translate" [formControl]="account" #one/>
+
+                    <div class="error-inset" [errorDisplay]="account">
+                        <ng-container *errorCase="'required'">
+                            {{"forget.account_number_required" | translate}}
+                        </ng-container>
+                        <ng-container *errorCase="'wrong_code'">
+                            {{"forget.account_number_not_exist" | translate}}
+                        </ng-container>
+                        <ng-container *errorCase="'wrong_codeone'">
+                            {{"forget.account_use_not_exist" | translate}}
+                        </ng-container>
+                    </div>
+                </div>
+                <button class="buttonRight" (click)="confirmAccount(one)">
+                    {{"forget.get_verifycode" | translate}}
+                </button>
+            </div>
+            <!-- 验证账号 -->
+            <div *ivoStep>
+                <div>{{"forget.verifycode" | translate}}:</div>
+                <div class="inputWithVerifycode"  *ngrxLet="cooldown$;let cooldown">
+                    <input type="text" [placeholder]="'forget.verifycode_placeholder' | translate" [formControl]="verifyCode" />
+                    <button class="veriftButton" (click)="requestAgain()" [disabled]=cooldown >
+                        <ng-container *ngIf="cooldown==0" >
+                           {{"forget.get_verifycode"|translate}}
+                        </ng-container>
+                        <ng-container *ngIf="cooldown>0">
+                            {{"forget.verifyCode_wait" | translate}}({{cooldown}})
+                        </ng-container>
+                    </button>
+                    <div class="error-inset" [errorDisplay]="verifyCode">
+                        <ng-container *errorCase="'required'">
+                            {{"forget.verifyCode_required"|translate}}
+                        </ng-container>
+                        <ng-container *errorCase="'wrong_code'">
+                            {{"forget.verifyCode_error" | translate}}
+                        </ng-container>
+                    </div>
+                    <div>
+                        <button class="buttonRight" (click)="confirmVerify()">
+                            {{"forget.next_step" | translate}}
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <!-- 输入新密码 -->
+            <div *ivoStep>
+                <div class="description">{{"forget.please_enter_password" | translate}}</div>
+                <div>
+                    <input type="password" [placeholder]="'forget.password_placeholder'|translate" [formControl]="password" />
+                </div>
+                <div class="error-inset" [errorDisplay]="password">
+                    <ng-container *errorCase="'required'">
+                        {{"forget.password_required" | translate}}
+                    </ng-container>
+                    <ng-container *errorCase="'minlength'">
+                        {{"forget.password_minlength" | translate}}
+                    </ng-container>
+                    <ng-container *errorCase="'maxlength'">
+                        {{"forget.password_maxlength" | translate}}
+                    </ng-container>
+                    <ng-container *errorCase="'pattern'">
+                        {{"forget.password_format" | translate}}
+                    </ng-container>
+
+                </div>
+                <div>
+                    <input type="password" [placeholder]="'forget.password_input_again' | translate" [formControl]="passwordConfirm" />
+                </div>
+                <div class="error-inset" [errorDisplay]="passwordConfirm">
+                    <ng-container *errorCase="'required'">
+                        {{'forget.password_input_again_required' | translate}}
+                    </ng-container>
+                    <ng-container *errorCase="'confirm'">
+                        {{'forget.password_input_again_required_not_common' | translate}}
+                    </ng-container>
+                </div>
+                <div>
+                    <button [disabled]="!passwordConfirm.valid" class="buttonRight" (click)="finishReset()">
+                        {{'forget.next_step' | translate}}
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

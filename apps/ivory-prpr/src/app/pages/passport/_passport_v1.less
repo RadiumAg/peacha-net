@@ -1,0 +1,167 @@
+.main {
+    width: 960px;
+    margin: 50px auto;
+
+    .setting {
+        font-size: 16px;
+
+        .safe-setting {
+            color: black;
+            font-weight: 900;
+        }
+    }
+
+    .logo {
+        display: block;
+        margin: 30px 0;
+        height: 36px;
+    }
+
+    .verify-des {
+        font-size: 18px;
+        font-weight: 900;
+    }
+
+    .body {
+        width: 400px;
+        margin: 50px auto;
+    }
+
+    .inputtext {
+        display: block;
+        margin-bottom: 20px;
+        width: 400px;
+        height: 40px;
+        text-align: left;
+        border: solid 1px #cccccc;
+        border-radius: 4px;
+        background-color: white;
+        font-size: 14px;
+        font-family: Microsoft YaHei;
+
+        &>img {
+            margin-right: 10px;
+            margin-top: -3px;
+        }
+    }
+
+    .inputtext:hover,
+    .inputtext:focus {
+        border: solid 1px #FF6398;
+        box-shadow: 0px 0px 6px rgba(249, 137, 174, 0.4);
+        outline: none;
+    }
+
+    .verifyInput {
+        margin-bottom: 20px;
+        color: #999;
+        font-size: 14px;
+
+    }
+
+    .description {
+        font-weight: 900;
+        margin-bottom: 30px;
+        font-size: 16px;
+    }
+
+    .defaultMessege:focus {
+        outline: none;
+    }
+
+    .error-inset {
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        color: red;
+        padding-left: 10px;
+        left: 0;
+        height: 22px;
+        margin:5px 0 10px;
+    }
+
+    .inputWithVerifycode {
+        position: relative;
+        margin-bottom: 20px;
+        font-size: 14px;
+
+
+        .veriftButton {
+            background-color: white;
+            color: #FF6398;
+            right: 0;
+            position: absolute;
+            height: 40px;
+            border: none;
+            background: transparent;
+            padding-right: 10px;
+            font-size: 14px;
+
+        }
+
+        .veriftButton:focus {
+            background-color: white;
+            outline: none;
+            filter: none
+        }
+    }
+
+    .buttonRight {
+        color: white;
+        border: none;
+        background-color: #ff6398;
+        right: 0;
+        position: absolute;
+        width: max-content;
+        height: 35px;
+        font-size: 14px;
+        border-radius: 4px;
+    }
+
+    .button1 {
+        color: white;
+        border: solid 1px #ff6398;
+        background-color: #ff6398;
+        width: 88px;
+        height: 35px;
+        font-size: 14px;
+
+    }
+
+    input {
+        width: 400px;
+        height: 40px;
+        border: solid 1px #ff6398;
+        border-radius: 4px;
+        padding-left: 10px;
+        font-size: 14px;
+    }
+
+    input:active,
+    input:focus {
+        border: solid 1px #ff6398;
+        box-shadow: 0px 0px 6px rgba(249, 137, 174, 0.4);
+        outline: none;
+    }
+
+    input::placeholder {
+        color: #999;
+        font-size: 14px;
+    }
+
+    div {
+        position: relative;
+    }
+
+    button:active,
+    button:focus {
+        border: solid 1px #ff6398;
+        // filter: drop-shadow(0 0 5px #FFE6EA);
+        outline: none;
+    }
+
+    button:hover {
+        cursor: pointer;
+    }
+}

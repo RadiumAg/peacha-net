@@ -1,0 +1,17 @@
+<div class="all">
+
+    <div class="imgs">
+        <ng-container *ngFor="let img of imgs;let i=index">
+            <img [attr.src]="img.imageurl" alt="" class="img" (click)="toUrl(img.url)" [@imgMove]="ImgState(i)">
+        </ng-container>
+    </div>
+
+    <div class="small" *ngIf="imgs.length>1">
+        <li>
+            <span class="out" *ngFor="let img of imgs;let i=index" (click)="changeSmall(i)">
+                <span [class.borderRed]="is_active(i)"></span>
+            </span>
+        </li>
+    </div>
+
+</div>

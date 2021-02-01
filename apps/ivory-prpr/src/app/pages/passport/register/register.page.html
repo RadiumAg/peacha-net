@@ -1,0 +1,98 @@
+<div class="register">
+    <div class="logo">
+        <img src="/assets/image/svg/i-logo.svg">
+    </div>
+
+    <form class="passport" [formGroup]="checkForm" (ngSubmit)="submit()">
+
+        <div class="form-control">
+            <label>
+                {{"register.account" | translate}}：
+            </label>
+            <div class="input-control">
+                <nz-input-group nzCompact>
+                    <nz-select formControlName="method" nzSize="large">
+                        <!-- <nz-option [nzLabel]="'手机'" [nzValue]="'phone'"></nz-option> -->
+                        <nz-option [nzLabel]="'register.mail' | translate" [nzValue]="'email'"></nz-option>
+
+                    </nz-select>
+                    <input type="text" nz-input formControlName="account" nzSize="large" autocomplete="username" />
+                </nz-input-group>
+
+                <div class="error-inset" [errorDisplay]="account">
+                    <ng-container *errorCase="'required'">
+                        {{ "register.account_required"|translate}}
+                    </ng-container>
+                    <ng-container *errorCase="'used'">
+                        {{ "register.account_used"|translate}}
+                    </ng-container>
+                    <ng-container *errorCase="'invaild'">
+                        {{ "register.account_invaild"|translate}}
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label>
+                {{"register.password" | translate}}：
+            </label>
+            <div class="input-control">
+                <input class="input-top" formControlName="password" type="password"
+                    [placeholder]="'register.password_placeholder' | translate" autocomplete="new-password">
+                <div class="error-inset" [errorDisplay]="password">
+                    <ng-container *errorCase="'required'">
+                        {{ "register.password_required" | translate}}
+                    </ng-container>
+                    <ng-container *errorCase="'minlength'">
+                        {{ "register.password_minlength" | translate}}
+                    </ng-container>
+                    <ng-container *errorCase="'maxlength'">
+                        {{ "register.password_maxlength" | translate}}
+                    </ng-container>
+                    <ng-container *errorCase="'pattern'">
+                        {{ "register.verifyCode" | translate}}
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label>
+                {{"register.getVerifyCode" | translate}}：
+            </label>
+            <div class="input-control">
+                <input class="input" formControlName="verify_code" />
+                <ng-container ivo-verifycode #v="verifycode" verify-type=0>
+                    <button *ngrxLet="v.cooldown$;let cooldown" type="button" (click)="queryVerifycode(v)">
+                        <ng-container *ngIf="cooldown==0">
+                            {{"register.account_getVerifyCode" | translate}}
+                        </ng-container>
+                        <ng-container *ngIf="cooldown>0">
+                            {{"register.verifyCode_wait" | translate}}({{cooldown}})
+                        </ng-container>
+                    </button>
+                </ng-container>
+
+                <div class="error-inset-extre" [errorDisplay]="verify_code">
+                    <ng-container *errorCase="'required'">
+                        {{"register.verifyCode_required" | translate}}
+                    </ng-container>
+                    <ng-container *errorCase="'pattern'">
+                        {{"register.verifyCode_format" | translate}}
+                    </ng-container>
+                    <ng-container *errorCase="'nocorrect'">
+                        {{ "register.verifyCode_error" | translate}}
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <button type="submit" [ngClass]="{'disabled':!formvalid}">{{"register.register" | translate}}</button>
+        <div class="form-actions">
+            <label nz-checkbox formControlName="eula">{{"register.agree" | translate}}<a
+                    [routerLink]="['/useragreement']">《{{"register.userAgreeMent" | translate}}》</a></label>
+
+            <a class="right" [routerLink]="['../login']">{{"register.login" | translate}}></a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,6 @@
+<ng-container ivo-work-like [like-state]="isLike" [work-id]="workId" #c="worklike">
+    <div [@like]="c.like$|async" class="like" (click)="c.request()" [class.checked]="c.like$|async">
+        <img [src]="(c.like$|async)?'/assets/image/svg/点赞-true.svg':'/assets/image/svg/点赞-false.svg'">
+        <span>{{(likeCount + ((c.like$|async)?1:0) - likeOffset)>10000?((likeCount + ((c.like$|async)?1:0) - likeOffset)/10000).toFixed(2) +'w':likeCount + ((c.like$|async)?1:0) - likeOffset}}</span>
+    </div>
+</ng-container>

@@ -1,0 +1,15 @@
+<div class="demo-overlay">
+    <h2>设置空间背景</h2>
+    <img src="/assets/image/svg/close.svg" (click)="cancel()">
+    <div class="container">
+        <image-cropper [imageFile]="data" [imageChangedEvent]="data" [maintainAspectRatio]="true"
+            [aspectRatio]="1920 / 400"  format="png"
+            (imageCropped)="imageCropped($event)">
+        </image-cropper>
+        <li>
+            <button (click)="cancel()">取消</button>
+            <button (click)="checkAvatar()">确认</button>
+        </li>
+
+    </div>
+</div>

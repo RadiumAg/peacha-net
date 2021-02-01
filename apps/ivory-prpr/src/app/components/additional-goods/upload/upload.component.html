@@ -1,0 +1,25 @@
+<div class="body-upload" *ngrxLet="Process$;let process">
+    <div class="upload">
+        <div #scroll_body>
+            <div>
+                <div class="upload-item" *ngFor="let item of (filters$ | async)">
+                    <span>
+                        <span class="title">{{item.name|ivoNameFriendly}}</span>
+                    </span>
+                    <span *ngIf="canDelete" (click)="delteFile(item['symbol'])" id="{{ item.name }}"></span>
+                </div>
+
+                <ng-container *ngIf="progress">
+                    <div class='process-body'>
+                        <div class='outer'>
+                            <div class="mask" [ngStyle]="{'width': (process.progress * 100)+'%'}"></div>
+                        </div>
+                        <span>{{ process.progress * 100 | number:'0.0-0'}}%</span>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <button (click)="onClick($event)" [disabled]='!canUplaod'>{{buttonWord}}</button>
+    <input #files (change)="onChange($event)" type="file"  hidden />
+</div>

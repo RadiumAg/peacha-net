@@ -1,0 +1,27 @@
+<div [ngClass]="{'avatar':true,'binder':role==='binder','drawer':role==='drawer'}">
+    <div class="face">
+        <img [src]="userAvatar" (click)="click()">
+    </div>
+    <div class="label">
+        <span>{{role==='binder'?'模型师':role==='drawer'?'画师':null}}</span>
+    </div>
+</div>
+
+<div class="remain">
+    <span (click)="click()">{{userName}}</span>
+
+    <div class="actions">
+        <ng-container ivo-follow [follow-id]="userId" [follow-state]="followState" #fffff="follow">
+            <ng-container *ngrxLet="fffff.follow$;let f" [ngSwitch]="f">
+                <button ivo-button class="follow" [class.followed]="f==1" [class.followed-each]="f==2" (click)="fffff.request()">
+                    <ng-container *ngSwitchCase="0"><img src="/assets/image/svg/i-add.svg">关注</ng-container>
+                    <ng-container *ngSwitchCase="1"><img src="/assets/image/svg/i-follow-check.svg">已关注</ng-container>
+                    <ng-container *ngSwitchCase="2"><img src="/assets/image/svg/i-circle.svg">互相关注</ng-container>
+                </button>
+            </ng-container>
+        </ng-container>
+        <!-- <button class="pm">
+            <img src="/assets/image/svg/pm.svg">私信
+        </button> -->
+    </div>
+</div>

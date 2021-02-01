@@ -1,0 +1,34 @@
+<div class="bgc">
+
+    <div class="content">
+        <nav>
+            <div class="profile">
+                <img [attr.src]="avatar$ | async">
+                <p class="nickname">{{nickname$ | async}}</p>
+            </div>
+            <a [routerLink]="['./']" routerLinkActive="active" [routerLinkActiveOptions]="{'exact':true}">
+                <img src="assets/image/svg/time1.svg" class="d">
+                <img src="assets/image/svg/time.svg" class="e">
+                {{"linkageTime.linkage_duration" | translate}}</a>
+            <a [routerLink]="['./profile']" routerLinkActive="active">
+                <img src="assets/image/svg/我的.svg" class="d">
+                <img src="assets/image/svg/我的1.svg" class="e">
+                {{"linkageTime.personal_data" | translate}}</a>
+            <a [routerLink]="['./security']" routerLinkActive="active">
+                <img src="assets/image/svg/安全.svg" class="d">
+                <img src="assets/image/svg/安全1.svg" class="e">
+                {{"linkageTime.security_setting" | translate}}</a>
+            <a [routerLink]="['./cdk_exchange']" routerLinkActive="active">
+                <img src="assets/image/setting/svg/change.svg" class="d">
+                <img src="assets/image/setting/svg/change_active.svg" class="e">
+                {{"cdk_exchange.cdk_exchange" | translate}}</a>
+            <!-- <a [routerLink]="['./order']"    routerLinkActive="active">
+                <img src="assets/image/svg/订单.svg" class="d">
+                <img src="assets/image/svg/订单1.svg" class="e" >
+                消费记录</a> -->
+        </nav>
+        <div class="wrapper">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

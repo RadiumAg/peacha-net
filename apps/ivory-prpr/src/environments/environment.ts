@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-	production: false,
+  production: false,
+  // api_gateway: 'https://virtserver.swaggerhub.com/p8948/peacha.net/1.0.0'
 };
 
 /*

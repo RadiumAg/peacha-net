@@ -1,0 +1,47 @@
+:host {
+    display: block;
+    cursor: default;
+
+    span {
+        position: relative;
+        top: 0;
+        outline: none;
+        overflow: hidden;
+    }
+
+    span::after {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        background-color: rgba(255, 255, 255,0.5);
+        left: 50%;
+        top: 50%;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: all 1s ease;
+    }
+
+    span:active::after {
+        width: 0;
+        height: 0;
+        transition-duration: 0s;
+        opacity: 1;
+    }
+
+    &>span {
+        display: inline-block;
+        cursor: pointer;
+        margin: 0px 20px 20px 0;
+        border-radius: 4px;
+        padding: 5px 16px 5px 16px;
+        color: #ffffff;
+        transition: filter 0.2s 0s;
+
+        &:hover {
+            filter: opacity(80%);
+        }
+    }
+}

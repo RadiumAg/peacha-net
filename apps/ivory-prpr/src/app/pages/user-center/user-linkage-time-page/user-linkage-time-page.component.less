@@ -1,0 +1,161 @@
+&.user-linkage-time {
+    width: 100%;
+    height: 100%;
+    background: #FFFFFF;
+    border-radius: 4px;
+    padding: 20px;
+
+    &>.time {
+        height: 185px;
+        border-radius: 4px;
+        border: 1px solid #FFF0F5;
+        padding: 30px;
+        display: flex;
+        justify-content: space-between;
+
+        &>.left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            &>.title {
+                font-size: 20px;
+                font-weight: bold;
+                color: #333;
+                line-height: 16px;
+            }
+
+            &>.content {
+                margin-top: 20px;
+                font-size: 30px;
+                font-weight: 600;
+                color: #FF6398;
+                line-height: 30px;
+                letter-spacing: 1px;
+            }
+
+            >.description{
+                margin-top: 20px;
+                font-size: 14px;
+            }
+        }
+
+        &>.right {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            &>button {
+                width: max-content;
+                height: 32px;
+                border-radius: 4px;
+                border: none;
+                cursor: pointer;
+                transition: all ease 0.5s;
+
+                &.recharge-record {
+                    background: #ffffff;
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #FA89AF;
+                    line-height: 22px;
+                    margin-right: 15px;
+                }
+
+                &.recharge {
+                    padding: 0 25px;
+                    font-size: 16px;
+                    font-weight: 400;
+                    color: #FFFFFF;
+                    line-height: 22px;
+                    background: #FF6398;
+                    margin-right: 20px;
+
+                    &:hover {
+                        background: #FA89AF;
+                    }
+                }
+            }
+        }
+    }
+
+    &>.record {
+        height: 710px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        border-radius: 4px;
+        border: 1px solid #FFF0F5;
+        padding: 20px 30px;
+
+        &>.title {
+            font-size: 14px;
+            font-weight: 400;
+            color: #666666;
+            line-height: 16px;
+        }
+
+        &>.list {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            &>.head {
+                width: 100%;
+                height: 56px;
+                border-bottom: 2px solid #e6e6e6;
+                display: flex;
+                justify-content: space-between;
+
+                &>span {
+                    width: 100%;
+                    font-weight: 400;
+                    color: #343434;
+                    line-height: 16px;
+                    font-size: 14px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+
+            &>.content {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+
+                &>.item {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    height: 50px;
+
+                    &:not(:first-child) {
+                        border-top: 2px dashed #FFF0F5;
+                    }
+
+                    &>div {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 14px;
+                        font-weight: 400;
+                        color: #343434;
+                        line-height: 20px;
+                    }
+                }
+            }
+
+            &>.page {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+        }
+
+    }
+}

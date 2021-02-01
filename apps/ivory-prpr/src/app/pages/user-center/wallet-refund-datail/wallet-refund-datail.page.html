@@ -1,0 +1,47 @@
+<div class="main">
+    <div class="index">
+        账单详情
+        <span class="return" (click)="goBack()">&lt;返回列表</span>
+    </div>
+    <div class="detail" *ngrxLet="info$;let info">
+        <div class="works" *ngFor="let item of info.orders">
+            <li class="o">
+                <img [attr.src]="item.work_cover" (click)="toWork(item.work_type,item.work_id)">
+                <span class="left">
+                    <span class="work" (click)="toWork(item.work_type,item.work_id)">{{item.work_name}}</span>
+                    <span class="good">商品名称：{{item.goods_name}}</span>
+                    <span class="seller">卖家：{{item.seller_name}}</span>
+                </span>
+                <span class="right">
+                    <span class="type" *ngIf="item.single;else other">单次出售</span>
+                    <ng-template #other>
+                        <span class="type">不限量出售</span>
+                    </ng-template>
+                    <span class="price">
+                        价格：<a>¥{{item.price| number:'1.2-2'}}</a>
+                    </span>
+                </span>
+            </li>
+            <li class="hello">
+                <span>订单号：{{item.order_id}}</span>
+                <span [ngSwitch]="item.state">状态：
+                    <ng-container *ngSwitchCase="5">已退款</ng-container>
+                    <ng-container *ngSwitchDefault>退款中</ng-container>
+                </span>
+            </li>
+        </div>
+
+        <li class="hello">
+            <span>支付交易号：{{info.pay_id}}</span>
+            <span>退款交易号：{{info.id}}</span>
+        </li>
+        <li class="hello">
+            <span>支付渠道：{{info.pay_channel}}</span>
+            <span>退款渠道：{{info.channel}}</span>
+        </li>
+        <li class="hello">
+            <span>支付时间：{{info.pay_start_time |date:"yyyy-MM-dd HH:mm"}}</span>
+            <span>退款时间：{{info.start_time |date:"yyyy-MM-dd HH:mm"}}</span>
+        </li>
+    </div>
+</div>

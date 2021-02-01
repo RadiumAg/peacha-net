@@ -1,0 +1,16 @@
+<div class="cover">
+    <ivo-lazy-img [ngLazyLoad]="cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'">
+    </ivo-lazy-img>
+</div>
+
+<div class="remain">
+    <h5>
+        {{name}}
+    </h5>
+    <p class="time">
+        {{time|date:'MM-dd'}}
+    </p>
+    <p class="author">
+        {{authorName}}
+    </p>
+</div>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>pass</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="pass">
+            <circle id="椭圆形" fill="#26CD43" cx="12" cy="12" r="12"></circle>
+            <g id="编组" transform="translate(4.000000, 7.000000)" fill="#FFFFFF">
+                <rect id="矩形备份-3" transform="translate(10.010408, 5.353553) rotate(-675.000000) translate(-10.010408, -5.353553) " x="9.01040764" y="-1.14644661" width="2" height="13"></rect>
+                <rect id="矩形备份-4" transform="translate(4.000000, 7.121320) rotate(-945.000000) translate(-4.000000, -7.121320) " x="3" y="3.12132034" width="2" height="8"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

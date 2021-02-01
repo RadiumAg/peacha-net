@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="95px" height="180px" viewBox="0 0 95 180" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>路径</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="未登录Live2D示例" transform="translate(-270.000000, -1536.000000)" stroke="#979797" stroke-width="10">
+            <polyline id="路径" transform="translate(360.000000, 1626.000000) rotate(-45.000000) translate(-360.000000, -1626.000000) " points="300 1686 300 1566 420 1566"></polyline>
+        </g>
+    </g>
+</svg>
