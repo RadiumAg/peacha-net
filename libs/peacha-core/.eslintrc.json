@@ -5,10 +5,12 @@
 		{
 			"files": ["*.ts"],
 			"extends": ["plugin:@nrwl/nx/angular", "plugin:@angular-eslint/template/process-inline-templates"],
-			"parserOptions": { "project": ["libs/peacha/core/tsconfig.*?.json"] },
+			"parserOptions": { "project": ["libs/peacha-core/tsconfig.*?.json"] },
 			"rules": {
-				"@angular-eslint/directive-selector": ["error", { "type": "attribute", "prefix": "peacha-net", "style": "camelCase" }],
-				"@angular-eslint/component-selector": ["error", { "type": "element", "prefix": "peacha-net", "style": "kebab-case" }]
+				"@angular-eslint/directive-class-suffix": "off",
+				"@angular-eslint/component-class-suffix": "off",
+				"@angular-eslint/directive-selector": ["warn", { "type": "attribute", "prefix": "ivo", "style": "camelCase" }],
+				"@angular-eslint/component-selector": ["warn", { "type": "element", "prefix": "ivo", "style": "kebab-case" }]
 			}
 		},
 		{
