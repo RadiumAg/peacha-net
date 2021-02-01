@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { UserState } from '../../core/state/user.state';
+import { UserState } from '@peacha-core';
 
 @Component({
   selector: 'ivo-user-center',

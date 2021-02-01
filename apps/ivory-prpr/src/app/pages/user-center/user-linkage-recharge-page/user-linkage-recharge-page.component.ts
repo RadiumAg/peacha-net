@@ -1,10 +1,10 @@
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { ModalService } from './../../../core/service/modals.service';
 import { take, map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { PopTips } from 'src/app/components/pop-tips/pop-tips';
+import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { ModalService } from '@peacha-core';
 
 @Component({
     selector: 'ivo-user-linkage-recharge-page',
@@ -16,7 +16,7 @@ export class UserLinkageRechargePageComponent {
         private modal: ModalService,
         private http: HttpClient,
         private router: Router
-    ) {}
+    ) { }
 
     goods$ = this.http
         .get<{

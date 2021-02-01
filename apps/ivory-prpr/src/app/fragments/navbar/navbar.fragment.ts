@@ -14,10 +14,9 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { DASHBOARD_ANIMATION, AVATAR_ANIMATION } from './animations';
 import { PlatformLocation } from '@angular/common';
-import { UserState } from '../../core/state/user.state';
-import { ModalService } from '../../core/service/modals.service';
-import { Logout } from '../../core/state/user.action';
-import { PopTips } from '../../components/pop-tips/pop-tips';
+import { UserState, ModalService } from '@peacha-core';
+import { Logout } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
 
 
 

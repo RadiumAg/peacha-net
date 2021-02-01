@@ -3,9 +3,9 @@ import { combineLatest, Observable, BehaviorSubject, concat, of, from, } from 'r
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map, take, withLatestFrom, startWith, tap, shareReplay, delay, skipUntil, filter, distinctUntilChanged } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { ModalService } from 'src/app/core/service/modals.service';
 import { FormControl } from '@angular/forms';
-import { PopTips } from 'src/app/components/pop-tips/pop-tips';
+import { ModalService } from '@peacha-core';
+import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
 
 type OrderInfo = {
     count: number;
@@ -116,13 +116,13 @@ export class OrderListPage implements OnInit {
     // 1 4 传入orderid
     delet(item: any) {
         if (item.state == 0) {
-            this.modal.open(PopTips, ['待支付或退款中,订单无法删除，支付完毕或取消才可删除',false]);
+            this.modal.open(PopTips, ['待支付或退款中,订单无法删除，支付完毕或取消才可删除', false]);
         } else if (item.state == 4) {
-            this.modal.open(PopTips, ['退款中,订单无法删除，需退款完毕后才可删除',false]);
+            this.modal.open(PopTips, ['退款中,订单无法删除，需退款完毕后才可删除', false]);
         } else {
-            this.modal.open(PopTips, ['是否确认删除订单，订单删除后无法找回',true]).afterClosed().subscribe(s => {
-                if(s){
-                    this.http.post('/api/v1/mall/delete_order', { o: [item.orderid]}).subscribe(_=>{
+            this.modal.open(PopTips, ['是否确认删除订单，订单删除后无法找回', true]).afterClosed().subscribe(s => {
+                if (s) {
+                    this.http.post('/api/v1/mall/delete_order', { o: [item.orderid] }).subscribe(_ => {
                         this.update$.next(false);
                     })
                 }
@@ -135,22 +135,22 @@ export class OrderListPage implements OnInit {
         this.router.navigate(['/setting/order', orderid]);
     }
 
-    toPay(id:number) {
+    toPay(id: number) {
         this.http.post<{ trade_id: number }>(
             '/mall/initiate_transaction',
             {
                 o: [id],
             }
-        ).subscribe(s=>{
+        ).subscribe(s => {
             this.router.navigate(['../pay'], {
                 queryParams: {
                     tradeId: s.trade_id,
-                    a:1,
-                    orderId:JSON.stringify([id])
+                    a: 1,
+                    orderId: JSON.stringify([id])
                 },
             });
         })
-     }
+    }
 
 
 

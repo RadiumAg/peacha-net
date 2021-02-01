@@ -14,10 +14,9 @@ import { switchMap, map, startWith, filter, tap, take } from 'rxjs/operators';
 import { FormControl, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Store, Select } from '@ngxs/store';
-import { Steps } from 'src/app/components/steps/steps';
-import { UserState } from 'src/app/core/state/user.state';
-import { ModalService } from 'src/app/core/service/modals.service';
-import { PopTips } from 'src/app/components/pop-tips/pop-tips';
+import { UserState, ModalService } from '@peacha-core';
+import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
+import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
 
 type walletInfo = {
     amount: number;
@@ -53,7 +52,7 @@ export class WalletPage {
         private router: Router,
         private store: Store,
         private modal: ModalService
-    ) {}
+    ) { }
     @ViewChild(Steps) steps: Steps;
 
     toWithdraw() {
@@ -78,7 +77,7 @@ export class WalletPage {
         this.update$.next(1);
     }
 
-    handleDatePanelChange(mode: string): void {}
+    handleDatePanelChange(mode: string): void { }
     type$ = this.route.queryParams.pipe(
         map((r) => {
             return r.t ?? 1;

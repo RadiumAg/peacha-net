@@ -1,12 +1,13 @@
 import { TranslateService } from '@ngx-translate/core';
-import { PopTips } from './../../../components/pop-tips/pop-tips';
-import { ModalService } from './../../../core/service/modals.service';
+import { ModalService, VerifycodeFetchDirective } from '@peacha-core';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, NgForm, ValidatorFn, AbstractControl } from '@angular/forms';
-import { VerifycodeService, EVerifycodeType, Register, IvoryError } from 'src/app/core';
+import { VerifycodeService, EVerifycodeType, Register, IvoryError } from '@peacha-core';
 import { Store } from '@ngxs/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HashLocationStrategy } from '@angular/common';
+import { FetchMe } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
 
 @Component({
     selector: 'ivo-register',

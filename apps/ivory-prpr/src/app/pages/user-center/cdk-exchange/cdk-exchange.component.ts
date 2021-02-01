@@ -1,10 +1,8 @@
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ApiSrevice } from 'src/app/core/service/api.service';
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Exchange } from 'src/app/core/model/exchange';
-import { isEmptyInputValue } from 'src/app/core/commom/common';
+import { isEmptyInputValue } from 'libs/peacha-core/src/lib/core/commom/common';
 
 @Component({
     selector: 'ivo-cdk-exchange',
@@ -16,7 +14,7 @@ export class CdkExchangeComponent implements OnInit {
         private apiServices: ApiSrevice,
         private httpClient: HttpClient,
         private translate: TranslateService
-    ) {}
+    ) { }
     errorDescription$ = new BehaviorSubject<string>('');
     exchangeData$ = new BehaviorSubject<Exchange>({
         count: '0',
@@ -69,7 +67,7 @@ export class CdkExchangeComponent implements OnInit {
         this.buttonDisabled = false;
     }
 
-    private getTranslate(key: string){
+    private getTranslate(key: string) {
         let result;
         this.translate.get(key).subscribe((x) => {
             result = x;
@@ -92,7 +90,7 @@ export class CdkExchangeComponent implements OnInit {
                 );
                 break;
             default:
-                errorMessage =  this.getTranslate(
+                errorMessage = this.getTranslate(
                     'cdk_exchange.unknew_error'
                 );
         }

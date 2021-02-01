@@ -1,5 +1,4 @@
 import { Component, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Steps } from 'src/app/components/steps/steps';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngxs/store';
 import {
@@ -16,9 +15,10 @@ import {
     interval,
     Subject,
 } from 'rxjs';
-import { FetchMe } from 'src/app/core/state/user.action';
 import { Router } from '@angular/router';
 import { tap, map, switchMap, take, takeUntil } from 'rxjs/operators';
+import { FetchMe } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
 
 @Component({
     selector: 'ivo-bind-phone',

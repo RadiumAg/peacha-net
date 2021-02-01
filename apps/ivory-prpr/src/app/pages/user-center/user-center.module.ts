@@ -1,6 +1,5 @@
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { ComponentsModule } from 'src/app/components/components.module';
-import { ReactiveComponentModule } from '@peacha-core';
+import { ReactiveComponentModule, PeachaComponentsModule } from '@peacha-core';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -48,10 +47,9 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
         NzSpinModule,
         ReactiveComponentModule,
         CommonModule,
-        ComponentsModule,
+        PeachaComponentsModule,
         FormsModule,
         ReactiveFormsModule,
-        ComponentsModule,
         NzDatePickerModule,
         NzIconModule,
         RouterModule.forChild([

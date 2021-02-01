@@ -3,12 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, BehaviorSubject, combineLatest, timer, Subject, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { switchMap, tap, startWith, take, map, withLatestFrom, shareReplay, takeWhile, takeUntil } from 'rxjs/operators';
-import { Steps } from 'src/app/components/steps/steps';
-import { ModalService } from 'src/app/core/service/modals.service';
-import { PopTips } from 'src/app/components/pop-tips/pop-tips';
 import { TradeInfo, TradeChannel } from './trade';
-import { TradeApiService } from 'src/app/pages/pay/trade-api.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ModalService } from '@peacha-core';
+import { TradeApiService } from './trade-api.service';
+import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
+import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
 
 const TimeOut = 300;
 

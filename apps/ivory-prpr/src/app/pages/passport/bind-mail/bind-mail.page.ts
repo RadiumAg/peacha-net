@@ -1,5 +1,4 @@
 import { Component, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Steps } from 'src/app/components/steps/steps';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngxs/store';
 import { FormControl, Validators, FormBuilder } from '@angular/forms';
@@ -12,9 +11,10 @@ import {
     interval,
     Subject,
 } from 'rxjs';
-import { FetchMe } from 'src/app/core/state/user.action';
 import { Router } from '@angular/router';
 import { take, switchMap, tap, takeUntil } from 'rxjs/operators';
+import { FetchMe } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
 
 @Component({
     selector: 'ivo-bind-mail',
@@ -49,7 +49,7 @@ export class BindMailPage implements OnInit {
 
     token: any;
     wrong_code: any;
-    c$=new Subject
+    c$ = new Subject
     ngOnInit(): void { }
     sendVerifyToPhone() {
         this.sp = combineLatest([this.cooldown$, this.requesting$])
@@ -157,7 +157,7 @@ export class BindMailPage implements OnInit {
                 () => { }
             );
     }
-s$=new BehaviorSubject<string>('')
+    s$ = new BehaviorSubject<string>('')
     sendVerifyToEmail() {
         this.c$.next()
         this.c$.complete()
@@ -186,13 +186,13 @@ s$=new BehaviorSubject<string>('')
                                         this.emailText.setErrors({
                                             time: true,
                                         });
-                                    }else if(e.code==107){
+                                    } else if (e.code == 107) {
                                         this.emailText.setErrors({
                                             register: true,
                                         });
                                     }
                                     this.s$.next(' ')
-                               }
+                                }
                             ),
                             switchMap((_) => {
                                 this.cooldown$.next(60);

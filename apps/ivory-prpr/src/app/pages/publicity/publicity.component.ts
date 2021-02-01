@@ -1,6 +1,6 @@
-import { ModalService } from './../../core/service/modals.service';
 import { Component, OnInit } from '@angular/core';
-import { VideoPlayerComponent } from 'src/app/components/video-player/video-player.component';
+import { VideoPlayerComponent } from 'libs/peacha-core/src/lib/components/video-player/video-player.component';
+import { ModalService } from '@peacha-core';
 
 @Component({
     selector: 'ivo-publicity',
@@ -8,11 +8,11 @@ import { VideoPlayerComponent } from 'src/app/components/video-player/video-play
     styleUrls: ['./publicity.component.less'],
 })
 export class PublicityComponent implements OnInit {
-    constructor(private modal: ModalService) {}
+    constructor(private modal: ModalService) { }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
-    playVideo(src:string) {
+    playVideo(src: string) {
         this.modal.open(VideoPlayerComponent, {
             src,
         });

@@ -1,12 +1,12 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { HttpClient } from '@angular/common/http';
-import { Steps } from 'src/app/components/steps/steps';
 import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import {  FetchMe } from 'src/app/core/state/user.action';
 import { interval, Subject, BehaviorSubject } from 'rxjs';
 import { takeUntil, take, tap } from 'rxjs/operators';
+import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
+import { FetchMe } from 'libs/peacha-core/src/lib/core/state/user.action';
 
 @Component({
     selector: 'ivo-reset-password',
@@ -20,8 +20,8 @@ export class ResetPasswordPage implements OnInit {
         private fb: FormBuilder,
         private router: Router,
     ) {
-        this.vericode = this.fb.control('', [Validators.required, ]);
-        this.password = this.fb.control('', [Validators.required,Validators.pattern('[0-9]{0,6}$')]);
+        this.vericode = this.fb.control('', [Validators.required,]);
+        this.password = this.fb.control('', [Validators.required, Validators.pattern('[0-9]{0,6}$')]);
         this.passwordagain = this.fb.control('', [this.confirmValidator]);
     }
 
@@ -122,7 +122,7 @@ export class ResetPasswordPage implements OnInit {
             p: 5,
             v: this.vericode.value
         }).subscribe(s => {
-            this.token =s.token;
+            this.token = s.token;
             this.steps.next();
         }, e => {
             this.vericode.setErrors({
@@ -138,7 +138,7 @@ export class ResetPasswordPage implements OnInit {
             n: this.passwordagain.value
         }).subscribe(s => {
             this.steps.next();
-        this.store.dispatch(new FetchMe()).subscribe();
+            this.store.dispatch(new FetchMe()).subscribe();
         }, e => {
         });
     }

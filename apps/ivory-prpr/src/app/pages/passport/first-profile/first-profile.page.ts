@@ -7,11 +7,11 @@ import {
     AbstractControl,
 } from '@angular/forms';
 import { Store, Select, State } from '@ngxs/store';
-import { UpdatePublicInformation } from 'src/app/core/state/user.action';
-import { UserState, IvoryError } from 'src/app/core';
 import { Observable } from 'rxjs';
-import { UserStateModel } from 'src/app/core/state/user.state';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserState, IvoryError } from '@peacha-core';
+import { UserStateModel } from 'libs/peacha-core/src/lib/core/state/user.state';
+import { UpdatePublicInformation } from 'libs/peacha-core/src/lib/core/state/user.action';
 
 @Component({
     selector: 'ivo-user-profile',
@@ -55,8 +55,8 @@ export class FirstProfilePage {
         return !this.detailsForm.touched
             ? 'disabled'
             : this.detailsForm.valid
-            ? null
-            : 'disabled';
+                ? null
+                : 'disabled';
     }
 
     get avatar() {

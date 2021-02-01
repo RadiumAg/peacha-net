@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayModule } from '@angular/cdk/overlay';
 // local imports
 import { NavbarModule } from './fragments/navbar/navbar.module';
-import { PeachaCoreModule } from './core/peacha.module';
 import { AppComponent } from './app.component';
 import { FooterModule } from './fragments/footer/footer.module';
 import { PublicityComponent } from './pages/publicity/publicity.component';
@@ -21,6 +20,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { ReviewMechanismComponent } from './pages/review-mechanism/review-mechanism.component';
 import { environment } from '../environments/environment';
+import { PeachaCoreModule } from '@peacha-core';
 
 const routes: Routes = [
 	{
@@ -102,7 +102,7 @@ const routes: Routes = [
 		BrowserModule,
 		FooterModule,
 		BrowserAnimationsModule,
-		PeachaCoreModule.forRoot(),
+		PeachaCoreModule.forRoot({api_gateway:''}),
 		NgxsModule.forRoot([], {
 			developmentMode: !environment.production,
 			// executionStrategy: NoopNgxsExecutionStrategy

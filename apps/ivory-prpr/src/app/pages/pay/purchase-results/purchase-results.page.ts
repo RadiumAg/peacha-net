@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, timer, Subject, BehaviorSubject } from 'rxjs';
 import { tap, takeUntil, switchMap, take } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { ModalService } from 'src/app/core/service/modals.service';
 import { NoResult } from './no-result/no-resule';
+import { ModalService } from '@peacha-core';
 
 
 

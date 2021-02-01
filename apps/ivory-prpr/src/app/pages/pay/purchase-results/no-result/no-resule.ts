@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalRef } from 'src/app/core/service/modals.service';
+import { ModalRef } from '@peacha-core';
 
 @Component({
     selector: 'ivo-no-result',

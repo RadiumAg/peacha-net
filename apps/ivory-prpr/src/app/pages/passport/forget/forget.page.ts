@@ -1,17 +1,15 @@
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Component, ViewChild, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Steps } from 'src/app/components/steps/steps';
 import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { combineLatest, empty, interval, BehaviorSubject, Subscription } from 'rxjs';
 import { take, switchMap, tap, catchError } from 'rxjs/operators';
-import { IvoryError } from 'src/app/core/error';
-import { Toast } from 'src/app/core/toast/toast.service';
 import { Store } from '@ngxs/store';
-import { Logout } from 'src/app/core/state/user.action';
-import { ModalService } from 'src/app/core/service/modals.service';
-import { PopTips } from 'src/app/components/pop-tips/pop-tips';
+import { Toast, ModalService, IvoryError } from '@peacha-core';
+import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
+import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { Logout } from 'libs/peacha-core/src/lib/core/state/user.action';
 
 
 @Component({
@@ -159,7 +157,7 @@ export class ForgetPage {
                                 (e) => {
                                     this.requesting$.next(false);
                                 },
-                                () => {}
+                                () => { }
                             ),
                             switchMap((_) => {
                                 this.cooldown$.next(60);
@@ -169,8 +167,8 @@ export class ForgetPage {
                                         (v) => {
                                             this.cooldown$.next(59 - v);
                                         },
-                                        (e) => {},
-                                        () => {}
+                                        (e) => { },
+                                        () => { }
                                     )
                                 );
                             }),
@@ -190,13 +188,13 @@ export class ForgetPage {
                         );
                 }),
                 tap(
-                    (f) => {},
+                    (f) => { },
                     null,
-                    () => {}
+                    () => { }
                 )
             )
             .subscribe(
-                (b) => {},
+                (b) => { },
                 null,
                 () => {
                     // 销毁时回收...
@@ -235,7 +233,7 @@ export class ForgetPage {
                                 (e) => {
                                     this.requesting$.next(false);
                                 },
-                                () => {}
+                                () => { }
                             ),
                             switchMap((_) => {
                                 this.cooldown$.next(60);
@@ -245,21 +243,21 @@ export class ForgetPage {
                                         (v) => {
                                             this.cooldown$.next(59 - v);
                                         },
-                                        (e) => {},
-                                        () => {}
+                                        (e) => { },
+                                        () => { }
                                     )
                                 );
                             })
                         );
                 }),
                 tap(
-                    (f) => {},
+                    (f) => { },
                     null,
-                    () => {}
+                    () => { }
                 )
             )
             .subscribe(
-                (b) => {},
+                (b) => { },
                 null,
                 () => {
                     // 销毁时回收...

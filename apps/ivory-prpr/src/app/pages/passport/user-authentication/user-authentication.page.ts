@@ -1,18 +1,15 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { Steps } from 'src/app/components/steps/steps';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, Validators } from '@angular/forms';
 import { BehaviorSubject, combineLatest, Subscription, empty, interval, Observable, timer } from 'rxjs';
 import { take, switchMap, tap, catchError, startWith, map } from 'rxjs/operators';
-import { IvoryError } from 'src/app/core/error';
-import { PopTips } from 'src/app/components/pop-tips/pop-tips';
-import { ModalService } from 'src/app/core/service/modals.service';
 import { Select, Store } from '@ngxs/store';
-import { UserState } from 'src/app/core/state/user.state';
-import { Toast } from 'src/app/core/toast/toast.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SubmitInformation, SubmitCardImage } from 'src/app/core/state/user.action';
+import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
+import { UserState, ModalService, Toast, IvoryError } from '@peacha-core';
+import { SubmitInformation, SubmitCardImage } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
 
 @Component({
     selector: 'ivo-user-authentication',
@@ -89,7 +86,7 @@ export class UserAuthenticationPage {
                                 (e) => {
                                     this.requesting$.next(false);
                                 },
-                                () => {}
+                                () => { }
                             ),
                             switchMap((_) => {
                                 this.cooldown$.next(60);
@@ -99,8 +96,8 @@ export class UserAuthenticationPage {
                                         (v) => {
                                             this.cooldown$.next(59 - v);
                                         },
-                                        (e) => {},
-                                        () => {}
+                                        (e) => { },
+                                        () => { }
                                     )
                                 );
                             }),
@@ -117,13 +114,13 @@ export class UserAuthenticationPage {
                         );
                 }),
                 tap(
-                    (f) => {},
+                    (f) => { },
                     null,
-                    () => {}
+                    () => { }
                 )
             )
             .subscribe(
-                (b) => {},
+                (b) => { },
                 null,
                 () => {
                     // 销毁时回收...
@@ -163,7 +160,7 @@ export class UserAuthenticationPage {
                                 (e) => {
                                     this.requesting$.next(false);
                                 },
-                                () => {}
+                                () => { }
                             ),
                             switchMap((_) => {
                                 this.cooldown$.next(60);
@@ -173,21 +170,21 @@ export class UserAuthenticationPage {
                                         (v) => {
                                             this.cooldown$.next(59 - v);
                                         },
-                                        (e) => {},
-                                        () => {}
+                                        (e) => { },
+                                        () => { }
                                     )
                                 );
                             })
                         );
                 }),
                 tap(
-                    (f) => {},
+                    (f) => { },
                     null,
-                    () => {}
+                    () => { }
                 )
             )
             .subscribe(
-                (b) => {},
+                (b) => { },
                 null,
                 () => {
                     // 销毁时回收...
