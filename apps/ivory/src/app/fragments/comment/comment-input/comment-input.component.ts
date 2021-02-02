@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Store, Select } from '@ngxs/store';
+import { Component, ViewChild, ElementRef, Input } from '@angular/core';
+import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ModelComment } from '../model';
@@ -8,8 +8,7 @@ import { UserState } from '@peacha-core';
 @Component({
 	selector: 'ivo-comment-input',
 	templateUrl: './comment-input.component.html',
-	styleUrls: ['./comment-input.component.less'],
-	inputs: ['aid', 'comment'],
+	styleUrls: ['./comment-input.component.less']
 })
 export class CommentInputComponent {
 	@Select(UserState.avatar)
@@ -25,8 +24,8 @@ export class CommentInputComponent {
 		banner: string;
 	}>;
 
-	aid: number;
-	comment: {
+	@Input() aid: number;
+	@Input() comment: {
 		count: number;
 		list: ModelComment[];
 	};
@@ -34,7 +33,7 @@ export class CommentInputComponent {
 	one: ModelComment;
 	@ViewChild('text') text: ElementRef<HTMLTextAreaElement>;
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	send() {
 		this.http

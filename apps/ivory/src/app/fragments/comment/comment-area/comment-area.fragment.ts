@@ -1,20 +1,19 @@
-import { Component, OnInit, Input, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
-import { tap, switchMap, catchError, shareReplay, take, distinctUntilChanged } from 'rxjs/operators';
+import { Component, ChangeDetectorRef, ViewChild, ElementRef, Input } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { tap, switchMap, shareReplay } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ModelComment } from '../model';
 import { CommentEntryComponent } from '../comment-entry/comment-entry.component';
 import { Select } from '@ngxs/store';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, Validators } from '@angular/forms';
-import { Toast, UserState } from '@peacha-core';
-import { ModalService } from 'libs/peacha-core/src/lib/core/service/modals.service';
+import { FormControl } from '@angular/forms';
+import { ModalService, Toast, UserState } from '@peacha-core';
+
 
 @Component({
 	selector: 'ivo-comment-area',
 	templateUrl: './comment-area.fragment.html',
-	styleUrls: ['./comment-area.fragment.less'],
-	inputs: ['aid'],
+	styleUrls: ['./comment-area.fragment.less']
 })
 export class CommentAreaFragment {
 	all: {
@@ -25,7 +24,7 @@ export class CommentAreaFragment {
 
 	comment_aid$ = new BehaviorSubject(0);
 
-	set aid(aid: number) {
+	@Input() set aid(aid: number) {
 		this.comment_aid$.next(aid);
 	}
 
@@ -53,8 +52,30 @@ export class CommentAreaFragment {
 
 	show = false;
 
-	tips(el: HTMLTextAreaElement, input: ElementRef) {
-		const a = el.getBoundingClientRect();
+
+	comments$ = combineLatest([this.page$, this.comment_aid$]).pipe(
+		shareReplay(),
+		switchMap(([page, aid]) => {
+			return this.http
+				.get<{
+					count: number;
+					list: ModelComment[];
+				}>(`/comment/get_comment?c=${aid}&s=10&p=${page - 1}`)
+				.pipe(
+					tap(a => {
+						this.all = a;
+						this.show = true;
+					})
+				);
+		})
+	);
+
+	rootid: string;
+
+	lastActived?: CommentEntryComponent = undefined;
+
+	tips(_el: HTMLTextAreaElement, input: ElementRef) {
+		// const a = el.getBoundingClientRect();
 		this.textarea.valueChanges.subscribe(s => {
 			if (s.length > 200) {
 				this.toast.show('最多只能发200字的评论', {
@@ -66,8 +87,8 @@ export class CommentAreaFragment {
 		});
 	}
 
-	send(el: HTMLTextAreaElement, input: ElementRef) {
-		const a = el.getBoundingClientRect();
+	send(_el: HTMLTextAreaElement, input: ElementRef) {
+		// const a = el.getBoundingClientRect();
 
 		if (this.text.nativeElement.value) {
 			this.comment_aid$.subscribe(aid => {
@@ -119,8 +140,8 @@ export class CommentAreaFragment {
 		}
 	}
 
-	sendTwo(el: HTMLTextAreaElement, input: ElementRef) {
-		const a = el.getBoundingClientRect();
+	sendTwo(_el: HTMLTextAreaElement, input: ElementRef) {
+		// const a = el.getBoundingClientRect();
 		if (this.textt.nativeElement.value) {
 			this.comment_aid$.subscribe(aid => {
 				this.http
@@ -178,27 +199,12 @@ export class CommentAreaFragment {
 			},
 		});
 	}
-	comments$ = combineLatest([this.page$, this.comment_aid$]).pipe(
-		shareReplay(),
-		switchMap(([page, aid]) => {
-			return this.http
-				.get<{
-					count: number;
-					list: ModelComment[];
-				}>(`/comment/get_comment?c=${aid}&s=10&p=${page - 1}`)
-				.pipe(
-					tap(a => {
-						this.all = a;
-						this.show = true;
-					})
-				);
-		})
-	);
+
 
 	toPage(p: number) {
 		this.page$.next(p);
 	}
-	rootid: string;
+
 	constructor(
 		private http: HttpClient,
 		private cdf: ChangeDetectorRef,
@@ -219,12 +225,12 @@ export class CommentAreaFragment {
 					}
 				})
 			)
-			.subscribe(s => {});
+			.subscribe(_s => { });
 	}
 
-	lastActived?: CommentEntryComponent = undefined;
 
-	onactive(cid: number, t: CommentEntryComponent) {
+
+	onactive(_cid: number, t: CommentEntryComponent) {
 		if (this.lastActived) {
 			this.lastActived.active = false;
 			//mark for check
@@ -237,10 +243,4 @@ export class CommentAreaFragment {
 }
 
 export const COMMNET_AREA_PAGE_SIZE = 20;
-function compare(a: number, b: number): boolean {
-	if (a != b) {
-		return false;
-	} else {
-		return true;
-	}
-}
+
