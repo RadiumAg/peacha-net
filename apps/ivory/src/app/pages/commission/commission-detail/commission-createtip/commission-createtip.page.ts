@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { CommissionApiService } from '../../service/commission-api.service';
@@ -43,10 +43,10 @@ export class CommissionCreatetipPage implements OnInit {
 		private router: Router,
 		private cdr: ChangeDetectorRef,
 		private isError: CommissionDetailErrorService
-	) {}
+	) { }
 
 	tipsList$ = combineLatest([this.refresh$, this.route.queryParams]).pipe(
-		switchMap(([r, p]) => {
+		switchMap(([_r, p]) => {
 			return this.api.tipsList(p.id).pipe(
 				tap(l => {
 					this.tipList = l;
@@ -70,7 +70,7 @@ export class CommissionCreatetipPage implements OnInit {
 					.subscribe(s => {
 						if (s) {
 							this.api.createTips(this.detail.getCommissionId(), s?.money, s?.text).subscribe(
-								i => {
+								_i => {
 									this.tipList.list.unshift({
 										id: -1,
 										amount: Number(s.money) * 10,

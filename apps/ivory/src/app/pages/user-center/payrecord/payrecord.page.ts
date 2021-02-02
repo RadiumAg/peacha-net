@@ -1,10 +1,10 @@
 import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { TradeApiService } from '../../pay/trade-api.service';
 
 @Component({
@@ -12,10 +12,9 @@ import { TradeApiService } from '../../pay/trade-api.service';
 	templateUrl: './payrecord.page.html',
 	styleUrls: ['./payrecord.page.less'],
 })
-export class PayrecordPage implements OnInit {
-	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private tradeApi: TradeApiService) {}
+export class PayrecordPage {
+	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private tradeApi: TradeApiService) { }
 
-	ngOnInit(): void {}
 	key = new FormControl(null);
 	date = new FormControl(null);
 	page$ = new BehaviorSubject<number>(0);
@@ -27,7 +26,7 @@ export class PayrecordPage implements OnInit {
 				.queryPayLists(time, r.p ? r.p - 1 : 0, 10)
 
 				.pipe(
-					tap(s => {
+					tap(_s => {
 						this.page$.next(r.p ?? 1);
 					})
 				);
@@ -43,7 +42,7 @@ export class PayrecordPage implements OnInit {
 			queryParamsHandling: 'merge',
 		});
 	}
-	handleDatePanelChange(mode: string): void {
+	handleDatePanelChange(_mode: string): void {
 		console.log(1);
 		this.router.navigate([], {
 			queryParams: {

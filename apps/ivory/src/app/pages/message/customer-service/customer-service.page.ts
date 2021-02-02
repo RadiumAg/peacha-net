@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, Input, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { UserState, ModalService, ZoomService, Toast } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
 import { Observable, BehaviorSubject, Subject, timer, EMPTY } from 'rxjs';
 import { switchMap, tap, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { IllustZoomModalComponent } from '../../work/illust-zoom-modal/illust-zoom-modal.component';
@@ -28,7 +28,7 @@ export class CustomerServicePage implements OnDestroy {
 	@Select(UserState.id)
 	id$: Observable<number>;
 
-	histroy: any = [];
+	histroy = [];
 
 	now = new Date().getTime();
 	lastTime$ = new BehaviorSubject(this.now);
@@ -58,7 +58,7 @@ export class CustomerServicePage implements OnDestroy {
 			if (s > 0) {
 				timer(1000, 10000)
 					.pipe(
-						switchMap(t => {
+						switchMap(_t => {
 							return this.http.get<{
 								list: {
 									sender_id: number;
@@ -164,7 +164,7 @@ export class CustomerServicePage implements OnDestroy {
 		}
 	}
 
-	trackByIndex(index, item): void {
+	trackByIndex(index, _item): void {
 		return index;
 	}
 	timerBox(): void {
@@ -180,7 +180,7 @@ export class CustomerServicePage implements OnDestroy {
 		});
 	}
 
-	contentChange(p: number, text: string): void {}
+	contentChange(_p: number, _text: string): void { }
 
 	sendPic(event: any): void {
 		if (event.type.split('image').length > 1) {

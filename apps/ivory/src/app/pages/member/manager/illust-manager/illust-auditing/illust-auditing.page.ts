@@ -24,11 +24,25 @@ type ProductionTwo = {
 	styleUrls: ['./illust-auditing.page.less'],
 })
 export class IllustAuditingPage {
-	showList: any = [];
+	showList = [];
 	key: FormControl = new FormControl('');
 	update$ = new BehaviorSubject(true);
 	currentPage$ = new BehaviorSubject(1);
-	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private _sharedService: SharedService) {}
+
+
+	works$ = combineLatest([this.route.queryParams, this.update$]).pipe(
+		switchMap(([params, _i]) => {
+			return this.http
+				.get<ProductionTwo>(`/work/get_apply_works?k=${params.k ?? ''}&p=${params.p ? params.p - 1 : 0}&s=6&c=1&a=0`)
+				.pipe(
+					tap(s => {
+						this.showList = s.list;
+						this.currentPage$.next(params.p ?? 1);
+					})
+				);
+		})
+	);
+	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private _sharedService: SharedService) { }
 
 	params$ = this.route.queryParams.pipe(
 		tap(params => {
@@ -46,18 +60,6 @@ export class IllustAuditingPage {
 		});
 	}
 
-	works$ = combineLatest(this.route.queryParams, this.update$).pipe(
-		switchMap(([params, i]) => {
-			return this.http
-				.get<ProductionTwo>(`/work/get_apply_works?k=${params.k ?? ''}&p=${params.p ? params.p - 1 : 0}&s=6&c=1&a=0`)
-				.pipe(
-					tap(s => {
-						this.showList = s.list;
-						this.currentPage$.next(params.p ?? 1);
-					})
-				);
-		})
-	);
 
 	toPage(p: number) {
 		this.router.navigate([], {

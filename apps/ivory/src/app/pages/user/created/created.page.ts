@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, tap, map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
@@ -13,12 +13,12 @@ import { UserState, Collection, ModalService } from '@peacha-core';
 	templateUrl: './created.page.html',
 	styleUrls: ['./created.page.less'],
 })
-export class CreatedPage implements OnInit {
+export class CreatedPage {
 	@Select(UserState.id)
 	id$: Observable<number>;
 
 	refresh$ = new BehaviorSubject<number>(0);
-	create$: Observable<Collection> = combineLatest(this.route.parent!.params, this.route!.queryParams, this.refresh$).pipe(
+	create$: Observable<Collection> = combineLatest(this.route.parent.params, this.route.queryParams, this.refresh$).pipe(
 		switchMap(([c, params]) => {
 			return this.http.get<any>(`/work/get_create_collections?u=${c.id}&p=${params.page ? params.page - 1 : 0}&s=12`).pipe(
 				tap(_ => {
@@ -26,7 +26,7 @@ export class CreatedPage implements OnInit {
 				})
 			);
 		}),
-		catchError(e => {
+		catchError(_e => {
 			return of({
 				count: 0,
 				list: [],
@@ -37,10 +37,10 @@ export class CreatedPage implements OnInit {
 	indexPage$ = new BehaviorSubject<number>(1);
 
 	get pageUid$() {
-		return this.route.parent!.params.pipe(map(s => s.id as number));
+		return this.route.parent.params.pipe(map(s => s.id as number));
 	}
 
-	constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private modal: ModalService) {}
+	constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private modal: ModalService) { }
 
 	createCollection() {
 		this.modal
@@ -59,5 +59,5 @@ export class CreatedPage implements OnInit {
 			queryParamsHandling: 'merge',
 		});
 	}
-	ngOnInit(): void {}
+
 }

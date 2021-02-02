@@ -4,11 +4,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap, switchMap, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { IllustZoomModalComponent } from './illust-zoom-modal/illust-zoom-modal.component';
-import { ReportModalComponent } from 'libs/peacha-core/src/lib/components/report-modal/report-modal.component';
-import { DropDownService } from 'libs/peacha-core/src/lib/core/service/dropdown.service';
-import { ModalService } from 'libs/peacha-core/src/lib/core/service/modals.service';
-import { ZoomService } from 'libs/peacha-core/src/lib/core/service/zoom.service';
-import { CopyrightList } from '@peacha-core';
+import { CopyrightList, DropDownService, ModalService, ZoomService } from '@peacha-core';
+import { ReportModalComponent } from '@peacha-core/components';
 
 @Component({
 	selector: 'ivo-work',

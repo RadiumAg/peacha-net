@@ -25,7 +25,7 @@ export class ChatResolve implements Resolve<any> {
 
 	totalCount = 0;
 
-	resolve(route: import('@angular/router').ActivatedRouteSnapshot, state: import('@angular/router').RouterStateSnapshot) {
+	resolve() {
 		return this.http.get<RoomList>(`/chat/room_list?r=&s=20`).pipe(
 			switchMap(list => {
 				const idlist = [];

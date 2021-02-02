@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { tap, switchMap, startWith } from 'rxjs/operators';
+import { tap, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -54,7 +54,7 @@ export class CooperateWorkPage {
 			}
 		})
 	);
-	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) {}
+	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) { }
 
 	addParamsOne(id: number) {
 		this.router.navigate([], {

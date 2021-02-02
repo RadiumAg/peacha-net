@@ -1,14 +1,14 @@
-import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, combineLatest, BehaviorSubject, empty } from 'rxjs';
+import { Observable, combineLatest, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, map, startWith, tap, take } from 'rxjs/operators';
+import { switchMap, startWith, tap, take } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Select } from '@ngxs/store';
 import { TradeApiService } from '../../pay/trade-api.service';
 import { UserState, ModalService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
+import { PopTips, Steps } from '@peacha-core/components';
+
 
 @Component({
 	selector: 'ivo-wallet',
@@ -24,13 +24,41 @@ export class WalletPage {
 	key: FormControl = new FormControl('');
 	isHelpShow = false;
 
+	update$ = new BehaviorSubject<number>(0);
+
+	page$ = new BehaviorSubject<number>(0);
+
+
+	dateMonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+	thisYear = new Date().getFullYear();
+	thisMonth = new Date().getMonth() + 1;
+
+	account$: Observable<{
+		is_usable: boolean;
+		balance: number;
+		cashout: number;
+	}> = combineLatest([this.update$]).pipe(
+		switchMap(_s => {
+			return this.http.get<any>(`/trade/wallet/info`);
+		})
+	);
+
+	wallet$ = combineLatest([this.route.queryParams, this.date.valueChanges.pipe(startWith(new Date())), this.update$]).pipe(
+		switchMap(([r]) => {
+			return this.tradeapi.queryWalletBill(r.m as Date, r.p ?? 1, r.s ?? 7).pipe(
+				tap(_s => {
+					this.page$.next(r.p ?? 1);
+				})
+			);
+		})
+	);
 	constructor(
 		private http: HttpClient,
 		private route: ActivatedRoute,
 		private router: Router,
 		private modal: ModalService,
 		private tradeapi: TradeApiService
-	) {}
+	) { }
 	@ViewChild(Steps) steps: Steps;
 
 	toWithdraw() {
@@ -47,11 +75,11 @@ export class WalletPage {
 			)
 			.subscribe();
 	}
-	update$ = new BehaviorSubject<number>(0);
+
 	refresh() {
 		this.update$.next(1);
 	}
-	handleDatePanelChange(mode: string): void {
+	handleDatePanelChange(_mode: string): void {
 		console.log(1);
 		this.router.navigate([], {
 			queryParams: {
@@ -59,27 +87,7 @@ export class WalletPage {
 			},
 		});
 	}
-	page$ = new BehaviorSubject<number>(0);
 
-	account$: Observable<{
-		is_usable: boolean;
-		balance: number;
-		cashout: number;
-	}> = combineLatest(this.update$).pipe(
-		switchMap(s => {
-			return this.http.get<any>(`/trade/wallet/info`);
-		})
-	);
-
-	wallet$ = combineLatest([this.route.queryParams, this.date.valueChanges.pipe(startWith(new Date())), this.update$]).pipe(
-		switchMap(([r]) => {
-			return this.tradeapi.queryWalletBill(r.m as Date, r.p ?? 1, r.s ?? 7).pipe(
-				tap(s => {
-					this.page$.next(r.p ?? 1);
-				})
-			);
-		})
-	);
 
 	// help() {
 	//     this.isHelpShow = !this.isHelpShow;
@@ -140,7 +148,4 @@ export class WalletPage {
 		}
 	}
 
-	dateMonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-	thisYear = new Date().getFullYear();
-	thisMonth = new Date().getMonth() + 1;
 }

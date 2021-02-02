@@ -8,9 +8,9 @@ import { OpalUser, IvoryError } from '@peacha-core';
 
 @Injectable()
 export class UserResolve implements Resolve<any> {
-	constructor(private http: HttpClient, private store: Store, private router: Router) {}
+	constructor(private http: HttpClient, private store: Store, private router: Router) { }
 
-	resolve(route: import('@angular/router').ActivatedRouteSnapshot, state: import('@angular/router').RouterStateSnapshot) {
+	resolve(route: import('@angular/router').ActivatedRouteSnapshot) {
 		let id = route.params.id;
 		if (id === '') {
 			id = this.store.selectSnapshot(s => s.user.id);

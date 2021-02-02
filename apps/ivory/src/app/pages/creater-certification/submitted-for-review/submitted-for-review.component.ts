@@ -1,4 +1,3 @@
-import { title } from 'process';
 import { ActivatedRoute } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
 
@@ -8,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 	styleUrls: ['./submitted-for-review.component.less'],
 })
 export class SubmittedForReviewComponent implements OnInit {
-	constructor(private route: ActivatedRoute) {}
+	constructor(private route: ActivatedRoute) { }
 	@Input() ImgSrc = '/assets/image/submitted_for_review/01.png';
 	@Input() Title = '您已提交审核，请耐心等待';
 	@Input() backRoute = '/setting/security';

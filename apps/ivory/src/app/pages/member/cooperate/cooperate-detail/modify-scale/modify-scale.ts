@@ -1,6 +1,5 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
-import { ModalRef } from '@peacha-core';
-import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
+import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -10,7 +9,11 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ModifyScale {
 	@ViewChild('inputNum') num: ElementRef;
+
+	shownum = 0;
+
 	number$ = new BehaviorSubject<number>(0);
+
 	constructor(private modalRef: ModalRef<ModifyScale>, @Inject(MODAL_DATA_TOKEN) public n: number) {
 		this.number$.next(n);
 		this.shownum = n * 100;
@@ -22,8 +25,6 @@ export class ModifyScale {
 	sure() {
 		this.modalRef.close(this.number$.value);
 	}
-
-	shownum = 0;
 
 	setPrecent(num: { process: number }) {
 		this.shownum = Number((num.process * 100).toFixed(0));

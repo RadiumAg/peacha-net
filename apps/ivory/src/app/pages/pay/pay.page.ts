@@ -2,11 +2,10 @@ import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, BehaviorSubject, combineLatest, timer, Subject, Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { switchMap, tap, startWith, take, map, withLatestFrom, shareReplay, takeWhile, takeUntil } from 'rxjs/operators';
+import { switchMap, tap, take, map, withLatestFrom, shareReplay, takeWhile, takeUntil } from 'rxjs/operators';
 import { ModalService, TradeInfo } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
 import { TradeApiService } from './trade-api.service';
+import { PopTips, Steps } from '@peacha-core/components';
 
 const TimeOut = 300;
 
@@ -22,7 +21,7 @@ export class PayPage implements OnInit, OnDestroy {
 		private http: HttpClient,
 		private modal: ModalService,
 		private tradeApi: TradeApiService
-	) {}
+	) { }
 	@ViewChild(Steps) steps: Steps;
 
 	wallet$: Observable<number>;
@@ -44,6 +43,35 @@ export class PayPage implements OnInit, OnDestroy {
 	//         return this.tradeApi.channelList(s.tradeId);
 	//     })
 	// );
+
+	// 用来判断选择支付方式页面倒计时五分钟是否完成
+	show$ = new BehaviorSubject<boolean>(true);
+
+	timer$ = timer(1000, 1000).pipe(
+		withLatestFrom(this.tradeInfo$),
+		take(TimeOut),
+		map(([_, p]) => {
+			const start = new Date(Number(p.startTime));
+			const end = new Date(Date.now());
+			const sumSecond = 60 - start.getSeconds() + end.getSeconds();
+			let sumMinute: number;
+
+			if (end.getMinutes() >= start.getMinutes()) {
+				sumMinute = (end.getMinutes() - start.getMinutes()) * 60;
+			} else {
+				sumMinute = (60 + end.getMinutes() - start.getMinutes()) * 60;
+			}
+			if (sumMinute + sumSecond - 60 < TimeOut) {
+				this.show$.next(true);
+				return Number(p.startTime) + TimeOut * 1000 - Date.now();
+			} else {
+				this.show$.next(false);
+				return 0;
+			}
+		})
+	);
+
+	destroy$ = new Subject<void>();
 
 	ngOnInit() {
 		let heartbeatSub: Subscription;
@@ -81,32 +109,7 @@ export class PayPage implements OnInit, OnDestroy {
 		});
 	}
 
-	// 用来判断选择支付方式页面倒计时五分钟是否完成
-	show$ = new BehaviorSubject<boolean>(true);
 
-	timer$ = timer(1000, 1000).pipe(
-		withLatestFrom(this.tradeInfo$),
-		take(TimeOut),
-		map(([_, p]) => {
-			const start = new Date(Number(p.startTime));
-			const end = new Date(Date.now());
-			const sumSecond = 60 - start.getSeconds() + end.getSeconds();
-			let sumMinute: number;
-
-			if (end.getMinutes() >= start.getMinutes()) {
-				sumMinute = (end.getMinutes() - start.getMinutes()) * 60;
-			} else {
-				sumMinute = (60 + end.getMinutes() - start.getMinutes()) * 60;
-			}
-			if (sumMinute + sumSecond - 60 < TimeOut) {
-				this.show$.next(true);
-				return Number(p.startTime) + TimeOut * 1000 - Date.now();
-			} else {
-				this.show$.next(false);
-				return 0;
-			}
-		})
-	);
 
 	// 确定支付方式按钮
 	next() {
@@ -164,7 +167,7 @@ export class PayPage implements OnInit, OnDestroy {
 				}
 			});
 	}
-	destroy$ = new Subject<void>();
+
 
 	payByAlipay() {
 		this.route.queryParams
@@ -181,7 +184,7 @@ export class PayPage implements OnInit, OnDestroy {
 							document.forms[0].submit();
 							div.innerHTML = '';
 						},
-						e => {
+						_e => {
 							this.steps.goto('fali');
 						}
 					);

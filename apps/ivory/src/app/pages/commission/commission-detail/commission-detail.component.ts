@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Select } from '@ngxs/store';
 import { UserState, ModalService, ChatStartService, Toast } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
 import { Observable, combineLatest, Subject, fromEvent } from 'rxjs';
 import { tap, takeUntil, shareReplay, take, debounceTime } from 'rxjs/operators';
 import { CommissionDetail } from '../model/commission-detail';
@@ -140,7 +140,7 @@ export class CommissionDetailComponent implements OnInit, OnDestroy {
 		private isError: CommissionDetailErrorService,
 		private chat: ChatStartService,
 		private toast: Toast
-	) {}
+	) { }
 
 	destroy$ = new Subject<void>();
 	ngOnDestroy(): void {
@@ -519,7 +519,7 @@ export class CommissionDetailComponent implements OnInit, OnDestroy {
 				.subscribe(i => {
 					if (i) {
 						this.commissionApi.delayTime(this.detailState.getCommissionId(), i).subscribe(
-							s => {
+							_s => {
 								this.detailState.setCommissionDay(this.detailState.getCommissionDay() + i);
 								this.commissionDay = this.commissionDay + Number(i);
 								this.lasttime = this.lasttime + Number(i) * 24 * 60 * 60 * 1000;
@@ -605,8 +605,6 @@ export class CommissionDetailComponent implements OnInit, OnDestroy {
 				});
 			});
 	}
-
-	clickEvent$;
 
 	func(i: number): void {
 		if (!((this.commissionStatus$.value === 6 || this.commissionStatus$.value === 4) && i === 1)) {

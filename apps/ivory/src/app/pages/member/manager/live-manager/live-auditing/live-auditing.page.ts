@@ -25,10 +25,23 @@ type ProductionTwo = {
 })
 export class LiveAuditingPage {
 	key: FormControl = new FormControl('');
-	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private _sharedService: SharedService) {}
+	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private _sharedService: SharedService) { }
 	update$ = new BehaviorSubject<boolean>(true);
 	currentPage$ = new BehaviorSubject(0);
-	showList: any = [];
+	showList = [];
+
+	works$ = combineLatest([this.update$, this.route.queryParams]).pipe(
+		switchMap(([_up, params]) => {
+			return this.http
+				.get<ProductionTwo>(`/work/get_apply_works?k=${params.k ?? ''}&p=${params.p ? params.p - 1 : 0}&s=6&c=0&a=0`)
+				.pipe(
+					tap(s => {
+						this.showList = s.list;
+						this.currentPage$.next(params.p ?? 1);
+					})
+				);
+		})
+	);
 
 	params$ = this.route.queryParams.pipe(
 		tap(params => {
@@ -46,18 +59,7 @@ export class LiveAuditingPage {
 		});
 	}
 
-	works$ = combineLatest(this.update$, this.route.queryParams).pipe(
-		switchMap(([up, params]) => {
-			return this.http
-				.get<ProductionTwo>(`/work/get_apply_works?k=${params.k ?? ''}&p=${params.p ? params.p - 1 : 0}&s=6&c=0&a=0`)
-				.pipe(
-					tap(s => {
-						this.showList = s.list;
-						this.currentPage$.next(params.p ?? 1);
-					})
-				);
-		})
-	);
+
 
 	toPage(p: number) {
 		this.router.navigate([], {

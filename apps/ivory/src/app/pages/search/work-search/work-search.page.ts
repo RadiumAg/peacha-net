@@ -17,7 +17,7 @@ export class WorkSearchPage {
 		})
 	);
 
-	constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
+	constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
 	sp: FormControl = new FormControl();
 	ep: FormControl = new FormControl('', [Validators.maxLength(10)]);
@@ -26,18 +26,18 @@ export class WorkSearchPage {
 	sp$ = new BehaviorSubject<[number, number]>([0, 0]);
 	workdata$: Observable<{
 		count: number;
+		// eslint-disable-next-line @typescript-eslint/ban-types
 		list: {};
 	}> = combineLatest([this.route.queryParams, this.sp$]).pipe(
-		switchMap(([r, sp]) => {
+		switchMap(([r, _sp]) => {
 			const key: string = encodeURIComponent(r.keyword ?? '');
 			return this.http
 				.get<any>(
-					`/work/search_work?k=${key ?? ''}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ? r.o : key ? 0 : 1}&dd=${r.dd ?? 0}&c=${
-						r.c === undefined ? '-1' : r.c
+					`/work/search_work?k=${key ?? ''}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ? r.o : key ? 0 : 1}&dd=${r.dd ?? 0}&c=${r.c === undefined ? '-1' : r.c
 					}`
 				)
 				.pipe(
-					tap(s => {
+					tap(_s => {
 						this.page$.next(r.p ?? 1);
 					})
 					// catchError((err) => of({ count: 0 }))

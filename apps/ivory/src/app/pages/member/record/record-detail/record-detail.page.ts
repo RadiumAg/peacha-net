@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { switchMap } from 'rxjs/operators';
 	styleUrls: ['./record-detail.page.less'],
 })
 export class RecordDetailPage {
-	constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {}
+	constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) { }
 
 	order$ = this.route.queryParams.pipe(
 		switchMap(r => {

@@ -31,9 +31,9 @@ export class ReceiveReplyPage implements OnDestroy {
 
 	pageOne$ = new BehaviorSubject(0);
 
-	constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private scrollDispatcher: ScrollDispatcher) {}
+	constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private scrollDispatcher: ScrollDispatcher) { }
 
-	reg = new RegExp(/\{<@(?<link>[^>]*?)>(?<show>[^\}]*?)}/, 'ig');
+	reg = new RegExp(/\{<@(?<link>[^>]*?)>(?<show>[^}]*?)}/, 'ig');
 
 	active$ = new BehaviorSubject(false);
 	active = false;

@@ -25,9 +25,9 @@ type ProductionTwo = {
 })
 export class IllustFailPage {
 	key: FormControl = new FormControl('');
-	showList: any = [];
+	showList = [];
 
-	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private _sharedService: SharedService) {}
+	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private _sharedService: SharedService) { }
 	update$ = new BehaviorSubject<boolean>(true);
 	currentPage$ = new BehaviorSubject(0);
 
@@ -37,8 +37,8 @@ export class IllustFailPage {
 		})
 	);
 
-	works$ = combineLatest(this.update$, this.route.queryParams).pipe(
-		switchMap(([up, params]) => {
+	works$ = combineLatest([this.update$, this.route.queryParams]).pipe(
+		switchMap(([_up, params]) => {
 			return this.http
 				.get<ProductionTwo>(`/work/get_apply_works?k=${params.k ?? ''}&p=${params.p ? params.p - 1 : 0}&s=6&c=1&a=2`)
 				.pipe(

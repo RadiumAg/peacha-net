@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ModalRef } from '@peacha-core';
-import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
 
 @Component({
 	selector: 'ivo-delete-tip',
@@ -9,7 +8,7 @@ import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
 	styleUrls: ['./delete-tip.less'],
 })
 export class DeleteTip {
-	constructor(private modalRef: ModalRef<DeleteTip>, @Inject(MODAL_DATA_TOKEN) public collectionId: number, private http: HttpClient) {}
+	constructor(private modalRef: ModalRef<DeleteTip>, @Inject(MODAL_DATA_TOKEN) public collectionId: number, private http: HttpClient) { }
 
 	deleteCollection() {
 		return this.http

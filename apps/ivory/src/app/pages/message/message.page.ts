@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { UserState, CustomerService } from '@peacha-core';
-import { ChatState } from 'libs/peacha-core/src/lib/core/state/chat.state';
+import { ChatState } from '@peacha-core/state';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 @Component({

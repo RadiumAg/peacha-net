@@ -1,11 +1,11 @@
-import { Component, ChangeDetectorRef, TrackByFunction } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, BehaviorSubject, combineLatest, fromEvent, merge, Subject, ReplaySubject } from 'rxjs';
+import { Observable, of, BehaviorSubject, combineLatest, fromEvent, merge } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, catchError, tap, map, take, debounceTime, filter, mergeMap, share, shareReplay } from 'rxjs/operators';
+import { switchMap, catchError, tap, map, take, debounceTime, filter, mergeMap } from 'rxjs/operators';
 import { Select } from '@ngxs/store';
-import { UserState, Work, WorkSale, WorkCategory, ModalService, WorkApiService } from '@peacha-core';
-import { WorkSelectorComponent } from 'libs/peacha-core/src/lib/components/work-selector/work-selector.component';
+import { UserState, WorkSale, WorkCategory, ModalService, WorkApiService } from '@peacha-core';
+import { WorkSelectorComponent } from '@peacha-core/components';
 
 @Component({
 	selector: 'ivo-homepage',
@@ -18,7 +18,7 @@ export class HomepagePage {
 
 	pageId$ = this.route.params.pipe(
 		map(s => Number(s.id) as number),
-		tap(id => {
+		tap(_id => {
 			this.count = 0;
 			this.page = 1;
 			this.cache = [];
@@ -36,7 +36,7 @@ export class HomepagePage {
 	refresh$ = new BehaviorSubject<number>(0);
 
 	represent$ = combineLatest([this.pageId$, this.refresh$]).pipe(
-		switchMap(([id, r]) => {
+		switchMap(([id, _r]) => {
 			return this.workApi.getRepresentWork(id).pipe(
 				tap(s => {
 					this.representidList = s.list.map((u: { id: number }) => u.id);
@@ -46,7 +46,7 @@ export class HomepagePage {
 				})
 			);
 		}),
-		catchError(e => {
+		catchError(_e => {
 			return of({
 				count: 0,
 				list: [],
@@ -73,7 +73,7 @@ export class HomepagePage {
 	loadedItems$ = combineLatest([this.pageId$, this.loadByScroll$]).pipe(
 		mergeMap(([id, _]) => {
 			return this.workApi.getWorks(id, this.page, this.pageSize, '', WorkSale.All, WorkCategory.All).pipe(
-				tap(() => {}),
+				tap(() => { }),
 				tap(res => {
 					this.count = res.count;
 					this.cache = [...this.cache, ...res.list];
@@ -91,7 +91,7 @@ export class HomepagePage {
 		private router: Router,
 		private cdr: ChangeDetectorRef,
 		private workApi: WorkApiService
-	) {}
+	) { }
 
 	changeBest(): void {
 		this.modal

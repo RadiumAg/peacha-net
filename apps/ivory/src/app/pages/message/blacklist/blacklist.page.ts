@@ -64,7 +64,7 @@ export class BlacklistPage implements OnInit, OnDestroy {
 		.subscribe();
 
 	blackList$ = combineLatest([this.route.queryParams, this.change$]).pipe(
-		switchMap(([p, c]) => {
+		switchMap(([p, _c]) => {
 			if (p.page) {
 				return this.http
 					.get<{
@@ -104,7 +104,7 @@ export class BlacklistPage implements OnInit, OnDestroy {
 	}
 
 	cancelBlack(id: number): void {
-		this.http.get(`/user/black?u=${id}`).subscribe(s => {
+		this.http.get(`/user/black?u=${id}`).subscribe(_s => {
 			this.list = this.list.filter(l => l.id != id);
 			this.change$.next(1);
 		});
