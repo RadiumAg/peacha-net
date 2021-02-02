@@ -105,7 +105,7 @@ export class Select implements ControlValueAccessor, SelectFather, AfterContentI
 		this.overlayRef
 			.backdropClick()
 			.pipe(takeUntil(this.overlayRef.detachments()))
-			.subscribe(_ => {
+			.subscribe(() => {
 				this.overlayRef.detach();
 				this.render.removeClass(this.hello?.nativeElement, 'zhuan');
 				this.selected = false;

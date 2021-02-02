@@ -1,11 +1,11 @@
-import { Directive, ViewContainerRef, TemplateRef, Input, Host } from '@angular/core';
+import { Directive, ViewContainerRef, TemplateRef, Input, Host, OnInit, DoCheck } from '@angular/core';
 import { Steps } from './steps';
 
 @Directive({
 	selector: '[ivoStep]',
 })
-export class Step {
-	constructor(public viewContainer: ViewContainerRef, public template: TemplateRef<any>, @Host() private stepHost: Steps) {}
+export class Step implements OnInit, DoCheck {
+	constructor(public viewContainer: ViewContainerRef, public template: TemplateRef<any>, @Host() private stepHost: Steps) { }
 
 	@Input('ivoStep') step: string;
 

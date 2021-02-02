@@ -1,5 +1,5 @@
 import { ModalRef, ModalService } from './../../core/service/modals.service';
-import { Component, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, Inject, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
@@ -15,7 +15,7 @@ import { PopTips } from '../pop-tips/pop-tips';
 	styleUrls: ['./report-modal.component.less'],
 	animations: [MODAL_ANIMATION],
 })
-export class ReportModalComponent {
+export class ReportModalComponent implements AfterContentChecked {
 	options$ = new BehaviorSubject<string[]>([
 		'违法违禁',
 		'色情',
@@ -38,7 +38,7 @@ export class ReportModalComponent {
 		private modal: ModalService,
 		@Inject(MODAL_DATA_TOKEN)
 		public id: number
-	) {}
+	) { }
 
 	form = this.fb.group({
 		option: ['', Validators.required],
@@ -68,23 +68,25 @@ export class ReportModalComponent {
 			})
 			.pipe(take(1))
 			.subscribe({
-				next: _ => {
+				next: () => {
 					this.modal
 						.open(PopTips, ['举报成功', 0, 1])
 						.afterClosed()
 						.pipe(take(1))
 						.subscribe(_ => {
+							// eslint-disable-next-line no-extra-boolean-cast
 							if (!!_) {
 								this.modalRef.close();
 							}
 						});
 				},
-				error: _ => {
+				error: () => {
 					this.modal
 						.open(PopTips, ['举报失败', 1, 0])
 						.afterClosed()
 						.pipe(take(1))
 						.subscribe(_ => {
+							// eslint-disable-next-line no-extra-boolean-cast
 							if (!!_) {
 								this.modalRef.close();
 							}

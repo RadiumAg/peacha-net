@@ -21,7 +21,7 @@ import { dataURLtoBlob } from '../../core/commom/common';
 	],
 })
 export class CropImage implements ControlValueAccessor {
-	constructor(private modal: ModalService, private changeDetectorRef: ChangeDetectorRef) {}
+	constructor(private modal: ModalService, private changeDetectorRef: ChangeDetectorRef) { }
 
 	@ViewChild('inputAvatar') inputAvatar: ElementRef;
 
@@ -45,7 +45,7 @@ export class CropImage implements ControlValueAccessor {
 						if (img) {
 							this.imgUrl = img;
 							this.changeDetectorRef.markForCheck();
-							this.cropImage = dataURLtoBlob(this.imgUrl!);
+							this.cropImage = dataURLtoBlob(this.imgUrl);
 							this.updata(this.cropImage);
 						} else {
 							// alert("没有img")
@@ -54,12 +54,10 @@ export class CropImage implements ControlValueAccessor {
 
 				this.inputAvatar.nativeElement.value = null;
 			} else {
-				let a = '你上传的图片尺寸过大！最大为5M';
-				this.modal.open(PopTips, [a, false]);
+				this.modal.open(PopTips, ['你上传的图片尺寸过大！最大为5M', false]);
 			}
 		} else {
-			let a = '图片格式不正确，背景图仅支持.png,.jpg,.jpeg';
-			this.modal.open(PopTips, [a, false]);
+			this.modal.open(PopTips, ['图片格式不正确，背景图仅支持.png,.jpg,.jpeg', false]);
 		}
 	}
 
@@ -71,5 +69,5 @@ export class CropImage implements ControlValueAccessor {
 		this.updata = fn;
 	}
 
-	registerOnTouched(fn: any) {}
+	registerOnTouched(fn: any) { }
 }

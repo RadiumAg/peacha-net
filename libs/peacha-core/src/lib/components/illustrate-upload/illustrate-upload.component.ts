@@ -211,7 +211,7 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 		this.fnChange = fn;
 	}
 
-	registerOnTouched(fn: any) {}
+	registerOnTouched(fn: any) { }
 
 	trackBy(index: number, f: UploadImage) {
 		return f.symbol;
@@ -220,7 +220,7 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 
 type UploadImage = {
 	// tslint:disable-next-line: ban-types
-	symbol: Symbol;
+	symbol: symbol;
 	process$: Observable<UpladoProcess>;
 } & UploadToken;
 
