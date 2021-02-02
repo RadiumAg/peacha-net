@@ -23,7 +23,10 @@
 			"@peacha-core/feature": ["libs/peacha-core/src/lib/features/index.ts"],
 			"@peacha-core/components": ["libs/peacha-core/src/lib/components/index.ts"],
 			"@peacha-core/services": ["libs/peacha-core/src/lib/core/service/index.ts"],
-			"@peacha-studio-core": ["libs/peacha-studio-core/src/index.ts"]
+			"@peacha-studio-core": ["libs/peacha-studio-core/src/index.ts"],
+			"@peacha-studio-core/components": ["libs/peacha-studio-core/src/lib/components/index.ts"],
+			"@peacha-studio-core/vfs": ["libs/peacha-studio-core/src/lib/core/vfs/index.ts"],
+			"@peacha-studio-core/zip": ["libs/peacha-studio-core/src/lib/core/devkit/zip/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]

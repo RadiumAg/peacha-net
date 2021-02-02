@@ -3,7 +3,13 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { environment } from '../environments/environment';
 
-declare let gtag: (eventName: string, param: any, param2: any) => {};
+declare let gtag: (
+	eventName: string,
+	param: any,
+	param2: any
+) => {
+	//
+};
 
 @Component({
 	selector: 'ivo-root',

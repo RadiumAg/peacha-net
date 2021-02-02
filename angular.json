@@ -10,7 +10,10 @@
 				"lint": {
 					"builder": "@nrwl/linter:eslint",
 					"options": {
-						"lintFilePatterns": ["libs/peacha-core/src/**/*.ts", "libs/peacha-core/src/**/*.html"]
+						"lintFilePatterns": [
+							"libs/peacha-core/src/**/*.ts",
+							"libs/peacha-core/src/**/*.html"
+						]
 					}
 				}
 			}
@@ -40,7 +43,9 @@
 								"output": "/assets/"
 							}
 						],
-						"styles": ["apps/ivory/src/styles.less"],
+						"styles": [
+							"apps/ivory/src/styles.less"
+						],
 						"scripts": []
 					},
 					"configurations": {
@@ -94,21 +99,39 @@
 				"lint": {
 					"builder": "@nrwl/linter:eslint",
 					"options": {
-						"lintFilePatterns": ["apps/ivory/src/**/*.ts", "apps/ivory/src/**/*.html"]
+						"lintFilePatterns": [
+							"apps/ivory/src/**/*.ts",
+							"apps/ivory/src/**/*.html"
+						]
 					}
 				}
 			}
 		},
 		"peacha-studio-core": {
 			"projectType": "library",
-			"root": "libs/peacha-studiocore",
-			"sourceRoot": "libs/peacha-studiocore/src",
+			"root": "libs/peacha-studio-core",
+			"sourceRoot": "libs/peacha-studio-core/src",
 			"prefix": "peacha",
 			"architect": {
+				"build": {
+					"builder": "@nrwl/angular:ng-packagr-lite",
+					"options": {
+						"tsConfig": "libs/peacha-studio-core/tsconfig.lib.json",
+						"project": "libs/peacha-studio-core/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "libs/peacha-studio-core/tsconfig.lib.prod.json"
+						}
+					}
+				},
 				"lint": {
 					"builder": "@nrwl/linter:eslint",
 					"options": {
-						"lintFilePatterns": ["libs/peacha-studio-core/src/**/*.ts", "libs/peacha-studio-core/src/**/*.html"]
+						"lintFilePatterns": [
+							"libs/peacha-studio-core/src/**/*.ts",
+							"libs/peacha-studio-core/src/**/*.html"
+						]
 					}
 				}
 			}
@@ -128,8 +151,13 @@
 						"polyfills": "apps/ivory-mobile/src/polyfills.ts",
 						"tsConfig": "apps/ivory-mobile/tsconfig.app.json",
 						"aot": true,
-						"assets": ["apps/ivory-mobile/src/favicon.ico", "apps/ivory-mobile/src/assets"],
-						"styles": ["apps/ivory-mobile/src/styles.less"],
+						"assets": [
+							"apps/ivory-mobile/src/favicon.ico",
+							"apps/ivory-mobile/src/assets"
+						],
+						"styles": [
+							"apps/ivory-mobile/src/styles.less"
+						],
 						"scripts": []
 					},
 					"configurations": {
@@ -182,7 +210,10 @@
 				"lint": {
 					"builder": "@nrwl/linter:eslint",
 					"options": {
-						"lintFilePatterns": ["apps/ivory-mobile/src/**/*.ts", "apps/ivory-mobile/src/**/*.html"]
+						"lintFilePatterns": [
+							"apps/ivory-mobile/src/**/*.ts",
+							"apps/ivory-mobile/src/**/*.html"
+						]
 					}
 				}
 			}
@@ -202,8 +233,13 @@
 						"polyfills": "apps/ivory-prpr/src/polyfills.ts",
 						"tsConfig": "apps/ivory-prpr/tsconfig.app.json",
 						"aot": true,
-						"assets": ["apps/ivory-prpr/src/favicon.ico", "apps/ivory-prpr/src/assets"],
-						"styles": ["apps/ivory-prpr/src/styles.less"],
+						"assets": [
+							"apps/ivory-prpr/src/favicon.ico",
+							"apps/ivory-prpr/src/assets"
+						],
+						"styles": [
+							"apps/ivory-prpr/src/styles.less"
+						],
 						"scripts": []
 					},
 					"configurations": {
@@ -256,7 +292,10 @@
 				"lint": {
 					"builder": "@nrwl/linter:eslint",
 					"options": {
-						"lintFilePatterns": ["apps/ivory-prpr/src/**/*.ts", "apps/ivory-prpr/src/**/*.html"]
+						"lintFilePatterns": [
+							"apps/ivory-prpr/src/**/*.ts",
+							"apps/ivory-prpr/src/**/*.html"
+						]
 					}
 				}
 			}

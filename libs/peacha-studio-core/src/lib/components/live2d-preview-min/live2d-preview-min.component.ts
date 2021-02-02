@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef, Input, Injector, AfterViewInit, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ReadableVirtualFileSystem } from '../../core';
 import {
 	Entity,
 	EventHub,
@@ -23,6 +22,7 @@ import {
 	loadOpalModelFromVFS,
 	PreserveParameterSaveSystem,
 } from '../../core/engine/gl2d-cubism';
+import { ReadableVirtualFileSystem } from '../../core/vfs';
 
 @Component({
 	selector: 'peacha-live2d-preview-min',

@@ -5,8 +5,7 @@ import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserState } from '@peacha-core';
-import { HttpVirtualFileSystem } from '@peacha-studio-core';
-
+import { HttpVirtualFileSystem } from '@peacha-studio-core/vfs';
 
 type Hot = {
 	count: number;
@@ -48,7 +47,7 @@ export class UnloginIndexPage {
 		})
 	);
 
-	constructor(private http: HttpClient, private router: Router) { }
+	constructor(private http: HttpClient, private router: Router) {}
 
 	toWork(id: number, c: number) {
 		if (c == 1) {
@@ -57,8 +56,6 @@ export class UnloginIndexPage {
 			this.router.navigate(['live2d', id]);
 		}
 	}
-
-
 
 	toTop() {
 		document.documentElement.scrollTop = 0;

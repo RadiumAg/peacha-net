@@ -12,6 +12,7 @@ import {
 	HostListener,
 	AfterViewInit,
 	OnDestroy,
+	ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
@@ -36,7 +37,6 @@ import {
 	Transform2DComponent,
 	World,
 } from '../../core/engine';
-import { ReadableVirtualFileSystem } from '../../core';
 import {
 	CubismAnimationAction,
 	CubismAnimationSystem,
@@ -57,6 +57,7 @@ import {
 	loadOpalModelFromVFS,
 	PreserveParameterSaveSystem,
 } from '../../core/engine/gl2d-cubism';
+import { ReadableVirtualFileSystem } from '../../core/vfs';
 
 export function getEasingSine(value: number): number {
 	if (value < 0) {
@@ -87,6 +88,7 @@ export function isDocumentInFullScreenMode(): boolean {
 			transition(':leave', [animate('100ms', style({ opacity: 0 }))]),
 		]),
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Live2dPreviewComponent implements AfterViewInit, OnDestroy {
 	@ViewChild('canvas') canvas!: ElementRef;
@@ -263,7 +265,6 @@ export class Live2dPreviewComponent implements AfterViewInit, OnDestroy {
 				PreserveParameterSaveSystem,
 				CubismExpressionSystem,
 				CubismAnimationSystem,
-				// CubismPoseSystem,
 				CubismDragSystem,
 				CubismPhysicsSystem,
 				CubismModelEmulateSystem,
@@ -440,7 +441,6 @@ export class Live2dPreviewComponent implements AfterViewInit, OnDestroy {
 		});
 		this.world.update();
 		this.ticker = requestAnimationFrame(this.tick.bind(this));
-		this.changeDetectorRef.markForCheck();
 		this.parameterValues.forEach((parameterValue, index) => {
 			this.parameterValues.get(index).value = this.model.getParameterByIndex(parameterValue.index);
 		});

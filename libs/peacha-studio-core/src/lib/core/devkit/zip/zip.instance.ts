@@ -50,7 +50,7 @@ export class ZipInstance extends WorkerInstance implements ZipDelegate {
 			throw new Error('');
 		}
 		const files = Object.keys(this.refMap.get(ref).files);
-		const buffer = await this.refMap.get(ref).files[files.find(_file => _file.includes(file))].async('arraybuffer', meta => {
+		const buffer = await this.refMap.get(ref).files[files.find(_file => _file.includes(file))].async('arraybuffer', _meta => {
 			//
 		});
 		return buffer;
@@ -61,7 +61,6 @@ export class ZipInstance extends WorkerInstance implements ZipDelegate {
 		if (!this.refMap.has(ref)) {
 			throw new Error('');
 		}
-		const zip = this.refMap.get(ref);
 		this.refMap.delete(ref);
 	}
 }
