@@ -3,12 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
-import { UserState, ModalService, DropDownService, ChatStartService, OpalUser } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { UserReportModalComponent } from 'libs/peacha-core/src/lib/components/user-report-modal/user-report-modal.component';
-import { dataURLtoBlob } from 'libs/peacha-core/src/lib/core/commom/common';
-import { UpdateBanner } from 'libs/peacha-core/src/lib/core/state/user.action';
-import { CropBanner } from 'libs/peacha-core/src/lib/components/crop-banner/crop-banner';
+import { UserState, ModalService, DropDownService, ChatStartService, OpalUser, dataURLtoBlob } from '@peacha-core';
+import { CropBanner, PopTips, UserReportModalComponent } from '@peacha-core/components';
+import { UpdateBanner } from '@peacha-core/state';
 
 
 
@@ -53,7 +50,7 @@ export class UserPage {
 
 	testimg$ = new BehaviorSubject('');
 
-	updateBanner(event: any, input: ElementRef) {
+	updateBanner(event: any, _input: ElementRef) {
 		const imgtype = event.target.files[0].name.toLowerCase().split('.');
 		const a = imgtype.findIndex(l => l == 'png');
 		const b = imgtype.findIndex(l => l == 'jpg');
@@ -65,7 +62,7 @@ export class UserPage {
 					.afterClosed()
 					.subscribe(img => {
 						if (img) {
-							this.store.dispatch(new UpdateBanner(dataURLtoBlob(img))).subscribe(s => {
+							this.store.dispatch(new UpdateBanner(dataURLtoBlob(img))).subscribe(_s => {
 								this.input.nativeElement.value = null;
 								this.modal.open(PopTips, ['修改成功', false, 1]);
 							});

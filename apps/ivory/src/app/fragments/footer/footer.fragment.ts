@@ -1,23 +1,10 @@
-import { Component, OnInit, AfterViewInit, AfterViewChecked, AfterContentInit, Input, AfterContentChecked } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
 	selector: 'ivo-footer',
 	templateUrl: './footer.fragment.html',
-	styleUrls: ['./footer.fragment.less'],
-	host: {
-		'[class.footer-position]': `isAbsoulte`,
-	},
+	styleUrls: ['./footer.fragment.less']
 })
-export class FooterFragment implements AfterContentChecked {
-	isAbsoulte = false;
-	constructor() {}
-
-	ngAfterContentChecked(): void {
-		// this.isAbsoulte = !this.hasScroll();
-	}
-
-	private hasScroll(): boolean {
-		return document.body.scrollHeight > document.documentElement.clientHeight;
-	}
+export class FooterFragment {
+	constructor() { }
 }

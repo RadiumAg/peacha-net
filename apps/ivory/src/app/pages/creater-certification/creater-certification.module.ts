@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Routes, RouterModule, CanActivate } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { CreaterCertificationGuard } from './creater-certification.guard';
 import { CreaterCertificationComponent } from './creater-certification/creater-certification.component';
 import { ScreenshotComponent } from './components/screenshot/screenshot.component';
@@ -64,4 +64,4 @@ const routes: Routes = [
 	imports: [CommonModule, ReactiveComponentModule, ComponentsModule, RouterModule.forChild(routes)],
 	providers: [CreaterCertificationGuard, RoleApiService],
 })
-export class CreaterCertificationModule {}
+export class CreaterCertificationModule { }

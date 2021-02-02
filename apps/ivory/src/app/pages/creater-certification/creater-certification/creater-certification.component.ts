@@ -1,24 +1,38 @@
-import { Component, ViewChildren, QueryList, Input, ChangeDetectorRef } from '@angular/core';
-import { take, map, takeWhile, tap } from 'rxjs/operators';
-import { BehaviorSubject, pipe, Observable } from 'rxjs';
+/* eslint-disable no-sparse-arrays */
+import { Component, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { take, map, takeWhile } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 import { ScreenshotComponent, UploadImage } from '../components/screenshot/screenshot.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoleApiService, ModalService, Role } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { WorkSelectorComponent } from 'libs/peacha-core/src/lib/components/work-selector/work-selector.component';
+import { PopTips, WorkSelectorComponent } from '@peacha-core/components';
 
 @Component({
 	templateUrl: './creater-certification.component.html',
 	styleUrls: ['./creater-certification.component.less'],
 })
 export class CreaterCertificationComponent {
+	verify = {
+		workVerify: (): boolean => {
+			const currentValue = this.applyWorkList$.getValue();
+			if (!currentValue.every(x => x !== undefined)) {
+				this.modal.open(PopTips, ['请选择至少三幅作品']).afterClosed();
+				return false;
+			}
+			if (!currentValue.every(x => x.screenshots.length !== 0)) {
+				this.modal.open(PopTips, ['每个作品至少有一张截图']).afterClosed();
+				return false;
+			}
+			return true;
+		},
+	};
 	constructor(
 		private roleApi: RoleApiService,
 		private route: ActivatedRoute,
 		private modal: ModalService,
 		private router: Router,
 		private cdr: ChangeDetectorRef
-	) {}
+	) { }
 	@ViewChildren(ScreenshotComponent)
 	screenshotComponentList: QueryList<ScreenshotComponent>;
 
@@ -42,23 +56,9 @@ export class CreaterCertificationComponent {
 				})),
 			})
 			.pipe(take(1))
-			.subscribe(() => {});
+			.subscribe(() => { });
 	}
 
-	verify = {
-		workVerify: (): boolean => {
-			const currentValue = this.applyWorkList$.getValue();
-			if (!currentValue.every(x => x !== undefined)) {
-				this.modal.open(PopTips, ['请选择至少三幅作品']).afterClosed();
-				return false;
-			}
-			if (!currentValue.every(x => x.screenshots.length !== 0)) {
-				this.modal.open(PopTips, ['每个作品至少有一张截图']).afterClosed();
-				return false;
-			}
-			return true;
-		},
-	};
 
 	roleMapper(role: Role) {
 		switch (role) {
@@ -107,10 +107,10 @@ export class CreaterCertificationComponent {
 						this.applyWorkList$.value.map((work, index) =>
 							i === index
 								? {
-										id,
-										cover,
-										screenshots: [],
-								  }
+									id,
+									cover,
+									screenshots: [],
+								}
 								: work
 						)
 					);
@@ -155,7 +155,7 @@ export class CreaterCertificationComponent {
 				}),
 			})
 			.subscribe({
-				next: message => {
+				next: _message => {
 					this.modal
 						.open(PopTips, ['提交成功', , 1])
 						.afterClosed()
@@ -163,10 +163,10 @@ export class CreaterCertificationComponent {
 							this.router.navigate(['/setting/security']);
 						});
 				},
-				error: message => {
+				error: _message => {
 					this.modal.open(PopTips, ['提交认证失败!,请稍后再试', , 0]);
 				},
-				complete: () => {},
+				complete: () => { },
 			});
 	}
 }

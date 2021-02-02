@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs/operators';
 import { ModalService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
 
 @Component({
 	selector: 'ivo-order-detail',
@@ -12,7 +12,7 @@ import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
 	styleUrls: ['./order-detail.page.less'],
 })
 export class OrderDetailPage {
-	constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private modal: ModalService) {}
+	constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private modal: ModalService) { }
 	update$ = new BehaviorSubject<number>(0);
 	id$ = new BehaviorSubject<string[]>([]);
 	work$: Observable<{

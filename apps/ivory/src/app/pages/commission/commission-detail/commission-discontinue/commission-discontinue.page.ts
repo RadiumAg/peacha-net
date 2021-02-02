@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select } from '@ngxs/store';
 import { UserState, ModalService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { CommissionApiService } from '../../service/commission-api.service';
@@ -74,10 +74,10 @@ export class CommissionDiscontinuePage implements OnInit {
 		private cdr: ChangeDetectorRef,
 		private router: Router,
 		private isError: CommissionDetailErrorService
-	) {}
+	) { }
 
 	discontinueList$ = combineLatest([this.refresh$, this.route.queryParams]).pipe(
-		switchMap(([r, p]) => {
+		switchMap(([_r, p]) => {
 			return this.api.discontinueList(p.id).pipe(
 				tap(s => {
 					if (s.list[0]?.status === 0 || ([3, 0].includes(s.list[0]?.type) && s.list[0]?.status === 1)) {
@@ -106,7 +106,7 @@ export class CommissionDiscontinuePage implements OnInit {
 
 	commitRecord$ = this.refresh$
 		.pipe(
-			switchMap(p => {
+			switchMap(_p => {
 				return this.api.discontinueFileRecords(this.detail.getCommissionId()).pipe(
 					tap(s => {
 						this.latestSubmit = s;

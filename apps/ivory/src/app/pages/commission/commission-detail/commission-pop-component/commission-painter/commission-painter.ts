@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ModalRef } from '@peacha-core';
-import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -28,7 +27,7 @@ export class CommissionPainter implements OnInit {
 			identity: number;
 			category: number;
 		}
-	) {}
+	) { }
 
 	ngOnInit(): void {
 		this.type$.next(this.k.type);

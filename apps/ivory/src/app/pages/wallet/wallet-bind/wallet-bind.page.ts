@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
 	selector: 'ivo-wallet-bind',
 	templateUrl: './wallet-bind.page.html',
 	styleUrls: ['./wallet-bind.page.less'],
 })
-export class WalletBindPage implements OnInit {
-	constructor() {}
+export class WalletBindPage {
+	constructor() { }
 
-	ngOnInit(): void {}
 }

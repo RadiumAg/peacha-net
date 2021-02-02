@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 	templateUrl: './userinfo.component.html',
 	styleUrls: ['./userinfo.component.less'],
 })
-export class UserinfoComponent implements OnInit {
+export class UserinfoComponent {
 	@Input() user: {
 		id: number;
 		nickname: string;
@@ -15,9 +15,8 @@ export class UserinfoComponent implements OnInit {
 		follow_state: number;
 	};
 
-	constructor(private router: Router) {}
+	constructor(private router: Router) { }
 
-	ngOnInit(): void {}
 	toUser(id: number) {
 		this.router.navigate(['user', id]);
 	}

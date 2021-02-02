@@ -1,7 +1,5 @@
 import { Component, Inject, ViewChild, ElementRef, AfterViewInit, OnDestroy, HostListener } from '@angular/core';
-import { MODAL_ANIMATION } from 'libs/peacha-core/src/lib/core/animations/modal-animation';
-import { ModalRef } from 'libs/peacha-core/src/lib/core/service/modals.service';
-import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { ModalRef, MODAL_ANIMATION, MODAL_DATA_TOKEN } from '@peacha-core';
 import { BehaviorSubject } from 'rxjs';
 
 enum ZoomInOrOut {
@@ -40,12 +38,13 @@ export class IllustZoomModalComponent implements AfterViewInit, OnDestroy {
 	 * @memberof IllustZoomModalComponent
 	 */
 	private readonly getOldLeftAndTop = {
+		// eslint-disable-next-line no-global-assign
 		target: (HTMLElement = null),
 		getter: {
-			getLeft(target: HTMLElement): number {
+			getLeft(_target: HTMLElement): number {
 				return 1;
 			},
-			getTop(target: HTMLElement): number {
+			getTop(_target: HTMLElement): number {
 				return 1;
 			},
 		},
@@ -85,6 +84,9 @@ export class IllustZoomModalComponent implements AfterViewInit, OnDestroy {
 	};
 
 	pic$ = new BehaviorSubject('');
+
+	tipTimer: NodeJS.Timer;
+
 	constructor(
 		private modalRef: ModalRef<IllustZoomModalComponent>,
 		@Inject(MODAL_DATA_TOKEN)
@@ -194,7 +196,7 @@ export class IllustZoomModalComponent implements AfterViewInit, OnDestroy {
 		e.preventDefault();
 	};
 
-	draggleout = (e: MouseEvent) => {
+	draggleout = (_e: MouseEvent) => {
 		(this.el.nativeElement as HTMLElement).removeEventListener('mousemove', this.draggle, true);
 	};
 
@@ -243,8 +245,8 @@ export class IllustZoomModalComponent implements AfterViewInit, OnDestroy {
 	}
 
 	private closeTips() {
-		clearInterval(tip);
-		var tip = setInterval(() => {
+		clearInterval(this.tipTimer);
+		this.tipTimer = setInterval(() => {
 			(this.tips.nativeElement as HTMLElement).style.opacity = '0';
 		}, 5000);
 	}

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { tap, take } from 'rxjs/operators';
@@ -83,5 +83,5 @@ export class SystemInstallPage {
 		this.a$.subscribe();
 	}
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 }

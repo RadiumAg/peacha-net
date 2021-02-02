@@ -1,13 +1,13 @@
 import { RouterModule } from '@angular/router';
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommissionSelect } from './commission-select/commission-select.component';
 import { BehaviorSubject } from 'rxjs';
 import { CommissionChoseComponent } from './commission-chose.component';
 import { HeaderComponent } from './commission-components/header/header.component';
 import { FooterComponent } from './commission-components/footer/footer.component';
-import { ReactiveComponentModule } from '@peacha-core';
-import { SELECT_TOKEN, SELECT_DATA_TOKEN, FORM_NAV_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { FORM_NAV_TOKEN, ReactiveComponentModule, SELECT_DATA_TOKEN, SELECT_TOKEN } from '@peacha-core';
+
 
 @NgModule({
 	declarations: [CommissionSelect, HeaderComponent, FooterComponent, CommissionChoseComponent],
@@ -51,4 +51,4 @@ import { SELECT_TOKEN, SELECT_DATA_TOKEN, FORM_NAV_TOKEN } from 'libs/peacha-cor
 		},
 	],
 })
-export class CommissionSelectModule {}
+export class CommissionSelectModule { }

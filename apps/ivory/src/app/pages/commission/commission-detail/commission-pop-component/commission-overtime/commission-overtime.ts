@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ModalRef } from '@peacha-core';
 
@@ -7,12 +7,11 @@ import { ModalRef } from '@peacha-core';
 	templateUrl: './commission-overtime.html',
 	styleUrls: ['./commission-overtime.less'],
 })
-export class CommissionOvertime implements OnInit {
+export class CommissionOvertime {
 	addtime = new FormControl('', [Validators.required, Validators.pattern('^[1-9]([0-9])?$')]);
 
-	constructor(private modalRef: ModalRef<CommissionOvertime>) {}
+	constructor(private modalRef: ModalRef<CommissionOvertime>) { }
 
-	ngOnInit(): void {}
 
 	cancel(): void {
 		this.modalRef.close();

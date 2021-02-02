@@ -4,9 +4,8 @@ import { Store, Select } from '@ngxs/store';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserState, IvoryError } from '@peacha-core';
-import { UpdatePublicInformation } from 'libs/peacha-core/src/lib/core/state/user.action';
-import { UserStateModel } from 'libs/peacha-core/src/lib/core/state/user.state';
 import { Observable } from 'rxjs';
+import { UpdatePublicInformation, UserStateModel } from '@peacha-core/state';
 
 @Component({
 	selector: 'ivo-user-profile',
@@ -71,7 +70,7 @@ export class FirstProfilePage {
 					)
 				)
 				.subscribe(
-					s => {
+					_s => {
 						this.route.queryParams.subscribe(s => {
 							if (s.return) {
 								this.router.navigate([s.return]);
@@ -97,6 +96,7 @@ export class FirstProfilePage {
 	}
 
 	myPattern(control: AbstractControl) {
+		// eslint-disable-next-line max-len
 		const result = /^[_,\-,0-9,a-z,A-z,\u3040-\u30ff,\u31f0-\u31ff,\u1100-\u11ff,\u3400-\u4db5,\u4e00-\u9fa5,\u9fa6-\u9fbb,\uf900-\ufa2d,\ufa30-\ufa6a,\ufa70-\ufad9,\u20000-\u2a6d6,\u2f800-\u2fa1d]+$/.test(
 			control.value
 		);

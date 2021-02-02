@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, ViewContainerRef, ElementRef, TemplateRef, Output, EventEmitter, Renderer2, ViewChild } from '@angular/core';
+import { Component, Input, ViewContainerRef, ElementRef, TemplateRef, Output, EventEmitter, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalService, DropDownService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
 import { GoodsManagerPage } from '../goods-manager/goods-manager.page';
 
 @Component({
@@ -10,7 +10,7 @@ import { GoodsManagerPage } from '../goods-manager/goods-manager.page';
 	templateUrl: './single-manager.page.html',
 	styleUrls: ['./single-manager.page.less'],
 })
-export class SingleManagerPage {
+export class SingleManagerPage implements AfterViewInit {
 	@ViewChild('dd') dd: ElementRef;
 	/**
 	 * type=1 插画
@@ -37,7 +37,7 @@ export class SingleManagerPage {
 		private menu: DropDownService,
 		private vc: ViewContainerRef,
 		private render: Renderer2
-	) {}
+	) { }
 
 	ngAfterViewInit() {
 		if (this.state == 1) {
@@ -59,7 +59,7 @@ export class SingleManagerPage {
 						.post('/work/cannel_apply', {
 							w: id,
 						})
-						.subscribe(s => {
+						.subscribe(_s => {
 							this.delete.emit(true);
 						});
 				}
@@ -88,7 +88,7 @@ export class SingleManagerPage {
 						.post('/work/delete_work', {
 							w: id,
 						})
-						.subscribe(s => {
+						.subscribe(_s => {
 							this.delete.emit(true);
 						});
 				}
@@ -106,7 +106,7 @@ export class SingleManagerPage {
 						.post('/work/delete_apply', {
 							w: id,
 						})
-						.subscribe(s => {
+						.subscribe(_s => {
 							this.delete.emit(true);
 						});
 				}

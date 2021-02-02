@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable, of, BehaviorSubject, combineLatest } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -11,13 +11,13 @@ import { Collection, UserState } from '@peacha-core';
 	templateUrl: './subscribed.page.html',
 	styleUrls: ['./subscribed.page.less'],
 })
-export class SubscribedPage implements OnInit {
+export class SubscribedPage {
 	@Select(UserState.id)
 	id$: Observable<number>;
 
 	currentPage$ = new BehaviorSubject<number>(1);
 
-	subscribed$: Observable<Collection> = combineLatest(this.route.parent!.params, this.route!.queryParams).pipe(
+	subscribed$: Observable<Collection> = combineLatest([this.route.parent.params, this.route.queryParams]).pipe(
 		switchMap(([c, params]) => {
 			return this.http.get<any>(`/work/get_subscribe_collections?u=${c.id}&p=${params.page ? params.page - 1 : 0}&s=12`).pipe(
 				tap(_ => {
@@ -25,7 +25,7 @@ export class SubscribedPage implements OnInit {
 				})
 			);
 		}),
-		catchError(e => {
+		catchError(_e => {
 			return of({
 				count: 0,
 				list: [],
@@ -34,7 +34,7 @@ export class SubscribedPage implements OnInit {
 	);
 
 	get pageUid$() {
-		return this.route.parent!.params.pipe(map(s => s.id as number));
+		return this.route.parent.params.pipe(map(s => s.id as number));
 	}
 
 	cancelSubscribe(id: number) {
@@ -45,7 +45,7 @@ export class SubscribedPage implements OnInit {
 			.subscribe();
 	}
 
-	constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
+	constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
 	toPage(p: number) {
 		this.router.navigate([], {
@@ -55,5 +55,5 @@ export class SubscribedPage implements OnInit {
 			queryParamsHandling: 'merge',
 		});
 	}
-	ngOnInit(): void {}
+
 }

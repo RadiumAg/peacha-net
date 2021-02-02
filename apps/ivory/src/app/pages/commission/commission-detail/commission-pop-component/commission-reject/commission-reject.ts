@@ -1,10 +1,8 @@
-import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ModalRef, ModalService, ZoomService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { UploadImageDirective } from 'libs/peacha-core/src/lib/components/uploadImage/uploadImage.directive';
-import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { ModalRef, ModalService, MODAL_DATA_TOKEN, ZoomService } from '@peacha-core';
+import { PopTips, UploadImageDirective } from '@peacha-core/components';
 import { IllustZoomModalComponent } from '../../../../work/illust-zoom-modal/illust-zoom-modal.component';
 
 @Component({
@@ -27,7 +25,7 @@ export class CommissionReject implements OnInit {
 		private modal: ModalService,
 		private http: HttpClient,
 		private zoom: ZoomService
-	) {}
+	) { }
 
 	images: Array<{ token: string; url: string }> = [];
 	tokens: Array<string> = [];

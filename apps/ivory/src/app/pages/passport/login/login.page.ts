@@ -14,6 +14,10 @@ import { UserState, Login, IvoryError } from '@peacha-core';
 export class LoginPage {
 	@Select(UserState.isLogin)
 	isLogin$: Observable<boolean>;
+
+	password_async_error: any;
+	previousUrl$ = new BehaviorSubject<string>('');
+	currentUrl$ = new BehaviorSubject<string>('');
 	constructor(
 		private fb: FormBuilder,
 		private store: Store,
@@ -47,11 +51,7 @@ export class LoginPage {
 		});
 	}
 
-	password_async_error: any;
-	previousUrl$ = new BehaviorSubject<string>('');
-	currentUrl$ = new BehaviorSubject<string>('');
-
-	async login(e: MouseEvent) {
+	async login(_e: MouseEvent) {
 		this.store
 			.selectOnce<number>(s => s.user.id)
 			.pipe(
@@ -73,7 +73,7 @@ export class LoginPage {
 								)
 							)
 							.subscribe(
-								s => {
+								_s => {
 									this.route.queryParams.subscribe(s => {
 										if (s.return) {
 											this.router.navigateByUrl(s.return);
@@ -106,7 +106,7 @@ export class LoginPage {
 										this.cdr.markForCheck();
 									}
 								},
-								() => {}
+								() => { }
 							);
 					}
 				})
@@ -118,7 +118,7 @@ export class LoginPage {
 		// cold pipe
 		return merge(
 			cont.valueChanges.pipe(
-				map(s => {
+				map(_s => {
 					return {};
 				})
 			)

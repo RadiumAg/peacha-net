@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalRef } from 'libs/peacha-core/src/lib/core/service/modals.service';
+import { ModalRef } from '@peacha-core';
+
 
 @Component({
 	selector: 'ivo-submit-success',
@@ -8,7 +9,7 @@ import { ModalRef } from 'libs/peacha-core/src/lib/core/service/modals.service';
 	styleUrls: ['./submit-success.less'],
 })
 export class SubmitSuccess {
-	constructor(private router: Router, private modalRef: ModalRef<SubmitSuccess>) {}
+	constructor(private router: Router, private modalRef: ModalRef<SubmitSuccess>) { }
 	sure() {
 		this.modalRef.close();
 		this.router.navigate(['/setting/wallet']);

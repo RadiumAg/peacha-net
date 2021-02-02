@@ -1,14 +1,14 @@
-import { Component, ViewChild, Renderer2 } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { switchMap, tap, take, catchError } from 'rxjs/operators';
-import { BehaviorSubject, Observable, Subscription, combineLatest, empty, interval } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, combineLatest, empty, interval, EMPTY } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { Select } from '@ngxs/store';
 import { SubmitSuccess } from './submit-success/submit-success';
 import { OnDestroy } from '@angular/core';
-import { UserState, IvoryError, Toast } from '@peacha-core';
-import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
-import { ModalService } from 'libs/peacha-core/src/lib/core/service/modals.service';
+import { UserState, IvoryError, Toast, ModalService } from '@peacha-core';
+import { Steps } from '@peacha-core/components';
+
 
 @Component({
 	selector: 'ivo-wallet-withdraw',
@@ -32,7 +32,7 @@ export class WalletWithdrawPage implements OnDestroy {
 	sp?: Subscription;
 	cooldown$ = new BehaviorSubject<number>(0);
 	requesting$ = new BehaviorSubject<boolean>(false);
-	constructor(private http: HttpClient, private toast: Toast, private modal: ModalService) {}
+	constructor(private http: HttpClient, private toast: Toast, private modal: ModalService) { }
 	maxMoney$ = new BehaviorSubject(0);
 
 	/**
@@ -55,6 +55,10 @@ export class WalletWithdrawPage implements OnDestroy {
 	choice$ = new BehaviorSubject(0);
 
 	space$ = new BehaviorSubject<number>(0);
+
+	outMoney$ = new BehaviorSubject(0);
+
+	errorMsg: string;
 
 	// pay$ = this.http
 	//     .get<any>(`/wallet/cashout/payee`)
@@ -87,7 +91,7 @@ export class WalletWithdrawPage implements OnDestroy {
 								}),
 							})
 							.subscribe(
-								s => {
+								_s => {
 									this.modal.open(SubmitSuccess);
 								},
 								(e: IvoryError) => {
@@ -125,8 +129,6 @@ export class WalletWithdrawPage implements OnDestroy {
 		// })
 	}
 
-	outMoney$ = new BehaviorSubject(0);
-
 	out() {
 		this.outMoney$.next(this.money.value * 0.98);
 	}
@@ -135,7 +137,7 @@ export class WalletWithdrawPage implements OnDestroy {
 		this.money.setValue(count);
 		this.outMoney$.next(this.money.value * 0.98);
 	}
-	errorMsg: string;
+
 	next(m: number) {
 		if (this.money.valid) {
 			if (this.money.value <= m) {
@@ -162,12 +164,12 @@ export class WalletWithdrawPage implements OnDestroy {
 	 */
 	request(i: number) {
 		this.type = i;
-		this.sp = combineLatest(this.cooldown$, this.requesting$)
+		this.sp = combineLatest([this.cooldown$, this.requesting$])
 			.pipe(
 				take(1),
 				switchMap(([cooldown, requesting]) => {
 					if (cooldown > 0 || requesting) {
-						return empty();
+						return EMPTY;
 					}
 					this.requesting$.next(true);
 					return this.http
@@ -177,14 +179,14 @@ export class WalletWithdrawPage implements OnDestroy {
 						})
 						.pipe(
 							tap(
-								s => {
+								_s => {
 									this.steps.goto('two');
 									this.requesting$.next(false);
 								},
-								e => {
+								_e => {
 									this.requesting$.next(false);
 								},
-								() => {}
+								() => { }
 							),
 							switchMap(_ => {
 								this.cooldown$.next(60);
@@ -194,8 +196,8 @@ export class WalletWithdrawPage implements OnDestroy {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {},
-										() => {}
+										_e => { },
+										() => { }
 									)
 								);
 							}),
@@ -203,18 +205,18 @@ export class WalletWithdrawPage implements OnDestroy {
 								if (s.code == 101) {
 									alert('用户不存在');
 								}
-								return empty();
+								return EMPTY;
 							})
 						);
 				}),
 				tap(
-					f => {},
+					_f => { },
 					null,
-					() => {}
+					() => { }
 				)
 			)
 			.subscribe(
-				b => {},
+				_b => { },
 				null,
 				() => {
 					// 销毁时回收...
@@ -226,12 +228,12 @@ export class WalletWithdrawPage implements OnDestroy {
 	 * 再次请求验证码
 	 */
 	requestAgain() {
-		this.sp = combineLatest(this.cooldown$, this.requesting$)
+		this.sp = combineLatest([this.cooldown$, this.requesting$])
 			.pipe(
 				take(1),
 				switchMap(([cooldown, requesting]) => {
 					if (cooldown > 0 || requesting) {
-						return empty();
+						return EMPTY;
 					}
 					this.requesting$.next(true);
 					return this.http
@@ -241,13 +243,13 @@ export class WalletWithdrawPage implements OnDestroy {
 						})
 						.pipe(
 							tap(
-								s => {
+								_s => {
 									this.requesting$.next(false);
 								},
-								e => {
+								_e => {
 									this.requesting$.next(false);
 								},
-								() => {}
+								() => { }
 							),
 							switchMap(_ => {
 								this.cooldown$.next(60);
@@ -257,21 +259,21 @@ export class WalletWithdrawPage implements OnDestroy {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {},
-										() => {}
+										_e => { },
+										() => { }
 									)
 								);
 							})
 						);
 				}),
 				tap(
-					f => {},
+					_f => { },
 					null,
-					() => {}
+					() => { }
 				)
 			)
 			.subscribe(
-				b => {},
+				_b => { },
 				null,
 				() => {
 					// 销毁时回收...
@@ -298,7 +300,7 @@ export class WalletWithdrawPage implements OnDestroy {
 						this.token = s.token;
 						this.steps.goto('three');
 					},
-					e => {
+					_e => {
 						// this.verifyCode.setErrors({
 						//     wrong_code: true
 						// });

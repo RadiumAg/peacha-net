@@ -1,11 +1,11 @@
 import { formatDate } from '@angular/common';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TradeInfo } from '@peacha-core';
 
 @Injectable()
 export class TradeApiService {
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	// #region pay
 

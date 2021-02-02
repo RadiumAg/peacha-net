@@ -24,14 +24,14 @@ type Production = {
 	styleUrls: ['./illust-success.page.less'],
 })
 export class IllustSuccessPage {
-	showList: any = [];
-	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private _sharedService: SharedService) {}
+	showList = [];
+	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private _sharedService: SharedService) { }
 
 	update$ = new BehaviorSubject(true);
 	currentPage$ = new BehaviorSubject(1);
 
-	works$ = combineLatest(this.update$, this.route.queryParams).pipe(
-		switchMap(([up, params]) => {
+	works$ = combineLatest([this.update$, this.route.queryParams]).pipe(
+		switchMap(([_up, params]) => {
 			return this.http
 				.get<Production>(`/work/get_create_illustration?k=${params.k ?? ''}&p=${params.p ? params.p - 1 : 0}&s=6&n=-1`)
 				.pipe(

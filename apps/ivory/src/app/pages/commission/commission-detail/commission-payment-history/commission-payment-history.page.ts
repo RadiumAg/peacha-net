@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
+import { Steps } from '@peacha-core/components';
 import { CommissionApiService } from '../../service/commission-api.service';
 import { CommissionDetailService } from '../../service/detail.service';
 
@@ -43,7 +43,7 @@ export class CommissionPaymentHistoryPage implements OnInit {
 		rateType: number;
 	}[];
 
-	constructor(private detail: CommissionDetailService, private api: CommissionApiService, private cdr: ChangeDetectorRef) {}
+	constructor(private detail: CommissionDetailService, private api: CommissionApiService, private cdr: ChangeDetectorRef) { }
 
 	ngOnInit(): void {
 		this.identity = this.detail.getIdentity();

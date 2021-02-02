@@ -1,19 +1,20 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngxs/store';
 import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Observable, BehaviorSubject, Subscription, combineLatest, empty, interval, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { take, switchMap, tap, takeUntil } from 'rxjs/operators';
-import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
-import { FetchMe } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { Steps } from '@peacha-core/components';
+import { FetchMe } from '@peacha-core/state';
+
 
 @Component({
 	selector: 'ivo-bind-mail',
 	templateUrl: './bind-mail.page.html',
 	styleUrls: ['./bind-mail.page.less'],
 })
-export class BindMailPage implements OnInit {
+export class BindMailPage {
 	constructor(private http: HttpClient, private store: Store, private fb: FormBuilder, private router: Router) {
 		this.verifyCode = this.fb.control('', [Validators.required]);
 		this.verifyCode2 = this.fb.control('', [Validators.required]);
@@ -37,7 +38,9 @@ export class BindMailPage implements OnInit {
 	token: any;
 	wrong_code: any;
 	c$ = new Subject();
-	ngOnInit(): void {}
+
+	s$ = new BehaviorSubject<string>('');
+
 	sendVerifyToPhone() {
 		this.sp = combineLatest([this.cooldown$, this.requesting$])
 			.pipe(
@@ -61,7 +64,7 @@ export class BindMailPage implements OnInit {
 								() => {
 									this.requesting$.next(false);
 								},
-								() => {}
+								() => { }
 							),
 							switchMap(_ => {
 								this.cooldown$.next(60);
@@ -72,28 +75,28 @@ export class BindMailPage implements OnInit {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {},
-										() => {}
+										_e => { },
+										() => { }
 									)
 								);
 							})
 						);
 				}),
 				tap(
-					f => {},
+					_f => { },
 					null,
-					() => {}
+					() => { }
 				)
 			)
 			.subscribe(
-				b => {},
+				_b => { },
 				null,
-				() => {}
+				() => { }
 			);
 	}
 
 	sendVerifyToPhoneAgain() {
-		this.sp = combineLatest(this.cooldown$, this.requesting$)
+		this.sp = combineLatest([this.cooldown$, this.requesting$])
 			.pipe(
 				take(1),
 				switchMap(([cooldown, requesting]) => {
@@ -114,7 +117,7 @@ export class BindMailPage implements OnInit {
 								() => {
 									this.requesting$.next(false);
 								},
-								() => {}
+								() => { }
 							),
 							switchMap(_ => {
 								this.cooldown$.next(60);
@@ -124,26 +127,26 @@ export class BindMailPage implements OnInit {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {},
-										() => {}
+										_e => { },
+										() => { }
 									)
 								);
 							})
 						);
 				}),
 				tap(
-					f => {},
+					_f => { },
 					null,
-					() => {}
+					() => { }
 				)
 			)
 			.subscribe(
-				b => {},
+				_b => { },
 				null,
-				() => {}
+				() => { }
 			);
 	}
-	s$ = new BehaviorSubject<string>('');
+
 	sendVerifyToEmail() {
 		this.c$.next();
 		this.c$.complete();
@@ -188,15 +191,15 @@ export class BindMailPage implements OnInit {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {}
+										_e => { }
 									)
 								);
 							})
 						);
 				}),
-				tap(f => {})
+				tap(_f => { })
 			)
-			.subscribe(b => {});
+			.subscribe(_b => { });
 	}
 	sendVerifyToEmailAgain() {
 		this.sp2 = combineLatest(this.cooldown2$, this.requesting2$)
@@ -229,23 +232,23 @@ export class BindMailPage implements OnInit {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {},
-										() => {}
+										_e => { },
+										() => { }
 									)
 								);
 							})
 						);
 				}),
 				tap(
-					f => {},
+					_f => { },
 					null,
-					() => {}
+					() => { }
 				)
 			)
 			.subscribe(
-				b => {},
+				_b => { },
 				null,
-				() => {}
+				() => { }
 			);
 	}
 
@@ -263,7 +266,7 @@ export class BindMailPage implements OnInit {
 					this.steps.next();
 					this.token = s.token;
 				},
-				e => {
+				_e => {
 					this.verifyCode.setErrors({
 						wrong_code: true,
 					});
@@ -278,11 +281,11 @@ export class BindMailPage implements OnInit {
 				v: this.verifyCode2.value,
 			})
 			.subscribe(
-				s => {
+				_s => {
 					this.store.dispatch(new FetchMe()).subscribe();
 					this.steps.next();
 				},
-				e => {
+				_e => {
 					this.verifyCode2.setErrors({
 						wrong_code: true,
 					});

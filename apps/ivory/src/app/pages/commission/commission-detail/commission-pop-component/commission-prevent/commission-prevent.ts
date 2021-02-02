@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ModalRef } from '@peacha-core';
-import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
 import { CommissionApiService } from '../../../service/commission-api.service';
 
 @Component({
@@ -10,7 +9,7 @@ import { CommissionApiService } from '../../../service/commission-api.service';
 	styleUrls: ['./commission-prevent.less'],
 	providers: [CommissionApiService],
 })
-export class CommissionPrevent implements OnInit {
+export class CommissionPrevent {
 	next = false;
 	result: string;
 
@@ -18,11 +17,10 @@ export class CommissionPrevent implements OnInit {
 		private modalRef: ModalRef<CommissionPrevent>,
 		@Inject(MODAL_DATA_TOKEN) public key: { type: number; id: number },
 		private api: CommissionApiService
-	) {}
+	) { }
 
 	rate = new FormControl(0, [Validators.required, Validators.pattern('^(?:0|[1-9][0-9]?|100)$')]);
 
-	ngOnInit(): void {}
 
 	update(e: { process: number }): void {
 		this.rate.setValue(Number(e.process * 100).toFixed(0));
@@ -36,7 +34,7 @@ export class CommissionPrevent implements OnInit {
 		if (this.rate.valid) {
 			if (!this.next) {
 				this.api.discontinue(this.key.id, this.key.type, this.rate.value, '').subscribe(
-					s => {
+					_s => {
 						if (this.key.type === 0) {
 							this.result = '已成功发起协商中止请求，等待对方处理。';
 						} else if (this.key.type === 2) {

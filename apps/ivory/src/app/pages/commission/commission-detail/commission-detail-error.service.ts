@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ModalService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
+
 
 @Injectable()
 export class CommissionDetailErrorService {
-	constructor(private modal: ModalService) {}
+	constructor(private modal: ModalService) { }
 
 	/**错误处理 */
 	ifError(e: number): void {

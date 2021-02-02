@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, catchError, tap, map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap, catchError, map } from 'rxjs/operators';
 import { Select } from '@ngxs/store';
 import { UserState, Collection } from '@peacha-core';
 
@@ -26,15 +26,15 @@ type SubscribeCollection = {
 	templateUrl: './collection.page.html',
 	styleUrls: ['./collection.page.less'],
 })
-export class CollectionPage implements OnInit {
+export class CollectionPage {
 	@Select(UserState.id)
 	id$: Observable<number>;
 
-	create$: Observable<Collection> = this.route.parent!.params.pipe(
+	create$: Observable<Collection> = this.route.parent.params.pipe(
 		switchMap(c => {
 			return this.http.get<any>(`/work/get_create_collections?u=${c.id}&p=0&s=4`);
 		}),
-		catchError(e => {
+		catchError(_e => {
 			return of({
 				count: 0,
 				list: [],
@@ -42,11 +42,11 @@ export class CollectionPage implements OnInit {
 		})
 	);
 
-	subscribed$: Observable<SubscribeCollection> = this.route.parent!.params.pipe(
+	subscribed$: Observable<SubscribeCollection> = this.route.parent.params.pipe(
 		switchMap(c => {
 			return this.http.get<SubscribeCollection>(`/work/get_subscribe_collections?u=${c.id}&p=0&s=4`);
 		}),
-		catchError(e => {
+		catchError(_e => {
 			return of({
 				count: 0,
 				list: [],
@@ -55,7 +55,7 @@ export class CollectionPage implements OnInit {
 	);
 
 	get pageUid$() {
-		return this.route.parent!.params.pipe(map(s => s.id as number));
+		return this.route.parent.params.pipe(map(s => s.id as number));
 	}
 
 	cancelSubscribe(id: number) {
@@ -66,7 +66,6 @@ export class CollectionPage implements OnInit {
 			.subscribe();
 	}
 
-	constructor(private http: HttpClient, private route: ActivatedRoute) {}
+	constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
-	ngOnInit(): void {}
 }

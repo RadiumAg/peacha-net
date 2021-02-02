@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -10,10 +10,9 @@ import { TradeApiService } from '../../../pay/trade-api.service';
 	templateUrl: './pay-record-detail.page.html',
 	styleUrls: ['./pay-record-detail.page.less'],
 })
-export class PayRecordDetailPage implements OnInit {
-	constructor(private tradeapi: TradeApiService, private router: ActivatedRoute, private http: HttpClient) {}
+export class PayRecordDetailPage {
+	constructor(private tradeapi: TradeApiService, private router: ActivatedRoute, private http: HttpClient) { }
 
-	ngOnInit(): void {}
 	detail$ = combineLatest([this.router.params]).pipe(
 		switchMap(([r]) => {
 			return this.tradeapi.queryPayDetails(r.payid);

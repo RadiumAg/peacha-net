@@ -31,9 +31,9 @@ export class SystemNoticePage implements OnDestroy {
 		private cdr: ChangeDetectorRef,
 		private router: Router,
 		private scrollDispatcher: ScrollDispatcher
-	) {}
+	) { }
 
-	reg = new RegExp(/\{<@(?<link>[^>]*?)>(?<show>[^\}]*?)}/, 'ig');
+	reg = new RegExp(/\{<@(?<link>[^>]*?)>(?<show>[^}]*?)}/, 'ig');
 
 	noticeList: Detail[] = [];
 	noticeCount$ = new BehaviorSubject(null);

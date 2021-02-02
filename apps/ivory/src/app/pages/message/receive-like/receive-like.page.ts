@@ -2,7 +2,7 @@ import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/overlay';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ModalService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
 import { BehaviorSubject, EMPTY } from 'rxjs';
 import { withLatestFrom, switchMap, tap } from 'rxjs/operators';
 
@@ -37,7 +37,7 @@ export class ReceiveLikePage implements OnDestroy {
 		private cdr: ChangeDetectorRef,
 		private modal: ModalService,
 		private scrollDispatcher: ScrollDispatcher
-	) {}
+	) { }
 
 	receiveLike$ = this.page$
 		.pipe(

@@ -1,21 +1,21 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject, interval, Subject } from 'rxjs';
-import { switchMap, tap, takeUntil, takeWhile, take, delay } from 'rxjs/operators';
+import { switchMap, tap, takeUntil, takeWhile } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { OnDestroy } from '@angular/core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
-import { ModalService } from 'libs/peacha-core/src/lib/core/service/modals.service';
+import { PopTips, Steps } from '@peacha-core/components';
+import { ModalService } from '@peacha-core';
+
 
 @Component({
 	selector: 'ivo-wallet-detail',
 	templateUrl: './wallet-pay.page.html',
 	styleUrls: ['./wallet-pay.page.less'],
 })
-export class WalletPayPage implements OnInit, OnDestroy {
-	constructor(private http: HttpClient, private modal: ModalService, private el: ElementRef, private router: Router) {}
+export class WalletPayPage implements OnDestroy {
+	constructor(private http: HttpClient, private modal: ModalService, private el: ElementRef, private router: Router) { }
 	@ViewChild(Steps) steps: Steps;
 	money: FormControl = new FormControl();
 	money$ = new BehaviorSubject<number>(0);
@@ -27,7 +27,6 @@ export class WalletPayPage implements OnInit, OnDestroy {
 	qrcode$ = new BehaviorSubject<string>('');
 	cashier_id$ = new BehaviorSubject<number>(0);
 
-	ngOnInit(): void {}
 	sum() {
 		this.error$.next(1);
 		this.error = true;
@@ -60,7 +59,7 @@ export class WalletPayPage implements OnInit, OnDestroy {
 						interval(3000)
 							.pipe(
 								takeUntil(this.destory$),
-								switchMap(a => {
+								switchMap(_a => {
 									return this.http.get<any>(`/wallet/cashier/heartbeat?id=${s.cashier_id}`);
 								}),
 								tap(s => {
@@ -110,7 +109,7 @@ export class WalletPayPage implements OnInit, OnDestroy {
 					interval(3000)
 						.pipe(
 							takeUntil(this.destory$),
-							switchMap(a => {
+							switchMap(_a => {
 								return this.http.get<any>(`/wallet/cashier/heartbeat?id=${s.cashier_id}`);
 							}),
 							tap(s => {
@@ -131,7 +130,7 @@ export class WalletPayPage implements OnInit, OnDestroy {
 						)
 						.subscribe();
 				},
-				e => {
+				_e => {
 					// console.log(e);
 				}
 			);

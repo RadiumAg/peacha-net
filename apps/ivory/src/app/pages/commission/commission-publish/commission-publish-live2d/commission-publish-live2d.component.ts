@@ -1,13 +1,12 @@
-import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommissionApiService } from './../../service/commission-api.service';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { map, tap, debounceTime } from 'rxjs/operators';
 import { fromEvent } from 'rxjs';
-import { ModalService, ZoomService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { isEmptyInputValue, live2dPriceValidator, ModalService, validator, ZoomService } from '@peacha-core';
 import { IllustZoomModalComponent } from '../../../work/illust-zoom-modal/illust-zoom-modal.component';
-import { live2dPriceValidator, isEmptyInputValue, validator } from 'libs/peacha-core/src/lib/core/commom/common';
+import { PopTips } from '@peacha-core/components';
 
 @Component({
 	templateUrl: './commission-publish-live2d.component.html',
@@ -21,7 +20,7 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private zoom: ZoomService
-	) {}
+	) { }
 
 	activeList = [false, true, true, true];
 	navActiveList = [false, false, false, false];
@@ -214,7 +213,7 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 
 		if (flag === 1) {
 			if (currentIndex >= 1) {
-				this.activeList = this.activeList.map(x => true);
+				this.activeList = this.activeList.map(_x => true);
 				this.activeList.splice(--currentIndex, 1, false);
 			} else {
 				if (this.isEdit) {
@@ -229,7 +228,7 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 				return currentIndex;
 			}
 			if (currentIndex < this.activeList.length - 1) {
-				this.activeList = this.activeList.map(x => true);
+				this.activeList = this.activeList.map(_x => true);
 				this.activeList.splice(++currentIndex, 1, false);
 			}
 		} else if (flag === 3) {
@@ -263,11 +262,11 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 				this.param.ft
 			)
 			.subscribe({
-				next: x => {
+				next: _x => {
 					this.modal
 						.open(PopTips, ['编辑成功', 0, 1])
 						.afterClosed()
-						.subscribe(i => {
+						.subscribe(_i => {
 							this.router.navigate(['/commission/detail'], {
 								queryParams: {
 									id: this.param.c,
@@ -275,7 +274,7 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 							});
 						});
 				},
-				error: x => {
+				error: _x => {
 					this.modal.open(PopTips, ['编辑失败']);
 				},
 				complete: () => {
@@ -309,7 +308,7 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 					this.modal
 						.open(PopTips, ['发布成功', 0, 1])
 						.afterClosed()
-						.subscribe(i => {
+						.subscribe(_i => {
 							this.router.navigate(['/commission/detail'], {
 								queryParams: {
 									id: x.id,
@@ -317,7 +316,7 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 							});
 						});
 				},
-				error: x => {
+				error: _x => {
 					this.modal.open(PopTips, ['发布失败']);
 				},
 				complete: () => {
@@ -351,20 +350,20 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 					spii: x.property.split || 1,
 					f: x.commission.file
 						? [
-								{
-									url: x.commission.file,
-									name: x.commission.fileName,
-								},
-						  ]
+							{
+								url: x.commission.file,
+								name: x.commission.fileName,
+							},
+						]
 						: [],
 					ft:
 						x.commission.fileImages.length == 0
 							? []
 							: x.commission.fileImages.map(_ => {
-									return {
-										url: _,
-									};
-							  }),
+								return {
+									url: _,
+								};
+							}),
 				});
 			},
 			error: x => {
@@ -421,13 +420,13 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 	private bind(): void {
 		fromEvent(this.minPrice.nativeElement, 'input')
 			.pipe(debounceTime(1000))
-			.subscribe(x => {
+			.subscribe(_x => {
 				this.checkPrice(1);
 			});
 
 		fromEvent(this.maxPrice.nativeElement, 'input')
 			.pipe(debounceTime(1000))
-			.subscribe(x => {
+			.subscribe(_x => {
 				this.checkPrice(0);
 			});
 	}
@@ -468,8 +467,8 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 					this.previewImgsUrl = _.ft ? _.ft?.map(x => x.url) : [];
 					this.previewFileUrl = _.f
 						? _.f.map(x => {
-								return { url: x.url, name: x.name };
-						  })
+							return { url: x.url, name: x.name };
+						})
 						: [];
 				}),
 				map(_ => {

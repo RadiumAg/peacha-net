@@ -7,8 +7,8 @@ import { Select } from '@ngxs/store';
 import { PlatformLocation } from '@angular/common';
 import { CopyrightList, DropDownService, ModalService, UserState } from '@peacha-core';
 import { Live2dTransformData } from '@peacha-studio-core';
-import { ReportModalComponent } from 'libs/peacha-core/src/lib/components/report-modal/report-modal.component';
 import { ReadableVirtualFileSystem, HttpVirtualFileSystem } from '@peacha-studio-core/vfs';
+import { ReportModalComponent } from '@peacha-core/components';
 
 @Component({
 	selector: 'ivo-work-live2d',
