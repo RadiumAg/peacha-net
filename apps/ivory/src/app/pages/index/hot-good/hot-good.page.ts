@@ -78,10 +78,10 @@ export class HotGoodPage {
 	hotGoods$ = this.route.queryParams.pipe(
 		switchMap(params => {
 			return this.http.get<HotGood>(`/work/hot_goods?k=&p=${params.page - 1 ?? 0}&s=20`).pipe(
-				tap(l => {
+				tap(() => {
 					this.currentPage$.next(params.page ?? 1);
 				}),
-				catchError(e => {
+				catchError(() => {
 					return of({
 						count: 0,
 						list: [],
@@ -90,7 +90,7 @@ export class HotGoodPage {
 			);
 		})
 	);
-	constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
+	constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
 
 	toPage(p: number) {
 		this.router.navigate([], {

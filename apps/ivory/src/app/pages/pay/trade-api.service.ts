@@ -152,7 +152,7 @@ export class TradeApiService {
 	 * @param {number} id
 	 * @memberof TradeApiService
 	 */
-	queryPayLists = (m: Date | String, p: number, s: Number) =>
+	queryPayLists = (m: Date | string, p: number, s: number) =>
 		this.http.get(`/trade/query/pay/list`, {
 			params: {
 				m: m.toString(),

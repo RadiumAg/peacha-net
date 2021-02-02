@@ -33,10 +33,10 @@ export class PublicWorkPage {
 	publicWork$ = this.route.queryParams.pipe(
 		switchMap(s => {
 			return this.http.get<HotWork>(`/work/public_work?p=${s.page - 1 ?? 0}&s=20`).pipe(
-				tap(l => {
+				tap(_l => {
 					this.currentPage$.next(s.page ?? 1);
 				}),
-				catchError(e => {
+				catchError(_e => {
 					return of({
 						count: 0,
 						list: [],
@@ -45,7 +45,7 @@ export class PublicWorkPage {
 			);
 		})
 	);
-	constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) {}
+	constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) { }
 
 	toPagePublic(p: number) {
 		this.router.navigate([], {

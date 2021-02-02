@@ -64,7 +64,7 @@ export class CoverImageUploadComponent implements ControlValueAccessor {
 	 * @param event
 	 */
 	openCrop(event: Event) {
-		let input = event.target as HTMLInputElement;
+		const input = event.target as HTMLInputElement;
 		if (input.files![0]) {
 			this.modal
 				.open<Cropper, string | undefined>(Cropper, input.files![0])

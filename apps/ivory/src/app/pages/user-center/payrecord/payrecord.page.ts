@@ -22,7 +22,7 @@ export class PayrecordPage implements OnInit {
 
 	wallet$ = combineLatest([this.route.queryParams]).pipe(
 		switchMap(([r]) => {
-			let time = this.date.value ? formatDate(this.date.value as Date, 'yyyy-MM-dd', 'zh-cn') : '';
+			const time = this.date.value ? formatDate(this.date.value as Date, 'yyyy-MM-dd', 'zh-cn') : '';
 			return this.tradeApi
 				.queryPayLists(time, r.p ? r.p - 1 : 0, 10)
 

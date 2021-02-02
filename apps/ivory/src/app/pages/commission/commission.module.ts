@@ -29,7 +29,8 @@ import { CommissionDiscontinueRejectFilePage } from './commission-detail/commiss
 import { CommissionDetailErrorService } from './commission-detail/commission-detail-error.service';
 import { CommissionRemindedPage } from './commission-reminded/commission-reminded.page';
 import { TechnologicalProcessComponent } from './technological-process/technological-process.component';
-import { PeachaComponentsModule, PhoneGuard, ReactiveComponentModule } from '@peacha-core';
+import { PhoneGuard, ReactiveComponentModule } from '@peacha-core';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [
@@ -140,4 +141,4 @@ import { PeachaComponentsModule, PhoneGuard, ReactiveComponentModule } from '@pe
 	],
 	providers: [CommissionApiService, CommissionDetailService, CommissionDetailResolve, CommissionGuard, CommissionDetailErrorService],
 })
-export class CommissionModule {}
+export class CommissionModule { }

@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { CartPage } from './cart.page';
 import { RouterModule } from '@angular/router';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
+import { ReactiveComponentModule } from '@peacha-core';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [CartPage],
@@ -20,4 +21,4 @@ import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 		PeachaComponentsModule,
 	],
 })
-export class CartModule {}
+export class CartModule { }

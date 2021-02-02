@@ -4,8 +4,9 @@ import { CommonModule } from '@angular/common';
 import { CommissionPublishIllustrationComponent } from './commission-publish-illustration.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommissionApiService } from '../../service/commission-api.service';
-import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
+import { ReactiveComponentModule } from '@peacha-core';
 import { ComponentsModule } from '../../components/components.module';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [CommissionPublishIllustrationComponent],
@@ -24,4 +25,4 @@ import { ComponentsModule } from '../../components/components.module';
 	],
 	providers: [CommissionApiService],
 })
-export class CommissionPublishIllustrationModule {}
+export class CommissionPublishIllustrationModule { }

@@ -71,7 +71,7 @@ export class CommentEntryComponent {
 		});
 	}
 
-	showLoad: boolean = true;
+	showLoad = true;
 	list: ModelComment | undefined;
 	constructor(
 		private http: HttpClient,
@@ -83,9 +83,9 @@ export class CommentEntryComponent {
 		private router: Router,
 		private toast: Toast
 	) {}
-	rootid: number = -1;
-	subcompage: number = -1;
-	@Input() active: boolean = false;
+	rootid = -1;
+	subcompage = -1;
+	@Input() active = false;
 
 	@Output() clickActive: EventEmitter<number> = new EventEmitter();
 
@@ -100,7 +100,7 @@ export class CommentEntryComponent {
 	ngAfterContentInit() {
 		this.route.queryParams.subscribe(s => {
 			if (s.sub == -1) {
-				let hash = location.hash;
+				const hash = location.hash;
 				location.hash = '';
 				location.hash = hash;
 			}
@@ -282,7 +282,7 @@ export class CommentEntryComponent {
 	subLength: number;
 
 	toLogin() {
-		let a =
+		const a =
 			(this.route.snapshot as any)._routerState.url.split('/')[1] + '/' + (this.route.snapshot as any)._routerState.url.split('/')[2];
 		this.router.navigate(['/login'], {
 			queryParams: {

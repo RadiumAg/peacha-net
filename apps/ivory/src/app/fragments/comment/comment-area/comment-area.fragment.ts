@@ -51,7 +51,7 @@ export class CommentAreaFragment {
 	@ViewChild('textq') text: ElementRef<HTMLTextAreaElement>;
 	@ViewChild('textT') textt: ElementRef<HTMLTextAreaElement>;
 
-	show: boolean = false;
+	show = false;
 
 	tips(el: HTMLTextAreaElement, input: ElementRef) {
 		const a = el.getBoundingClientRect();
@@ -170,7 +170,7 @@ export class CommentAreaFragment {
 		}
 	}
 	toLogin() {
-		let a =
+		const a =
 			(this.route.snapshot as any)._routerState.url.split('/')[1] + '/' + (this.route.snapshot as any)._routerState.url.split('/')[2];
 		this.router.navigate(['/login'], {
 			queryParams: {
@@ -211,7 +211,7 @@ export class CommentAreaFragment {
 			.pipe(
 				tap(s => {
 					if (s) {
-						let compage = Number(s.root);
+						const compage = Number(s.root);
 						this.rootid = s.rootid;
 						if ((compage + 1) / 10 > 1) {
 							this.page$.next(Math.ceil((compage + 1) / 10));

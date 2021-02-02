@@ -53,7 +53,7 @@ export class CommentSubentryComponent {
 	toggleReply: EventEmitter<ModelSubComment> = new EventEmitter();
 
 	ngAfterContentInit() {
-		let hash = location.hash;
+		const hash = location.hash;
 		location.hash = '';
 		location.hash = hash;
 	}

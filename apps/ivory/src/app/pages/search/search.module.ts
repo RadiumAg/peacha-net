@@ -7,8 +7,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserSearchPage } from './usersearch/usersearch.page';
 import { GoodsearchPage } from './goodsearch/goodsearch.page';
 import { WorkSearchPage } from './work-search/work-search.page';
-import { FollowModule } from 'libs/peacha-core/src/lib/features/follow/follow.module';
-import { PeachaComponentsModule, ReactiveComponentModule, WorkApiService } from '@peacha-core';
+import { ReactiveComponentModule, WorkApiService } from '@peacha-core';
+import { FollowModule } from '@peacha-core/feature';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [SearchPage, UserSearchPage, GoodsearchPage, WorkSearchPage],
@@ -46,4 +47,4 @@ import { PeachaComponentsModule, ReactiveComponentModule, WorkApiService } from 
 	],
 	providers: [WorkApiService, WorkSearchGuard],
 })
-export class SearchModule {}
+export class SearchModule { }

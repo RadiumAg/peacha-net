@@ -2,8 +2,9 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { Router } from '@angular/router';
-import { VerifycodeFetchDirective, IvoryError, Register } from '@peacha-core';
-import { FetchMe } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { IvoryError, Register } from '@peacha-core';
+import { VerifycodeFetchDirective } from '@peacha-core/feature';
+import { FetchMe } from '@peacha-core/state';
 
 @Component({
 	selector: 'ivo-register',
@@ -47,7 +48,7 @@ export class RegisterPage implements OnInit {
 	queryVerifycode(v: VerifycodeFetchDirective) {
 		if (this.account?.valid) {
 			v.request(this.checkForm.value.method === 'phone' ? this.account.value + ',86' : this.account.value)
-				.then(() => {})
+				.then(() => { })
 				.catch((e: IvoryError) => {
 					switch (e.code) {
 						case 103:
@@ -128,7 +129,7 @@ export class RegisterPage implements OnInit {
 				return { invaild: true };
 			}
 		} else {
-			const ruler2 = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+			const ruler2 = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
 			const test2 = ruler2.test(account.value);
 			if (test2) {
 				return {};

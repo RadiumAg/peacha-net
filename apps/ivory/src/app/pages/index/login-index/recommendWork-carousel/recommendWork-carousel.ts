@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, HostBinding, HostListener, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, HostListener, Input, ChangeDetectorRef } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
@@ -28,11 +28,13 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 		]),
 	],
 })
-export class RecommendWorkCarousel {
+export class RecommendWorkCarousel implements OnInit {
 	@Input() workList: any;
 
 	current: number;
 	partNum: number;
+
+	clear: any;
 
 	constructor(private cdr: ChangeDetectorRef) {
 		this.current = 0;
@@ -102,5 +104,5 @@ export class RecommendWorkCarousel {
 		}, 5000);
 	}
 
-	clear: any;
+
 }

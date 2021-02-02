@@ -19,8 +19,10 @@
 		"baseUrl": ".",
 		"paths": {
 			"@peacha-core": ["libs/peacha-core/src/index.ts"],
-			"@peacha-core/components": ["libs/peacha-core/src/lib/components"],
-			"@peacha-core/services": ["libs/peacha-core/src/lib/core/service"],
+			"@peacha-core/state": ["libs/peacha-core/src/lib/core/state/index.ts"],
+			"@peacha-core/feature": ["libs/peacha-core/src/lib/features/index.ts"],
+			"@peacha-core/components": ["libs/peacha-core/src/lib/components/index.ts"],
+			"@peacha-core/services": ["libs/peacha-core/src/lib/core/service/index.ts"],
 			"@peacha-studio-core": ["libs/peacha-studio-core/src/index.ts"]
 		}
 	},

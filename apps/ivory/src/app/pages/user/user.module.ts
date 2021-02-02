@@ -18,9 +18,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserinfoComponent } from './follow-list/userinfo/userinfo.component';
 import { FollowingComponent } from './follow-list/following/following.component';
 import { FollowerComponent } from './follow-list/follower/follower.component';
-import { PeachaComponentsModule, ReactiveComponentModule, WorkApiService } from '@peacha-core';
-import { FollowModule } from 'libs/peacha-core/src/lib/features/follow/follow.module';
+import { ReactiveComponentModule, WorkApiService } from '@peacha-core';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { PeachaComponentsModule } from '@peacha-core/components';
+import { FollowModule } from '@peacha-core/feature';
 
 @NgModule({
 	declarations: [

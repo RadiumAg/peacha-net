@@ -94,7 +94,7 @@ type HotUser = {
 	styleUrls: ['./login-index.page.less'],
 })
 export class LoginIndexPage {
-	constructor(private http: HttpClient, private router: Router, private render: Renderer2) {}
+	constructor(private http: HttpClient, private router: Router, private render: Renderer2) { }
 
 	loadOne = true;
 	loadTwo = true;
@@ -110,10 +110,10 @@ export class LoginIndexPage {
 
 	/**banner图片 */
 	banners$ = this.http.get<Banner>('/common/index_banner').pipe(
-		tap(s => {
+		tap(() => {
 			this.loadBanner = false;
 		}),
-		catchError(e => {
+		catchError(() => {
 			return of({
 				name: '',
 				imageurl: '',
@@ -124,7 +124,7 @@ export class LoginIndexPage {
 
 	/**最新作品动态 */
 	newest$ = this.http.get<Newest>(`/news/newest?page=0&size=5`).pipe(
-		catchError(e => {
+		catchError(() => {
 			return of({
 				count: 0,
 				list: [],
@@ -138,23 +138,22 @@ export class LoginIndexPage {
 
 	/**热门标签 */
 	hotTags$ = this.http.get<HotTag>(`/work/hot_tag`).pipe(
-		tap(s => {
+		tap(() => {
 			this.loadFour = false;
 		})
 	);
 	/**热门全部作品 */
 	hotlWork$ = this.changeOriginalWork$.pipe(
-		switchMap(_ => {
+		switchMap(() => {
 			return this.http.get<Hot>(`/work/recommend`).pipe(
 				tap(s => {
 					console.log(s.list.length);
 				})
 			);
 		}),
-		catchError(e => {
+		catchError(() => {
 			return of({
 				count: 0,
-				list: [],
 			});
 		})
 	);
@@ -162,12 +161,12 @@ export class LoginIndexPage {
 	hotOriginalWork$ = this.changeOriginalWork$.pipe(
 		switchMap(_ => {
 			return this.http.get<Hot>(`/work/hot_work?p=0&s=10&c=1`).pipe(
-				tap(s => {
+				tap(_s => {
 					this.loadOne = false;
 				})
 			);
 		}),
-		catchError(e => {
+		catchError(_e => {
 			return of({
 				count: 0,
 				list: [],
@@ -178,12 +177,12 @@ export class LoginIndexPage {
 	hotLiveWork$ = this.changeLiveWork$.pipe(
 		switchMap(_ => {
 			return this.http.get<Hot>(`/work/hot_work?p=0&s=10&c=0`).pipe(
-				tap(s => {
+				tap(_s => {
 					this.loadTwo = false;
 				})
 			);
 		}),
-		catchError(e => {
+		catchError(_e => {
 			return of({
 				count: 0,
 				list: [],
@@ -192,10 +191,10 @@ export class LoginIndexPage {
 	);
 	/**公示期作品 */
 	publicWork$ = this.http.get<Hot>(`/work/public_work?p=0&s=5`).pipe(
-		tap(s => {
+		tap(_s => {
 			this.loadThree = false;
 		}),
-		catchError(e => {
+		catchError(_e => {
 			return of({
 				count: 0,
 				list: [],
@@ -204,14 +203,14 @@ export class LoginIndexPage {
 	);
 	/**热门作者 */
 	hotUser$ = this.changeHotUser$.pipe(
-		switchMap(s => {
+		switchMap(_s => {
 			return this.http.get<HotUser>(`/user/hot_user?p=0&s=4`).pipe(
 				tap(() => {
 					this.loadFive = false;
 				})
 			);
 		}),
-		catchError(e => {
+		catchError(_e => {
 			return of({
 				count: 0,
 				list: [],
@@ -220,10 +219,10 @@ export class LoginIndexPage {
 	);
 	/**热门商品 */
 	hotGoods$ = this.http.get<HotGood>(`/work/hot_goods?p=0&s=10`).pipe(
-		tap(s => {
+		tap(_s => {
 			this.loadSix = false;
 		}),
-		catchError(e => {
+		catchError(_e => {
 			return of({
 				count: 0,
 				list: [],
@@ -282,7 +281,7 @@ export class LoginIndexPage {
 	}
 
 	@HostListener('window:scroll', ['$event'])
-	public scrolled($event: Event) {
+	public scrolled(_$event: Event) {
 		if (document.documentElement.scrollTop >= 900) {
 			this.render.setStyle(this.show.nativeElement, 'visibility', 'visible');
 		} else if (document.documentElement.scrollTop <= 900) {
@@ -306,7 +305,7 @@ export class LoginIndexPage {
 		}
 	}
 
-	@HostListener('wheel', ['$event']) public whell($event: Event) {}
+	@HostListener('wheel', ['$event']) public whell(_$event: Event) { }
 
 	toDetail(i: number) {
 		this.router.navigate(['rankling'], {

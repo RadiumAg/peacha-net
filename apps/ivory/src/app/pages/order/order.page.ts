@@ -61,7 +61,7 @@ export class OrderPage {
 
 	a: string;
 
-	count: boolean = true;
+	count = true;
 	createOrder() {
 		if (this.count) {
 			combineLatest(this.goods$, this.route.queryParams)

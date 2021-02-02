@@ -16,11 +16,12 @@ import { HotGoodPage } from './hot-good/hot-good.page';
 import { UnloginIndexPage } from './unlogin-index/unlogin-index.page';
 import { UnindexResolve } from './unindex.guard';
 import { RecommendWorkCarousel } from './login-index/recommendWork-carousel/recommendWork-carousel';
-import { PeachaComponentsModule, ReactiveComponentModule, WorkRelatedModule } from '@peacha-core';
+import { ReactiveComponentModule } from '@peacha-core';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { PeachaStudioCoreModule } from '@peacha-studio-core';
-import { FollowModule } from 'libs/peacha-core/src/lib/features/follow/follow.module';
 import { Carousel } from './login-index/carousel/carousel';
+import { FollowModule } from '@peacha-core/feature';
+import { PeachaComponentsModule, WorkRelatedModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [

@@ -15,9 +15,10 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
+import { ReactiveComponentModule } from '@peacha-core';
 import { PeachaStudioCoreModule } from '@peacha-studio-core';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [
@@ -57,4 +58,4 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 		FormNavDirective,
 	],
 })
-export class ReleaseComponentsModule {}
+export class ReleaseComponentsModule { }

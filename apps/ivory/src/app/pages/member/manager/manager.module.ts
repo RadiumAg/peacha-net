@@ -14,7 +14,8 @@ import { IllustSuccessPage } from './illust-manager/illust-success/illust-succes
 import { IllustFailPage } from './illust-manager/illust-fail/illust-fail.page';
 import { SharedService } from './live-manager/live.service';
 import { SingleManagerPage } from './single-manager/single-manager.page';
-import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
+import { ReactiveComponentModule } from '@peacha-core';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [
@@ -87,4 +88,4 @@ import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 	],
 	providers: [SharedService],
 })
-export class ManagerModule {}
+export class ManagerModule { }

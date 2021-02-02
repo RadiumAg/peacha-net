@@ -168,7 +168,7 @@ export class CartPage {
 								this.store.dispatch(new RemoveFromCart([...Array.from(checkArr)])).subscribe();
 							})
 						)
-						.subscribe(_ => {
+						.subscribe(() => {
 							this.checkArr$.next(new Set());
 						});
 				}

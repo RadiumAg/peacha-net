@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
 	selector: 'ivo-about-us',
 	templateUrl: './about-us.component.html',
 	styleUrls: ['./about-us.component.less'],
 })
-export class AboutUsComponent implements OnInit {
-	constructor() {}
+export class AboutUsComponent {
+	constructor() { }
 
-	ngOnInit(): void {}
 }

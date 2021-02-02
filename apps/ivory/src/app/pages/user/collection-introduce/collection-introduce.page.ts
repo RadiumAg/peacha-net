@@ -142,7 +142,7 @@ export class CollectionIntroducePage implements OnInit {
 				take(1),
 				tap(c => {
 					if (c.work_count == 0) {
-						let a = '该合辑暂时没有作品可以批量操作哦！';
+						const a = '该合辑暂时没有作品可以批量操作哦！';
 						this.modal.open(PopTips, [a, false]);
 					} else {
 						this.show$.next(true);
@@ -219,7 +219,7 @@ export class CollectionIntroducePage implements OnInit {
 	// 删除合辑
 	deleteTip() {
 		this.float.close();
-		let a = '确定要删除该合辑吗？';
+		const a = '确定要删除该合辑吗？';
 		this.modal
 			.open(PopTips, [a, true])
 			.afterClosed()

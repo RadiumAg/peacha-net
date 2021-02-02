@@ -147,7 +147,7 @@ export class UserState {
 		return state;
 	}
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	@Action(Login)
 	login(ctx: Context, action: Login) {
@@ -162,7 +162,7 @@ export class UserState {
 				switchMap(_ => {
 					return ctx.dispatch(new FetchMe());
 				}),
-				tap(_ => {})
+				tap(_ => { })
 			);
 	}
 
@@ -207,7 +207,7 @@ export class UserState {
 	fetch(ctx: Context) {
 		return this.http.get<Me>('/user/me').pipe(
 			tap(s => {
-				let res = s.role.filter(function (item, index, self) {
+				const res = s.role.filter(function (item, index, self) {
 					return self.findIndex(el => el.id == item.id) === index;
 				});
 				ctx.patchState({ ...s, role: res });

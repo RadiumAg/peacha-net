@@ -5,11 +5,12 @@ import { CommentEntryComponent } from './comment-entry/comment-entry.component';
 import { CommentInputComponent } from './comment-input/comment-input.component';
 import { CommentSubentryComponent } from './comment-entry/comment-subentry/comment-subentry.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ReactiveComponentModule, PeachaComponentsModule } from '@peacha-core';
+import { ReactiveComponentModule } from '@peacha-core';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [CommentAreaFragment, CommentEntryComponent, CommentInputComponent, CommentSubentryComponent],
 	imports: [CommonModule, ReactiveComponentModule, ReactiveFormsModule, PeachaComponentsModule],
 	exports: [CommentAreaFragment],
 })
-export class CommentModule {}
+export class CommentModule { }

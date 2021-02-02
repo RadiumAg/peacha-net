@@ -23,7 +23,7 @@ export class ModifyScale {
 		this.modalRef.close(this.number$.value);
 	}
 
-	shownum: number = 0;
+	shownum = 0;
 
 	setPrecent(num: { process: number }) {
 		this.shownum = Number((num.process * 100).toFixed(0));

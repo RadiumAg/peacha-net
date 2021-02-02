@@ -9,7 +9,7 @@ export class CommissionDetailResolve implements Resolve<any> {
 	constructor(private commission: CommissionApiService, private commissionDetail: CommissionDetailService) {}
 
 	resolve(route: import('@angular/router').ActivatedRouteSnapshot) {
-		let id = route.queryParams.id;
+		const id = route.queryParams.id;
 		this.commissionDetail.setCommissionId(id);
 		if (id) {
 			return this.commission.detail(id).pipe(

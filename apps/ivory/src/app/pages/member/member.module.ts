@@ -5,7 +5,8 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RecordPage } from './record/record.page';
 import { RecordDetailPage } from './record/record-detail/record-detail.page';
-import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
+import { ReactiveComponentModule } from '@peacha-core';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [MemberPage, RecordPage, RecordDetailPage],
@@ -41,4 +42,4 @@ import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 		]),
 	],
 })
-export class MemberModule {}
+export class MemberModule { }

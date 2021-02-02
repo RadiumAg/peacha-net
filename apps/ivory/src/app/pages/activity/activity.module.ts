@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ActivityPage } from './activity.page';
-import { PeachaComponentsModule, ReactiveComponentModule, WorkRelatedModule } from '@peacha-core';
+import { ReactiveComponentModule } from '@peacha-core';
 import { CommentModule } from '../../fragments/comment/comment.module';
+import { PeachaComponentsModule, WorkRelatedModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [ActivityPage],
@@ -21,4 +22,4 @@ import { CommentModule } from '../../fragments/comment/comment.module';
 		]),
 	],
 })
-export class ActivityModule {}
+export class ActivityModule { }

@@ -10,7 +10,7 @@ import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
 	styleUrls: ['./success-tips.less'],
 })
 export class SuccessTips {
-	redirectSet: number = 5;
+	redirectSet = 5;
 	count$: BehaviorSubject<number>;
 
 	@Input('redirectUrl')
