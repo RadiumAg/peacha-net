@@ -4,8 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { map } from 'rxjs/operators';
-import { ModalRef } from '@peacha-core';
-import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
 
 @Component({
 	selector: 'ivo-company-modal',

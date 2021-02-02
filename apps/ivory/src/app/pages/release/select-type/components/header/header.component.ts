@@ -1,15 +1,14 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SelectData } from '@peacha-core';
-import { SELECT_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { SelectData, SELECT_DATA_TOKEN } from '@peacha-core';
 
 @Component({
 	selector: 'ivo-header',
 	templateUrl: './header.component.html',
 	styleUrls: ['./header.component.less'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 	title: string[];
 	constructor(
 		private router: ActivatedRoute,
@@ -21,5 +20,4 @@ export class HeaderComponent implements OnInit {
 		});
 	}
 
-	ngOnInit() {}
 }

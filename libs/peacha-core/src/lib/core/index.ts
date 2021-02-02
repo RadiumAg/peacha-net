@@ -11,3 +11,4 @@ export * from './toast/toast.component';
 export * from './toast/toast.service';
 export * from './commom/common';
 export * from './animations/modal-animation';
+export * from './model/process';

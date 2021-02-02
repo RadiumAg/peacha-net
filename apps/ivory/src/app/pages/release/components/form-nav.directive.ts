@@ -1,7 +1,7 @@
 import { NgControl } from '@angular/forms';
-import { Directive, ElementRef, OnInit, Inject, HostListener } from '@angular/core';
+import { Directive, ElementRef, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { FORM_NAV_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { FORM_NAV_TOKEN } from '@peacha-core';
 
 @Directive({
 	selector: '[ivoFormNav]',
@@ -16,7 +16,7 @@ export class FormNavDirective {
 		const click = () => {
 			const controlIndex = (this.el.nativeElement as HTMLElement).getAttribute('data-control-index');
 			let oldval = this.form_nav_token.getValue();
-			oldval = oldval.map(x => false);
+			oldval = oldval.map(_x => false);
 			if (controlIndex) {
 				oldval[controlIndex] = true;
 			}

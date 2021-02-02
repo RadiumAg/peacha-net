@@ -7,10 +7,10 @@ import { Live2dUploadComponent } from '../../components/live2d-upload/live2d-upl
 import { SuccessTips } from '../../components/success-tips/success-tips';
 import { BehaviorSubject, fromEvent, interval } from 'rxjs';
 import { ReleaseApiService } from '../../release-api.service';
-import { ModalService, Work } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { emptyStringValidator, live2dPriceValidator, validator } from 'libs/peacha-core/src/lib/core/commom/common';
-import { Live2dTransformData } from 'libs/peacha-studio-core/src/lib/live2d-transform-data';
+import { emptyStringValidator, live2dPriceValidator, ModalService, validator, Work } from '@peacha-core';
+import { Live2dTransformData } from '@peacha-studio-core';
+import { PopTips } from '@peacha-core/components';
+
 
 @Component({
 	selector: 'ivo-live2d-paid',
@@ -18,7 +18,7 @@ import { Live2dTransformData } from 'libs/peacha-studio-core/src/lib/live2d-tran
 	styleUrls: ['./live2d-paid.component.less'],
 })
 export class Live2dPaidComponent implements OnInit, AfterViewInit {
-	constructor(private fb: FormBuilder, private modal: ModalService, private route: ActivatedRoute, private api: ReleaseApiService) {}
+	constructor(private fb: FormBuilder, private modal: ModalService, private route: ActivatedRoute, private api: ReleaseApiService) { }
 
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
@@ -82,23 +82,24 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
 		enableFaceTracker: boolean;
 		enableSettingPanel: boolean;
 	} = {
-		transformData: {},
-		enableFaceTracker: false,
-		enableSettingPanel: false,
-	};
+			transformData: {},
+			enableFaceTracker: false,
+			enableSettingPanel: false,
+		};
 	isEdit = false;
 	stateMentStrategy = {
 		['fllow']: () => {
-			this.stateMentStates = this.stateMentStates.map(x => true);
+			this.stateMentStates = this.stateMentStates.map(_x => true);
 			this.resetAChecked();
 		},
 		['orgin']: () => {
-			this.stateMentStates = this.stateMentStates.map(x => false);
+			this.stateMentStates = this.stateMentStates.map(_x => false);
 		},
 		['not_checked']: () => {
-			this.stateMentStates = this.stateMentStates.map(x => true);
+			this.stateMentStates = this.stateMentStates.map(_x => true);
 		},
 	};
+	// eslint-disable-next-line @typescript-eslint/ban-types
 	call = (x: Function, y: any, ...args) => x.call(y, args);
 	setSaleDisabledState(): void {
 		if (this.form.value.gl_token) {
@@ -238,7 +239,7 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
 
 	private public_work(): void {
 		this.api.publish_work(this.param).subscribe({
-			next: x => {
+			next: _x => {
 				this.modal.open(SuccessTips, {
 					redirectUrl: '/member/manager/live2D/auditing',
 					tip: '已成功提交审核，请等待后台人员审核！',
@@ -302,7 +303,7 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
 	private subscribeForm(): void {
 		this.form.valueChanges
 			.pipe(
-				tap(value => {
+				tap(_value => {
 					this.setModalCheckedDisabled();
 					this.setSaleDisabledState();
 				}),

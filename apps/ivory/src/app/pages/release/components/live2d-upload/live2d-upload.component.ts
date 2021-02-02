@@ -3,12 +3,10 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { filter } from 'rxjs/operators';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
 import { ModalService } from '@peacha-core';
-import { Live2dTransformData } from '@peacha-studio-core';
-import { ReadableVirtualFileSystem, HttpVirtualFileSystem, FileNotFoundError } from '@peacha-studio-core/vfs';
-import { CompressService, ZipVFS } from '@peacha-studio-core/zip';
-import { Live2dPreviewComponent } from '@peacha-studio-core/components';
+import { CompressService, FileNotFoundError, HttpVirtualFileSystem, Live2dPreviewComponent, Live2dTransformData, ReadableVirtualFileSystem, ZipVFS } from '@peacha-studio-core';
+
+import { PopTips } from '@peacha-core/components';
 
 export enum Live2dLoadStatus {
 	Not,
@@ -37,7 +35,7 @@ export enum UploadStatus {
 	],
 })
 export class Live2dUploadComponent implements ControlValueAccessor {
-	constructor(private compress: CompressService, private http: HttpClient, private modal: ModalService) {}
+	constructor(private compress: CompressService, private http: HttpClient, private modal: ModalService) { }
 
 	token: string;
 	transformData: Live2dTransformData;
@@ -67,7 +65,7 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 
 	@ViewChild(Live2dPreviewComponent)
 	live2d: Live2dPreviewComponent;
-	update: (token: string) => void = () => {};
+	update: (token: string) => void = () => { };
 
 	@HostListener('dragover', ['$event'])
 	onDragOver(event: DragEvent) {
@@ -191,11 +189,11 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 		this.live2dLoadStatus$.next(Live2dLoadStatus.Not);
 	}
 
-	writeValue(): void {}
+	writeValue(): void { }
 
 	registerOnChange(fn: (token: string) => void): void {
 		this.update = fn;
 	}
 
-	registerOnTouched(): void {}
+	registerOnTouched(): void { }
 }

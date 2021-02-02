@@ -3,11 +3,9 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { filter, map, switchMap } from 'rxjs/operators';
-import { ModalService } from '@peacha-core';
-import { Cropper } from 'libs/peacha-core/src/lib/components/cropper/cropper';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { dataURLtoBlob } from 'libs/peacha-core/src/lib/core/commom/common';
-import { Process } from 'libs/peacha-core/src/lib/core/model/process';
+import { dataURLtoBlob, ModalService, Process } from '@peacha-core';
+import { Cropper, PopTips } from '@peacha-core/components';
+
 
 @Component({
 	selector: 'ivo-thumbnail-upload',
@@ -22,7 +20,7 @@ import { Process } from 'libs/peacha-core/src/lib/core/model/process';
 	],
 })
 export class ThumbnailUploadComponent implements ControlValueAccessor {
-	constructor(private modal: ModalService, private http: HttpClient) {}
+	constructor(private modal: ModalService, private http: HttpClient) { }
 	Process$: BehaviorSubject<Process> = new BehaviorSubject({
 		success: false,
 		progress: 0,
@@ -81,13 +79,13 @@ export class ThumbnailUploadComponent implements ControlValueAccessor {
 						this.Process$.next({
 							success: false,
 							// tslint:disable-next-line: no-non-null-assertion
-							progress: e.loaded / e.total!,
+							progress: e.loaded / e.total,
 						});
 						// tslint:disable-next-line: triple-equals
 					} else if (e.type == HttpEventType.Response) {
 						if (e.ok) {
 							// tslint:disable-next-line: no-non-null-assertion
-							const ret = e.body! as {
+							const ret = e.body as {
 								token: string;
 								url: string;
 							};

@@ -6,8 +6,7 @@ import { tap, switchMap, map } from 'rxjs/operators';
 import { Select } from '@ngxs/store';
 import { PlatformLocation } from '@angular/common';
 import { CopyrightList, DropDownService, ModalService, UserState } from '@peacha-core';
-import { Live2dTransformData } from '@peacha-studio-core';
-import { ReadableVirtualFileSystem, HttpVirtualFileSystem } from '@peacha-studio-core/vfs';
+import { HttpVirtualFileSystem, Live2dTransformData, ReadableVirtualFileSystem } from '@peacha-studio-core';
 import { ReportModalComponent } from '@peacha-core/components';
 
 @Component({
@@ -78,7 +77,7 @@ export class WorkLive2dComponent {
 		private drop: DropDownService,
 		private modal: ModalService,
 		private vc: ViewContainerRef
-	) {}
+	) { }
 
 	relevants$ = this.route.params.pipe(
 		switchMap(_ => {

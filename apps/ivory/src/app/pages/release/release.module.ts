@@ -17,12 +17,12 @@ import { Live2dPaidComponent } from './live2d/live2d-paid/live2d-paid.component'
 import { NotFoundPage } from '../error/not-found/not-found.page';
 import { ReleaseApiService } from './release-api.service';
 import { FORM_NAV_TOKEN, PhoneGuard, SELECT_DATA_TOKEN, SELECT_TOKEN } from '@peacha-core';
-import { PeachaStudioCoreModule } from '@peacha-studio-core';
+import { CompressService, PeachaStudioCoreModule } from '@peacha-studio-core';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { PeachaComponentsModule } from '@peacha-core/components';
-import { CompressService } from '@peacha-studio-core/zip';
+
 
 @NgModule({
 	declarations: [
@@ -101,4 +101,4 @@ import { CompressService } from '@peacha-studio-core/zip';
 		},
 	],
 })
-export class ReleaseModule {}
+export class ReleaseModule { }

@@ -1,4 +1,4 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CertifiedTipsComponent } from './../../components/certified-tips/certified-tips.component';
 import { Inject, OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
@@ -6,8 +6,8 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
 import { take, tap } from 'rxjs/operators';
 import { app_config } from '../../../../../global.config';
-import { SelectData, ModalService, UserState } from '@peacha-core';
-import { SELECT_TOKEN, SELECT_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { SelectData, ModalService, UserState, SELECT_TOKEN, SELECT_DATA_TOKEN } from '@peacha-core';
+
 
 @Component({
 	selector: 'ivo-live2d',
@@ -21,7 +21,7 @@ export class Live2dComponent implements OnInit, OnDestroy {
 		public select_data_token: BehaviorSubject<SelectData>,
 		private router: Router,
 		private modal: ModalService
-	) {}
+	) { }
 
 	@Select(UserState.isLogin)
 	isLogin$: Observable<boolean>;
@@ -65,7 +65,7 @@ export class Live2dComponent implements OnInit, OnDestroy {
 	}
 
 	private checkedIcon(index: number) {
-		this.activeList = this.activeList.map(x => false);
+		this.activeList = this.activeList.map(_x => false);
 		this.activeList[index] = true;
 		this.select_token.next(false);
 	}

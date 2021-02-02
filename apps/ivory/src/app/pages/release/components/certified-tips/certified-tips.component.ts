@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalRef } from '@peacha-core';
 
 @Component({
@@ -6,10 +6,9 @@ import { ModalRef } from '@peacha-core';
 	templateUrl: './certified-tips.component.html',
 	styleUrls: ['./certified-tips.component.less'],
 })
-export class CertifiedTipsComponent implements OnInit {
-	constructor(private modal: ModalRef<string>) {}
+export class CertifiedTipsComponent {
+	constructor(private modal: ModalRef<string>) { }
 	close() {
 		this.modal.close(1);
 	}
-	ngOnInit() {}
 }

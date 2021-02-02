@@ -1,7 +1,7 @@
 import { Renderer2, ElementRef } from '@angular/core';
-import { AfterViewChecked, Component, Inject, Input, OnInit, AfterContentInit, OnDestroy, HostBinding } from '@angular/core';
+import { Component, Inject, Input, OnInit, OnDestroy } from '@angular/core';
+import { FORM_NAV_TOKEN } from '@peacha-core';
 import { BehaviorSubject } from 'rxjs';
-import { FORM_NAV_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
 
 @Component({
 	selector: 'ivo-form-nav',
@@ -14,7 +14,7 @@ export class FormNavComponent implements OnInit, OnDestroy {
 		public form_nav_token: BehaviorSubject<boolean[]>,
 		private re2: Renderer2,
 		private el: ElementRef
-	) {}
+	) { }
 
 	activeList: boolean[];
 	@Input()

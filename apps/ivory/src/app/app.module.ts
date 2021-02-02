@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, RouteReuseStrategy } from '@angular/router';
-import { NgxsModule, NoopNgxsExecutionStrategy } from '@ngxs/store';
+import { RouterModule, Routes } from '@angular/router';
+import { NgxsModule } from '@ngxs/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayModule } from '@angular/cdk/overlay';
 // local imports
