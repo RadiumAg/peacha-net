@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -19,7 +19,7 @@ export class CreatorBlockComponent {
 	@Input() followState: number;
 	@Input() role: Array<number>;
 
-	constructor(private router: Router, private chat: ChatStartService) {}
+	constructor(private router: Router, private chat: ChatStartService) { }
 
 	click() {
 		this.router.navigateByUrl('/user/' + this.userId);

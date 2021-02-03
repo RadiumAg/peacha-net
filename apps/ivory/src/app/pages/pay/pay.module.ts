@@ -7,7 +7,8 @@ import { PurchaseResultsPage } from './purchase-results/purchase-results.page';
 import { NoResult } from './purchase-results/no-result/no-resule';
 import { PaySuccessPage } from './pay-success/pay-success.page';
 import { TradeApiService } from './trade-api.service';
-import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
+import { ReactiveComponentModule } from '@peacha-core';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [PayPage, PurchaseResultsPage, NoResult, PaySuccessPage],
@@ -33,4 +34,4 @@ import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 	],
 	providers: [TradeApiService],
 })
-export class PayModule {}
+export class PayModule { }

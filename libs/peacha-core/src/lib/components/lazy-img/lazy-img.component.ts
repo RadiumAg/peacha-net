@@ -1,15 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
 	selector: 'ivo-lazy-img',
 	templateUrl: './lazy-img.component.html',
 	styleUrls: ['./lazy-img.component.less'],
 })
-export class LazyImgComponent implements OnInit {
-	constructor() {}
-
-	ngOnInit(): void {}
-
+export class LazyImgComponent {
 	@Input()
 	ngLazyLoad: string;
 
@@ -22,4 +18,8 @@ export class LazyImgComponent implements OnInit {
 
 	defaultImage = '/assets/image/login_index/loading.png';
 	errorImage = '/assets/image/login_index/error.png';
+	constructor() { }
+
+
+
 }

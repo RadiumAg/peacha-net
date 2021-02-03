@@ -1,6 +1,5 @@
-import { Observable, timer } from 'rxjs';
-import { Component, HostListener, Inject, ViewChild, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { ImageCroppedEvent, ImageCropperComponent, ImageTransform } from 'ngx-image-cropper';
+import { Component, Inject, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
+import { ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 import { MODAL_DATA_TOKEN } from '../../core/tokens';
 import { ModalRef } from '../../core/service/modals.service';
 
@@ -32,7 +31,7 @@ export class Cropper implements AfterViewInit, OnDestroy {
 	// 图片裁剪
 	imageCropped(event: ImageCroppedEvent) {
 		// tslint:disable-next-line: no-non-null-assertion
-		this.cropImage = event.base64!;
+		this.cropImage = event.base64;
 	}
 
 	checkAvatar() {

@@ -1,6 +1,5 @@
 import {
 	Component,
-	OnInit,
 	ContentChildren,
 	QueryList,
 	ViewChild,
@@ -16,8 +15,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Option } from '../option/option';
 import { Overlay, CdkOverlayOrigin, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { takeUntil, withLatestFrom } from 'rxjs/operators';
-import { BehaviorSubject, of, Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs'
 import { SelectAnimations } from './select.animations';
 import { SelectFather, SELECT_FATHER } from './selectfather';
 
@@ -41,7 +40,7 @@ export const EXE_COUNTER_VALUE_ACCESSOR: any = {
 	animations: [SelectAnimations.transformPanel],
 })
 export class Select implements ControlValueAccessor, SelectFather, AfterContentInit {
-	constructor(private overlay: Overlay, private vc: ViewContainerRef, private render: Renderer2) {}
+	constructor(private overlay: Overlay, private vc: ViewContainerRef, private render: Renderer2) { }
 
 	@Input()
 	tipText = { text: '请选择', value: '-1' };

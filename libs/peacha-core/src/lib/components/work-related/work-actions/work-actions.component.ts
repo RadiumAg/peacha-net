@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { trigger, transition, state, animate, style, keyframes, query, group } from '@angular/animations';
 
 @Component({
@@ -53,7 +53,7 @@ import { trigger, transition, state, animate, style, keyframes, query, group } f
 	],
 })
 export class WorkActionsComponent {
-	constructor() {}
+	constructor() { }
 
 	@Input() work: {
 		id: number;

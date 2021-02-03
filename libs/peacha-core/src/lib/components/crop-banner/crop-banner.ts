@@ -8,13 +8,13 @@ import { MODAL_DATA_TOKEN } from '../../core/tokens';
 	styleUrls: ['./crop-banner.less'],
 })
 export class CropBanner {
-	constructor(private modalRef: ModalRef<CropBanner>, @Inject(MODAL_DATA_TOKEN) public data: Blob) {}
+	constructor(private modalRef: ModalRef<CropBanner>, @Inject(MODAL_DATA_TOKEN) public data: Blob) { }
 
 	cropBanner = '';
 
 	// 图片裁剪
 	imageCropped(event: ImageCroppedEvent) {
-		this.cropBanner = event.base64!;
+		this.cropBanner = event.base64;
 	}
 
 	checkAvatar() {

@@ -3,8 +3,9 @@ import { Store, Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserState, Role, ModalService, RoleApiService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { UserStateModel } from 'libs/peacha-core/src/lib/core/state/user.state';
+import { UserStateModel } from '@peacha-core/state';
+import { PopTips } from '@peacha-core/components';
+
 
 @Component({
 	selector: 'ivo-user-security',
@@ -21,7 +22,7 @@ export class UserSecurityPage {
 	artistRoleState$ = this.roleApi.findApply(Role.Artist);
 	modelerRoleState$ = this.roleApi.findApply(Role.Modeler);
 
-	constructor(public store: Store, private router: Router, private modal: ModalService, private roleApi: RoleApiService) {}
+	constructor(public store: Store, private router: Router, private modal: ModalService, private roleApi: RoleApiService) { }
 
 	changePhone(email: string) {
 		if (email) {

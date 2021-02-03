@@ -1,4 +1,4 @@
-import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
+import { ScrollDispatcher } from '@angular/cdk/scrolling';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import {
 	ChangeDetectorRef,
@@ -14,9 +14,8 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { UserState, ChatStartService, ZoomService, Toast, ModalService, DropDownService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { RemoveHistroyAll } from 'libs/peacha-core/src/lib/core/state/chat.action';
-import { ChatState } from 'libs/peacha-core/src/lib/core/state/chat.state';
+import { PopTips } from '@peacha-core/components';
+import { ChatState, RemoveHistroyAll } from '@peacha-core/state';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
 import { IllustZoomModalComponent } from '../../work/illust-zoom-modal/illust-zoom-modal.component';
@@ -87,7 +86,7 @@ export class ChatPage implements OnInit, OnDestroy {
 		private menu: DropDownService,
 		private vc: ViewContainerRef,
 		private scrollDispatcher: ScrollDispatcher
-	) {}
+	) { }
 
 	now$ = this.route.queryParams;
 
@@ -195,7 +194,7 @@ export class ChatPage implements OnInit, OnDestroy {
 		}
 	}
 
-	sendPic(event: any, r: number, me: number, input: HTMLInputElement, el: ElementRef): void {
+	sendPic(event: any, r: number, me: number, input: HTMLInputElement, _el: ElementRef): void {
 		let filetype: number;
 		if (event.type.split('image').length > 1) {
 			filetype = 1;
@@ -249,14 +248,14 @@ export class ChatPage implements OnInit, OnDestroy {
 		}
 	}
 
-	close(ev: Event, id: string, item: any, i: number): void {
+	close(ev: Event, id: string, _item: any, i: number): void {
 		ev?.stopPropagation();
 		this.http
 			.post('/chat/cover_room', {
 				r: [id],
 			})
 			.subscribe(
-				s => {
+				_s => {
 					this.dialog.closeRoom(id);
 
 					this.showRoomList$.pipe(withLatestFrom(this.now$)).subscribe(([l, n]) => {
@@ -319,7 +318,7 @@ export class ChatPage implements OnInit, OnDestroy {
 				this.menu.close();
 				if (is) {
 					this.http.get(`/user/black?u=${id}`).subscribe(
-						s => {
+						_s => {
 							this.isBlack = true;
 						},
 						e => {

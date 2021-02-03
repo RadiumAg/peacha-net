@@ -28,10 +28,27 @@ export class LiveSuccessPage {
 	currentPage$ = new BehaviorSubject(1);
 	m: FormControl = new FormControl(-1);
 	key: FormControl = new FormControl('');
-	showList: any = [];
-	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private _sharedService: SharedService) {}
+	showList = [];
 
 	update$ = new BehaviorSubject<boolean>(true);
+
+	works$ = combineLatest([this.update$, this.route.queryParams]).pipe(
+		switchMap(([_up, params]) => {
+			return this.http
+				.get<Production>(`/work/get_create_live?k=${params.k ?? ''}&p=${params.p ? params.p - 1 : 0}&s=6&ss=${params.m ?? -1}`)
+				.pipe(
+					tap(s => {
+						this.showList = s.list;
+						this.currentPage$.next(params.p ?? 1);
+						s.list.map(l => {
+							l.time = l.publishtime + 7 * 24 * 60 * 60 * 1000 - Date.now();
+						});
+					})
+				);
+		})
+	);
+	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private _sharedService: SharedService) { }
+
 
 	b = this.m.valueChanges
 		.pipe(
@@ -60,22 +77,6 @@ export class LiveSuccessPage {
 			queryParamsHandling: 'merge',
 		});
 	}
-
-	works$ = combineLatest(this.update$, this.route.queryParams).pipe(
-		switchMap(([up, params]) => {
-			return this.http
-				.get<Production>(`/work/get_create_live?k=${params.k ?? ''}&p=${params.p ? params.p - 1 : 0}&s=6&ss=${params.m ?? -1}`)
-				.pipe(
-					tap(s => {
-						this.showList = s.list;
-						this.currentPage$.next(params.p ?? 1);
-						s.list.map(l => {
-							l.time = l.publishtime + 7 * 24 * 60 * 60 * 1000 - Date.now();
-						});
-					})
-				);
-		})
-	);
 
 	toPage(p: number) {
 		this.router.navigate([], {

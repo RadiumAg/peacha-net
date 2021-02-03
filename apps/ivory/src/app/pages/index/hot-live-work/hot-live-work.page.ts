@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef, HostListener } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, empty } from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY } from 'rxjs';
 import { tap, take, switchMap, shareReplay } from 'rxjs/operators';
 
 type HotWork = {
@@ -38,7 +38,7 @@ export class HotLiveWorkPage {
 		}),
 		shareReplay()
 	);
-	constructor(private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) {}
+	constructor(private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) { }
 
 	@HostListener('window:scroll', ['$event']) public scrolled($event: Event) {
 		/**
@@ -62,7 +62,7 @@ export class HotLiveWorkPage {
 								})
 							);
 						}
-						return empty();
+						return EMPTY;
 					})
 				)
 				.subscribe();

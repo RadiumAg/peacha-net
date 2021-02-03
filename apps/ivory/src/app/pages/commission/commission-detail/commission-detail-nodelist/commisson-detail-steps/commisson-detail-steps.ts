@@ -2,17 +2,14 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
-	ElementRef,
 	EventEmitter,
 	OnInit,
 	Output,
-	Renderer2,
-	ViewChild,
+	Renderer2
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalService, ZoomService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { UploadImageDirective } from 'libs/peacha-core/src/lib/components/uploadImage/uploadImage.directive';
+import { PopTips, UploadImageDirective } from '@peacha-core/components';
 import { BehaviorSubject } from 'rxjs';
 import { IllustZoomModalComponent } from '../../../../work/illust-zoom-modal/illust-zoom-modal.component';
 import { CommissionApiService } from '../../../service/commission-api.service';
@@ -354,7 +351,7 @@ export class CommissionDetailSteps implements OnInit {
 		private isError: CommissionDetailErrorService,
 		private zoom: ZoomService,
 		private render: Renderer2
-	) {}
+	) { }
 
 	ngOnInit(): void {
 		this.commissionApi.nodeModifyCount(this.detail.getCommissionId()).subscribe(i => {
@@ -419,7 +416,7 @@ export class CommissionDetailSteps implements OnInit {
 	}
 
 	// 选中某一节点
-	select(ac: number, name: string, status: number, type: number, index: number, node_id: number, file_type: number): void {
+	select(ac: number, _name: string, _status: number, _type: number, index: number, node_id: number, _file_type: number): void {
 		this.showIndex = index;
 		if (this.showIndex <= ac || this.active === -1) {
 			// this.showTitle = name;
@@ -789,7 +786,7 @@ export class CommissionDetailSteps implements OnInit {
 								);
 							} else {
 								this.commissionApi.cancelOrders(this.detail.getCommissionId()).subscribe(
-									o => {
+									_o => {
 										this.commissionApi.nodeAudit(this.indexNode.id, p).subscribe(
 											_ => {
 												// this.index_status = 3;
@@ -861,7 +858,7 @@ export class CommissionDetailSteps implements OnInit {
 							this.modal
 								.open(PopTips, ['超时中止发起成功', false, 1])
 								.afterClosed()
-								.subscribe(w => {
+								.subscribe(_w => {
 									this.commissionApi.commissionStatus(this.detail.getCommissionId()).subscribe(i => {
 										this.detail.commissionStatus$.next(i.status);
 									});

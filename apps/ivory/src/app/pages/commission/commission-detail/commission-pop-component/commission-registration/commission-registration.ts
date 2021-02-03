@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ModalRef } from '@peacha-core';
 import { BehaviorSubject } from 'rxjs';
@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 	templateUrl: './commission-registration.html',
 	styleUrls: ['./commission-registration.less'],
 })
-export class CommissionRegistration implements OnInit {
+export class CommissionRegistration {
 	registrationForm: FormGroup;
 
 	next$ = new BehaviorSubject(0);
@@ -88,7 +88,6 @@ export class CommissionRegistration implements OnInit {
 		return this.registrationForm.get('tips');
 	}
 
-	ngOnInit(): void {}
 
 	close(): void {
 		this.modalRef.close();

@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ModalRef } from '@peacha-core';
-import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
 import { CommissionDetail } from '../../../model/commission-detail';
 import { CommissionApiService } from '../../../service/commission-api.service';
 import { CommissionDetailService } from '../../../service/detail.service';
@@ -30,7 +29,7 @@ export class CommissionTimeout implements OnInit {
 		},
 		private api: CommissionApiService,
 		private isError: CommissionDetailErrorService
-	) {}
+	) { }
 
 	ngOnInit(): void {
 		if (this.key.type === -1) {
@@ -111,7 +110,7 @@ export class CommissionTimeout implements OnInit {
 	sure(): void {
 		if (this.isDiscontinue) {
 			this.api.discontinue(this.key.id, 3).subscribe(
-				s => {
+				_s => {
 					this.modalRef.close(1);
 					this.rate = null;
 				},

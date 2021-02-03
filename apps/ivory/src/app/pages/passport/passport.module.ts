@@ -16,10 +16,12 @@ import { AuthenticationSuccessPage } from './authentication-success/authenticati
 import { AuthenticationFailPage } from './authentication-fail/authentication-fail.page';
 import { AuthenticationWaitPage } from './authentication-wait/authentication-wait.page';
 import { LoginResolve } from './login.guard';
-import { PeachaComponentsModule, ReactiveComponentModule, VerifyModule } from '@peacha-core';
+import { ReactiveComponentModule } from '@peacha-core';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { VerifyModule } from '@peacha-core/feature';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [
@@ -92,4 +94,4 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 	],
 	providers: [LoginResolve],
 })
-export class PassportModule {}
+export class PassportModule { }

@@ -1,11 +1,9 @@
-import { Component, ViewChild, ElementRef, Inject } from '@angular/core';
+import { Component, ViewChild, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { formatDate } from '@angular/common';
-import { ModalRef } from '@peacha-core';
-import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
 
 @Component({
 	selector: 'ivo-complain',
@@ -19,12 +17,15 @@ export class Complain {
 	tokenList$ = new BehaviorSubject<Array<string>>([]);
 	imgList$ = new BehaviorSubject<Array<string>>([]);
 
+
+	keyArray = ['违法违禁', '色情', '低俗', '赌博诈骗', '血腥暴力', '人身攻击', '引战', '青少年不良信息', '其他问题'];
+
 	constructor(
 		private route: ActivatedRoute,
 		private http: HttpClient,
 		private modalRef: ModalRef<Complain>,
 		@Inject(MODAL_DATA_TOKEN) public collectionId: number
-	) {}
+	) { }
 
 	close() {
 		this.keywordList$.next(new Set());
@@ -32,8 +33,6 @@ export class Complain {
 		this.imgList$.next([]);
 		this.modalRef.close();
 	}
-
-	keyArray = ['违法违禁', '色情', '低俗', '赌博诈骗', '血腥暴力', '人身攻击', '引战', '青少年不良信息', '其他问题'];
 
 	choice(i: number) {
 		this.keywordList$
@@ -51,7 +50,7 @@ export class Complain {
 			const form = new FormData();
 			form.append('f', url);
 			this.http.post<any>('/common/upload_file', form).subscribe(s => {
-				combineLatest(this.tokenList$, this.imgList$)
+				combineLatest([this.tokenList$, this.imgList$])
 					.pipe(
 						tap(([token, img]) => {
 							token.push(s.token);
@@ -66,7 +65,7 @@ export class Complain {
 	}
 
 	deleteUpdate(i: number) {
-		combineLatest(this.tokenList$, this.imgList$)
+		combineLatest([this.tokenList$, this.imgList$])
 			.pipe(
 				tap(([token, img]) => {
 					token.splice(i, 1);

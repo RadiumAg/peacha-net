@@ -1,6 +1,6 @@
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { CommissionApiService } from './../service/commission-api.service';
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable, of, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { UserState } from '@peacha-core';
 	templateUrl: './commission-index.component.html',
 	styleUrls: ['./commission-index.component.less'],
 })
-export class CommissionIndexComponent implements OnInit, OnDestroy {
+export class CommissionIndexComponent implements OnInit {
 	@Select(UserState.id)
 	id$!: Observable<number>;
 
@@ -102,7 +102,6 @@ export class CommissionIndexComponent implements OnInit, OnDestroy {
 			maxPrice: new FormControl(''),
 		});
 	}
-	ngOnDestroy(): void {}
 
 	ngOnInit(): void {
 		this.route.queryParams.subscribe(p => {

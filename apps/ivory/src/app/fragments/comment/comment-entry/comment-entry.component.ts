@@ -8,31 +8,24 @@ import {
 	ElementRef,
 	TemplateRef,
 	ViewContainerRef,
-	HostListener,
-	AfterContentInit,
-	AfterViewInit,
-	AfterContentChecked,
+	AfterContentInit
 } from '@angular/core';
-import { BehaviorSubject, combineLatest, empty, Observable } from 'rxjs';
-import { switchMap, take, shareReplay, tap, catchError } from 'rxjs/operators';
+import { BehaviorSubject, empty, Observable } from 'rxjs';
+import { switchMap, take, tap, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ModelComment, ModelSubComment } from '../model';
 import { FormControl } from '@angular/forms';
 import { Select } from '@ngxs/store';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserState, Toast } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { DropDownService } from 'libs/peacha-core/src/lib/core/service/dropdown.service';
-import { ModalService } from 'libs/peacha-core/src/lib/core/service/modals.service';
-import { CommentReportModalComponent } from 'libs/peacha-core/src/lib/components/comment-report-modal/comment-report-modal-component';
+import { UserState, Toast, ModalService, DropDownService } from '@peacha-core';
+import { CommentReportModalComponent, PopTips } from '@peacha-core/components';
 
 @Component({
 	selector: 'ivo-comment-entry',
 	templateUrl: './comment-entry.component.html',
 	styleUrls: ['./comment-entry.component.less'],
-	inputs: ['comment', 'aid'],
 })
-export class CommentEntryComponent {
+export class CommentEntryComponent implements AfterContentInit {
 	@ViewChild('hello') el: HTMLDivElement;
 	@ViewChild('textbox') box: ElementRef;
 	@ViewChild('dot') dot: ElementRef;
@@ -51,7 +44,7 @@ export class CommentEntryComponent {
 		banner: string;
 	}>;
 
-	set comment(c: ModelComment) {
+	@Input() set comment(c: ModelComment) {
 		this.comment$.next(c);
 		this.list = this.comment$.value;
 		this.cid = c.id;
@@ -71,21 +64,8 @@ export class CommentEntryComponent {
 		});
 	}
 
-	showLoad: boolean = true;
-	list: ModelComment | undefined;
-	constructor(
-		private http: HttpClient,
-		private cdr: ChangeDetectorRef,
-		private modal: ModalService,
-		private route: ActivatedRoute,
-		private menu: DropDownService,
-		private vc: ViewContainerRef,
-		private router: Router,
-		private toast: Toast
-	) {}
-	rootid: number = -1;
-	subcompage: number = -1;
-	@Input() active: boolean = false;
+	@Input() active = false;
+	@Input() aid: number;
 
 	@Output() clickActive: EventEmitter<number> = new EventEmitter();
 
@@ -93,19 +73,9 @@ export class CommentEntryComponent {
 	comment$ = new BehaviorSubject<ModelComment | undefined>(undefined);
 	show_all_reply$ = new BehaviorSubject(false);
 	private cid: number;
-	aid: number;
 	current_replying$ = new BehaviorSubject<ModelSubComment | undefined>(undefined);
 	subList: { count: number; list: ModelSubComment[] };
 
-	ngAfterContentInit() {
-		this.route.queryParams.subscribe(s => {
-			if (s.sub == -1) {
-				let hash = location.hash;
-				location.hash = '';
-				location.hash = hash;
-			}
-		});
-	}
 	comments$ = this.page$.pipe(
 		switchMap(p => {
 			return this.http
@@ -124,13 +94,51 @@ export class CommentEntryComponent {
 
 	replyControl: FormControl = new FormControl('');
 
+	showLoad = true;
+	list: ModelComment | undefined;
+
+
+	one: ModelSubComment;
+
+	a: number;
+	b: string;
+
+	subLength: number;
+
+	constructor(
+		private http: HttpClient,
+		private cdr: ChangeDetectorRef,
+		private modal: ModalService,
+		private route: ActivatedRoute,
+		private menu: DropDownService,
+		private vc: ViewContainerRef,
+		private router: Router,
+		private toast: Toast
+	) { }
+	rootid = -1;
+	subcompage = -1;
+
+
+
+
+	ngAfterContentInit() {
+		this.route.queryParams.subscribe(s => {
+			if (s.sub == -1) {
+				const hash = location.hash;
+				location.hash = '';
+				location.hash = hash;
+			}
+		});
+	}
+
+
 	showAllReply() {
 		this.show_all_reply$.next(true);
 		this.page$.next(1);
 	}
 
 	tips(el: HTMLTextAreaElement, input: ElementRef) {
-		const a = el.getBoundingClientRect();
+		// const a = el.getBoundingClientRect();
 		this.replyControl.valueChanges.subscribe(s => {
 			if (s.length > 200) {
 				this.toast.show('最多只能发200字的评论', {
@@ -160,12 +168,8 @@ export class CommentEntryComponent {
 			});
 	}
 
-	one: ModelSubComment;
-
-	a: number;
-	b: string;
 	reply(userid: number, usernick: string, el: HTMLTextAreaElement, input: ElementRef) {
-		const a = el.getBoundingClientRect();
+		// const a = el.getBoundingClientRect();
 		this.current_replying$
 			.pipe(
 				take(1),
@@ -253,8 +257,8 @@ export class CommentEntryComponent {
 				})
 			)
 			.subscribe(
-				s => {},
-				e => {}
+				_s => { },
+				_e => { }
 			);
 	}
 	toUser(id: number) {
@@ -279,10 +283,8 @@ export class CommentEntryComponent {
 		}
 	}
 
-	subLength: number;
-
 	toLogin() {
-		let a =
+		const a =
 			(this.route.snapshot as any)._routerState.url.split('/')[1] + '/' + (this.route.snapshot as any)._routerState.url.split('/')[2];
 		this.router.navigate(['/login'], {
 			queryParams: {

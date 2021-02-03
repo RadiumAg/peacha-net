@@ -15,18 +15,18 @@ export class IllustManagerPage {
 	key: FormControl = new FormControl('');
 	refresh$ = new BehaviorSubject(1);
 
-	constructor(private http: HttpClient, private _sharedService: SharedService, private router: Router) {}
+	constructor(private http: HttpClient, private _sharedService: SharedService, private router: Router) { }
 
 	re$ = this._sharedService.changeEmitted$
 		.pipe(
-			tap(s => {
+			tap(_s => {
 				this.refresh$.next(1);
 			})
 		)
 		.subscribe();
 
 	countList$ = this.refresh$.pipe(
-		switchMap(s => {
+		switchMap(_s => {
 			return this.http.get(`/work/get_create_works_count?c=1`);
 		})
 	);

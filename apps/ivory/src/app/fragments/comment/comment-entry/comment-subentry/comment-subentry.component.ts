@@ -2,40 +2,41 @@ import {
 	Component,
 	EventEmitter,
 	ChangeDetectorRef,
-	OnDestroy,
 	ViewContainerRef,
 	ViewChild,
 	ElementRef,
 	TemplateRef,
 	Renderer2,
-	AfterViewInit,
-	AfterContentChecked,
+	Input,
+	Output,
+	AfterContentInit,
 } from '@angular/core';
 import { ModelSubComment } from '../../model';
 import { Select } from '@ngxs/store';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserState } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { DropDownService } from 'libs/peacha-core/src/lib/core/service/dropdown.service';
-import { ModalService } from 'libs/peacha-core/src/lib/core/service/modals.service';
-import { CommentReportModalComponent } from 'libs/peacha-core/src/lib/components/comment-report-modal/comment-report-modal-component';
+import { Router } from '@angular/router';
+import { DropDownService, ModalService, UserState } from '@peacha-core';
+import { PopTips } from '@peacha-core/components';
+import { CommentReportModalComponent } from '@peacha-core/components';
+
 
 @Component({
 	selector: 'ivo-comment-subentry',
 	templateUrl: './comment-subentry.component.html',
-	styleUrls: ['./comment-subentry.component.less'],
-	inputs: ['comment'],
-	outputs: ['toggleReply'],
+	styleUrls: ['./comment-subentry.component.less']
 })
-export class CommentSubentryComponent {
+export class CommentSubentryComponent implements AfterContentInit {
 	@ViewChild('dot') dot: ElementRef;
 	@ViewChild('menuTemp') tmp: TemplateRef<any>;
 	@ViewChild('subShow') subShow: HTMLDivElement;
 
 	@Select(UserState.id)
 	id$: Observable<number>;
+
+	@Input() comment: ModelSubComment | undefined;
+
+	@Output() toggleReply: EventEmitter<ModelSubComment> = new EventEmitter();
 
 	constructor(
 		private element: ElementRef,
@@ -46,14 +47,10 @@ export class CommentSubentryComponent {
 		private vc: ViewContainerRef,
 		private render: Renderer2,
 		private router: Router
-	) {}
-
-	comment: ModelSubComment | undefined;
-
-	toggleReply: EventEmitter<ModelSubComment> = new EventEmitter();
+	) { }
 
 	ngAfterContentInit() {
-		let hash = location.hash;
+		const hash = location.hash;
 		location.hash = '';
 		location.hash = hash;
 	}
@@ -67,7 +64,7 @@ export class CommentSubentryComponent {
 			.post('/comment/like', {
 				c: id,
 			})
-			.subscribe(s => {
+			.subscribe(_s => {
 				if (this.comment) {
 					if (this.comment.is_like) {
 						this.comment.is_like = 0;

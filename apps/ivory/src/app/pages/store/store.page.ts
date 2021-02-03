@@ -10,7 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 	styleUrls: ['./store.page.less'],
 })
 export class StorePage implements AfterViewInit {
-	constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private render: Renderer2) {}
+	constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private render: Renderer2) { }
 
 	page$ = new BehaviorSubject<number>(0);
 	workCount$ = new BehaviorSubject(0);
@@ -52,7 +52,7 @@ export class StorePage implements AfterViewInit {
 		switchMap(([id, w]) => {
 			return this.http.get<any>(`/work/get_own_work_detail?w=${id == 0 ? w.list[0].id : id}`);
 		}),
-		catchError(e => {
+		catchError(_e => {
 			return of({ count: 0 });
 		})
 	);

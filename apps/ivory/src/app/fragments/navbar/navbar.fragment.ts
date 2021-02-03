@@ -10,8 +10,8 @@ import { DASHBOARD_ANIMATION, AVATAR_ANIMATION } from './animations';
 import { PlatformLocation } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { UserState, ModalService, CustomerService, ChatStartService } from '@peacha-core';
-import { ChatState } from 'libs/peacha-core/src/lib/core/state/chat.state';
-import { Logout } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { ChatState, Logout } from '@peacha-core/state';
+
 
 @Component({
 	selector: 'ivo-navbar',
@@ -83,7 +83,7 @@ export class NavbarFragment {
 
 	timer$ = combineLatest([timer(0, 20000), this.unread$])
 		.pipe(
-			tap(([t, u]) => {
+			tap(([_t, u]) => {
 				this.isLogin$.subscribe(isLogin => {
 					if (isLogin) {
 						this.http
@@ -106,7 +106,7 @@ export class NavbarFragment {
 		)
 		.subscribe();
 
-	hoverAvatar(e: Event): void {
+	hoverAvatar(_e: Event): void {
 		// if (this.currentOverlay == undefined) {
 		this.currentOverlay = this.overlay.create({
 			positionStrategy: this.overlay
@@ -166,7 +166,7 @@ export class NavbarFragment {
 
 	logout(): void {
 		this.store.dispatch(new Logout()).subscribe(
-			s => {
+			_s => {
 				if (this.isPortalShowing$.value) {
 					this.portal.detach();
 				}

@@ -1,7 +1,7 @@
 import { app_config } from './../../../global.config';
 import { IllustrateComponent } from './illustrate/illustrate.component';
 import { Live2dFreeComponent } from './live2d/live2d-free/live2d-free.component';
-import { ReactiveFormsModule, NgControl, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
 import { Live2dorillustComponent } from './select-type/live2dorillust/live2dorillust.component';
@@ -16,12 +16,13 @@ import { ReleaseComponentsModule } from './components/component.module';
 import { Live2dPaidComponent } from './live2d/live2d-paid/live2d-paid.component';
 import { NotFoundPage } from '../error/not-found/not-found.page';
 import { ReleaseApiService } from './release-api.service';
-import { PeachaComponentsModule, PhoneGuard } from '@peacha-core';
-import { CompressService, PeachaStudioCoreModule } from '@peacha-studio-core';
-import { SELECT_TOKEN, SELECT_DATA_TOKEN, FORM_NAV_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { FORM_NAV_TOKEN, PhoneGuard, SELECT_DATA_TOKEN, SELECT_TOKEN } from '@peacha-core';
+import { PeachaStudioCoreModule } from '@peacha-studio-core';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { PeachaComponentsModule } from '@peacha-core/components';
+import { CompressService } from '@peacha-studio-core/zip';
 
 @NgModule({
 	declarations: [

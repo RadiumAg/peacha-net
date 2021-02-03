@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ModalService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
 
 type Detail = {
 	id: number;
@@ -29,7 +29,7 @@ export class Subreply {
 
 	active = false;
 	replyControl: FormControl = new FormControl('');
-	constructor(private http: HttpClient, private modal: ModalService) {}
+	constructor(private http: HttpClient, private modal: ModalService) { }
 
 	reply(): void {
 		this.active = true;

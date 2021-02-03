@@ -1,11 +1,11 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { Input, Output, EventEmitter, ElementRef, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { ChangeDetectionStrategy, Component, forwardRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
 	// tslint:disable-next-line: component-selector
-	selector: '[ivo-checkbox]',
+	selector: 'ivo-checkbox',
 	exportAs: 'ivoCheckbox',
 	preserveWhitespaces: false,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,13 +32,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 		</span>
 		<span class="text"><ng-content></ng-content></span>
 	`,
-	// tslint:disable-next-line: no-host-metadata-property
+
+	// eslint-disable-next-line @angular-eslint/no-host-metadata-property
 	host: {
 		'(click)': 'hostClick($event)',
 	},
 })
-export class CheckboxComponent implements OnInit, ControlValueAccessor {
-	constructor(private elementRef: ElementRef<HTMLElement>, private cdr: ChangeDetectorRef, private focusMonitor: FocusMonitor) {}
+export class CheckboxComponent implements ControlValueAccessor {
+	constructor(private elementRef: ElementRef<HTMLElement>, private cdr: ChangeDetectorRef, private focusMonitor: FocusMonitor) { }
 
 	@ViewChild('inputElement', { static: true })
 	private inputElement!: ElementRef<HTMLInputElement>;
@@ -68,9 +69,8 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
 		this.onChange = fn;
 	}
 
-	registerOnTouched(fn: any): void {}
+	registerOnTouched(fn: any): void { }
 
-	setDisabledState?(isDisabled: boolean): void {}
+	setDisabledState?(isDisabled: boolean): void { }
 
-	ngOnInit(): void {}
 }

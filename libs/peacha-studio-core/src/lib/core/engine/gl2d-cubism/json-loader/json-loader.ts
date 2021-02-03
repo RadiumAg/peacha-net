@@ -5,12 +5,13 @@ import { GL2DRenderComponent, Transform2DComponent, Transform2D, Matrix44 } from
 import { createCubismPose } from '../pose/cubism-pose-component';
 import { CubismAnimator, CubismMotionComponent, CubismExpressionComponent } from '../animation/animator';
 import { loadCubismMotionClipFromJson } from './json-motion-loader';
-import { CubismModelJson, CubismPoseJson, CubismUserDataJson, CubismPhysicsJson, CubismCDIJson } from './structures';
+import { CubismModelJson, CubismPoseJson, CubismPhysicsJson, CubismCDIJson } from './structures';
 import { loadPhysicsComponent } from './json-physics-loader';
 import { CubismCdi, CubismCdiComponent } from '../cdi/cubism-cdi-component';
 import { loadCubismExpressionFromJson } from './json-expression-loader';
 import { getCfgIdleAnimationNames, loadCfgClipsFromFile } from './json-cfg-pose-adapter';
-import { ReadableVirtualFileSystem, readStringToEnd, loadImageFromArrayBuffer, scaleImage, FileNotFoundError } from '../../..';
+import { FileNotFoundError, loadImageFromArrayBuffer, ReadableVirtualFileSystem, readStringToEnd, scaleImage } from '../../../vfs';
+import { Component } from '../../ecs';
 
 type CubismLoaderOptions = {
 	loadPose?: boolean;
@@ -43,7 +44,7 @@ export async function loadJsonModelFromVFS(
 	gl: WebGLRenderingContext,
 	vfs: ReadableVirtualFileSystem,
 	options?: CubismLoaderOptions
-): Promise<any[]> {
+): Promise<Component[]> {
 	const ret = [];
 	// #region Initial
 	await loadEm();
@@ -103,7 +104,7 @@ export async function loadJsonModelFromVFS(
 
 		const idleNames = new Set<string>();
 
-		for (const [fileName, cfgPromises] of vfs.tryFindAndReadAll(findCfgFile)) {
+		for (const [, cfgPromises] of vfs.tryFindAndReadAll(findCfgFile)) {
 			getCfgIdleAnimationNames(await cfgPromises).forEach(s => {
 				idleNames.add(s);
 			});
@@ -194,8 +195,8 @@ export async function loadJsonModelFromVFS(
 
 	// #region UserData
 	if (model3json.FileReferences.UserData !== undefined && options?.loadUserData) {
-		const udFile = await vfs.read(model3json.FileReferences.UserData);
-		const ud3json = JSON.parse(readStringToEnd(udFile)) as CubismUserDataJson;
+		// const udFile = await vfs.read(model3json.FileReferences.UserData);
+		// const ud3json = JSON.parse(readStringToEnd(udFile)) as CubismUserDataJson;
 	}
 	// #endregion
 

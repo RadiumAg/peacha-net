@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngxs/store';
 import { CanNot } from './can-not/can-not';
 import { ModalService } from '@peacha-core';
-import { RemoveFromCart } from 'libs/peacha-core/src/lib/core/state/cart.action';
+import { RemoveFromCart } from '@peacha-core/state';
 
 type GoodsInfo = {
 	count: number;
@@ -57,17 +57,17 @@ export class OrderPage {
 		private router: Router,
 		private store: Store,
 		private modal: ModalService
-	) {}
+	) { }
 
 	a: string;
 
-	count: boolean = true;
+	count = true;
 	createOrder() {
 		if (this.count) {
 			combineLatest(this.goods$, this.route.queryParams)
 				.pipe(
 					take(1),
-					switchMap(([goods, params]) => {
+					switchMap(([_goods, params]) => {
 						return this.http.post<{ list: Array<string> }>('/mall/create_order', {
 							g: JSON.parse(params.order),
 						});

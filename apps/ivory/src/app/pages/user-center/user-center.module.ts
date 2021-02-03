@@ -15,9 +15,10 @@ import { PayrecordPage } from './payrecord/payrecord.page';
 import { PayRecordDetailPage } from './payrecord/pay-record-detail/pay-record-detail.page';
 import { TradeApiService } from '../pay/trade-api.service';
 import { WalletDrawPage } from './wallet/wallet-withdraw/walletdraw.page';
-import { PeachaComponentsModule, ReactiveComponentModule, RoleApiService } from '@peacha-core';
+import { ReactiveComponentModule, RoleApiService } from '@peacha-core';
 import { ComponentsModule } from '../commission/components/components.module';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [
@@ -86,4 +87,4 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 	],
 	providers: [SettingResolve, TradeApiService, RoleApiService],
 })
-export class UserCenterModule {}
+export class UserCenterModule { }

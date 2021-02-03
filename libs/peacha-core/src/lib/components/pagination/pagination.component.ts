@@ -34,38 +34,12 @@ export class PaginationComponent {
 	/**
 	 * currentPage(从0开始)
 	 */
-
-	// tslint:disable-next-line: no-output-on-prefix
+	// eslint-disable-next-line @angular-eslint/no-output-on-prefix
 	@Output()
 	onPageChange = new EventEmitter<number>();
 
-	pageCount$ = combineLatest([this.total$, this.pageSize$]).pipe(map(([total, pageSize]) => Math.ceil(total / pageSize)));
-
-	constructor() {}
-
 	pretendCurrentPage$ = new BehaviorSubject(1);
-
-	toPage(input: HTMLInputElement) {
-		const a = Number(input.value);
-		this.pageCount$
-			.pipe(
-				take(1),
-				tap(pageCount => {
-					if (a <= pageCount && a > 0) {
-						this.pretendCurrentPage$.next(a);
-					}
-				})
-			)
-			.subscribe();
-	}
-
-	changePage(actionKey: number) {
-		this.currentPage$.pipe(take(1)).subscribe(c => {
-			if (actionKey > 0) {
-				this.pretendCurrentPage$.next(actionKey);
-			}
-		});
-	}
+	pageCount$ = combineLatest([this.total$, this.pageSize$]).pipe(map(([total, pageSize]) => Math.ceil(total / pageSize)));
 
 	currentPage$: Observable<number> = combineLatest([this.pretendCurrentPage$, this.pageCount$]).pipe(
 		map(([p, c]) => {
@@ -104,7 +78,7 @@ export class PaginationComponent {
 
 	pageList$ = combineLatest([this.currentPage$, this.pageCount$]).pipe(
 		map(([current, pageCount]) => {
-			const list = new Array();
+			const list = [];
 			if (pageCount > 7) {
 				for (let i = Number(current) - 2; i < Number(current) + 3; i++) {
 					list.push(i);
@@ -132,12 +106,28 @@ export class PaginationComponent {
 			return list;
 		})
 	);
-}
 
-function compare(a: number, b: number): boolean {
-	if (a != b) {
-		return false;
-	} else {
-		return true;
+	constructor() { }
+
+	toPage(input: HTMLInputElement) {
+		const a = Number(input.value);
+		this.pageCount$
+			.pipe(
+				take(1),
+				tap(pageCount => {
+					if (a <= pageCount && a > 0) {
+						this.pretendCurrentPage$.next(a);
+					}
+				})
+			)
+			.subscribe();
+	}
+
+	changePage(actionKey: number) {
+		this.currentPage$.pipe(take(1)).subscribe(() => {
+			if (actionKey > 0) {
+				this.pretendCurrentPage$.next(actionKey);
+			}
+		});
 	}
 }

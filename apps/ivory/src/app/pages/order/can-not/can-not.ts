@@ -1,9 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { ModalRef } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
+import { PopTips } from '@peacha-core/components';
 
 @Component({
 	selector: 'ivo-can-not',

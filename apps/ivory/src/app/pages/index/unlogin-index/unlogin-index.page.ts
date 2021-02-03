@@ -1,17 +1,11 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { Component } from '@angular/core';
+import { Select } from '@ngxs/store';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserState } from '@peacha-core';
-import { HttpVirtualFileSystem } from 'libs/peacha-studio-core/src/lib/core';
-
-type Banner = {
-	name: string;
-	imageurl: string;
-	url: string;
-}[];
+import { HttpVirtualFileSystem } from '@peacha-studio-core/vfs';
 
 type Hot = {
 	count: number;
@@ -44,9 +38,11 @@ export class UnloginIndexPage {
 	images$ = new BehaviorSubject<Array<string>>([]);
 	urls$ = new BehaviorSubject<Array<string>>([]);
 
+	workList = [];
+
 	/**未登录主页作品 */
 	unloginWork$ = this.http.get<Hot>(`/work/hot_work?p=0&s=5&c=-1`).pipe(
-		tap(s => {
+		tap(_s => {
 			this.load = false;
 		})
 	);
@@ -60,8 +56,6 @@ export class UnloginIndexPage {
 			this.router.navigate(['live2d', id]);
 		}
 	}
-
-	workList: Array<any> = [];
 
 	toTop() {
 		document.documentElement.scrollTop = 0;

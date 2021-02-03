@@ -21,12 +21,12 @@ type RoomList = {
 };
 @Injectable()
 export class ChatResolve implements Resolve<any> {
-	constructor(private chat: ChatStartService, private router: Router, private store: Store, private http: HttpClient) {}
+	constructor(private chat: ChatStartService, private router: Router, private store: Store, private http: HttpClient) { }
 
 	totalCount = 0;
 
-	resolve(route: import('@angular/router').ActivatedRouteSnapshot, state: import('@angular/router').RouterStateSnapshot) {
-		return this.http.get<RoomList>(`/chat/room_list?r=[]&s=20`).pipe(
+	resolve() {
+		return this.http.get<RoomList>(`/chat/room_list?r=&s=20`).pipe(
 			switchMap(list => {
 				const idlist = [];
 				let roomList = [];

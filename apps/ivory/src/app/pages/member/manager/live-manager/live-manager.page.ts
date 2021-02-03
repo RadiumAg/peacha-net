@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { SharedService } from './live.service';
 import { tap, switchMap } from 'rxjs/operators';
@@ -14,17 +14,17 @@ import { BehaviorSubject } from 'rxjs';
 export class LiveManagerPage {
 	key: FormControl = new FormControl('');
 	refresh$ = new BehaviorSubject(1);
-	constructor(private http: HttpClient, private router: Router, private _sharedService: SharedService) {}
+	constructor(private http: HttpClient, private router: Router, private _sharedService: SharedService) { }
 	re$ = this._sharedService.changeEmitted$
 		.pipe(
-			tap(s => {
+			tap(_s => {
 				this.refresh$.next(1);
 			})
 		)
 		.subscribe();
 
 	countList$ = this.refresh$.pipe(
-		switchMap(s => {
+		switchMap(_s => {
 			return this.http.get(`/work/get_create_works_count?c=0`);
 		})
 	);

@@ -3,11 +3,12 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { filter } from 'rxjs/operators';
-import { CompressService, Live2dPreviewComponent, ZipVFS } from '@peacha-studio-core';
 import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { ReadableVirtualFileSystem, FileNotFoundError, HttpVirtualFileSystem } from 'libs/peacha-studio-core/src/lib/core';
-import { Live2dTransformData } from 'libs/peacha-studio-core/src/lib/live2d-transform-data';
 import { ModalService } from '@peacha-core';
+import { Live2dTransformData } from '@peacha-studio-core';
+import { ReadableVirtualFileSystem, HttpVirtualFileSystem, FileNotFoundError } from '@peacha-studio-core/vfs';
+import { CompressService, ZipVFS } from '@peacha-studio-core/zip';
+import { Live2dPreviewComponent } from '@peacha-studio-core/components';
 
 export enum Live2dLoadStatus {
 	Not,
@@ -66,7 +67,7 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 
 	@ViewChild(Live2dPreviewComponent)
 	live2d: Live2dPreviewComponent;
-	update: (token: string) => void = (token: string) => {};
+	update: (token: string) => void = () => {};
 
 	@HostListener('dragover', ['$event'])
 	onDragOver(event: DragEvent) {
@@ -154,10 +155,10 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 			.subscribe({
 				next: e => {
 					if (e.type == HttpEventType.UploadProgress) {
-						this.uploadProgress$.next((e.loaded / e.total!) * 100);
+						this.uploadProgress$.next((e.loaded / e.total) * 100);
 					} else if (e.type == HttpEventType.Response) {
 						if (e.ok) {
-							const ret = e.body! as {
+							const ret = e.body as {
 								token: string;
 								url: string;
 							};
@@ -190,13 +191,11 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 		this.live2dLoadStatus$.next(Live2dLoadStatus.Not);
 	}
 
-	writeValue(token: string): void {}
+	writeValue(): void {}
 
 	registerOnChange(fn: (token: string) => void): void {
 		this.update = fn;
 	}
 
-	registerOnTouched(fn: any): void {}
-
-	ngOnInit(): void {}
+	registerOnTouched(): void {}
 }

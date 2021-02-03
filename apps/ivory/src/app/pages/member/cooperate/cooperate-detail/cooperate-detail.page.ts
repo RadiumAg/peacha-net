@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -42,10 +42,10 @@ export class CooperateDetailPage {
 	id$: Observable<number>;
 
 	refresh$ = new BehaviorSubject(0);
-	constructor(private http: HttpClient, private route: ActivatedRoute, private modal: ModalService, private router: Router) {}
+	constructor(private http: HttpClient, private route: ActivatedRoute, private modal: ModalService, private router: Router) { }
 
-	detail$ = combineLatest(this.route.queryParams, this.refresh$).pipe(
-		switchMap(([params, r]) => {
+	detail$ = combineLatest([this.route.queryParams, this.refresh$]).pipe(
+		switchMap(([params, _r]) => {
 			return this.http.get<Detail>(`/work/get_cooperate_detail?c=${params.id}`);
 		})
 	);

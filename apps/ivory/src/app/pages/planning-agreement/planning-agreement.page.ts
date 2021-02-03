@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
 	selector: 'ivo-planning-agreement',
 	templateUrl: './planning-agreement.page.html',
 	styleUrls: ['./planning-agreement.page.less'],
 })
-export class PlanningAgreementPage implements OnInit {
-	constructor() {}
+export class PlanningAgreementPage {
+	constructor() { }
 
-	ngOnInit(): void {}
 }

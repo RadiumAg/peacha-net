@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommissionDetail } from '../../../model/commission-detail';
 import { CommissionApiService } from '../../../service/commission-api.service';
 import { CommissionDetailService } from '../../../service/detail.service';
@@ -17,7 +17,7 @@ export class CommissionTopNav implements OnInit {
 
 	status$ = this.detail.commissionStatus$;
 
-	constructor(private detail: CommissionDetailService, private api: CommissionApiService) {}
+	constructor(private detail: CommissionDetailService, private api: CommissionApiService) { }
 
 	clickEvent(): void {
 		this.api.commissionStatus(this.detail.getCommissionId()).subscribe(s => {

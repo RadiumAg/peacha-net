@@ -78,7 +78,7 @@ export class ChatStartService {
 		private store: Store,
 		private router: Router,
 		private modal: ModalService
-	) {}
+	) { }
 
 	/**
 	 * 后端获取url
@@ -463,7 +463,7 @@ export class ChatStartService {
 	 * 获取消息列表
 	 */
 	getList(): void {
-		this.http.get<RoomList>(`/chat/room_list?r=${this.roomidList}&s=20`).subscribe(s => {
+		this.http.get<RoomList>(`/chat/room_list?r=${this.roomidList.join(',')}&s=20`).subscribe(s => {
 			this.roomList = s.list;
 
 			// roomlist按最近一条消息时间降序排序

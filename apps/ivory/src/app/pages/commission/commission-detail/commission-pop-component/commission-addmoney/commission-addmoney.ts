@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ModalRef } from '@peacha-core';
 
@@ -7,7 +7,7 @@ import { ModalRef } from '@peacha-core';
 	templateUrl: './commission-addmoney.html',
 	styleUrls: ['./commission-addmoney.less'],
 })
-export class CommissionAddmoney implements OnInit {
+export class CommissionAddmoney {
 	addMoneyForm: FormGroup;
 	constructor(private modalRef: ModalRef<CommissionAddmoney>, private fb: FormBuilder) {
 		this.addMoneyForm = this.fb.group(
@@ -33,8 +33,6 @@ export class CommissionAddmoney implements OnInit {
 	get text(): AbstractControl {
 		return this.addMoneyForm.get('text');
 	}
-
-	ngOnInit(): void {}
 
 	cancel(): void {
 		this.modalRef.close();

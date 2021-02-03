@@ -45,10 +45,10 @@ export class HotTagPage {
 	works$ = this.route.queryParams.pipe(
 		switchMap(s => {
 			return this.http.get<TagWork>(`/work/tag_search?t=${s.id}&p=${s.page - 1 ?? 0}&s=20`).pipe(
-				tap(l => {
+				tap(() => {
 					this.pageWorks$.next(s.page ?? 1);
 				}),
-				catchError(e => {
+				catchError(() => {
 					return of({
 						count: 0,
 						list: [],
@@ -57,7 +57,7 @@ export class HotTagPage {
 			);
 		})
 	);
-	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) {}
+	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) { }
 
 	searchWork(i: number, name: string) {
 		this.router.navigate(['hotTagWork'], {

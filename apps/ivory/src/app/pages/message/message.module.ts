@@ -15,7 +15,8 @@ import { BlacklistPage } from './blacklist/blacklist.page';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ChatResolve } from './chat/chat.resolve';
 import { MessageResolve } from './message.guard';
-import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
+import { ReactiveComponentModule } from '@peacha-core';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [
@@ -80,4 +81,4 @@ import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 	],
 	providers: [ChatResolve, MessageResolve],
 })
-export class MessageModule {}
+export class MessageModule { }

@@ -1,12 +1,12 @@
 import { Component, OnInit, Renderer2, ViewContainerRef, ViewChild, TemplateRef, ElementRef } from '@angular/core';
-import { Observable, of, BehaviorSubject, combineLatest, EMPTY, empty } from 'rxjs';
+import { Observable, of, BehaviorSubject, combineLatest, EMPTY } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, switchMap, tap, take, catchError, withLatestFrom, shareReplay } from 'rxjs/operators';
+import { map, switchMap, tap, take, catchError, shareReplay } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Select } from '@ngxs/store';
 import { Complain } from './complain/complain';
 import { ModalService, DropDownService, UserState, IvoryError } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
 
 type Collection = {
 	name: string;
@@ -43,9 +43,9 @@ type Work = {
 	templateUrl: './collection-introduce.page.html',
 	styleUrls: ['./collection-introduce.page.less'],
 })
-export class CollectionIntroducePage implements OnInit {
+export class CollectionIntroducePage {
 	get pageUid$() {
-		return this.route.parent!.params.pipe(map(s => s.id as number));
+		return this.route.parent.params.pipe(map(s => s.id as number));
 	}
 
 	constructor(
@@ -56,7 +56,7 @@ export class CollectionIntroducePage implements OnInit {
 		private view: ViewContainerRef,
 		private modal: ModalService,
 		private float: DropDownService
-	) {}
+	) { }
 
 	@Select(UserState.id)
 	id$: Observable<number>;
@@ -74,7 +74,7 @@ export class CollectionIntroducePage implements OnInit {
 
 	collectionId: number;
 
-	collection$: Observable<Collection> = combineLatest(this.route.params, this.refresh_collection$).pipe(
+	collection$: Observable<Collection> = combineLatest([this.route.params, this.refresh_collection$]).pipe(
 		switchMap(([s]) => {
 			return this.http.get<Collection>(`/work/get_collection?c=${s.id}`);
 		}),
@@ -83,25 +83,25 @@ export class CollectionIntroducePage implements OnInit {
 
 	currentPage$ = new BehaviorSubject<number>(1);
 
-	work$: Observable<Work> = combineLatest(this.route!.params, this.route!.queryParams).pipe(
+	work$: Observable<Work> = combineLatest(this.route.params, this.route.queryParams).pipe(
 		switchMap(([w, params]) => {
 			this.currentPage$.next(params.page);
 			this.collectionId = w.id;
 			return this.http.get<any>(`/work/get_collection_works?u=${w.id}&p=${params.page ? params.page - 1 : 0}&s=15`);
 		}),
-		catchError(e => {
+		catchError(_e => {
 			return of({
 				count: 0,
 				list: [],
 			});
 		}),
-		tap(s => {
+		tap(_s => {
 			this.selected$.next(new Set());
 		})
 	);
 
 	// 修改合辑名称
-	isChange: any = true;
+	isChange = true;
 
 	toChange(input: HTMLInputElement) {
 		this.isChange = null;
@@ -111,7 +111,7 @@ export class CollectionIntroducePage implements OnInit {
 	changeName(input: HTMLInputElement) {
 		this.renderer.setStyle(input, 'background', '#F7F7F7');
 		this.isChange = true;
-		combineLatest(this.collection$, this.route.params)
+		combineLatest([this.collection$, this.route.params])
 			.pipe(
 				take(1),
 				switchMap(([c, s]) => {
@@ -121,7 +121,7 @@ export class CollectionIntroducePage implements OnInit {
 							n: input.value,
 						});
 					} else {
-						return empty();
+						return EMPTY;
 					}
 				})
 			)
@@ -142,14 +142,14 @@ export class CollectionIntroducePage implements OnInit {
 				take(1),
 				tap(c => {
 					if (c.work_count == 0) {
-						let a = '该合辑暂时没有作品可以批量操作哦！';
+						const a = '该合辑暂时没有作品可以批量操作哦！';
 						this.modal.open(PopTips, [a, false]);
 					} else {
 						this.show$.next(true);
 					}
 				})
 			)
-			.subscribe(_ => {});
+			.subscribe(_ => { });
 	}
 
 	// 全选
@@ -203,7 +203,7 @@ export class CollectionIntroducePage implements OnInit {
 
 	// 取消收藏作品
 	deleteWork() {
-		combineLatest([this.route!.params, this.selected$])
+		combineLatest([this.route.params, this.selected$])
 			.pipe(
 				take(1),
 				switchMap(([params, arr]) => {
@@ -213,13 +213,13 @@ export class CollectionIntroducePage implements OnInit {
 					});
 				})
 			)
-			.subscribe(a => {});
+			.subscribe(_a => { });
 	}
 
 	// 删除合辑
 	deleteTip() {
 		this.float.close();
-		let a = '确定要删除该合辑吗？';
+		const a = '确定要删除该合辑吗？';
 		this.modal
 			.open(PopTips, [a, true])
 			.afterClosed()
@@ -254,7 +254,7 @@ export class CollectionIntroducePage implements OnInit {
 					});
 				})
 			)
-			.subscribe(a => {
+			.subscribe(_a => {
 				this.refresh_collection$.next(0);
 			});
 	}
@@ -280,7 +280,7 @@ export class CollectionIntroducePage implements OnInit {
 			});
 	}
 
-	share() {}
+	share() { }
 
 	open() {
 		this.route.params
@@ -318,5 +318,4 @@ export class CollectionIntroducePage implements OnInit {
 		this.router.navigate(['work', id]);
 	}
 
-	ngOnInit(): void {}
 }

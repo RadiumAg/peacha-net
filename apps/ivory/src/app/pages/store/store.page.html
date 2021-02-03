@@ -38,7 +38,7 @@
 								</div>
 								<div class="bbb">
 									<span>购买时间：{{item.createtime|date:"yyyy-MM-dd HH:mm"}}</span>
-									<span *ngIf="item.filesize!=0">文件大小：{{item.filesize|save}}M</span>
+									<span *ngIf="item.filesize!=0">文件大小：{{(item.filesize/ 1048576).toFixed(2)}}M</span>
 								</div>
 								<button [ngClass]="{no: item.filesize==0}" [disabled]="item.filesize==0" (click)="download(item.id)">
 									下载商品模型文件

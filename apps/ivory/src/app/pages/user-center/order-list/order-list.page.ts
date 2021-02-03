@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { combineLatest, Observable, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map, withLatestFrom, startWith, tap, shareReplay, distinctUntilChanged } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { ModalService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
+
 
 type OrderInfo = {
 	count: number;
@@ -28,12 +29,12 @@ type OrderInfo = {
 	templateUrl: './order-list.page.html',
 	styleUrls: ['./order-list.page.less'],
 })
-export class OrderListPage implements OnInit {
-	constructor(private modal: ModalService, private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
+export class OrderListPage {
+	constructor(private modal: ModalService, private route: ActivatedRoute, private http: HttpClient, private router: Router) { }
 	key: FormControl = new FormControl();
 	a: number[];
 	page$ = new BehaviorSubject<number>(0);
-	showList: any = [];
+	showList = [];
 
 	type$ = this.route.queryParams.pipe(
 		map(r => {
@@ -56,15 +57,6 @@ export class OrderListPage implements OnInit {
 		shareReplay(0)
 	);
 
-	keyword() {
-		this.router.navigate([], {
-			queryParams: {
-				k: this.key.value,
-			},
-			queryParamsHandling: 'merge',
-		});
-	}
-
 	// 选择
 	prices$ = this.select$.pipe(
 		withLatestFrom(this.order$),
@@ -80,7 +72,17 @@ export class OrderListPage implements OnInit {
 		}),
 		startWith(0)
 	);
-	ngOnInit(): void {}
+
+	keyword() {
+		this.router.navigate([], {
+			queryParams: {
+				k: this.key.value,
+			},
+			queryParamsHandling: 'merge',
+		});
+	}
+
+
 	cancel(orderid: number, event: DragEvent) {
 		event.stopPropagation();
 		this.modal

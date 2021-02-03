@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,14 +6,14 @@ import { Router } from '@angular/router';
 	templateUrl: './work-card.html',
 	styleUrls: ['./work-card.less'],
 })
-export class WorkCard {
+export class WorkCard implements OnInit {
 	@Input() work: any;
 
 	timeDif: number;
 	timetype: number;
 	showtime: string;
 
-	constructor(private router: Router) {}
+	constructor(private router: Router) { }
 
 	ngOnInit() {
 		this.timeDif = Math.ceil((new Date().getTime() - this.work?.publishtime) / (60 * 60 * 1000));

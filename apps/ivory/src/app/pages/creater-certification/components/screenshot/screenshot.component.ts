@@ -1,11 +1,11 @@
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Component, OnInit, forwardRef, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, forwardRef, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { HttpEventType } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommmonApiService, ModalService } from '@peacha-core';
 import { filter, map } from 'rxjs/operators';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
 
 @Component({
 	selector: 'ivo-screenshot',
@@ -19,8 +19,8 @@ import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
 		},
 	],
 })
-export class ScreenshotComponent implements OnInit, ControlValueAccessor {
-	constructor(private apiService: CommmonApiService, private sanitizer: DomSanitizer, private modal: ModalService) {}
+export class ScreenshotComponent implements ControlValueAccessor {
+	constructor(private apiService: CommmonApiService, private sanitizer: DomSanitizer, private modal: ModalService) { }
 	@ViewChild('file')
 	fileInput: ElementRef<HTMLInputElement>;
 	@Input() multiple = false;
@@ -117,16 +117,14 @@ export class ScreenshotComponent implements OnInit, ControlValueAccessor {
 		return Array.from(fileList);
 	}
 
-	writeValue(obj: any): void {}
+	writeValue(obj: any): void { }
 
 	registerOnChange(fn: any): void {
 		this.fnChange = fn;
 	}
-	registerOnTouched(fn: any): void {}
+	registerOnTouched(fn: any): void { }
 
-	setDisabledState?(isDisabled: boolean): void {}
-
-	ngOnInit(): void {}
+	setDisabledState?(isDisabled: boolean): void { }
 }
 
 export type UploadImage = {

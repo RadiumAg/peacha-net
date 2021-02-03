@@ -1,21 +1,21 @@
-import { Component, ViewChild, ChangeDetectorRef, Renderer2 } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { combineLatest, empty, interval, BehaviorSubject, Subscription, Observable } from 'rxjs';
+import { combineLatest, interval, BehaviorSubject, Subscription, Observable, EMPTY } from 'rxjs';
 import { take, switchMap, tap, catchError } from 'rxjs/operators';
 import { Store, Select } from '@ngxs/store';
 import { Toast, ModalService, UserState, IvoryError } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
-import { Logout } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { PopTips, Steps } from '@peacha-core/components';
+import { Logout } from '@peacha-core/state';
+
 
 @Component({
 	selector: 'ivo-forget',
 	templateUrl: './forget.page.html',
 	styleUrls: ['./forget.page.less'],
 })
-export class ForgetPage {
+export class ForgetPage implements OnDestroy {
 	titleShow: boolean;
 
 	constructor(
@@ -88,7 +88,7 @@ export class ForgetPage {
 					this.token = s.token;
 					this.steps.next();
 				},
-				e => {
+				_e => {
 					//console.log(e);
 					this.verifyCode.setErrors({
 						wrong_code: true,
@@ -104,7 +104,7 @@ export class ForgetPage {
 				n: this.passwordConfirm.value,
 			})
 			.subscribe(
-				s => {
+				_s => {
 					this.modal
 						.open(PopTips, ['您已成功修改密码', false, 1])
 						.afterClosed()
@@ -116,7 +116,7 @@ export class ForgetPage {
 						});
 					// this.steps.next();
 				},
-				e => {
+				_e => {
 					//console.log(e);
 				}
 			);
@@ -137,12 +137,12 @@ export class ForgetPage {
 	};
 	request(el: HTMLInputElement) {
 		const a = el.getBoundingClientRect();
-		this.sp = combineLatest(this.account$, this.cooldown$, this.requesting$)
+		this.sp = combineLatest([this.account$, this.cooldown$, this.requesting$])
 			.pipe(
 				take(1),
 				switchMap(([account, cooldown, requesting]) => {
 					if (cooldown > 0 || requesting) {
-						return empty();
+						return EMPTY;
 					}
 					this.requesting$.next(true);
 					return this.http
@@ -152,14 +152,14 @@ export class ForgetPage {
 						})
 						.pipe(
 							tap(
-								s => {
+								_s => {
 									this.steps.next();
 									this.requesting$.next(false);
 								},
-								e => {
+								_e => {
 									this.requesting$.next(false);
 								},
-								() => {}
+								() => { }
 							),
 							switchMap(_ => {
 								this.cooldown$.next(60);
@@ -169,8 +169,8 @@ export class ForgetPage {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {},
-										() => {}
+										_e => { },
+										() => { }
 									)
 								);
 							}),
@@ -185,18 +185,18 @@ export class ForgetPage {
 										timeout: 1000,
 									});
 								}
-								return empty();
+								return EMPTY;
 							})
 						);
 				}),
 				tap(
-					f => {},
+					_f => { },
 					null,
-					() => {}
+					() => { }
 				)
 			)
 			.subscribe(
-				b => {},
+				_b => { },
 				null,
 				() => {
 					// 销毁时回收...
@@ -205,12 +205,12 @@ export class ForgetPage {
 			);
 	}
 	requestAgain() {
-		this.sp = combineLatest(this.account$, this.cooldown$, this.requesting$)
+		this.sp = combineLatest([this.account$, this.cooldown$, this.requesting$])
 			.pipe(
 				take(1),
 				switchMap(([account, cooldown, requesting]) => {
 					if (cooldown > 0 || requesting) {
-						return empty();
+						return EMPTY;
 					}
 					this.requesting$.next(true);
 					return this.http
@@ -220,13 +220,13 @@ export class ForgetPage {
 						})
 						.pipe(
 							tap(
-								s => {
+								_s => {
 									this.requesting$.next(false);
 								},
-								e => {
+								_e => {
 									this.requesting$.next(false);
 								},
-								() => {}
+								() => { }
 							),
 							switchMap(_ => {
 								this.cooldown$.next(60);
@@ -236,21 +236,21 @@ export class ForgetPage {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {},
-										() => {}
+										_e => { },
+										() => { }
 									)
 								);
 							})
 						);
 				}),
 				tap(
-					f => {},
+					_f => { },
 					null,
-					() => {}
+					() => { }
 				)
 			)
 			.subscribe(
-				b => {},
+				_b => { },
 				null,
 				() => {
 					// 销毁时回收...

@@ -44,22 +44,13 @@ export class WorksPage {
 		)
 		.subscribe();
 
-	addParams(k: string) {
-		this.router.navigate([], {
-			queryParams: {
-				k: k,
-				page: 1,
-			},
-			queryParamsHandling: 'merge',
-		});
-	}
-	works$: Observable<Works> = combineLatest(this.route.parent!.params, this.route.parent!.queryParams).pipe(
+
+	works$: Observable<Works> = combineLatest([this.route.parent.params, this.route.parent.queryParams]).pipe(
 		distinctUntilChanged(),
 		switchMap(([U, params]) => {
 			return this.http
 				.get<any>(
-					`/work/get_works?u=${U.id}&p=${params.page ? params.page - 1 : 0}&k=${params.k ?? ''}&s=20&c=${params.c ?? -1}&ws=${
-						params.ws ?? -1
+					`/work/get_works?u=${U.id}&p=${params.page ? params.page - 1 : 0}&k=${params.k ?? ''}&s=20&c=${params.c ?? -1}&ws=${params.ws ?? -1
 					}`
 				)
 				.pipe(
@@ -72,7 +63,7 @@ export class WorksPage {
 							this.error$.next(false);
 						}
 					}),
-					catchError(e => {
+					catchError(_e => {
 						return of({
 							count: 0,
 							list: [],
@@ -86,23 +77,34 @@ export class WorksPage {
 	refresh$ = new BehaviorSubject<number>(0);
 	currentPage$ = new BehaviorSubject<number>(1);
 
-	oId$ = this.route.parent!.queryParamMap.pipe(
+	oId$ = this.route.parent.queryParamMap.pipe(
 		map(q => {
 			return parseInt(q.get('o') ?? '0') ?? 0;
 		})
 	);
-	zId$ = this.route.parent!.queryParamMap.pipe(
+	zId$ = this.route.parent.queryParamMap.pipe(
 		map(q => {
 			return parseInt(q.get('z') ?? '-1') ?? 0;
 		})
 	);
-	tId$ = this.route.parent!.queryParamMap.pipe(
+	tId$ = this.route.parent.queryParamMap.pipe(
 		map(q => {
 			return parseInt(q.get('t') ?? '-1') ?? 0;
 		})
 	);
 
-	constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private cdr: ChangeDetectorRef) {}
+	addParams(k: string) {
+		this.router.navigate([], {
+			queryParams: {
+				k: k,
+				page: 1,
+			},
+			queryParamsHandling: 'merge',
+		});
+	}
+
+
+	constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private cdr: ChangeDetectorRef) { }
 
 	toPage(p: number) {
 		this.router.navigate([], {
@@ -133,11 +135,4 @@ export class WorksPage {
 	}
 }
 
-function compare(a: Array<any>, b: Array<any>): boolean {
-	for (let i = 0; i < a.length; i++) {
-		if (a[i] != b[i]) {
-			return false;
-		}
-	}
-	return true;
-}
+

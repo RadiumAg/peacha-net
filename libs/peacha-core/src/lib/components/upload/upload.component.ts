@@ -35,7 +35,7 @@ export interface IvoUploadFile {
 	],
 })
 export class UploadComponent implements ControlValueAccessor {
-	constructor(private re2: Renderer2, private http: HttpClient, private modal: ModalService) {}
+	constructor(private re2: Renderer2, private http: HttpClient, private modal: ModalService) { }
 
 	@Input() set fileSize(value: number) {
 		this._fileSzie = Number(value);
@@ -64,6 +64,19 @@ export class UploadComponent implements ControlValueAccessor {
 	// 上传之前是否清空
 	@Input() isResertBeforeUpload = false;
 
+	/**
+ *  @description 验证策略对象
+ */
+	verify = {
+		sizeVerify: (e: File) => {
+			if (e.size > this._fileSzie) {
+				this.modal.open(PopTips, ['容量超过限制大小，请重新上传']);
+				return false;
+			}
+			return true;
+		},
+	};
+
 	updata: (o: any[]) => void;
 	writeValue(files: any[]): void {
 		const data = files.map(x => {
@@ -75,18 +88,6 @@ export class UploadComponent implements ControlValueAccessor {
 		});
 		this.filters$.next(data);
 	}
-	/**
-	 *  @description 验证策略对象
-	 */
-	verify = {
-		sizeVerify: (e: File) => {
-			if (e.size > this._fileSzie) {
-				this.modal.open(PopTips, ['容量超过限制大小，请重新上传']);
-				return false;
-			}
-			return true;
-		},
-	};
 
 	registerOnChange(fn: any): void {
 		this.updata = fn;
@@ -100,14 +101,14 @@ export class UploadComponent implements ControlValueAccessor {
 				x.length === 0
 					? []
 					: x
-							.map((_: File) => {
-								return {
-									token: Reflect.get(_, 'token'),
-									url: Reflect.get(_, 'url'),
-									name: Reflect.get(_, 'name'),
-								};
-							})
-							.filter(l => Boolean(l))
+						.map((_: File) => {
+							return {
+								token: Reflect.get(_, 'token'),
+								url: Reflect.get(_, 'url'),
+								name: Reflect.get(_, 'name'),
+							};
+						})
+						.filter(l => Boolean(l))
 			);
 		});
 		const updata = this.updata;
@@ -134,9 +135,9 @@ export class UploadComponent implements ControlValueAccessor {
 		return true;
 	}
 
-	registerOnTouched(fn: any): void {}
+	registerOnTouched(/* fn: any */): void { }
 
-	setDisabledState?(isDisabled: boolean): void {}
+	setDisabledState?(/* isDisabled: boolean */): void { }
 
 	/**
 	 *

@@ -2,9 +2,8 @@ import { Component, Inject, ViewChild, ElementRef, HostListener } from '@angular
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, combineLatest, EMPTY } from 'rxjs';
 import { switchMap, tap, take } from 'rxjs/operators';
-import { ModalRef, ModalService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { ModalRef, ModalService, MODAL_DATA_TOKEN } from '@peacha-core';
+import { PopTips } from '@peacha-core/components';
 
 type Works = {
 	count: number;
@@ -39,9 +38,11 @@ export class ChangeRepresentComponent {
 		private modalRef: ModalRef<ChangeRepresentComponent>,
 		@Inject(MODAL_DATA_TOKEN) public list: [any, any],
 		private modal: ModalService
-	) {}
+	) { }
 
 	selected = this.list[1];
+
+	is = true;
 
 	work$ = this.http
 		.get<Works>(`/work/get_works?u=${this.list[0]._value.id}&p=0&s=12&ws=-1&k=&c=-1`)
@@ -57,15 +58,19 @@ export class ChangeRepresentComponent {
 		)
 		.subscribe();
 
-	allworkList: Array<any> = [];
+	allworkList = [];
 	allWorksCount$ = new BehaviorSubject<number>(0);
+
+
+	page$ = new BehaviorSubject<number>(0);
+	allPage$ = new BehaviorSubject<number>(0);
+	keyword$ = new BehaviorSubject<string>('');
 
 	goBack() {
 		this.selected = [];
 		this.modalRef.close();
 	}
 
-	is = true;
 
 	search(keyword: HTMLInputElement) {
 		this.allworkList = [];
@@ -91,11 +96,8 @@ export class ChangeRepresentComponent {
 		}
 	}
 
-	page$ = new BehaviorSubject<number>(0);
-	allPage$ = new BehaviorSubject<number>(0);
-	keyword$ = new BehaviorSubject<string>('');
 
-	@HostListener('scroll', ['$event']) public scrolled($event: Event) {
+	@HostListener('scroll', ['$event']) public scrolled(_$event: Event) {
 		if (this.box.nativeElement.scrollHeight - this.box.nativeElement.scrollTop == this.ne.nativeElement.clientHeight - 25) {
 			combineLatest(this.page$, this.keyword$, this.allWorksCount$)
 				.pipe(
@@ -117,7 +119,7 @@ export class ChangeRepresentComponent {
 				.subscribe();
 		}
 	}
-	@HostListener('scroll', ['$event']) public scrolledOne($event: Event) {
+	@HostListener('scroll', ['$event']) public scrolledOne(_$event: Event) {
 		if (this.boxone.nativeElement.scrollHeight - this.boxone.nativeElement.scrollTop == this.neone.nativeElement.clientHeight - 25) {
 			combineLatest(this.allWorksCount$, this.allPage$)
 				.pipe(
@@ -148,10 +150,10 @@ export class ChangeRepresentComponent {
 					w: this.selected,
 				})
 				.subscribe(
-					s => {
+					_s => {
 						this.modalRef.close([work, id]);
 					},
-					e => {
+					_e => {
 						this.selected.pop();
 					}
 				);

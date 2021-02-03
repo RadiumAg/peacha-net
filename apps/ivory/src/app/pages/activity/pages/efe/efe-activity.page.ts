@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
 	selector: 'ivo-activity',
-	templateUrl: './activity.page.html',
-	styleUrls: ['./activity.page.less'],
+	templateUrl: './efe-activity.page.html',
+	styleUrls: ['./efe-activity.page.less'],
 })
-export class ActivityPage implements OnInit {
+export class EfeActivityPage {
 	but = 0;
 	aid = 202;
 
@@ -60,8 +60,6 @@ export class ActivityPage implements OnInit {
 	sandengname = ['-白空-', '魔法doge', 'POKE'];
 	youxiuzuop = [10412, 10326, 10348, 10342, 10273, 10383, 10375, 10321, 10410, 10401];
 	constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
-
-	ngOnInit(): void {}
 
 	skipUser(i: number): void {
 		this.router.navigate(['/user/', i]);

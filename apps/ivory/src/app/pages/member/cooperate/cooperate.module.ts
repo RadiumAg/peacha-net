@@ -6,7 +6,8 @@ import { CooperateWorkPage } from './cooperate-work/cooperate-work.page';
 import { CooperateDetailPage } from './cooperate-detail/cooperate-detail.page';
 import { CooperatePage } from './cooperate.page';
 import { ModifyScale } from './cooperate-detail/modify-scale/modify-scale';
-import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
+import { ReactiveComponentModule } from '@peacha-core';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [CooperateWorkPage, CooperateDetailPage, ModifyScale, CooperatePage],
@@ -34,4 +35,4 @@ import { PeachaComponentsModule, ReactiveComponentModule } from '@peacha-core';
 		]),
 	],
 })
-export class CooperateModule {}
+export class CooperateModule { }

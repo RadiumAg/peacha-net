@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, combineLatest, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,7 +22,7 @@ export class FollowerComponent {
 	}>;
 	currentPage$ = new BehaviorSubject<number>(0);
 	constructor(http: HttpClient, route: ActivatedRoute, private router: Router) {
-		this.current$ = combineLatest(route.parent!.params, route.queryParams).pipe(
+		this.current$ = combineLatest([route.parent.params, route.queryParams]).pipe(
 			switchMap(([p, params]) => {
 				return http.get<any>(`/user/get_follower_list?u=${p.id}&p=${params.page ? params.page - 1 : 0}&s=10`).pipe(
 					tap(_ => {
@@ -30,7 +30,7 @@ export class FollowerComponent {
 					})
 				);
 			}),
-			catchError(e => {
+			catchError(_e => {
 				return of({
 					count: 0,
 					list: [],

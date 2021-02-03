@@ -27,9 +27,9 @@ import { CommissionPaymentHistoryPage } from './commission-detail/commission-pay
 import { CommissionTopNav } from './commission-detail/commission-pop-component/commission-top-nav/commission-top-nav';
 import { CommissionDiscontinueRejectFilePage } from './commission-detail/commission-discontinue-reject-file/commission-discontinue-reject-file.page';
 import { CommissionDetailErrorService } from './commission-detail/commission-detail-error.service';
-import { CommissionRemindedPage } from './commission-reminded/commission-reminded.page';
 import { TechnologicalProcessComponent } from './technological-process/technological-process.component';
-import { PeachaComponentsModule, PhoneGuard, ReactiveComponentModule } from '@peacha-core';
+import { PhoneGuard, ReactiveComponentModule } from '@peacha-core';
+import { PeachaComponentsModule } from '@peacha-core/components';
 
 @NgModule({
 	declarations: [
@@ -52,7 +52,6 @@ import { PeachaComponentsModule, PhoneGuard, ReactiveComponentModule } from '@pe
 		CommissionPaymentHistoryPage,
 		CommissionTopNav,
 		CommissionDiscontinueRejectFilePage,
-		CommissionRemindedPage,
 	],
 	imports: [
 		PeachaComponentsModule,
@@ -105,10 +104,6 @@ import { PeachaComponentsModule, PhoneGuard, ReactiveComponentModule } from '@pe
 				],
 			},
 			{
-				path: 'reminded',
-				component: CommissionRemindedPage,
-			},
-			{
 				path: 'technological',
 				component: TechnologicalProcessComponent,
 			},
@@ -140,4 +135,4 @@ import { PeachaComponentsModule, PhoneGuard, ReactiveComponentModule } from '@pe
 	],
 	providers: [CommissionApiService, CommissionDetailService, CommissionDetailResolve, CommissionGuard, CommissionDetailErrorService],
 })
-export class CommissionModule {}
+export class CommissionModule { }

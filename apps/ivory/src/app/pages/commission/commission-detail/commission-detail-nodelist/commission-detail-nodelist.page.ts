@@ -1,14 +1,14 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalService, ZoomService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
 import { BehaviorSubject, combineLatest, EMPTY } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { IllustZoomModalComponent } from '../../../work/illust-zoom-modal/illust-zoom-modal.component';
 import { CommissionApiService } from '../../service/commission-api.service';
 import { CommissionDetailService } from '../../service/detail.service';
 import { CommissionDetailErrorService } from '../commission-detail-error.service';
-import { CommissionPrevent } from '../commission-pop-component/commission-prevent/commission-prevent';
+
 
 @Component({
 	selector: 'ivo-commission-detail-nodelist',
@@ -24,7 +24,7 @@ export class CommissionDetailNodelistPage implements OnInit {
 		private isError: CommissionDetailErrorService,
 		private cdr: ChangeDetectorRef,
 		private zoom: ZoomService
-	) {}
+	) { }
 
 	change$ = new BehaviorSubject(0);
 	nodeList: {
@@ -57,7 +57,7 @@ export class CommissionDetailNodelistPage implements OnInit {
 
 	list$ = combineLatest([this.change$, this.route.queryParams])
 		.pipe(
-			switchMap(([c, p]) => {
+			switchMap(([_c, p]) => {
 				if (p.node) {
 					return this.commissionApi.nodeSubmitRecords(p.node).pipe(
 						tap(s => {
@@ -108,7 +108,7 @@ export class CommissionDetailNodelistPage implements OnInit {
 		//   }
 		// })
 		this.commissionApi.nodeAppeal(this.detail.getCommissionId()).subscribe(
-			s => {
+			_s => {
 				this.modal.open(PopTips, ['申请平台介入成功！', false, 1]);
 			},
 			e => {

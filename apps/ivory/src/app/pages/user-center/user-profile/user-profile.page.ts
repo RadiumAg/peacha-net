@@ -1,8 +1,8 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { Toast, IvoryError } from '@peacha-core';
-import { UpdateAvatar, UpdateNickname, UpdateDescription } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { UpdateAvatar, UpdateDescription, UpdateNickname } from '@peacha-core/state';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -10,7 +10,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 	templateUrl: './user-profile.page.html',
 	styleUrls: ['./user-profile.page.less'],
 })
-export class UserProfilePage implements OnInit {
+export class UserProfilePage implements OnDestroy {
 	avatar: FormControl;
 	nickName: FormControl;
 	description: FormControl;
@@ -45,7 +45,7 @@ export class UserProfilePage implements OnInit {
 
 		if (this.nickName.valid && this.nickName.value != this.nn.value) {
 			this.store.dispatch(new UpdateNickname(this.nickName.value)).subscribe(
-				s => {
+				_s => {
 					this.toast.show('修改成功 ', {
 						type: 'success',
 						// origin: {
@@ -135,7 +135,7 @@ export class UserProfilePage implements OnInit {
 		// const des:FormControl=new FormControl((this.description.value as string).replace(/\s*/g, ''))
 		if (this.description.valid && this.description.value != this.des.value) {
 			//this.description.setValue((this.description.value as string).replace(/\s*/g, ''));
-			this.store.dispatch(new UpdateDescription(this.description.value)).subscribe(s => {
+			this.store.dispatch(new UpdateDescription(this.description.value)).subscribe(_s => {
 				this.toast.show('修改成功 ', {
 					type: 'success',
 					// origin: {

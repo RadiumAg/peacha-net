@@ -2,11 +2,11 @@ import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngxs/store';
 import { FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Observable, Subscription, combineLatest, BehaviorSubject, empty, interval, Subject } from 'rxjs';
+import { Observable, Subscription, combineLatest, BehaviorSubject, interval, Subject, EMPTY } from 'rxjs';
 import { Router } from '@angular/router';
 import { tap, switchMap, take, takeUntil } from 'rxjs/operators';
-import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
-import { FetchMe } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { Steps } from '@peacha-core/components';
+import { FetchMe } from '@peacha-core/state';
 
 @Component({
 	selector: 'ivo-bind-phone',
@@ -44,13 +44,15 @@ export class BindPhonePage {
 	c$ = new Subject();
 
 	token: any;
+	a$ = new BehaviorSubject<string>('');
+
 	sendVerifyToEmail() {
-		this.sp = combineLatest(this.cooldown$, this.requesting$)
+		this.sp = combineLatest([this.cooldown$, this.requesting$])
 			.pipe(
 				take(1),
 				switchMap(([cooldown, requesting]) => {
 					if (cooldown > 0 || requesting) {
-						return empty();
+						return EMPTY;
 					}
 					this.requesting$.next(true);
 					return this.http
@@ -67,7 +69,7 @@ export class BindPhonePage {
 								() => {
 									this.requesting$.next(false);
 								},
-								() => {}
+								() => { }
 							),
 							switchMap(_ => {
 								this.cooldown$.next(60);
@@ -79,23 +81,23 @@ export class BindPhonePage {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {},
-										() => {}
+										_e => { },
+										() => { }
 									)
 								);
 							})
 						);
 				}),
 				tap(
-					f => {},
+					_f => { },
 					null,
-					() => {}
+					() => { }
 				)
 			)
 			.subscribe(
-				b => {},
+				_b => { },
 				null,
-				() => {}
+				() => { }
 			);
 	}
 
@@ -105,7 +107,7 @@ export class BindPhonePage {
 				take(1),
 				switchMap(([cooldown, requesting]) => {
 					if (cooldown > 0 || requesting) {
-						return empty();
+						return EMPTY;
 					}
 					this.requesting$.next(true);
 					return this.http
@@ -121,7 +123,7 @@ export class BindPhonePage {
 								() => {
 									this.requesting$.next(false);
 								},
-								() => {}
+								() => { }
 							),
 							switchMap(_ => {
 								this.cooldown$.next(60);
@@ -131,26 +133,26 @@ export class BindPhonePage {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {},
-										() => {}
+										_e => { },
+										() => { }
 									)
 								);
 							})
 						);
 				}),
 				tap(
-					f => {},
+					_f => { },
 					null,
-					() => {}
+					() => { }
 				)
 			)
 			.subscribe(
-				b => {},
+				_b => { },
 				null,
-				() => {}
+				() => { }
 			);
 	}
-	a$ = new BehaviorSubject<string>('');
+
 	sendVerifyToPhone() {
 		this.c$.next();
 		this.c$.complete();
@@ -159,7 +161,7 @@ export class BindPhonePage {
 				take(1),
 				switchMap(([cooldown, requesting]) => {
 					if (cooldown > 0 || requesting) {
-						return empty();
+						return EMPTY;
 					}
 					this.requesting$.next(true);
 					return this.http
@@ -195,23 +197,23 @@ export class BindPhonePage {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {},
-										() => {}
+										_e => { },
+										() => { }
 									)
 								);
 							})
 						);
 				}),
 				tap(
-					f => {},
+					_f => { },
 					null,
-					() => {}
+					() => { }
 				)
 			)
 			.subscribe(
-				b => {},
+				_b => { },
 				null,
-				() => {}
+				() => { }
 			);
 	}
 	sendVerifyToPhoneAgain() {
@@ -220,7 +222,7 @@ export class BindPhonePage {
 				take(1),
 				switchMap(([cooldown, requesting]) => {
 					if (cooldown > 0 || requesting) {
-						return empty();
+						return EMPTY;
 					}
 					this.requesting$.next(true);
 					return this.http
@@ -236,7 +238,7 @@ export class BindPhonePage {
 								() => {
 									this.requesting$.next(false);
 								},
-								() => {}
+								() => { }
 							),
 							switchMap(_ => {
 								this.cooldown$.next(60);
@@ -246,23 +248,23 @@ export class BindPhonePage {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {},
-										() => {}
+										_e => { },
+										() => { }
 									)
 								);
 							})
 						);
 				}),
 				tap(
-					f => {},
+					_f => { },
 					null,
-					() => {}
+					() => { }
 				)
 			)
 			.subscribe(
-				b => {},
+				_b => { },
 				null,
-				() => {}
+				() => { }
 			);
 	}
 
@@ -282,7 +284,7 @@ export class BindPhonePage {
 					this.token = s.token;
 					this.cc.markForCheck();
 				},
-				e => {
+				_e => {
 					this.cc.markForCheck();
 
 					this.verifyCode2.setErrors({
@@ -301,10 +303,10 @@ export class BindPhonePage {
 				v: this.verifyCode.value,
 			})
 			.subscribe(
-				s => {
+				_s => {
 					this.steps.next();
 				},
-				e => {
+				_e => {
 					//console.log(e);
 					this.verifyCode.setErrors({
 						wrong_code: true,

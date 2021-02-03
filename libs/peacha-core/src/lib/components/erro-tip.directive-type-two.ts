@@ -1,6 +1,5 @@
-import { of } from 'rxjs';
-import { ChangeDetectorRef, Directive, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChanges } from '@angular/core';
-import { NgControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { ChangeDetectorRef, Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { NgControl, ValidationErrors } from '@angular/forms';
 
 @Directive({
 	selector: '[ivoErroTipTwo]',
@@ -10,14 +9,14 @@ export class ErroTipDirectiveTwo implements OnInit {
 		| string
 		| ValidationErrors
 		| {
-				[key: string]: any;
-				order: number;
-		  }[];
+			[key: string]: any;
+			order: number;
+		}[];
 
 	private lastChange: number;
 	errElement;
 	parentElement;
-	constructor(private control: NgControl, private el: ElementRef<HTMLElement>, private cdr: ChangeDetectorRef, private re2: Renderer2) {}
+	constructor(private control: NgControl, private el: ElementRef<HTMLElement>, private cdr: ChangeDetectorRef, private re2: Renderer2) { }
 
 	/**
 	 * @description create the message

@@ -14,6 +14,6 @@
 		"strictMetadataEmit": true,
 		"enableResourceInlining": true
 	},
-	"exclude": [],
+	"exclude": ["**/*.worker.ts", "**/*.instance.ts"],
 	"include": ["**/*.ts"]
 }

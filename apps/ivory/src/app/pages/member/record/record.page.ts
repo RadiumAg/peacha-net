@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -11,7 +11,7 @@ import { switchMap, tap } from 'rxjs/operators';
 	styleUrls: ['./record.page.less'],
 })
 export class RecordPage {
-	constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {}
+	constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
 
 	key: FormControl = new FormControl('');
 	keyword$ = new BehaviorSubject<string>('');

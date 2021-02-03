@@ -1,21 +1,20 @@
-import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, Validators } from '@angular/forms';
-import { BehaviorSubject, combineLatest, Subscription, empty, interval, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Subscription, interval, Observable, EMPTY } from 'rxjs';
 import { take, switchMap, tap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { UserState, ModalService, Toast, IvoryError } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { Steps } from 'libs/peacha-core/src/lib/components/steps/steps';
-import { SubmitInformation, SubmitCardImage } from 'libs/peacha-core/src/lib/core/state/user.action';
+import { PopTips, Steps } from '@peacha-core/components';
+import { SubmitCardImage, SubmitInformation } from '@peacha-core/state';
 
 @Component({
 	selector: 'ivo-user-authentication',
 	templateUrl: './user-authentication.page.html',
 	styleUrls: ['./user-authentication.page.less'],
 })
-export class UserAuthenticationPage {
+export class UserAuthenticationPage implements OnDestroy {
 	@ViewChild(Steps) steps: Steps;
 	@ViewChild('inputOne') inputOne: ElementRef;
 	@ViewChild('inputTwo') inputTwo: ElementRef;
@@ -26,6 +25,13 @@ export class UserAuthenticationPage {
 
 	@Select(UserState.phone)
 	phone$: Observable<string>;
+
+	onePic$ = new BehaviorSubject('/assets/image/i-real-one.png');
+	twoPic$ = new BehaviorSubject('/assets/image/i-real-two.png');
+	threePic$ = new BehaviorSubject('/assets/image/i-real-three.png');
+	oneToken: string;
+	twoToken: string;
+	threeToken: string;
 
 	constructor(private http: HttpClient, private modal: ModalService, private toast: Toast, private router: Router, private store: Store) {
 		this.verifyCode = new FormControl('', [Validators.required]);
@@ -60,7 +66,7 @@ export class UserAuthenticationPage {
 				take(1),
 				switchMap(([cooldown, requesting]) => {
 					if (cooldown > 0 || requesting) {
-						return empty();
+						return EMPTY;
 					}
 					this.requesting$.next(true);
 					return this.http
@@ -70,14 +76,14 @@ export class UserAuthenticationPage {
 						})
 						.pipe(
 							tap(
-								s => {
+								_s => {
 									this.steps.goto('two');
 									this.requesting$.next(false);
 								},
-								e => {
+								_e => {
 									this.requesting$.next(false);
 								},
-								() => {}
+								() => { }
 							),
 							switchMap(_ => {
 								this.cooldown$.next(60);
@@ -87,8 +93,8 @@ export class UserAuthenticationPage {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {},
-										() => {}
+										_e => { },
+										() => { }
 									)
 								);
 							}),
@@ -96,18 +102,18 @@ export class UserAuthenticationPage {
 								if (s.code == 101) {
 									alert('用户不存在');
 								}
-								return empty();
+								return EMPTY;
 							})
 						);
 				}),
 				tap(
-					f => {},
+					_f => { },
 					null,
-					() => {}
+					() => { }
 				)
 			)
 			.subscribe(
-				b => {},
+				_b => { },
 				null,
 				() => {
 					// 销毁时回收...
@@ -122,7 +128,7 @@ export class UserAuthenticationPage {
 				take(1),
 				switchMap(([cooldown, requesting]) => {
 					if (cooldown > 0 || requesting) {
-						return empty();
+						return EMPTY;
 					}
 					this.requesting$.next(true);
 					return this.http
@@ -132,13 +138,13 @@ export class UserAuthenticationPage {
 						})
 						.pipe(
 							tap(
-								s => {
+								_s => {
 									this.requesting$.next(false);
 								},
-								e => {
+								_e => {
 									this.requesting$.next(false);
 								},
-								() => {}
+								() => { }
 							),
 							switchMap(_ => {
 								this.cooldown$.next(60);
@@ -148,21 +154,21 @@ export class UserAuthenticationPage {
 										v => {
 											this.cooldown$.next(59 - v);
 										},
-										e => {},
-										() => {}
+										_e => { },
+										() => { }
 									)
 								);
 							})
 						);
 				}),
 				tap(
-					f => {},
+					_f => { },
 					null,
-					() => {}
+					() => { }
 				)
 			)
 			.subscribe(
-				b => {},
+				_b => { },
 				null,
 				() => {
 					// 销毁时回收...
@@ -187,7 +193,7 @@ export class UserAuthenticationPage {
 						this.token = s.token;
 						this.steps.goto('fill');
 					},
-					e => {
+					_e => {
 						this.toast.show('验证码错误', {
 							type: 'error',
 							origin: {
@@ -215,7 +221,7 @@ export class UserAuthenticationPage {
 		let text: string;
 		if (this.name.valid && this.code.valid) {
 			this.store.dispatch(new SubmitInformation(this.token, this.name.value, this.code.value)).subscribe(
-				s => {
+				_s => {
 					this.steps.goto('update');
 				},
 				e => {
@@ -256,12 +262,7 @@ export class UserAuthenticationPage {
 		// this.steps.goto('update')
 	}
 
-	onePic$ = new BehaviorSubject('/assets/image/i-real-one.png');
-	twoPic$ = new BehaviorSubject('/assets/image/i-real-two.png');
-	threePic$ = new BehaviorSubject('/assets/image/i-real-three.png');
-	oneToken: string;
-	twoToken: string;
-	threeToken: string;
+
 	upPicOne(event: any) {
 		const url = event.target.files[0];
 		const imgtype = url.name.toLowerCase().split('.');
@@ -335,7 +336,7 @@ export class UserAuthenticationPage {
 		const a = el.getBoundingClientRect();
 		let text: string;
 		this.store.dispatch(new SubmitCardImage(this.token, this.oneToken, this.threeToken, this.twoToken)).subscribe(
-			s => {
+			_s => {
 				this.router.navigate(['passport/authenticate/wait']);
 			},
 			e => {

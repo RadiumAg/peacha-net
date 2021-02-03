@@ -5,13 +5,12 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { UserState, ModalService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { RemoveFromCart } from 'libs/peacha-core/src/lib/core/state/cart.action';
-import { CartState } from 'libs/peacha-core/src/lib/core/state/cart.state';
+import { CartState, RemoveFromCart } from '@peacha-core/state';
+import { PopTips } from '@peacha-core/components';
+
 
 type GoodsInfo = {
 	count: number;
-	1;
 	list: {
 		workid: number;
 		work_name: string;
@@ -168,7 +167,7 @@ export class CartPage {
 								this.store.dispatch(new RemoveFromCart([...Array.from(checkArr)])).subscribe();
 							})
 						)
-						.subscribe(_ => {
+						.subscribe(() => {
 							this.checkArr$.next(new Set());
 						});
 				}

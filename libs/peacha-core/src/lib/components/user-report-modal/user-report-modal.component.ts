@@ -1,8 +1,8 @@
 import { ModalRef, ModalService } from './../../core/service/modals.service';
-import { Component, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, Inject, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { take, tap } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { PopTips } from '../pop-tips/pop-tips';
 import { MODAL_ANIMATION } from '../../core/animations/modal-animation';
 import { validator } from '../../core/commom/common';
@@ -14,7 +14,7 @@ import { MODAL_DATA_TOKEN } from '../../core/tokens';
 	styleUrls: ['./user-report-modal.component.less'],
 	animations: [MODAL_ANIMATION],
 })
-export class UserReportModalComponent {
+export class UserReportModalComponent implements AfterContentChecked {
 	constructor(
 		private fb: FormBuilder,
 		private http: HttpClient,
@@ -23,7 +23,7 @@ export class UserReportModalComponent {
 		private modal: ModalService,
 		@Inject(MODAL_DATA_TOKEN)
 		public id: number
-	) {}
+	) { }
 
 	form = this.fb.group({
 		option: [
@@ -70,24 +70,24 @@ export class UserReportModalComponent {
 			})
 			.pipe(take(1))
 			.subscribe({
-				next: _ => {
+				next: () => {
 					this.modal
 						.open(PopTips, ['举报成功', 0, 1])
 						.afterClosed()
 						.pipe(take(1))
 						.subscribe(_ => {
-							if (!!_) {
+							if (_) {
 								this.modalRef.close();
 							}
 						});
 				},
-				error: _ => {
+				error: () => {
 					this.modal
 						.open(PopTips, ['举报失败', 1, 0])
 						.afterClosed()
 						.pipe(take(1))
 						.subscribe(_ => {
-							if (!!_) {
+							if (_) {
 								this.modalRef.close();
 							}
 						});

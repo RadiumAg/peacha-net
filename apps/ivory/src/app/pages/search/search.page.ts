@@ -56,7 +56,7 @@ export class SearchPage implements OnInit, OnDestroy {
 	);
 	params$ = this.route.queryParams;
 
-	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder) {}
+	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder) { }
 
 	ngOnInit(): void {
 		this.orderSubscription = this.order.valueChanges.pipe().subscribe(o => this.updateParams({ o }));
@@ -65,6 +65,7 @@ export class SearchPage implements OnInit, OnDestroy {
 		this.userTypeSubscription = this.userType.valueChanges.pipe().subscribe(r => this.updateParams({ r }));
 	}
 
+	// eslint-disable-next-line @typescript-eslint/ban-types
 	updateParams(queryParams: object): void {
 		this.router.navigate([], {
 			queryParams,
