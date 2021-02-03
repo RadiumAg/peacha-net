@@ -8,6 +8,7 @@ import { Select } from '@ngxs/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ModalService, Toast, UserState } from '@peacha-core';
+import { CommentApiService } from '../comment-api.service';
 
 
 @Component({
@@ -56,11 +57,7 @@ export class CommentAreaFragment {
 	comments$ = combineLatest([this.page$, this.comment_aid$]).pipe(
 		shareReplay(),
 		switchMap(([page, aid]) => {
-			return this.http
-				.get<{
-					count: number;
-					list: ModelComment[];
-				}>(`/comment/get_comment?c=${aid}&s=10&p=${page - 1}`)
+			return this.commentApi.getFirstLevelComments(aid, page - 1, 10)
 				.pipe(
 					tap(a => {
 						this.all = a;
@@ -92,44 +89,44 @@ export class CommentAreaFragment {
 
 		if (this.text.nativeElement.value) {
 			this.comment_aid$.subscribe(aid => {
-				this.http
-					.post<{ id: number }>('/comment/comment', {
-						a: aid,
-						c: this.text.nativeElement.value,
-					})
-					.subscribe(
-						s => {
-							this.all.count++;
-							this.basicInfo$.subscribe(info => {
-								this.one = {
-									id: s.id,
-									nickname: info.nickname,
-									userid: info.id,
-									avatar: info.avatar,
-									content: this.text.nativeElement.value,
-									comment_time: Date.now(),
-									like_count: 0,
-									is_like: 0,
-									comment_count: 0,
-									comment_list: [],
-								};
+				// this.http
+				// 	.post<{ id: number }>('/comment/comment', {
+				// 		a: aid,
+				// 		c: this.text.nativeElement.value,
+				// 	})
+				this.commentApi.firstLevelComments(aid, this.text.nativeElement.value).subscribe(
+					s => {
+						this.all.count++;
+						this.basicInfo$.subscribe(info => {
+							this.one = {
+								id: s.id,
+								nickname: info.nickname,
+								userid: info.id,
+								avatar: info.avatar,
+								content: this.text.nativeElement.value,
+								comment_time: Date.now(),
+								like_count: 0,
+								is_like: 0,
+								comment_count: 0,
+								comment_list: [],
+							};
+						});
+						this.all.list.unshift(this.one);
+						this.cdf.markForCheck();
+						//console.log('success');
+						this.text.nativeElement.value = '';
+					},
+					e => {
+						if (Math.abs(e.code) == 122) {
+							// this.modal.open(Tips)
+							this.toast.show('重复评论', {
+								type: 'error',
+								el: input,
+								timeout: 1000,
 							});
-							this.all.list.unshift(this.one);
-							this.cdf.markForCheck();
-							//console.log('success');
-							this.text.nativeElement.value = '';
-						},
-						e => {
-							if (Math.abs(e.code) == 122) {
-								// this.modal.open(Tips)
-								this.toast.show('重复评论', {
-									type: 'error',
-									el: input,
-									timeout: 1000,
-								});
-							}
 						}
-					);
+					}
+				);
 			});
 		} else {
 			this.toast.show('不能发送空评论', {
@@ -144,11 +141,12 @@ export class CommentAreaFragment {
 		// const a = el.getBoundingClientRect();
 		if (this.textt.nativeElement.value) {
 			this.comment_aid$.subscribe(aid => {
-				this.http
-					.post<{ id: number }>('/comment/comment', {
-						a: aid,
-						c: this.textt.nativeElement.value,
-					})
+				// this.http
+				// 	.post<{ id: number }>('/comment/comment', {
+				// 		a: aid,
+				// 		c: this.textt.nativeElement.value,
+				// 	})
+				this.commentApi.firstLevelComments(aid, this.textt.nativeElement.value)
 					.subscribe(
 						s => {
 							this.all.count++;
@@ -211,7 +209,8 @@ export class CommentAreaFragment {
 		private route: ActivatedRoute,
 		private router: Router,
 		private modal: ModalService,
-		private toast: Toast
+		private toast: Toast,
+		private commentApi: CommentApiService
 	) {
 		this.route.queryParams
 			.pipe(

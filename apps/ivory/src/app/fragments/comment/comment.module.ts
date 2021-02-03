@@ -7,10 +7,12 @@ import { CommentSubentryComponent } from './comment-entry/comment-subentry/comme
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveComponentModule } from '@peacha-core';
 import { PeachaComponentsModule } from '@peacha-core/components';
+import { CommentApiService } from './comment-api.service';
 
 @NgModule({
 	declarations: [CommentAreaFragment, CommentEntryComponent, CommentInputComponent, CommentSubentryComponent],
 	imports: [CommonModule, ReactiveComponentModule, ReactiveFormsModule, PeachaComponentsModule],
 	exports: [CommentAreaFragment],
+	providers: [CommentApiService],
 })
 export class CommentModule { }

@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 import { DropDownService, ModalService, UserState } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { CommentReportModalComponent } from '@peacha-core/components';
+import { CommentApiService } from '../../comment-api.service';
 
 
 @Component({
@@ -46,7 +47,8 @@ export class CommentSubentryComponent implements AfterContentInit {
 		private menu: DropDownService,
 		private vc: ViewContainerRef,
 		private render: Renderer2,
-		private router: Router
+		private router: Router,
+		private commentApi: CommentApiService
 	) { }
 
 	ngAfterContentInit() {
@@ -60,10 +62,11 @@ export class CommentSubentryComponent implements AfterContentInit {
 	}
 
 	like(id: number) {
-		this.http
-			.post('/comment/like', {
-				c: id,
-			})
+		// this.http
+		// 	.post('/comment/like', {
+		// 		c: id,
+		// 	})
+		this.commentApi.commentLike(id)
 			.subscribe(_s => {
 				if (this.comment) {
 					if (this.comment.is_like) {
@@ -85,10 +88,12 @@ export class CommentSubentryComponent implements AfterContentInit {
 			.afterClosed()
 			.subscribe(s => {
 				if (s) {
-					this.http
-						.post('/comment/delete_sub', {
-							c: id,
-						})
+					// this.http
+					// 	.post('/comment/delete_sub', {
+					// 		c: id,
+					// 	})
+
+					this.commentApi.commentDeleteSub(id)
 						.subscribe(_ => {
 							this.comment = undefined;
 							this.cdr.markForCheck();
