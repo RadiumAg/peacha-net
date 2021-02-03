@@ -1,4 +1,4 @@
-import { Component, forwardRef, ChangeDetectorRef } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap, map, filter } from 'rxjs/operators';
 import { HttpEventType, HttpClient } from '@angular/common/http';
@@ -20,11 +20,15 @@ import { ModalService } from '../../../core/service/modals.service';
 	],
 })
 export class ReportUploadComponent implements ControlValueAccessor {
-	constructor(private http: HttpClient, private sanitizer: DomSanitizer, private modal: ModalService) {}
+
+	private fnChange: any;
+	private fnTouch: any;
+
+	constructor(private http: HttpClient, private sanitizer: DomSanitizer, private modal: ModalService) { }
 	private images$ = new BehaviorSubject<UploadImage[]>([]);
 	imageShow$ = this.images$.pipe(
 		tap(_ => {
-			for (let i of _) {
+			for (const i of _) {
 				if (!i.remote_token) {
 					return;
 				}
@@ -52,11 +56,11 @@ export class ReportUploadComponent implements ControlValueAccessor {
 						if (e.type == HttpEventType.UploadProgress) {
 							return {
 								success: false,
-								progress: e.loaded / e.total!,
+								progress: e.loaded / e.total,
 							};
 						} else if (e.type == HttpEventType.Response) {
 							if (e.ok) {
-								const ret = e.body! as {
+								const ret = e.body as {
 									token: string;
 									url: string;
 								};
@@ -80,21 +84,21 @@ export class ReportUploadComponent implements ControlValueAccessor {
 		this.images$.next([...this.images$.value, upload]);
 	}
 
-	uploadSuccess(symbol: Symbol, token: string, url: string) {
-		const k = this.images$.value.find(s => s.symbol === symbol)!;
+	uploadSuccess(symbol: symbol, token: string, url: string) {
+		const k = this.images$.value.find(s => s.symbol === symbol);
 		k.remote_token = token;
-		window.URL.revokeObjectURL(k.url!); // no need
+		window.URL.revokeObjectURL(k.url); // no need
 		this.images$.next(this.images$.value); // submit
 	}
 
-	removeFile(symbol: Symbol) {
+	removeFile(symbol: symbol) {
 		this.images$.next([...this.images$.value.filter(x => x.symbol !== symbol)]);
 	}
 
 	onPic(event: InputEvent) {
 		if ((event.target as HTMLInputElement).files.length > 0) {
 			if ((event.target as HTMLInputElement).files?.item(0)?.size < 2 * 1024 * 1024) {
-				this.startUploadImage((event.target as HTMLInputElement).files?.item(0)!);
+				this.startUploadImage((event.target as HTMLInputElement).files?.item(0));
 			} else {
 				this.modal.open(PopTips, ['图片尺寸大于2M，请重新上传！', 0, 0]);
 			}
@@ -118,12 +122,11 @@ export class ReportUploadComponent implements ControlValueAccessor {
 			);
 	}
 
-	private fnChange: any;
+
 	registerOnChange(fn: any) {
 		this.fnChange = fn;
 	}
 
-	private fnTouch: any;
 	registerOnTouched(fn: any) {
 		this.fnTouch = fn;
 	}
@@ -134,7 +137,7 @@ export class ReportUploadComponent implements ControlValueAccessor {
 }
 
 type UploadImage = {
-	symbol: Symbol;
+	symbol: symbol;
 	process$: Observable<UpladoProcess>;
 } & UploadToken;
 

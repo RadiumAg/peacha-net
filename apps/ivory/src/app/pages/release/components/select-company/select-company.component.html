@@ -1,6 +1,6 @@
 <form nz-from [formGroup]="form">
 	<div class="body" *ngIf="false">
-		<ng-container *ngIf="!(isHaveCompany$ | async)">
+		<ng-container *ngIf="(isHaveCompany$ | async) === false">
 			<div class="self active" (click)="onClick($event)">本作品完全由我自己创作</div>
 			<div class="company" *ngIf="!ivoDisabled" (click)="addCompany()">添加新的合作者</div>
 		</ng-container>
@@ -81,7 +81,7 @@
 		</div>
 	</ng-container>
 
-	<div *ngIf="!(isHaveCompany$ | async)">
+	<div *ngIf="(isHaveCompany$ | async) === false">
 		<nz-form-control>
 			<nz-radio-group formControlName="c">
 				<label nz-radio nzValue="0" class="original" [nzDisabled]="ivoDisabled">我声明形象为本人原创</label>

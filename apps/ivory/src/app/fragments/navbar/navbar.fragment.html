@@ -21,7 +21,7 @@
 			<img [routerLink]="['cart']" src="/assets/image/navbar/cart.svg" />
 		</span>
 
-		<ng-container *ngIf="!(isLogin$|async);else logined">
+		<ng-container *ngIf="(isLogin$|async) === false;else logined">
 			<a [routerLink]="['login']">登录</a>|
 			<a [routerLink]="['register']">注册</a>
 		</ng-container>

@@ -21,7 +21,7 @@
 				<li class="best-work" *ngFor="let represent of representList">
 					<img
 						class="delete-pic"
-						*ngIf="!(showEdit$|async)"
+						*ngIf="(showEdit$|async) === false"
 						src="/assets/image/live-2d/svg/delete.svg"
 						(click)="deleteWork(represent.id,$event)"
 					/>

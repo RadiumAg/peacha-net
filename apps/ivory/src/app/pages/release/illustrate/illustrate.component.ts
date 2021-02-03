@@ -5,9 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { SuccessTips } from '../components/success-tips/success-tips';
 import { BehaviorSubject, fromEvent, interval } from 'rxjs';
 import { ReleaseApiService } from '../release-api.service';
-import { ModalService, Work } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { emptyStringValidator, validator } from 'libs/peacha-core/src/lib/core/commom/common';
+import { emptyStringValidator, ModalService, validator, Work } from '@peacha-core';
+import { PopTips } from '@peacha-core/components';
+
 
 @Component({
 	selector: 'ivo-illustrate',
@@ -18,7 +18,7 @@ export class IllustrateComponent implements OnInit, AfterViewInit {
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
 
-	constructor(private fb: FormBuilder, private modal: ModalService, private route: ActivatedRoute, private api: ReleaseApiService) {}
+	constructor(private fb: FormBuilder, private modal: ModalService, private route: ActivatedRoute, private api: ReleaseApiService) { }
 
 	param: {
 		n: string;
@@ -54,11 +54,11 @@ export class IllustrateComponent implements OnInit, AfterViewInit {
 	isEdit = false;
 	stateMentStrategy = {
 		['fllow']: () => {
-			this.stateMentStates = this.stateMentStates.map(x => true);
+			this.stateMentStates = this.stateMentStates.map(_x => true);
 			this.resetAChecked();
 		},
 		['orgin']: () => {
-			this.stateMentStates = this.stateMentStates.map(x => false);
+			this.stateMentStates = this.stateMentStates.map(_x => false);
 		},
 	};
 
@@ -112,7 +112,7 @@ export class IllustrateComponent implements OnInit, AfterViewInit {
 
 	private public_work() {
 		this.api.publish_work(this.param).subscribe({
-			next: x => {
+			next: _x => {
 				this.modal.open(SuccessTips, {
 					redirectUrl: '/member/manager/illust/auditing',
 					tip: '已成功提交审核，请等待后台人员审核！',

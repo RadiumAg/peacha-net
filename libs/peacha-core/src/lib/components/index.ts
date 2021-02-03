@@ -8,3 +8,4 @@ export * from './work-selector/work-selector.component';
 export * from './user-report-modal/user-report-modal.component';
 export * from './crop-banner/crop-banner';
 export * from './report-modal/report-modal.component';
+export * from './cropper/cropper';

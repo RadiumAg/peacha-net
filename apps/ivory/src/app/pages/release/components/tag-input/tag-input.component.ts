@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { tap } from 'rxjs/operators';
 import { ModalService, Tag } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
 
 @Component({
 	selector: 'ivo-tag-input',
@@ -18,7 +18,7 @@ import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
 	],
 })
 export class TagInputComponent implements ControlValueAccessor {
-	constructor(private modal: ModalService) {}
+	constructor(private modal: ModalService) { }
 	@Input()
 	tagCount = 5;
 	readonly tags$ = new BehaviorSubject<Tag[]>([]);
@@ -92,7 +92,7 @@ export class TagInputComponent implements ControlValueAccessor {
 		this.fnChange = fn;
 	}
 
-	registerOnTouched() {}
+	registerOnTouched() { }
 
 	writeValue(word: string[]): void {
 		if (this.validator(this.proxy.whiteValidator, [word])) {
@@ -108,5 +108,5 @@ export class TagInputComponent implements ControlValueAccessor {
 		);
 	}
 
-	setDisabledState?(isDisabled: boolean): void {}
+	setDisabledState?(isDisabled: boolean): void { }
 }

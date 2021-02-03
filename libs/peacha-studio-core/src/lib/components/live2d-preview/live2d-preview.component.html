@@ -7,7 +7,7 @@
 			</div>
 			<div class="modal-body">
 				<span>请选择摄像头{{ selectDevice }}</span>
-				<ng-container *ngrxLet="cameraDevices$; let cameraDevices">
+				<ng-container>
 					<select [value]="selectDevice && cameraDevices[0].id" #camera>
 						<option *ngFor="let camera of cameraDevices" [value]="camera.id">
 							{{ camera.label }}

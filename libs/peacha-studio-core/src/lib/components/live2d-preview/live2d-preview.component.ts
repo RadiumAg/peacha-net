@@ -154,12 +154,10 @@ export class Live2dPreviewComponent implements AfterViewInit, OnDestroy {
 	//#region others
 	loading$ = new BehaviorSubject(true);
 	error$ = new BehaviorSubject(false);
-	cameraDevices$ = new BehaviorSubject<
-		{
-			id: string;
-			label: string;
-		}[]
-	>([]);
+	cameraDevices: {
+		id: string;
+		label: string;
+	}[] = [];
 	selectDevice!: string;
 	cs!: AbortController | null;
 	tracker!: PlatformFaceTracker;
@@ -566,14 +564,12 @@ export class Live2dPreviewComponent implements AfterViewInit, OnDestroy {
 		} else {
 			this.modalShow = true;
 			const devices = await navigator.mediaDevices.enumerateDevices();
-			this.cameraDevices$.next(
-				devices
-					.filter(device => device.kind === 'videoinput')
-					.map((device, index) => ({
-						id: device.deviceId || device.groupId,
-						label: device.label || `camera device ${index}`,
-					}))
-			);
+			this.cameraDevices = devices
+				.filter(device => device.kind === 'videoinput')
+				.map((device, index) => ({
+					id: device.deviceId || device.groupId,
+					label: device.label || `camera device ${index}`,
+				}));
 		}
 	}
 

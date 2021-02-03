@@ -1,19 +1,18 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, Input, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { ModalRef } from '@peacha-core';
-import { MODAL_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
+import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
 
 @Component({
 	selector: 'ivo-success-tips',
 	templateUrl: './success-tips.html',
 	styleUrls: ['./success-tips.less'],
 })
-export class SuccessTips {
+export class SuccessTips implements OnDestroy {
 	redirectSet = 5;
 	count$: BehaviorSubject<number>;
 
-	@Input('redirectUrl')
+	@Input()
 	redirectUrl: string;
 
 	tips$ = new BehaviorSubject<string>('');
@@ -47,5 +46,4 @@ export class SuccessTips {
 		clearInterval(this.timer);
 	}
 
-	ngOnInit(): void {}
 }

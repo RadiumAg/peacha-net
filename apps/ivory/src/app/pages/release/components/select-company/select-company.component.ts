@@ -1,12 +1,11 @@
-import { Component, OnInit, forwardRef, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, forwardRef, ViewChild, ElementRef, Input } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormBuilder, Validators } from '@angular/forms';
-import { Work, ModalService, Works, CooperateDetail } from '@peacha-core';
-import { validator } from 'libs/peacha-core/src/lib/core/commom/common';
-import { UserStateModel } from 'libs/peacha-core/src/lib/core/state/user.state';
+import { Work, ModalService, Works, CooperateDetail, validator } from '@peacha-core';
 import { CompanyModalComponent } from '../company-modal/company-modal.component';
+import { UserStateModel } from '@peacha-core/state';
 
 @Component({
 	selector: 'ivo-select-company',
@@ -20,9 +19,10 @@ import { CompanyModalComponent } from '../company-modal/company-modal.component'
 		},
 	],
 })
-export class SelectCompanyComponent implements ControlValueAccessor, OnInit {
+export class SelectCompanyComponent implements ControlValueAccessor {
 	isHaveCompany$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	uid$: Subject<number> = new Subject();
+	// eslint-disable-next-line @typescript-eslint/ban-types
 	user$: Subject<object> = new Subject();
 	precent$: BehaviorSubject<string> = new BehaviorSubject('0');
 	workImg$ = new BehaviorSubject<Work>(null);
@@ -35,6 +35,7 @@ export class SelectCompanyComponent implements ControlValueAccessor, OnInit {
 	@ViewChild('cover', { read: ElementRef })
 	cover: ElementRef<any>;
 
+	// eslint-disable-next-line @typescript-eslint/ban-types
 	updata: (o: object) => void;
 
 	form = this.fb.group({
@@ -123,9 +124,9 @@ export class SelectCompanyComponent implements ControlValueAccessor, OnInit {
 		});
 	}
 
-	registerOnTouched(fn: any): void {}
+	registerOnTouched(fn: any): void { }
 
-	setDisabledState?(isDisabled: boolean): void {}
+	setDisabledState?(isDisabled: boolean): void { }
 
 	setPrecentSelf(e: Event) {
 		const value = (e.target as HTMLInputElement).value;
@@ -134,6 +135,7 @@ export class SelectCompanyComponent implements ControlValueAccessor, OnInit {
 
 	addCompany() {
 		this.modal
+			// eslint-disable-next-line @typescript-eslint/ban-types
 			.open<CompanyModalComponent<UserStateModel>, object>(CompanyModalComponent, {
 				findKey: 'k',
 				pageKey: 'p',
@@ -163,6 +165,7 @@ export class SelectCompanyComponent implements ControlValueAccessor, OnInit {
 
 	addAssociation(e: Event) {
 		this.modal
+			// eslint-disable-next-line @typescript-eslint/ban-types
 			.open<CompanyModalComponent<Works>, object>(CompanyModalComponent, {
 				findKey: 'k',
 				pageKey: 'p',
@@ -205,7 +208,6 @@ export class SelectCompanyComponent implements ControlValueAccessor, OnInit {
 		element.classList.toggle('active');
 	}
 
-	seletOrgin(e: Event) {}
+	seletOrgin(e: Event) { }
 
-	ngOnInit(): void {}
 }

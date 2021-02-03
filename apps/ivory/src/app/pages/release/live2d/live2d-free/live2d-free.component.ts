@@ -8,10 +8,10 @@ import { Live2dUploadComponent } from '../../components/live2d-upload/live2d-upl
 import { SuccessTips } from '../../components/success-tips/success-tips';
 import { BehaviorSubject, fromEvent, interval } from 'rxjs';
 import { ReleaseApiService } from '../../release-api.service';
-import { ModalService, Work } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
-import { emptyStringValidator, validator } from 'libs/peacha-core/src/lib/core/commom/common';
-import { Live2dTransformData } from 'libs/peacha-studio-core/src/lib/live2d-transform-data';
+import { emptyStringValidator, ModalService, validator, Work } from '@peacha-core';
+import { Live2dTransformData } from '@peacha-studio-core';
+import { PopTips } from '@peacha-core/components';
+
 
 @Component({
 	selector: 'ivo-live2d-free',
@@ -25,7 +25,7 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 		private route: ActivatedRoute,
 		private api: ReleaseApiService,
 		private cdr: ChangeDetectorRef
-	) {}
+	) { }
 
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
@@ -82,19 +82,19 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 		enableFaceTracker: boolean;
 		enableSettingPanel: boolean;
 	} = {
-		transformData: {},
-		enableFaceTracker: false,
-		enableSettingPanel: false,
-	};
+			transformData: {},
+			enableFaceTracker: false,
+			enableSettingPanel: false,
+		};
 	freeModal = [];
 	isEdit = false;
 	stateMentStrategy = {
 		['fllow']: () => {
-			this.stateMentStates = this.stateMentStates.map(x => true);
+			this.stateMentStates = this.stateMentStates.map(_x => true);
 			this.resetAChecked();
 		},
 		['orgin']: () => {
-			this.stateMentStates = this.stateMentStates.map(x => false);
+			this.stateMentStates = this.stateMentStates.map(_x => false);
 		},
 	};
 
@@ -211,7 +211,7 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 
 	private public_work(): void {
 		this.api.publish_work(this.param).subscribe({
-			next: x => {
+			next: _x => {
 				this.modal.open(SuccessTips, {
 					redirectUrl: '/member/manager/live2D/auditing',
 					tip: '已成功提交审核，请等待后台人员审核！',
@@ -288,7 +288,7 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 	private subscribeForm(): void {
 		this.form.valueChanges
 			.pipe(
-				tap(value => {
+				tap(_value => {
 					this.setModalCheckedDisabled();
 					this.setFreeGoodList();
 				}),

@@ -1,22 +1,20 @@
-import { Component, ViewChildren, QueryList, Input, ContentChildren, ViewContainerRef } from '@angular/core';
+import { Component, QueryList, Input, ContentChildren, DoCheck } from '@angular/core';
 import { ErrorDisplayCase } from './error-display-case';
 import { AbstractControl } from '@angular/forms';
 
 @Component({
 	selector: '*[errorDisplay]',
 	template: `<ng-content></ng-content>`,
-	inputs: ['errorDisplay'],
-	styles: [],
 })
-export class ErrorDisplay {
+export class ErrorDisplay implements DoCheck {
 	@ContentChildren(ErrorDisplayCase) cases: QueryList<ErrorDisplayCase>;
-	@Input('errorDisplay') cont: AbstractControl;
+	@Input() errorDisplay: AbstractControl;
 
 	ngDoCheck() {
-		if (!this.cont) {
+		if (!this.errorDisplay) {
 			return;
 		}
-		const cont = this.cont;
+		const cont = this.errorDisplay;
 		if (!cont.touched) {
 			return;
 		}

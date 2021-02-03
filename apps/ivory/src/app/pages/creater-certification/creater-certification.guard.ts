@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate, Router } from '@angular/router';
+import { UrlTree, CanActivate, Router } from '@angular/router';
 import { Select } from '@ngxs/store';
 import { UserState, ModalService } from '@peacha-core';
-import { PopTips } from 'libs/peacha-core/src/lib/components/pop-tips/pop-tips';
+import { PopTips } from '@peacha-core/components';
 import { Observable } from 'rxjs';
 import { take, switchMap, map } from 'rxjs/operators';
 
@@ -12,10 +12,7 @@ export class CreaterCertificationGuard implements CanActivate {
 	identityState$: Observable<number>;
 
 	constructor(private modal: ModalService, private router: Router) {}
-	canActivate(
-		route: ActivatedRouteSnapshot,
-		state: RouterStateSnapshot
-	): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+	canActivate(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
 		return this.identityState$.pipe(
 			switchMap(identityState =>
 				identityState !== 2

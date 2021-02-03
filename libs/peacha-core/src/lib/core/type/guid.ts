@@ -3,7 +3,7 @@ import { assert } from '../error';
 export class Guid {
 	constructor(arrayBuffer: ArrayBuffer) {
 		assert(arrayBuffer instanceof ArrayBuffer, '[Guid] Given value is not valid ArrayBuffer type.');
-		assert(arrayBuffer.byteLength == 16, "[Guid] Given ArrayBuffer hasn't a length of 16.");
+		assert(arrayBuffer.byteLength == 16, '[Guid] Given ArrayBuffer hasn\'t a length of 16.');
 		this.__i32 = new Int32Array(arrayBuffer, 0, 4);
 	}
 

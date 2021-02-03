@@ -60,6 +60,5 @@ import 'zone.js/dist/zone'; // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
-import 'libs/peacha-studio-core/src/lib/core/polyfill';
 
 import 'fullscreen-api-polyfill';

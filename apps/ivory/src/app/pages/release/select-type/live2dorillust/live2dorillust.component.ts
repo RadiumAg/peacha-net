@@ -1,8 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 import { Inject, OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { SELECT_TOKEN, SELECT_DATA_TOKEN } from 'libs/peacha-core/src/lib/core/tokens';
-import { SelectData } from '@peacha-core';
+import { SelectData, SELECT_DATA_TOKEN, SELECT_TOKEN } from '@peacha-core';
 
 @Component({
 	selector: 'ivo-live2dorillust',
@@ -14,7 +13,7 @@ export class Live2dorillustComponent implements OnInit, OnDestroy {
 		@Inject(SELECT_TOKEN) public select_token: BehaviorSubject<boolean>,
 		@Inject(SELECT_DATA_TOKEN)
 		public select_data_token: BehaviorSubject<SelectData>
-	) {}
+	) { }
 
 	activeList = [false, false];
 	nexturl = '';
@@ -25,7 +24,7 @@ export class Live2dorillustComponent implements OnInit, OnDestroy {
 	}
 
 	private checkedIcon(index: number): void {
-		this.activeList = this.activeList.map(x => false);
+		this.activeList = this.activeList.map(_x => false);
 		this.activeList[index] = true;
 		this.select_token.next(false);
 	}

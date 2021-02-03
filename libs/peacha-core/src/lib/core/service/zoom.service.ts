@@ -1,13 +1,12 @@
 import { Injectable, Injector } from '@angular/core';
-import { Overlay, ComponentType, OverlayRef } from '@angular/cdk/overlay';
+import { Overlay, ComponentType } from '@angular/cdk/overlay';
 import { MODAL_DATA_TOKEN } from '../tokens';
 import { PortalInjector, ComponentPortal } from '@angular/cdk/portal';
-import { Subject } from 'rxjs';
 import { ModalRef } from './modals.service';
 
 @Injectable()
 export class ZoomService {
-	constructor(private overlay: Overlay, private injector: Injector) {}
+	constructor(private overlay: Overlay, private injector: Injector) { }
 
 	open<T, R = any>(t: ComponentType<T>, data?: any) {
 		const overlayRef = this.overlay.create({

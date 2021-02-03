@@ -29,7 +29,7 @@
 
 			<div class="reply" *ngIf="list?.comment_list.length > 0">
 				<!-- 评论回复内容 -->
-				<ng-container *ngIf="!(show_all_reply$ | async); else allSubComment">
+				<ng-container *ngIf="(show_all_reply$ | async) === false; else allSubComment">
 					<div class="sub-comment-list">
 						<ivo-comment-subentry
 							*ngFor="let cm of list?.comment_list"
