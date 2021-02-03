@@ -1,0 +1,88 @@
+<div class="main" *ngrxLet="type$;let type">
+    <div class="index">
+        账单详情
+        <span class="return" (click)="goBack()">&lt;返回列表</span>
+    </div>
+    <ng-container *ngrxLet="orderinfo$;let orderinfo">
+        <div class="detail">
+            <li>
+                <div class="top">
+                    <img [attr.src]="orderinfo?.order?.work_cover" (click)="toWork(orderinfo?.order?.work_type,orderinfo?.order?.work_id)">
+                    <span class="left">
+                        <span class="work" (click)="toWork(orderinfo?.order?.work_type,orderinfo?.order?.work_id)">{{orderinfo?.order?.work_name}}</span>
+                        <span class="good">商品名称：{{orderinfo?.order?.goods_name}}</span>
+                        <span class="seller">卖家：{{orderinfo?.order?.seller_name}}</span>
+                    </span>
+                    <span class="right">
+                        <span class="type" *ngIf="orderinfo?.order?.single;else other">单次出售</span>
+                        <ng-template #other>
+                            <span class="type">不限量出售</span>
+                        </ng-template>
+                        <span class="price">价格：<a>¥{{orderinfo?.order?.price| number:'1.2-2'}}</a></span>
+                    </span>
+                </div>
+                <div class="center" *ngIf="type==10">
+                    <li>
+                        <span>总金额</span>
+                        <span>+¥{{orderinfo?.order?.price| number:'1.2-2'}}</span>
+                    </li>
+                    <li>
+                        <span>服务费（{{orderinfo?.rate*100}}%）</span>
+                        <span>-¥{{orderinfo?.commission| number:'1.2-2'}}</span>
+                    </li>
+                    <!-- <li>
+                        <span>收益分成（总收益的{{orderinfo.share*100}}%）</span>
+                        <span>-¥{{orderinfo.amount| number:'1.2-2'}}</span>
+                    </li> -->
+                    <li class="money">
+                        <span>合计：</span>
+                        <span>¥{{orderinfo?.amount| number:'1.2-2'}}</span>
+                    </li>
+                </div>
+                <div class="center" *ngIf="type==23">
+                    <li>
+                        <span>收益分成（总收益的{{orderinfo?.share*100}}%）</span>
+                        <span>+¥{{orderinfo?.amount| number:'1.2-2'}}</span>
+                    </li>
+                    <li class="money">
+                        <span>合计：</span>
+                        <span>¥{{orderinfo?.amount| number:'1.2-2'}}</span>
+                    </li>
+                </div>
+                <div class="bottom">
+                    <li>
+                        <!-- <span class="order" [ngSwitch]="type">收入来源：
+                            <ng-container *ngSwitchCase="10">
+                                商品出售
+                            </ng-container>
+                            <ng-container *ngSwitchCase="23">
+                                收益分成
+                            </ng-container>
+                        </span> -->
+                        <span class="order">收入交易号：{{orderinfo?.id}}</span>
+                        <span class="result">订单号：{{orderinfo?.order?.order_id}}</span>
+                    </li>
+                    <li>
+                        <span>完成时间：{{orderinfo?.credited_time|date:"yyyy-MM-dd HH:mm"}}</span>
+                        <span class="result">订单状态：已完成</span>
+                    </li>
+                    <!-- <li>
+                        <span>完成时间：{{orderinfo.credited_time|date:"yyyy-MM-dd-HH:mm"}}</span>
+                    </li> -->
+
+                </div>
+
+            </li>
+        </div>
+        <!-- <div class="info">
+            <li>
+                <span>支付交易号：{{orderinfo.id}}</span>
+                <span>支付方式：{{orderinfo.channel}}</span>
+            </li>
+            <li>
+                <span>创建时间：{{orderinfo.create_time|date:"yyyy-MM-dd-HH:mm" }}</span>
+                <span>支付时间：{{orderinfo.complete_time|date:"yyyy-MM-dd-HH:mm"}}</span>
+            </li>
+        </div> -->
+    </ng-container>
+</div>

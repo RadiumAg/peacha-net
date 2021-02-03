@@ -1,0 +1,40 @@
+<div class="main" *ngrxLet="user$; let user">
+    <div class="index">{{"security.security_setting" | translate}}</div>
+    <div class="min">{{"security.account_password" | translate}}
+        <div class="des">
+            <span>{{"security.already_setting" | translate}}</span><span class="spe" [routerLink]="['/passport/forget_password']" [queryParams]="{type:0}">{{"linkageTime.change_password" | translate}}</span>
+        </div>
+    </div>
+    <!-- <div class="min">支付密码
+        <div *ngIf="!user.wallet_state;else now" class="des">
+            <span>已设置</span>
+            <span class="spe" routerLink="/passport/password">修改密码</span>
+        </div>
+        <ng-template #now>
+            <div class="des" *ngIf="user.wallet_state==1">
+                <span class="spe" routerLink="/passport/password">未设置</span>
+                <span class="spe" routerLink="/passport/password">设置密码</span>
+            </div>
+            <div class="des" *ngIf="user.wallet_state==2">
+                <span class="spe" routerLink="/passport/password">钱包被锁定</span>
+                <span class="spe" routerLink="/passport/password">立即验证</span>
+            </div>
+            <div class="des" *ngIf="user.wallet_state==3">
+                <span class="spe">钱包被冻结</span>
+                <span class="spe">立即申诉</span>
+            </div>
+        </ng-template>
+    </div> -->
+    <div class="min">{{"security.bind_mailbox" | translate}}
+        <div *ngIf="user.email;else noe" class="des">
+            <span>{{user.email}}</span>
+            <!-- <span class="spe" (click)="changeEmail(user.phone)">更换邮箱</span> -->
+        </div>
+        <ng-template #noe>
+            <div class="des">
+                <span class="spe" routerLink="/passport/bind_email">{{"security.not_bind_mailbox" | translate}}</span><span class="spe"
+                    routerLink="/passport/bind_email">{{"security.bind_mailbox" | translate}}</span>
+            </div>
+        </ng-template>
+    </div>
+</div>

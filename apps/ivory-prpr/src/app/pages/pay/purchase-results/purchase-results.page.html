@@ -1,0 +1,56 @@
+<ng-container *ngrxLet="show$;let show">
+    <div class="all">
+        <ng-container *ngIf="show">
+            <div class="wait">
+                <p>等待购买结果，请稍后...</p>
+                <img src="/assets/image/加载动画.gif" />
+            </div>
+        </ng-container>
+        <div class="all-two" *ngIf="!show">
+            <div class="show">
+                <div class="goods" *ngFor="let good of order?.list">
+                    <img [attr.src]="good.cover" />
+                    <li class="good-left">
+                        <span class="name"> {{good.work_name}} </span>
+                        <!-- <span class="good-name">商品名称:&nbsp;&nbsp;{{good.goods_name}}</span> -->
+                        <span class="ower"
+                            >卖家:&nbsp;&nbsp;{{good.seller_name}}</span
+                        >
+                        <span
+                            style="font-size: 12px;color: #999999;"
+                            *ngIf="good.maxstock==1;else otherWay"
+                            >单次出售</span
+                        >
+                        <ng-template #otherWay>
+                            <span style="font-size: 12px;color: #999999;">多次出售</span>
+                        </ng-template>
+                    </li>
+                    <li class="good-right">
+                        <span class="state" *ngIf="good.state==1;else fail"
+                            >购买成功</span
+                        >
+                        <ng-template #fail>
+                            <span class="state f">购买失败</span>
+                        </ng-template>
+                        <span class="orderid">订单号：{{good.orderid}}</span>
+
+                        <span class="price">
+                            价格: ¥{{good.price | number:'1.2-2'}}
+                        </span>
+                    </li>
+                </div>
+                <div class="bottom">
+                    <ng-container *ngIf="showTip">
+                        <p class="a">
+                            由于商品已下架或已被其他人抢先购买，导致商品购买失败
+                        </p>
+                        <p class="b">
+                            购买失败所支付的金额将会在1-3个工作日内退还至您的支付账户中
+                        </p>
+                    </ng-container>
+                    <button (click)="next()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

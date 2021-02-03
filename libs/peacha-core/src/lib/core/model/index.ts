@@ -7,3 +7,4 @@ export * from './select_data';
 export * from './tag';
 export * from './cooperateDetail';
 export * from './trade';
+export * from './exchange';

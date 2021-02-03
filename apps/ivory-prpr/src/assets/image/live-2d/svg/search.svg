@@ -1,0 +1,5 @@
+<svg id="搜索" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <rect id="矩形" width="20" height="20" opacity="0"/>
+  <path id="减去_16" data-name="减去 16" d="M7,14A7,7,0,0,1,7,0,7,7,0,0,1,9.69,13.463,6.958,6.958,0,0,1,7,14ZM7,1A6,6,0,0,0,7,13v-.027A5.986,5.986,0,1,0,7,1Z" transform="translate(2.086 2.091)" fill="#999" stroke="rgba(0,0,0,0)" stroke-miterlimit="10" stroke-width="1"/>
+  <path id="路径" d="M3.458,2.68.928.148a.552.552,0,0,0-.78.78l2.53,2.532a.552.552,0,1,0,.78-.78Z" transform="translate(14.55 14.545)" fill="#999"/>
+</svg>

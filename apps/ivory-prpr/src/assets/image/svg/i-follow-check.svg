@@ -1,0 +1,18 @@
+<svg id="delete" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <rect id="矩形_61" data-name="矩形 61" class="cls-1" width="12" height="12"/>
+  <g id="组_4" data-name="组 4" transform="translate(2.8 -4.171)">
+    <rect id="矩形_60" data-name="矩形 60" class="cls-2" width="2" height="10" rx="1" transform="translate(7.443 5.841) rotate(45)"/>
+    <rect id="矩形_1037" data-name="矩形 1037" class="cls-2" width="2" height="6" rx="1" transform="translate(-2.457 10.084) rotate(-45)"/>
+  </g>
+</svg>

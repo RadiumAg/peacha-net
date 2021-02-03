@@ -1,0 +1,23 @@
+<div ivoStepper #step>
+    <div *ivoStep>
+        <div class="main" *ngIf="wallet$|async;let wallet">
+            <div class="detail">
+                <ng-container *ngrxLet="account$;let account">
+                    <div>
+                        <div class="a">
+                            剩余联动时长
+                        </div>
+                        <span class="big">
+                            <span>00 小时 59 分钟 21 秒</span>
+                        </span>
+                    </div>
+                    <div>
+                        <button [routerLink]="['../../wallet/pay']" class="strong">
+                            充值
+                        </button>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

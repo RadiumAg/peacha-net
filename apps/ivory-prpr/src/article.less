@@ -1,0 +1,90 @@
+:host {
+    color: #000000;
+    display: block;
+    width: 1200px;
+    margin: 0 auto;
+
+    h1 {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    h3 {
+        margin-top: 24px;
+        font-weight: bold;
+    }
+
+    p {
+        margin-bottom: 0;
+        text-align: justify;
+        line-height: 24px;
+    }
+
+    a{
+      text-decoration: none;
+      color: @theme-color;
+    }
+
+    .pstyle1 {
+        text-indent: 22px;
+        text-align: justify;
+    }
+
+    .pstyle2{
+        font-weight: bold;
+    }
+
+    div.qtable {
+        border: 1px solid black;
+        display: table;
+        border-collapse: collapse;
+
+        >div {
+            display: table-row;
+
+            >div {
+                vertical-align: middle;
+
+                p {
+                    height: 100%;
+                    text-align: center;
+                }
+
+                border: 1px solid black;
+                display: table-cell;
+                padding: 10px 10px;
+            }
+
+            >div:nth-child(5) {
+                p {
+                    text-align: left;
+                }
+
+                width: 400px;
+            }
+        }
+
+        >div:nth-child(1) {
+            display: table-row;
+
+            >div {
+                vertical-align: middle;
+
+                p {
+                    text-align: center;
+                }
+
+                border: 1px solid black;
+                display: table-cell;
+                padding: 10px 10px;
+            }
+        }
+    }
+
+    .update_time{
+        text-align: center;
+        font-size: 12px;
+        color: gray;
+    }
+
+}
