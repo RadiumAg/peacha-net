@@ -10,7 +10,7 @@ import {
 	ViewContainerRef,
 	AfterContentInit
 } from '@angular/core';
-import { BehaviorSubject, empty, Observable } from 'rxjs';
+import { BehaviorSubject, EMPTY, empty, Observable } from 'rxjs';
 import { switchMap, take, tap, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ModelComment, ModelSubComment } from '../model';
@@ -19,6 +19,8 @@ import { Select } from '@ngxs/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserState, Toast, ModalService, DropDownService } from '@peacha-core';
 import { CommentReportModalComponent, PopTips } from '@peacha-core/components';
+import { CommentApiService } from '../comment-api.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
 	selector: 'ivo-comment-entry',
@@ -78,11 +80,12 @@ export class CommentEntryComponent implements AfterContentInit {
 
 	comments$ = this.page$.pipe(
 		switchMap(p => {
-			return this.http
-				.get<{
-					count: number;
-					list: ModelSubComment[];
-				}>(`/comment/get_comment_sub?c=${this.cid}&p=${p - 1}&s=10`)
+			// return this.http
+			// 	.get<{
+			// 		count: number;
+			// 		list: ModelSubComment[];
+			// 	}>(`/comment/get_comment_sub?c=${this.cid}&p=${p - 1}&s=10`)
+			return this.commentApi.getReplyToComments(this.cid, p - 1, 10)
 				.pipe(
 					tap(s => {
 						this.showLoad = false;
@@ -113,7 +116,8 @@ export class CommentEntryComponent implements AfterContentInit {
 		private menu: DropDownService,
 		private vc: ViewContainerRef,
 		private router: Router,
-		private toast: Toast
+		private toast: Toast,
+		private commentApi: CommentApiService
 	) { }
 	rootid = -1;
 	subcompage = -1;
@@ -150,10 +154,11 @@ export class CommentEntryComponent implements AfterContentInit {
 		});
 	}
 	like(id: number) {
-		this.http
-			.post('/comment/like', {
-				c: id,
-			})
+		// this.http
+		// 	.post('/comment/like', {
+		// 		c: id,
+		// 	})
+		this.commentApi.commentLike(id)
 			.subscribe(_ => {
 				if (this.list?.id == id) {
 					if (this.list.is_like == 1) {
@@ -182,11 +187,12 @@ export class CommentEntryComponent implements AfterContentInit {
 						this.b = this.replyControl.value;
 					}
 					if (this.replyControl.value) {
-						return this.http
-							.post<{ id: number }>('/comment/comment_sub', {
-								c: this.b,
-								r: this.a,
-							})
+						// return this.http
+						// 	.post<{ id: number }>('/comment/comment_sub', {
+						// 		c: this.b,
+						// 		r: this.a,
+						// 	})
+						return this.commentApi.replyToComments(this.b, this.a)
 							.pipe(
 								tap(s => {
 									this.basicInfo$.subscribe(info => {
@@ -244,7 +250,7 @@ export class CommentEntryComponent implements AfterContentInit {
 										});
 									}
 
-									return empty();
+									return EMPTY;
 								})
 							);
 					} else {
@@ -304,10 +310,11 @@ export class CommentEntryComponent implements AfterContentInit {
 			.afterClosed()
 			.subscribe(s => {
 				if (s) {
-					this.http
-						.post('/comment/delete', {
-							c: id,
-						})
+					// this.http
+					// 	.post('/comment/delete', {
+					// 		c: id,
+					// 	})
+					this.commentApi.commentDelete(id)
 						.subscribe(_ => {
 							this.cdr.markForCheck();
 							this.comment$.next(undefined);

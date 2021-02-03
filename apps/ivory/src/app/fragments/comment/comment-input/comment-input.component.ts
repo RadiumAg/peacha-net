@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ModelComment } from '../model';
 import { UserState } from '@peacha-core';
+import { CommentApiService } from '../comment-api.service';
 
 @Component({
 	selector: 'ivo-comment-input',
@@ -33,14 +34,18 @@ export class CommentInputComponent {
 	one: ModelComment;
 	@ViewChild('text') text: ElementRef<HTMLTextAreaElement>;
 
-	constructor(private http: HttpClient) { }
+	constructor(
+		private http: HttpClient,
+		private commentApi: CommentApiService
+	) { }
 
 	send() {
-		this.http
-			.post<{ id: number }>('/comment/comment', {
-				a: this.aid,
-				c: this.text.nativeElement.value,
-			})
+		// this.http
+		// 	.post<{ id: number }>('/comment/comment', {
+		// 		a: this.aid,
+		// 		c: this.text.nativeElement.value,
+		// 	})
+		this.commentApi.firstLevelComments(this.aid, this.text.nativeElement.value)
 			.subscribe(s => {
 				//console.log(s);
 				this.comment.count++;
