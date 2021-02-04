@@ -31,7 +31,7 @@
 					<input class="fill" placeholder="请输入金额" formControlName="money" />
 					<span class="unit">元</span>
 				</div>
-				<div class="maybe">预计收入：{{(money.value*0.95).toFixed(2)}}元（服务费5%）</div>
+				<div class="maybe">预计收入：{{(money.value*0.99).toFixed(2)}}元（服务费1%）</div>
 				<div class="error-inset" [errorDisplay]="money">
 					<ng-container *errorCase="'required'"> 请填写企划所需酬金 </ng-container>
 					<ng-container *errorCase="'max'"> 企划所需酬金过大 </ng-container>
@@ -56,7 +56,7 @@
 		<div class="box">
 			<li class="title"><img src="/assets/image/commission/red-flag.svg" />企划须知</li>
 			<div class="content">
-				<p>企划完成后，平台将收取您所得稿酬的5%作为服务费。</p>
+				<p>企划完成后，平台将收取您所得稿酬的1%作为服务费。</p>
 				<div class="item">
 					当您参与企划后，需按照企划的需求创作，提交每个阶段节点审核。若超时完成则会扣除一定比例的稿酬。（超时天数小于等于3天则扣除3%稿酬，超时天数大于3天-小于等于5天则扣除6%稿酬，超时天数大于5天-小于等于6天则扣除10%稿酬，超时天数大于6天则扣除15%稿酬。超时天数大于7天，企划方可以发起超时中止，扣除全部稿酬）。<br />
 					企划完成后，平台将收取您所得稿酬的5%作为服务费。
