@@ -18,11 +18,15 @@
 	"splitStrings": true,
 	"splitStringsChunkLength": 2,
 	"stringArray": true,
-	"stringArrayEncoding": ["rc4"],
+	"stringArrayEncoding": [
+		"rc4"
+	],
 	"stringArrayWrappersCount": 1,
 	"stringArrayWrappersChainedCalls": true,
 	"stringArrayWrappersType": "function",
 	"stringArrayThreshold": 0.75,
 	"unicodeEscapeSequence": false,
-	"exclude": ["dist/ivory/*.worker.js"]
+	"exclude": [
+		"dist/apps/ivory/*.worker.js"
+	]
 }

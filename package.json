@@ -46,6 +46,7 @@
 		"angularx-qrcode": "^11.0.0",
 		"crypto-js": "^4.0.0",
 		"fullscreen-api-polyfill": "^1.1.2",
+		"javascript-obfuscator": "^2.10.3",
 		"jszip": "^3.5.0",
 		"ng-lazyload-image": "^9.1.0",
 		"ng-zorro-antd": "^11.1.0",
