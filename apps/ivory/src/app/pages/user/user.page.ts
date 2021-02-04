@@ -41,6 +41,7 @@ export class UserPage {
 		this.user$ = this.route.data.pipe(
 			map(d => d.user),
 			tap(i => {
+				this.userRole = [];
 				i.role.forEach(l => {
 					this.userRole.push(l.id);
 				});
