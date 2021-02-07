@@ -1,32 +1,32 @@
 {
-	"compact": true,
-	"controlFlowFlattening": true,
-	"controlFlowFlatteningThreshold": 0.5,
-	"deadCodeInjection": true,
-	"deadCodeInjectionThreshold": 0.4,
-	"debugProtection": false,
-	"debugProtectionInterval": true,
-	"disableConsoleOutput": true,
-	"identifierNamesGenerator": "mangled",
-	"log": false,
-	"numbersToExpressions": false,
-	"renameGlobals": false,
-	"rotateStringArray": true,
-	"selfDefending": false,
-	"shuffleStringArray": true,
-	"simplify": true,
-	"splitStrings": true,
-	"splitStringsChunkLength": 2,
-	"stringArray": true,
-	"stringArrayEncoding": [
-		"rc4"
-	],
-	"stringArrayWrappersCount": 1,
-	"stringArrayWrappersChainedCalls": true,
-	"stringArrayWrappersType": "function",
-	"stringArrayThreshold": 0.75,
-	"unicodeEscapeSequence": false,
-	"exclude": [
-		"dist/apps/ivory/*.worker.js"
-	]
+  "compact": true,
+  "controlFlowFlattening": true,
+  "controlFlowFlatteningThreshold": 0.5,
+  "deadCodeInjection": true,
+  "deadCodeInjectionThreshold": 0.4,
+  "debugProtection": false,
+  "debugProtectionInterval": true,
+  "disableConsoleOutput": true,
+  "identifierNamesGenerator": "mangled",
+  "log": false,
+  "numbersToExpressions": false,
+  "renameGlobals": false,
+  "rotateStringArray": true,
+  "selfDefending": false,
+  "shuffleStringArray": true,
+  "simplify": true,
+  "splitStrings": true,
+  "splitStringsChunkLength": 2,
+  "stringArray": true,
+  "stringArrayEncoding": [
+    "rc4"
+  ],
+  "stringArrayWrappersCount": 1,
+  "stringArrayWrappersChainedCalls": true,
+  "stringArrayWrappersType": "function",
+  "stringArrayThreshold": 0.75,
+  "unicodeEscapeSequence": false,
+  "exclude": [
+    "dist/apps/**/*.worker.js"
+  ]
 }
