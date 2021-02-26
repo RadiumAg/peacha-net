@@ -16,9 +16,8 @@ function protect(): void {
   new Function(protectCode()).apply(null);
 }
 
-protect();
 if (environment.production) {
-
+  protect();
   enableProdMode();
 }
 
