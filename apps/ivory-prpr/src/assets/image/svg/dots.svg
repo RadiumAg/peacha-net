@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="4" viewBox="0 0 16 4">
-  <g id="_..." data-name="..." transform="translate(-792.844 -1560)">
-    <rect id="rectangle" width="16" height="4" transform="translate(792.844 1560)" fill="rgba(0,0,0,0)"/>
-    <path id="路径" d="M0,2A2,2,0,1,0,2,0,2,2,0,0,0,0,2Z" transform="translate(804.844 1560)" fill="#999"/>
-    <path id="路径-2" data-name="路径" d="M0,2A2,2,0,0,0,4,2H4A2,2,0,1,0,0,2Z" transform="translate(792.844 1560)" fill="#999"/>
-    <path id="路径-3" data-name="路径" d="M0,2A2,2,0,1,0,2,0,2,2,0,0,0,0,2Z" transform="translate(798.843 1560)" fill="#999"/>
-  </g>
-</svg>

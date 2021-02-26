@@ -10,10 +10,7 @@
 				"lint": {
 					"builder": "@nrwl/linter:eslint",
 					"options": {
-						"lintFilePatterns": [
-							"libs/peacha-core/src/**/*.ts",
-							"libs/peacha-core/src/**/*.html"
-						]
+						"lintFilePatterns": ["libs/peacha-core/src/**/*.ts", "libs/peacha-core/src/**/*.html"]
 					}
 				}
 			}
@@ -43,9 +40,7 @@
 								"output": "/assets/"
 							}
 						],
-						"styles": [
-							"apps/ivory/src/styles.less"
-						],
+						"styles": ["apps/ivory/src/styles.less"],
 						"scripts": []
 					},
 					"configurations": {
@@ -99,10 +94,7 @@
 				"lint": {
 					"builder": "@nrwl/linter:eslint",
 					"options": {
-						"lintFilePatterns": [
-							"apps/ivory/src/**/*.ts",
-							"apps/ivory/src/**/*.html"
-						]
+						"lintFilePatterns": ["apps/ivory/src/**/*.ts", "apps/ivory/src/**/*.html"]
 					}
 				}
 			}
@@ -128,175 +120,7 @@
 				"lint": {
 					"builder": "@nrwl/linter:eslint",
 					"options": {
-						"lintFilePatterns": [
-							"libs/peacha-studio-core/src/**/*.ts",
-							"libs/peacha-studio-core/src/**/*.html"
-						]
-					}
-				}
-			}
-		},
-		"ivory-mobile": {
-			"projectType": "application",
-			"root": "apps/ivory-mobile",
-			"sourceRoot": "apps/ivory-mobile/src",
-			"prefix": "ivo",
-			"architect": {
-				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
-					"options": {
-						"outputPath": "dist/apps/ivory-mobile",
-						"index": "apps/ivory-mobile/src/index.html",
-						"main": "apps/ivory-mobile/src/main.ts",
-						"polyfills": "apps/ivory-mobile/src/polyfills.ts",
-						"tsConfig": "apps/ivory-mobile/tsconfig.app.json",
-						"aot": true,
-						"assets": [
-							"apps/ivory-mobile/src/favicon.ico",
-							"apps/ivory-mobile/src/assets"
-						],
-						"styles": [
-							"apps/ivory-mobile/src/styles.less"
-						],
-						"scripts": []
-					},
-					"configurations": {
-						"production": {
-							"fileReplacements": [
-								{
-									"replace": "apps/ivory-mobile/src/environments/environment.ts",
-									"with": "apps/ivory-mobile/src/environments/environment.prod.ts"
-								}
-							],
-							"optimization": true,
-							"outputHashing": "all",
-							"sourceMap": false,
-							"namedChunks": false,
-							"extractLicenses": true,
-							"vendorChunk": false,
-							"buildOptimizer": true,
-							"budgets": [
-								{
-									"type": "initial",
-									"maximumWarning": "2mb",
-									"maximumError": "5mb"
-								},
-								{
-									"type": "anyComponentStyle",
-									"maximumWarning": "6kb",
-									"maximumError": "10kb"
-								}
-							]
-						}
-					}
-				},
-				"serve": {
-					"builder": "@angular-devkit/build-angular:dev-server",
-					"options": {
-						"browserTarget": "ivory-mobile:build"
-					},
-					"configurations": {
-						"production": {
-							"browserTarget": "ivory-mobile:build:production"
-						}
-					}
-				},
-				"extract-i18n": {
-					"builder": "@angular-devkit/build-angular:extract-i18n",
-					"options": {
-						"browserTarget": "ivory-mobile:build"
-					}
-				},
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"apps/ivory-mobile/src/**/*.ts",
-							"apps/ivory-mobile/src/**/*.html"
-						]
-					}
-				}
-			}
-		},
-		"ivory-prpr": {
-			"projectType": "application",
-			"root": "apps/ivory-prpr",
-			"sourceRoot": "apps/ivory-prpr/src",
-			"prefix": "ivo",
-			"architect": {
-				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
-					"options": {
-						"outputPath": "dist/apps/ivory-prpr",
-						"index": "apps/ivory-prpr/src/index.html",
-						"main": "apps/ivory-prpr/src/main.ts",
-						"polyfills": "apps/ivory-prpr/src/polyfills.ts",
-						"tsConfig": "apps/ivory-prpr/tsconfig.app.json",
-						"aot": true,
-						"assets": [
-							"apps/ivory-prpr/src/favicon.ico",
-							"apps/ivory-prpr/src/assets"
-						],
-						"styles": [
-							"apps/ivory-prpr/src/styles.less"
-						],
-						"scripts": []
-					},
-					"configurations": {
-						"production": {
-							"fileReplacements": [
-								{
-									"replace": "apps/ivory-prpr/src/environments/environment.ts",
-									"with": "apps/ivory-prpr/src/environments/environment.prod.ts"
-								}
-							],
-							"optimization": true,
-							"outputHashing": "all",
-							"sourceMap": false,
-							"namedChunks": false,
-							"extractLicenses": true,
-							"vendorChunk": false,
-							"buildOptimizer": true,
-							"budgets": [
-								{
-									"type": "initial",
-									"maximumWarning": "2mb",
-									"maximumError": "5mb"
-								},
-								{
-									"type": "anyComponentStyle",
-									"maximumWarning": "6kb",
-									"maximumError": "10kb"
-								}
-							]
-						}
-					}
-				},
-				"serve": {
-					"builder": "@angular-devkit/build-angular:dev-server",
-					"options": {
-						"browserTarget": "ivory-prpr:build",
-						"proxyConfig": "proxy.config.prpr.json"
-					},
-					"configurations": {
-						"production": {
-							"browserTarget": "ivory-prpr:build:production"
-						}
-					}
-				},
-				"extract-i18n": {
-					"builder": "@angular-devkit/build-angular:extract-i18n",
-					"options": {
-						"browserTarget": "ivory-prpr:build"
-					}
-				},
-				"lint": {
-					"builder": "@nrwl/linter:eslint",
-					"options": {
-						"lintFilePatterns": [
-							"apps/ivory-prpr/src/**/*.ts",
-							"apps/ivory-prpr/src/**/*.html"
-						]
+						"lintFilePatterns": ["libs/peacha-studio-core/src/**/*.ts", "libs/peacha-studio-core/src/**/*.html"]
 					}
 				}
 			}
