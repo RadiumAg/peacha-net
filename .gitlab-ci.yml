@@ -1,0 +1,32 @@
+image: node:latest
+
+cache:
+  key: ${CI_BUILD_REF_NAME}
+  paths:
+    - node_modules/
+
+stages:
+
+  - build
+
+build:
+
+    stage: build
+
+    script:
+
+        - npm install
+
+        - npx nx build --prod
+        
+        - npx javascript-obfuscator ./dist -o ./dist --config ./obfuscator.conf.json
+
+    artifacts:
+
+      paths:
+
+       - dist/apps
+
+    only:
+
+        - master
