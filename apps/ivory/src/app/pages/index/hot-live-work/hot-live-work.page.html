@@ -4,15 +4,15 @@
 		热门Live2D
 		<span>大佬们的作品都在这里！</span>
 	</li>
-	<ng-container *ngrxLet="hotLiveWork$;let hotLiveWork">
+	<ng-container>
 		<div class="works">
 			<ng-container *ngFor="let work of hotLiveWorkList">
 				<ivo-work-card [work]="work"></ivo-work-card>
 			</ng-container>
 		</div>
-		<ng-container *ngIf="hotLiveWork.count==0">
+		<ng-container *ngIf="count==0">
 			<ivo-lack-image></ivo-lack-image>
 		</ng-container>
-		<button *ngIf="hotLiveWorkList.length < hotLiveWork.count">下拉加载更多</button>
+		<button *ngIf="hotLiveWorkList.length < count">下拉加载更多</button>
 	</ng-container>
 </div>
