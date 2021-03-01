@@ -100,8 +100,8 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 		s: [-1, Validators.min(0)],
 		sd: ['', this.require()],
 		d: [null, [this.needTimeValidator(), Validators.max(999)]],
-		sp: [this.spValue, [live2dPriceValidator(), Validators.min(100), this.endWidthZero(), this.min()]],
-		mp: [this.mpValue, [live2dPriceValidator(), Validators.max(99900), this.endWidthZero(), this.max()]],
+		sp: [this.spValue, [live2dPriceValidator(), Validators.min(10), this.endWidthZero(), this.min()]],
+		mp: [this.mpValue, [live2dPriceValidator(), Validators.max(99990), this.endWidthZero(), this.max()]],
 		de: [-1, [Validators.min(0)]],
 	});
 

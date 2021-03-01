@@ -65,8 +65,8 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 		s: [-1, Validators.min(0)],
 		sd: ['', this.require()],
 		d: [null, [this.needTimeValidator(), Validators.max(999)]],
-		sp: [null, [live2dPriceValidator(), Validators.min(100), this.endWidthZero(), this.min()]],
-		mp: [null, [live2dPriceValidator(), this.max(), Validators.max(99900), this.endWidthZero()]],
+		sp: [null, [live2dPriceValidator(), Validators.min(10), this.endWidthZero(), this.min()]],
+		mp: [null, [live2dPriceValidator(), this.max(), Validators.max(99990), this.endWidthZero()]],
 	});
 
 	detailInfoForm = this.formBuild.group({
