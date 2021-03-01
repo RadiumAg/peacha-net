@@ -8,6 +8,7 @@
 		"nx": "nx",
 		"start": "ng serve",
 		"build": "ng build",
+		"obfuscator": "javascript-obfuscator ./dist -o ./dist --config ./obfuscator.conf.json",
 		"test": "ng test",
 		"lint": "nx workspace-lint && ng lint",
 		"e2e": "ng e2e",
@@ -25,7 +26,8 @@
 		"update": "nx migrate latest",
 		"workspace-generator": "nx workspace-generator",
 		"dep-graph": "nx dep-graph",
-		"help": "nx help"
+		"help": "nx help",
+		"release": "ng build --prod && npm run obfuscator"
 	},
 	"private": true,
 	"dependencies": {
