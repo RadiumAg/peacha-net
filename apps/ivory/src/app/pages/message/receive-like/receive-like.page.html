@@ -1,7 +1,7 @@
 <div class="all">
 	<div class="more" cdkScrollable>
 		<div class="one">
-			<div class="hello" *ngFor="let item of likeList;">
+			<!-- <div class="hello" *ngFor="let item of likeList;">
 				<img class="avatar" [attr.src]="item.public_useravatar" [routerLink]="['/user',item.public_userid]" />
 				<div class="no">
 					<span class="left">
@@ -19,11 +19,12 @@
 						<span class="time">{{item.public_time|date:"yyyy-MM-dd HH:mm"}}</span>
 					</span>
 				</div>
-			</div>
+			</div> -->
+			<ivo-single-card *ngFor="let i of likeList" [item]="i" [style]="1"></ivo-single-card>
 			<ng-container *ngIf="(likeCount$|async)===null">
 				<div class="empty">loading...</div>
 			</ng-container>
-			<ng-container *ngIf="(likeCount$|async)===0 && (page$|async)===0">
+			<ng-container *ngIf="(likeCount$|async)===0">
 				<div class="empty">
 					<ivo-lack-image></ivo-lack-image>
 				</div>

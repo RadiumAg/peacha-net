@@ -30,9 +30,8 @@ export class ThumbnailUploadComponent implements ControlValueAccessor {
 	@ViewChild('c', { read: ElementRef })
 	file: ElementRef;
 	@Input() maxSize = 3145728;
-
+  @Input() withAndHeightSize = 16384;
 	fnOnChange?: (value: any) => void;
-
 	fnOnTouched?: () => void;
 
 	/**
@@ -41,7 +40,6 @@ export class ThumbnailUploadComponent implements ControlValueAccessor {
 	verify = {
 		sizeVerify: (e: InputEvent) => {
 			let size = 0;
-			// tslint:disable-next-line: forin
 			for (const key in (e.target as HTMLInputElement).files) {
 				if (!isNaN(Number(key))) {
 					size += (e.target as HTMLInputElement).files.item(Number(key)).size;
@@ -54,6 +52,15 @@ export class ThumbnailUploadComponent implements ControlValueAccessor {
 			}
 			return true;
 		},
+    withAndHeightSize: (e: File) => {
+      const img = new Image();
+      img.src =  window.URL.createObjectURL(e);
+      if(img.width > this.withAndHeightSize || img.height > this.withAndHeightSize) {
+       this.modal.open(PopTips, ['长宽超过限制']);
+       return false;
+      }
+      return true;
+    }
 	};
 
 	upload(img: Blob) {
@@ -124,7 +131,7 @@ export class ThumbnailUploadComponent implements ControlValueAccessor {
 
 	inputChange(e: InputEvent) {
 		const inputTarget = e.target as HTMLInputElement;
-		if (!this.verify.sizeVerify(e)) {
+		if (!this.verify.sizeVerify(e) || !this.verify.sizeVerify(e)) {
 			this.clearInput(inputTarget);
 			return;
 		}

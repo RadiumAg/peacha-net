@@ -1,0 +1,47 @@
+<div class="all">
+	<div class="main">
+		<div class="block">
+			<h2><img src="/assets/image/coupon/bail.svg" />企划保证金</h2>
+			<li>企划名称：<span>{{commissionName}}</span></li>
+			<li>应付金额：<span class="price">¥{{commissionPrice}}</span></li>
+		</div>
+		<div class="block" *ngIf="coupons.length>0">
+			<h2><img src="/assets/image/coupon/coupon.svg" />优惠券</h2>
+			<div class="show-coupons">
+				<div class="couponlist">
+					<div class="single" *ngFor="let item of coupons" (click)="checked(item.id,item.effect)">
+						<div class="top">
+							<input type="checkbox" [class.isChecked]="checkCouponId===item.id" />
+							<div class="coupon">
+								<span class="name">{{item?.name}}</span>
+								<span class="money">{{item?.description}}</span>
+							</div>
+						</div>
+
+						<p>到期时间：{{item?.expireTime | date:'yyyy-MM-dd'}}</p>
+					</div>
+				</div>
+			</div>
+			<div class="page">
+				<img
+					[attr.src]="currentPage>1?'/assets/image/order/page-left.svg':'/assets/image/order/un-page-left.svg'"
+					(click)="currentPage>1&&pre()"
+					[class.no]="currentPage==1"
+				/>
+				<span *ngFor="let d of dotList;let i=index" [class.active]="currentPage-1===i"></span>
+				<img
+					[attr.src]="currentPage<dotList.length?'/assets/image/order/page-right.svg':'/assets/image/order/un-page-right.svg'"
+					(click)="currentPage<dotList.length&&next()"
+					[class.no]="currentPage==dotList.length"
+				/>
+			</div>
+		</div>
+		<div class="opera">
+			<div class="content">
+				<span>已优惠￥{{freeMoney.toFixed(2)}}</span>
+				<span>实际支付：<a>￥{{finallPrice.toFixed(2)}}</a></span>
+			</div>
+			<button (click)="toPay()">立即支付</button>
+		</div>
+	</div>
+</div>

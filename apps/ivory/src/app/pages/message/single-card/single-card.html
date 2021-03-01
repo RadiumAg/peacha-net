@@ -1,0 +1,21 @@
+<div class="card" [class.style-one]="style===0">
+	<div class="left" *ngIf="detail?.sp?.h" [routerLink]="'/user/'+detail?.sp?.h[0]">
+		<ivo-lazy-img [ngLazyLoad]="avatar" [border]="6"> </ivo-lazy-img>
+	</div>
+	<div class="right" [style.width]="detail?.sp?.h?'calc(100% - 76px)':'100%'">
+		<div class="nickname to-bottom" [routerLink]="'/user/'+detail?.sp?.h[0]" *ngIf="detail?.sp?.h">{{detail?.sp?.h[1]}}</div>
+		<div class="line-one to-bottom">
+			<ng-container *ngFor="let i of detail?.sp?.b[0]">
+				<span [class.link]="i?.l" (click)="toDetail(i.l)">{{i.s}}</span>
+			</ng-container>
+		</div>
+		<div class="line-two to-bottom" *ngIf="detail?.sp?.b[1]">
+			<span *ngFor="let i of detail?.sp?.b[1]" [routerLink]="i?.l">{{i?.s}}{{i?.l}}</span>
+		</div>
+		<div class="line-end">
+			<span class="time">{{item.time | date:'yyyy-MM-dd HH:mm'}}</span>
+			<span class="end" (click)="toDetail(detail?.e?.l)">{{detail?.e?.s}}</span>
+		</div>
+		<div class="line" *ngIf="style===1"></div>
+	</div>
+</div>

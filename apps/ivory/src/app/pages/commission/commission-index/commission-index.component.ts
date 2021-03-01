@@ -145,7 +145,7 @@ export class CommissionIndexComponent implements OnInit {
 		} else if (max == '') {
 			this.priceForm.get('maxPrice').setValue(999999);
 			max = 999999;
-		} else if (max && min && max < min) {
+		} else if (max && min && Number(max) < Number(min)) {
 			this.priceForm.get('minPrice').setValue(max);
 			this.priceForm.get('maxPrice').setValue(min);
 			min = max;
@@ -164,7 +164,7 @@ export class CommissionIndexComponent implements OnInit {
 	}
 
 	isInput(e: any): void {
-		if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 8 || e.keyCode === 13) {
+		if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 8 || e.keyCode === 13 || e.keyCode === 37 || e.keyCode === 39) {
 			console.log(e.keyCode);
 		} else {
 			e.preventDefault();

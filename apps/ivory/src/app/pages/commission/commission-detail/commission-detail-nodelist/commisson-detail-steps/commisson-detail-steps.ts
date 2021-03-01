@@ -638,11 +638,18 @@ export class CommissionDetailSteps implements OnInit {
 				if (is) {
 					this.commissionApi.createOrder(this.detail.getCommissionId()).subscribe(
 						s => {
-							this.router.navigate(['/pay'], {
+							// this.router.navigate(['/pay'], {
+							// 	queryParams: {
+							// 		tradeId: s.payId,
+							// 	},
+							// 	queryParamsHandling: 'merge',
+							// });
+							this.router.navigate(['/order/commission-order'], {
 								queryParams: {
-									tradeId: s.payId,
-								},
-								queryParamsHandling: 'merge',
+									orderId: s.orderId,
+									cid: this.detail.getCommissionId(),
+									p: 1
+								}
 							});
 						},
 						e => {

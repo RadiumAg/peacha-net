@@ -1,0 +1,15 @@
+<div class="all">
+	<div class="more" cdkScrollable>
+		<div class="one">
+			<ng-container *ngIf="(bulletinCount$|async)===null">
+				<div class="empty">loading...</div>
+			</ng-container>
+			<ng-container *ngIf="(bulletinCount$|async)===0">
+				<div class="empty">
+					<ivo-lack-image></ivo-lack-image>
+				</div>
+			</ng-container>
+			<ivo-single-card *ngFor="let i of bulletinList;let index;trackBy:trackByIndex" [item]="i" [style]="0"></ivo-single-card>
+		</div>
+	</div>
+</div>

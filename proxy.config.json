@@ -1,4 +1,7 @@
 {
+	"/link/": {
+		"target": "http://47.99.94.159:8400"
+	},
 	"/api/v1/commission": {
 		"target": "http://47.99.94.159:8601"
 	},
@@ -7,6 +10,16 @@
 	},
 	"/api/v1/chat/": {
 		"target": "http://47.99.94.159:18100",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"/api/v1/notice/": {
+		"target": "http://8.136.185.126:8900",
+		"secure": false,
+		"changeOrigin": true
+	},
+	"/api/v1/shopmall/": {
+		"target": "http://8.136.185.126:8602",
 		"secure": false,
 		"changeOrigin": true
 	},

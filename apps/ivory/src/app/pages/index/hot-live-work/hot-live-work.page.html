@@ -6,13 +6,13 @@
 	</li>
 	<ng-container>
 		<div class="works">
-			<ng-container *ngFor="let work of hotLiveWorkList">
+			<ng-container *ngFor="let work of loadedItems$ | async">
 				<ivo-work-card [work]="work"></ivo-work-card>
 			</ng-container>
 		</div>
 		<ng-container *ngIf="count==0">
 			<ivo-lack-image></ivo-lack-image>
 		</ng-container>
-		<button *ngIf="hotLiveWorkList.length < count">下拉加载更多</button>
+		<button *ngIf="cache.length < count">下拉加载更多</button>
 	</ng-container>
 </div>

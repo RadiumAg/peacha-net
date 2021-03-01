@@ -1,20 +1,15 @@
 <div class="all">
 	<div class="more" cdkScrollable>
 		<div class="one">
-			<ng-container *ngrxLet="useravatar$;let useravatar">
-				<li *ngFor="let item of replyList">
-					<ivo-subreply [item]="item" [avatar]="useravatar"></ivo-subreply>
-					<div class="line"></div>
-				</li>
-			</ng-container>
 			<ng-container *ngIf="(replyCount$|async)===null">
 				<div class="empty">loading...</div>
 			</ng-container>
-			<ng-container *ngIf="(replyCount$|async)===0 && (pageOne$|async)===0">
+			<ng-container *ngIf="(replyCount$|async)===0">
 				<div class="empty">
 					<ivo-lack-image></ivo-lack-image>
 				</div>
 			</ng-container>
+			<ivo-single-card *ngFor="let i of replyList" [item]="i" [style]="1"></ivo-single-card>
 		</div>
 	</div>
 </div>

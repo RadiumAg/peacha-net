@@ -13,7 +13,7 @@
 				<span class="one">
 					<span class="name">类型</span>
 					<span>
-						<ng-container [ngSwitch]="item.type">
+						<ng-container [ngSwitch]="item.goods.category.id">
 							<ng-container *ngSwitchCase="21"> 支付保证金 </ng-container>
 							<ng-container *ngSwitchCase="22"> 企划退款 </ng-container>
 							<ng-container *ngSwitchCase="23"> 支付增加的稿酬 </ng-container>
@@ -21,18 +21,22 @@
 					</span>
 				</span>
 				<span class="one">
-					<span class="name" [ngSwitch]="item.type">
+					<span class="name" [ngSwitch]="item.goods.category.id">
 						<ng-container *ngSwitchCase="22">退款金额</ng-container>
 						<ng-container *ngSwitchDefault>支付金额</ng-container>
 					</span>
 					<span>￥{{item.amount}}</span>
 				</span>
-				<span class="one" *ngIf="item.type===22">
+				<!-- <span class="one" *ngIf="item.goods.category.id==22">
 					<span class="name">退款稿酬比例</span>
 					<span>{{((item.amount/commissionFinalprice)*100).toFixed(0)}}%</span>
+				</span> -->
+				<span class="one" *ngIf="item.discountAmount>0 && identity===1">
+					<span class="name">已优惠金额</span>
+					<span>￥{{item.discountAmount}}</span>
 				</span>
 				<span class="one">
-					<span class="name" [ngSwitch]="item.type">
+					<span class="name" [ngSwitch]="item.goods.category.id">
 						<ng-container *ngSwitchCase="20">收入时间</ng-container>
 						<ng-container *ngSwitchCase="22">退款时间</ng-container>
 						<ng-container *ngSwitchDefault>支付时间</ng-container>
@@ -43,11 +47,11 @@
 					<span class="name">订单号</span>
 					<span>{{item.id}}</span>
 				</span>
-				<span class="one" *ngIf="item.type!=22">
+				<span class="one" *ngIf="item.goods.category.id!=22">
 					<span class="name">交易号</span>
 					<span>{{item.payId}}</span>
 				</span>
-				<ng-container *ngIf="item.type===22">
+				<ng-container *ngIf="item.goods.category.id==22">
 					<span class="one">
 						<span class="name">退款渠道</span>
 						<span>{{item.channel}}</span>
@@ -142,21 +146,21 @@
 			</li>
 			<div class="cut"></div>
 			<li>
-				<span class="line"> 预计稿酬： </span>
+				<span class="line"> 实际支付稿酬： </span>
 				<span class="line">
-					<span>￥{{commissionFinalprice}}</span>
+					<span>￥{{actualPayment}}</span>
 				</span>
 			</li>
 			<ng-container *ngFor="let d of detailList">
 				<li>
 					<span class="line" [ngSwitch]="d?.rateType">
 						<ng-container *ngSwitchCase="1">
-							画师超时{{stopTime}}天所需支付稿酬(预计稿酬{{100-d.expectRate*100}}%)：
+							画师超时{{stopTime}}天所需支付稿酬(实际支付稿酬{{100-d.expectRate*100}}%)：
 						</ng-container>
-						<ng-container *ngSwitchCase="2"> 中止企划所需支付稿酬(预计稿酬{{100-d.expectRate*100}}%)： </ng-container>
+						<ng-container *ngSwitchCase="2"> 中止企划所需支付稿酬(实际支付稿酬{{100-d.expectRate*100}}%)： </ng-container>
 					</span>
 					<span class="line">
-						<span>-￥{{commissionFinalprice-d.amount}}</span>
+						<span>-￥{{(actualPayment * (1-d.expectRate)).toFixed(2)}}</span>
 					</span>
 				</li>
 			</ng-container>

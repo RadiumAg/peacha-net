@@ -1,17 +1,17 @@
 <div class="all" *ngrxLet="state$;let state">
-	<ng-container *ngrxLet="one$;let one">
+	<ng-container *ngrxLet="allTip$;let allTip">
 		<div class="hello">
 			<p>信息提醒</p>
 			<!-- <input type="radio" name="one" value="true" id="a" (click)="open(1)" ><label
                 for="a">打开</label>
             <input type="radio" name="one" value="false" id="b" (click)="open(2)" ><label
                 for="b">关闭</label> -->
-			<nz-radio-group class="ol" [ngModel]="one?'1':'2'">
+			<nz-radio-group class="ol" [ngModel]="allTip?'1':'2'">
 				<label nz-radio nzValue="1" (click)="open(1)">打开</label>
 				<label nz-radio nzValue="2" (click)="open(2)">关闭</label>
 			</nz-radio-group>
 		</div>
-		<div class="hello" *ngIf="one">
+		<div class="hello" *ngIf="allTip">
 			<!-- <p>我的消息提醒</p>
             <ng-container *ngrxLet="two$;let two">
                 <nz-radio-group class="ol" [ngModel]="two?'3':'4'">
@@ -20,34 +20,34 @@
                 </nz-radio-group>
             </ng-container> -->
 			<p>回复我的提醒</p>
-			<ng-container *ngrxLet="three$;let three">
+			<ng-container *ngrxLet="replyTip$;let replyTip">
 				<!-- <input type="radio" name="three" value="true" id="e" (click)="open(5)" [checked]="three"><label
                     for="e">打开</label>
                 <input type="radio" name="three" value="false" id="f" (click)="open(6)" [checked]="!three"><label
                     for="f">关闭</label> -->
-				<nz-radio-group class="ol" [ngModel]="three?'5':'6'">
+				<nz-radio-group class="ol" [ngModel]="replyTip?'5':'6'">
 					<label nz-radio nzValue="5" (click)="open(5)">打开</label>
 					<label nz-radio nzValue="6" (click)="open(6)">关闭</label>
 				</nz-radio-group>
 			</ng-container>
 			<p>收到的赞提醒</p>
-			<ng-container *ngrxLet="four$;let four">
+			<ng-container *ngrxLet="likeTip$;let likeTip">
 				<!-- <input type="radio" name="four" value="true" id="g" (click)="open(7)" [checked]="four"><label
                     for="g">打开</label>
                 <input type="radio" name="four" value="false" id="h" (click)="open(8)" [checked]="!four"><label
                     for="h">关闭</label> -->
-				<nz-radio-group class="ol" [ngModel]="four?'7':'8'">
+				<nz-radio-group class="ol" [ngModel]="likeTip?'7':'8'">
 					<label nz-radio nzValue="7" (click)="open(7)">打开</label>
 					<label nz-radio nzValue="8" (click)="open(8)">关闭</label>
 				</nz-radio-group>
 			</ng-container>
 			<p>系统通知提醒</p>
-			<ng-container *ngrxLet="five$;let five">
+			<ng-container *ngrxLet="systemTip$;let systemTip">
 				<!-- <input type="radio" name="five" value="true" id="i" (click)="open(9)" [checked]="five"><label
                     for="i">打开</label>
                 <input type="radio" name="five" value="false" id="j" (click)="open(10)" [checked]="!five"><label
                     for="j">关闭</label> -->
-				<nz-radio-group class="ol" [ngModel]="one?'9':'10'">
+				<nz-radio-group class="ol" [ngModel]="systemTip?'9':'10'">
 					<label nz-radio nzValue="9" (click)="open(9)">打开</label>
 					<label nz-radio nzValue="10" (click)="open(10)">关闭</label>
 				</nz-radio-group>

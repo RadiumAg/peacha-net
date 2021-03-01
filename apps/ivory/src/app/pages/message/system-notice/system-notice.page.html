@@ -1,7 +1,7 @@
 <div class="all">
 	<div class="more" cdkScrollable>
 		<div class="one">
-			<div class="hello" *ngFor="let item of noticeList;let index;trackBy:trackByIndex">
+			<!-- <div class="hello" *ngFor="let item of noticeList;let index;trackBy:trackByIndex">
 				<div class="top">
 					<span class="own">{{item?.one}}</span>
 					<a [routerLink]="[item?.catenationOne]">{{item?.two}}</a>
@@ -21,15 +21,16 @@
 						<span class="detail" [routerLink]="[item?.catenationTwo]" [queryParams]="{jk:1}">{{item?.four}}</span>
 					</ng-template>
 				</div>
-			</div>
+			</div> -->
 			<ng-container *ngIf="(noticeCount$|async)===null">
 				<div class="empty">loading...</div>
 			</ng-container>
-			<ng-container *ngIf="(noticeCount$|async)===0 && (page$|async)===0">
+			<ng-container *ngIf="(noticeCount$|async)===0">
 				<div class="empty">
 					<ivo-lack-image></ivo-lack-image>
 				</div>
 			</ng-container>
+			<ivo-single-card *ngFor="let i of noticeList;let index;trackBy:trackByIndex" [item]="i" [style]="0"></ivo-single-card>
 		</div>
 	</div>
 </div>

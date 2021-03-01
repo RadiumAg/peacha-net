@@ -1,8 +1,8 @@
-import { Component, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject, EMPTY } from 'rxjs';
-import { tap, take, switchMap } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import { tap, filter, mergeMap, map, startWith } from 'rxjs/operators';
 
 type HotWork = {
 	count: number;
@@ -25,61 +25,38 @@ type HotWork = {
 	styleUrls: ['../reuse.less'],
 })
 export class HotLiveWorkPage {
-	pageLiveWork$ = new BehaviorSubject<number>(1);
-	hotLiveWorkList: Array<any> = [];
-	count: number;
-
-	/**热门Live2D作品 */
-	hotLiveWork$ = this.pageLiveWork$.pipe(
-		take(1),
-		switchMap(p => {
-			return this.http.get<HotWork>(`/work/hot_work?p=${p}&s=20&c=0`).pipe(
-				tap(s => {
-					this.count = s.count;
-					s.list.map(l => {
-						this.hotLiveWorkList.push(l);
-					});
-					this.cdr.detectChanges();
-				})
-			);
-		})
-	).subscribe()
+	count = 0;
+	cache = [];
+	private page = 1;
+	loading = false;
 
 	constructor(private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) { }
 
-	@HostListener('window:scroll', ['$event']) public scrolled($event: Event) {
-		/**
-		 * 修复高分屏下拉滚动无效
-		 * by kinori
-		 * 2020/11/9
-		 */
+	private loadByScroll$ = fromEvent(window, 'scroll').pipe(
+		filter(() => {
+			return (
+				window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight * 0.8 &&
+				(this.count === 0 || this.count > this.cache.length)
+			);
+		}),
+		filter(() => !this.loading) // 防止加载过程中滚动事件触发多次加载
+	);
 
-		if (document.documentElement.scrollHeight - document.documentElement.scrollTop == document.documentElement.clientHeight) {
-			this.pageLiveWork$
-				.pipe(
-					take(1),
-					switchMap((p) => {
-						if (this.count > this.hotLiveWorkList.length) {
-							return this.http.get<HotWork>(`/work/hot_work?p=${p}&s=20&c=0`).pipe(
-								tap(l => {
-									l.list.map(a => {
-										this.hotLiveWorkList.push(a);
-									});
-									this.pageLiveWork$.next(p + 1);
-									this.cdr.detectChanges();
-								})
-							);
-						}
-						return EMPTY;
-					})
-				)
-				.subscribe();
-		}
-	}
-
-	// @HostListener('click') click() {
-	// 	console.log('哈哈哈哈')
-	// }
+	loadedItems$ = this.loadByScroll$.pipe(
+		startWith(1), //页面首次加载触发
+		mergeMap(() => {
+			this.loading = true;
+			return this.http.get<HotWork>(`/work/hot_work?p=${this.page - 1}&s=20&c=0`).pipe(
+				tap(res => {
+					this.count = res.count;
+					this.cache = [...this.cache, ...res.list];
+					this.page++;
+					this.loading = false;
+				}),
+				map(() => this.cache)
+			);
+		})
+	);
 
 	toWork(id: number, c: number) {
 		if (c == 1) {

@@ -10,7 +10,6 @@ import { CreatedPage } from './created/created.page';
 import { CollectionIntroducePage } from './collection-introduce/collection-introduce.page';
 import { SubscribedPage } from './subscribed/subscribed.page';
 import { WorksPage } from './works/works.page';
-import { ChangeRepresentComponent } from './homepage/change-represent/change-represent.component';
 import { Complain } from './collection-introduce/complain/complain';
 import { DeleteTip } from './collection-introduce/delete-tip/delete-tip';
 import { NewCollection } from './created/new-collection/new-collection';
@@ -22,6 +21,7 @@ import { ReactiveComponentModule, WorkApiService } from '@peacha-core';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { PeachaComponentsModule } from '@peacha-core/components';
 import { FollowModule } from '@peacha-core/feature';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
 	declarations: [
@@ -35,7 +35,6 @@ import { FollowModule } from '@peacha-core/feature';
 		CollectionIntroducePage,
 		SubscribedPage,
 		WorksPage,
-		ChangeRepresentComponent,
 		Complain,
 		DeleteTip,
 		NewCollection
@@ -44,6 +43,7 @@ import { FollowModule } from '@peacha-core/feature';
 		CommonModule,
 		ReactiveFormsModule,
 		PeachaComponentsModule,
+		ScrollingModule,
 		RouterModule.forChild([
 			{
 				path: ':id',

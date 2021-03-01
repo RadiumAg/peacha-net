@@ -1,12 +1,12 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { CommissionApiService } from './../../service/commission-api.service';
-import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { map, tap, debounceTime } from 'rxjs/operators';
-import { fromEvent } from 'rxjs';
-import { isEmptyInputValue, live2dPriceValidator, ModalService, validator, ZoomService } from '@peacha-core';
-import { IllustZoomModalComponent } from '../../../work/illust-zoom-modal/illust-zoom-modal.component';
+import { AfterViewInit,Component,ElementRef,OnInit,ViewChild } from '@angular/core';
+import { AbstractControl,FormBuilder,ValidatorFn,Validators } from '@angular/forms';
+import { ActivatedRoute,Router } from '@angular/router';
+import { isEmptyInputValue,live2dPriceValidator,ModalService,validator,ZoomService } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
+import { fromEvent } from 'rxjs';
+import { debounceTime,map,tap } from 'rxjs/operators';
+import { IllustZoomModalComponent } from '../../../work/illust-zoom-modal/illust-zoom-modal.component';
+import { CommissionApiService } from './../../service/commission-api.service';
 
 @Component({
 	templateUrl: './commission-publish-live2d.component.html',
@@ -88,7 +88,7 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 			if (control.value == null) {
 				return null;
 			}
-			const flag = control.value.toString().endsWith('00');
+			const flag = control.value.toString().endsWith('0');
 			if (flag) {
 				return null;
 			}

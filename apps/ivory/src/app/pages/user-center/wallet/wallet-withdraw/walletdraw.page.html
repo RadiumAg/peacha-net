@@ -12,13 +12,13 @@
 		<span>提现订单号：{{cashout.orderId}}</span>
 	</li>
 	<li>
-		<span>提现发起时间：{{cashout.startTime|date:"yyyy-MM-dd hh:mm:ss"}}</span>
+		<span>提现发起时间：{{cashout.startTime|date:"yyyy-MM-dd HH:mm:ss"}}</span>
 		<span>提现渠道：{{cashout.channel}}</span>
 	</li>
 	<div>
 		<div>
-			<li *ngIf="cashout.status=='提现失败'">提现失败时间：{{cashout.endTime}}</li>
-			<li *ngIf="cashout.status=='提现成功'">提现成功时间：{{cashout.endTime}}</li>
+			<li *ngIf="cashout.status=='提现失败'">提现失败时间：{{cashout.endTime |date:'yyyy-MM-dd HH:mm:ss'}}</li>
+			<li *ngIf="cashout.status=='提现成功'">提现成功时间：{{cashout.endTime |date:'yyyy-MM-dd HH:mm:ss'}}</li>
 			<li *ngIf="cashout.status=='提现失败'">提现失败原因：{{cashout.error}}</li>
 		</div>
 		<div class="right">

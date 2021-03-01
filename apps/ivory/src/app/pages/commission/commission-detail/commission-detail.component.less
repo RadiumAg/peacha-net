@@ -178,6 +178,31 @@
 					margin-right: 5px;
 					margin-top: -3px;
 				}
+
+				& > .stop {
+					font-size: 12px;
+					font-weight: normal;
+					margin-top: 10px;
+					display: flex;
+					justify-content: center;
+					& > img {
+						cursor: pointer;
+						margin-left: 5px;
+					}
+				}
+				& > .explanation {
+					width: 247px;
+					height: 120px;
+					background-image: url(/assets/image/commission/explanation.svg);
+					background-repeat: no-repeat;
+					margin: 0 auto;
+					font-size: 12px;
+					font-weight: normal;
+					color: #333333;
+					padding: 25px 20px;
+					text-align: left;
+					display: none;
+				}
 			}
 
 			& > .big {
@@ -313,4 +338,9 @@
 			}
 		}
 	}
+}
+
+.show-explanation {
+	display: block !important;
+	transition: all ease 0.4s;
 }

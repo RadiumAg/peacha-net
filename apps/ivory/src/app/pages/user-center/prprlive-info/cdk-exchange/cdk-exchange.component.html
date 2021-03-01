@@ -1,0 +1,47 @@
+<header>
+  <div class="title">
+    <span>
+      {{"cdk_exchange.input" | translate}}
+    </span>
+    <span routerLink="../" class="go-back">
+      {{"common.go_back" | translate}}>
+    </span>
+  </div>
+  <div class="opera">
+    <input type="text" #cdk_code />
+    <span>
+      <nz-spin [hidden]="!buttonDisabled" nzSimple [nzIndicator]="indicatorTemplate"></nz-spin>
+      <input type="button" [disabled]="buttonDisabled" ivo-button [value]="'cdk_exchange.change' | translate"
+        (click)="exChange(cdk_code.value)" />
+    </span>
+    <span class="errorDescription">{{ errorDescription$ | async}}</span>
+  </div>
+</header>
+<ng-container *ngrxLet="exchangeData$;let exchangeData">
+  <div class="content">
+    <div class="title">{{"cdk_exchange.cdk_exchange_record" | translate}}</div>
+    <div class="table">
+      <div>
+        <div>
+          <div>CDK</div>
+          <div>{{"cdk_exchange.exchange_duration" | translate}}</div>
+          <div>{{"cdk_exchange.exchange_time" | translate}}</div>
+        </div>
+        <ng-container *ngFor="let item of exchangeData.list">
+          <div>
+            <div>{{item.code}}</div>
+            <div>{{(item.second)| timeFormat}}</div>
+            <div>{{item.createtime | date:"yyyy-MM-dd HH:mm:ss"}}</div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <footer *ngIf="exchangeData.count>9">
+    <ivo-page [total]="exchangeData.count" [currentPage]='page$ | async' [pageSize]="pageSize.toString()"
+      (onPageChange)="page$.next($event)">
+    </ivo-page>
+  </footer>
+</ng-container>
+
+<ng-template #indicatorTemplate><i nz-icon nzType="loading"></i></ng-template>

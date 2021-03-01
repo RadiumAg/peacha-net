@@ -6,7 +6,6 @@ import { ReceiveReplyPage } from './receive-reply/receive-reply.page';
 import { ReceiveLikePage } from './receive-like/receive-like.page';
 import { SystemNoticePage } from './system-notice/system-notice.page';
 import { SystemInstallPage } from './system-install/system-install.page';
-import { Subreply } from './receive-reply/subreply/subreply';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { CustomerServicePage } from './customer-service/customer-service.page';
@@ -17,6 +16,9 @@ import { ChatResolve } from './chat/chat.resolve';
 import { MessageResolve } from './message.guard';
 import { ReactiveComponentModule } from '@peacha-core';
 import { PeachaComponentsModule } from '@peacha-core/components';
+import { MessageApiService } from './message-api.service';
+import { SingleCard } from './single-card/single-card';
+import { BulletinPage } from './bulletin/bulletin.page';
 
 @NgModule({
 	declarations: [
@@ -26,9 +28,10 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 		ReceiveLikePage,
 		SystemNoticePage,
 		SystemInstallPage,
-		Subreply,
 		CustomerServicePage,
 		BlacklistPage,
+		SingleCard,
+		BulletinPage
 	],
 	imports: [
 		CommonModule,
@@ -74,11 +77,15 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 						path: 'blacklist',
 						component: BlacklistPage,
 					},
+					{
+						path: 'bulletin',
+						component: BulletinPage
+					}
 				],
 			},
 		]),
 		ReactiveComponentModule,
 	],
-	providers: [ChatResolve, MessageResolve],
+	providers: [ChatResolve, MessageResolve, MessageApiService],
 })
 export class MessageModule { }
