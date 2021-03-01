@@ -1,0 +1,56 @@
+<div class="user-linkage-time">
+  <div class="time">
+    <div class="left" *ngrxLet="info$;let info">
+      <ng-container *ngIf="info.expiry; else elseTemplate">
+        <span class="title">{{"linkageTime.linkage_duration" | translate}}
+          {{"linkageTime.time_surplus"  | translate}}:{{info.surplusSecond}}</span>
+        <span class="content">{{"linkageTime.limited_time_free"  | translate}} -
+          {{info.expiry|date:"yyyy-MM-dd HH:mm"}}</span>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <span class="title">
+          <span>{{"linkageTime.linkage_duration"  | translate}}</span>
+          <span class="title-help ivo-icon-question">
+            <span class="title-help-tips">Prprlive联动时长用于Prprlive虚拟形象直
+              播软件中，可实现多模型同框实时联动，享
+              受与同伴一起直播的乐趣。</span>
+          </span>
+        </span>
+        <span class="content">{{info.online?info.maxTime:info.surplusSecond}}</span>
+        <span class="description">{{"linkageTime.description" | translate}} :
+          {{getEstimatedTime(info.max_time,info.surplus_second,info.online)}}</span>
+      </ng-template>
+
+    </div>
+    <div class="right">
+      <button routerLink="cdk_exchange" class="recharge-record">{{"linkageTime.cdk_exchange"  | translate}}</button>
+      <button routerLink="order" class="recharge-record">{{"linkageTime.recharge_record"  | translate}}</button>
+      <button routerLink="recharge" class="recharge">{{"linkageTime.recharge"  | translate}}</button>
+    </div>
+  </div>
+  <div class="record" *ngrxLet="log$;let logs">
+    <span class="title">{{"linkageTime.linkage_usage_record"  | translate}}</span>
+    <div class="list">
+      <div class="head">
+        <span>{{"linkageTime.start_time"  | translate}}</span>
+        <span>{{"linkageTime.end_time"  | translate}}</span>
+        <span>{{"linkageTime.duration_time"  | translate}}</span>
+        <span>{{"linkageTime.number_of_rooms"  | translate}}</span>
+        <span>{{"linkageTime.deduction_duration"  | translate}}</span>
+      </div>
+      <div class="content">
+        <div class="item" *ngFor="let log of logs.list">
+          <div>{{log.starttime|date:"yyyy-MM-dd HH:mm:ss"}}</div>
+          <div>{{log.endtime|date:"yyyy-MM-dd HH:mm:ss"}}</div>
+          <div>{{log.second | timeFormat}}</div>
+          <div>{{log.number}}{{"linkageTime.number_of_room" | translate}}</div>
+          <div>{{log.second * log.magnification | timeFormat}}</div>
+        </div>
+      </div>
+      <div class="page" *ngIf="logs.count>10">
+        <ivo-page *ngrxLet="page$;let page" [currentPage]="page" [total]="logs.count" [pageSize]="10"
+          (onPageChange)="page$.next($event)"></ivo-page>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="main">
+	<ng-container *ngrxLet="coupons$;let coupons">
+		<div class="single" *ngFor="let item of coupons?.list">
+			<div class="left">
+				<span class="name">{{item?.name}}</span>
+				<span class="money">{{item?.description}}</span>
+			</div>
+			<div class="right">
+				<span>获取时间：{{item?.createTime | date:'yyyy-MM-dd'}}</span>
+				<span>到期时间：{{item?.expireTime | date:'yyyy-MM-dd'}}</span>
+			</div>
+		</div>
+		<div class="load" *ngIf="coupons.count===null">loading...</div>
+		<div class="lack" *ngIf="coupons.count===0">
+			<ivo-lack-image></ivo-lack-image>
+		</div>
+		<div class="page" *ngIf="coupons.count>4">
+			<ivo-pagination [total]="coupons.count" [pageSize]="4" [currentPage]="(page$|async)" (onPageChange)="page($event)">
+			</ivo-pagination>
+		</div>
+	</ng-container>
+</div>

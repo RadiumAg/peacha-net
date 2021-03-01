@@ -2,6 +2,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { environment } from '../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 declare let gtag: (
 	eventName: string,
@@ -20,7 +21,7 @@ declare let gtag: (
 export class AppComponent implements OnInit {
 	title = 'ivory';
 
-	constructor(public router: Router) {
+	constructor(public router: Router,private translateService: TranslateService) {
 		if (environment.production) {
 			this.router.events.subscribe(event => {
 				if (event instanceof NavigationEnd) {
@@ -33,6 +34,10 @@ export class AppComponent implements OnInit {
 	}
 
 	ngOnInit() {
+    this.translateService.addLangs(['zh', 'en', 'ja']);
+    this.translateService.setDefaultLang('zh');
+    const browserLang = this.translateService.getBrowserLang();
+    this.translateService.use(browserLang.match(/zh|en|ja/) ? browserLang : 'zh');
 		window.onpopstate = (ev: PopStateEvent) => {
 			ev.cancelBubble = true;
 			ev.preventDefault();

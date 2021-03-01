@@ -3,15 +3,15 @@
 		热门插画作品
 		<span>大佬们的插画都在这里！</span>
 	</li>
-	<ng-container *ngrxLet="hotOriginalWork$;let hotOriginalWork">
+	<ng-container *ngrxLet="loadedItems$;let loadedItems">
 		<div class="works">
-			<ng-container *ngFor="let work of hotOriginalWorkList">
+			<ng-container *ngFor="let work of loadedItems">
 				<ivo-work-card [work]="work"></ivo-work-card>
 			</ng-container>
 		</div>
-		<ng-container *ngIf="hotOriginalWork.count==0">
+		<ng-container *ngIf="count==0">
 			<ivo-lack-image></ivo-lack-image>
 		</ng-container>
-		<button *ngIf="hotOriginalWorkList.length < hotOriginalWork.count">下拉加载更多</button>
+		<button *ngIf="cache.length < count">下拉加载更多</button>
 	</ng-container>
 </div>

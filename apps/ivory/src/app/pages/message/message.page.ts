@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Select } from '@ngxs/store';
-import { UserState, CustomerService } from '@peacha-core';
+import { UserState, CustomerService, MessageUnreadCountService } from '@peacha-core';
 import { ChatState } from '@peacha-core/state';
 import { Observable, BehaviorSubject } from 'rxjs';
+
 
 @Component({
 	selector: 'ivo-message',
@@ -22,28 +22,32 @@ export class MessagePage {
 	chatUnread$: BehaviorSubject<number>;
 
 	unread$ = new BehaviorSubject(this.customer.unreadCounnt);
-	notice$ = new BehaviorSubject(0);
-	star$ = new BehaviorSubject(0);
-	forum$ = new BehaviorSubject(0);
-	follow$ = new BehaviorSubject(0);
+	notice$ = this.msgCount.systemCount$;
+	star$ = this.msgCount.likeCount$;
+	forum$ = this.msgCount.replyCount$;
+	bulletin$ = this.msgCount.bulletinCount$;
 	cooperation$ = new BehaviorSubject(0);
-	constructor(private http: HttpClient, private customer: CustomerService) {
-		this.http
-			.get<{
-				newest: number;
-				notice: number;
-				star: number;
-				forum: number;
-				follow: number;
-				cooperation: number;
-			}>('/news/count')
-			.subscribe(s => {
-				this.notice$.next(s.notice);
-				this.star$.next(s.star);
-				this.forum$.next(s.forum);
-				this.follow$.next(s.follow);
-				this.cooperation$.next(s.cooperation);
-			});
+	constructor(private customer: CustomerService, private msgCount: MessageUnreadCountService) {
+		// this.http
+		// 	.get<{
+		// 		newest: number;
+		// 		notice: number;
+		// 		star: number;
+		// 		forum: number;
+		// 		follow: number;
+		// 		cooperation: number;
+		// 	}>('/news/count')
+		// 	.subscribe(s => {
+		// 	});
+		// this.msgApi.getUnreadCount(['peacha0', 'peacha1', 'peacha2'])
+		// 	.subscribe(s => {
+		// 		if (s.list.length > 0) {
+		// 			this.notice$.next(s.list.filter(l => l.platform === 'peacha2')[0]?.count)
+		// 			this.star$.next(s.list.filter(l => l.platform === 'peacha1')[0]?.count);
+		// 			this.forum$.next(s.list.filter(l => l.platform === 'peacha0')[0]?.count);
+		// 		}
+
+		// 	});
 	}
 
 	toMO(): void {

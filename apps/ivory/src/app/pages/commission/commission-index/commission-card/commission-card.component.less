@@ -10,6 +10,7 @@
 		cursor: pointer;
 		display: flex;
 		flex-direction: column;
+		transition: all ease 0.4s;
 
 		& > .decoration {
 			position: absolute;
@@ -83,5 +84,10 @@
 			white-space: nowrap;
 			text-overflow: ellipsis;
 		}
+	}
+
+	& > .card:hover {
+		transform: scale(1.02);
+		transition: all ease 0.4s;
 	}
 }

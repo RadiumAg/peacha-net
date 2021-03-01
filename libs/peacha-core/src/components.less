@@ -1,50 +1,13 @@
-@step-border: 1px solid #e6e6e6;
-@step-color: #999999;
-@pageCount-active-border: #fa89af;
-@pageCount-active-color: #fa89af;
-@theme-color: rgb(255, 99, 152);
-@margin-width: 20px;
-@margin-top-width: 30px;
-@margin-bottom-width: 30px;
-@font-color1: #666666;
-@font-color2: #999999;
-@font-color3: #ffffff;
-@grey-color1: #fafafa;
-@grey-color2: #d5d5d5;
-@grey-color3: #c5c5c5;
-@grey-color4: #f6f6f6;
-@grey-color5: #ebebeb;
-@grey-color-background: #f2f2f2;
-@black-color1: #000;
-@white-color1: #ffffff;
-@background-red-color1: #ffe4ed;
-@border-red-color1: #ff6398;
-@background-grey-color1: #f6f6f6;
-@background-white-color1: #ffffff;
-@prefix: ~'ivo-icon';
+@import './icons.less';
+@import './colors.less';
 
 button,
 input[type='button'] {
-	border: none;
-	outline: none;
+  border: none;
+  outline: none;
 }
 
 input[type='button']:disabled,
 button:disabled {
-	filter: grayscale(100%);
-}
-
-.@{prefix} {
-	&-delete {
-		&:after {
-			content: '';
-			width: 26px;
-			height: 26px;
-			display: inline-block;
-			background-image: url(/assets/image/icons/01.png);
-			background-repeat: no-repeat;
-			left: 0;
-			top: 0;
-		}
-	}
+  filter: grayscale(100%);
 }

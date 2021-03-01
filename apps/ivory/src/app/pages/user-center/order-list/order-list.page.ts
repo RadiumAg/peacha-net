@@ -134,7 +134,7 @@ export class OrderListPage {
 	}
 
 	skipdetail(orderid: number) {
-		this.router.navigate(['/setting/order', orderid]);
+		this.router.navigate(['/setting/buy-order', orderid]);
 	}
 
 	toPay(id: number, event: Event) {

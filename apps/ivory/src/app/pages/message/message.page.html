@@ -13,35 +13,46 @@
 						</span>
 					</ng-container>
 				</span>
-				<span class="aaa" [routerLink]="['reply']" routerLinkActive="active" (click)="toMO()">
+				<span class="aaa" [routerLink]="['reply']" routerLinkActive="active">
 					<span class="back"></span>
 					<span class="font">回复我的</span>
 					<ng-container *ngrxLet="forum$;let forum">
 						<span class="num">
-							<a *ngIf="forum">
+							<a *ngIf="forum>0">
 								<ng-container *ngIf="forum<100;else more"> {{forum}} </ng-container>
 							</a>
 						</span>
 					</ng-container>
 				</span>
-				<span class="aaa" [routerLink]="['likeme']" routerLinkActive="active" (click)="toMT()">
+				<span class="aaa" [routerLink]="['likeme']" routerLinkActive="active">
 					<span class="back"></span>
 					<span class="font">收到的赞</span>
 					<ng-container *ngrxLet="star$;let star">
 						<span class="num">
-							<a *ngIf="star">
+							<a *ngIf="star>0">
 								<ng-container *ngIf="star<100;else more"> {{star}} </ng-container>
 							</a>
 						</span>
 					</ng-container>
 				</span>
-				<span class="aaa" [routerLink]="['system']" routerLinkActive="active" (click)="toMTr()">
+				<span class="aaa" [routerLink]="['system']" routerLinkActive="active">
 					<span class="back"></span>
 					<span class="font">系统通知</span>
 					<ng-container *ngrxLet="notice$;let notice">
 						<span class="num">
-							<a *ngIf="notice">
+							<a *ngIf="notice>0">
 								<ng-container *ngIf="notice<100;else more"> {{notice}} </ng-container>
+							</a>
+						</span>
+					</ng-container>
+				</span>
+				<span class="aaa" [routerLink]="['bulletin']" routerLinkActive="active">
+					<span class="back"></span>
+					<span class="font">系统公告</span>
+					<ng-container *ngrxLet="bulletin$;let bulletin">
+						<span class="num">
+							<a *ngIf="bulletin>0">
+								<ng-container *ngIf="bulletin<100;else more"> {{bulletin}} </ng-container>
 							</a>
 						</span>
 					</ng-container>

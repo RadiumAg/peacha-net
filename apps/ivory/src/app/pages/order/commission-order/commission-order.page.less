@@ -1,0 +1,197 @@
+.all {
+	width: 100%;
+	height: 100%;
+	background-color: #f7f7f7;
+	padding-top: 30px;
+
+	& > .main {
+		width: 1200px;
+		margin: 0 auto;
+		padding: 30px;
+		background-color: #ffffff;
+		border-radius: 4px;
+		& > .block {
+			margin-bottom: 30px;
+			padding-bottom: 30px;
+			border-bottom: 1px solid #e6e6e6;
+			& > h2 {
+				font-size: 20px;
+				font-weight: bold;
+				color: #333333;
+				display: flex;
+
+				& > img {
+					margin-right: 10px;
+				}
+			}
+			& > li {
+				margin-top: 30px;
+				font-size: 16px;
+				font-weight: bold;
+				color: #333333;
+				& > .price {
+					color: #ff778f;
+					font-weight: bold;
+					font-size: 24px;
+				}
+			}
+			& > .show-coupons {
+				width: 1125px;
+				overflow-x: hidden;
+				& > .couponlist {
+					margin-top: 30px;
+					display: flex;
+
+					& > .single {
+						width: 350px;
+						display: inline-flex;
+						align-items: center;
+						flex-direction: column;
+						margin-right: 30px;
+						cursor: pointer;
+						& > .top {
+							display: flex;
+
+							& > input[type='checkbox'] {
+								appearance: none;
+								position: relative;
+								width: 16px;
+								height: 16px;
+								border: 1px solid #999999;
+								outline: none;
+								position: relative;
+								overflow: hidden;
+								margin: 0 20px;
+								margin-left: 0;
+								border-radius: 4px;
+								align-self: center;
+								cursor: pointer;
+							}
+
+							> img {
+								position: absolute;
+								left: 50%;
+								top: 50%;
+								transform: translate(-50%, -50%);
+								border-radius: 4px;
+							}
+
+							> input[type='checkbox']:hover {
+								border: 1px solid #ff6398;
+							}
+
+							& > .coupon {
+								background-image: url(/assets/image/coupon/bg.svg);
+								height: 102px;
+								width: 309px;
+								display: flex;
+								flex-direction: column;
+								align-items: center;
+								justify-content: center;
+								& > .name {
+									height: 20px;
+									color: #ff778f;
+									font-size: 20px;
+									margin-bottom: 10px;
+									display: block;
+									line-height: 20px;
+								}
+								& > .money {
+									color: #999999;
+									font-size: 14px;
+								}
+							}
+						}
+						& > p {
+							margin: 10px 0 20px;
+							color: #999999;
+							font-size: 12px;
+							width: 100%;
+							text-align: center;
+							padding-left: 36px;
+						}
+					}
+				}
+			}
+			& > .page {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 50px;
+				& > span {
+					display: block;
+					width: 6px;
+					height: 6px;
+					background-color: #d2d2d2;
+					border-radius: 50%;
+					margin: 0 5px;
+				}
+				& > img {
+					cursor: pointer;
+					padding: 10px;
+				}
+				& > .no {
+					cursor: auto;
+				}
+			}
+		}
+
+		& > .opera {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			& > .content {
+				color: #666666;
+				font-size: 14px;
+				margin-right: 35px;
+				& > span {
+					display: flex;
+					align-items: center;
+					justify-content: flex-end;
+
+					& > a {
+						font-size: 30px;
+						font-weight: bold;
+						color: #ff6398;
+					}
+				}
+				& > span:first-child {
+					color: #ff778f;
+				}
+			}
+			& > button {
+				width: 112px;
+				height: 40px;
+				background-color: #ff778f;
+				color: #ffffff;
+				font-weight: bold;
+				font-size: 16px;
+				border: none;
+				border-radius: 4px;
+				cursor: pointer;
+				outline: none;
+			}
+		}
+	}
+}
+
+input[type='checkbox'].isChecked {
+	border: none !important;
+}
+
+input[type='checkbox'].isChecked::after {
+	content: '';
+	display: inline-block;
+	background-image: url(/assets/image/svg/i-tick.svg);
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	border: none;
+}
+
+.active {
+	background-color: #ff778f !important;
+}

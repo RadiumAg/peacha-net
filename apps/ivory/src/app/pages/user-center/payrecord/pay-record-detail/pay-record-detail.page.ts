@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ShopMallApiService } from '@peacha-core';
 import { combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { TradeApiService } from '../../../pay/trade-api.service';
@@ -11,7 +11,11 @@ import { TradeApiService } from '../../../pay/trade-api.service';
 	styleUrls: ['./pay-record-detail.page.less'],
 })
 export class PayRecordDetailPage {
-	constructor(private tradeapi: TradeApiService, private router: ActivatedRoute, private http: HttpClient) { }
+	constructor(
+		private tradeapi: TradeApiService,
+		private router: ActivatedRoute,
+		private shopApi: ShopMallApiService
+	) { }
 
 	detail$ = combineLatest([this.router.params]).pipe(
 		switchMap(([r]) => {
@@ -21,9 +25,9 @@ export class PayRecordDetailPage {
 
 	toOrderDetail(i: string, p: string, id: string) {
 		if (i.includes('企划')) {
-			this.http.get<{ commissionId: number }>(`/commission/order/commission?o=${id}`).subscribe(s => {
-				window.open(location.origin + '/commission/detail/payment?id=' + s.commissionId);
-			});
+			this.shopApi.orderDetail(id).subscribe(s => {
+				window.open(location.origin + '/commission/detail/payment?id=' + s.goods[0].sourceId);
+			})
 		} else {
 			window.open(p);
 		}

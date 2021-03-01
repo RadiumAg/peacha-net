@@ -9,8 +9,9 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { DASHBOARD_ANIMATION, AVATAR_ANIMATION } from './animations';
 import { PlatformLocation } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { UserState, ModalService, CustomerService, ChatStartService } from '@peacha-core';
+import { UserState, ModalService, CustomerService, ChatStartService, MessageUnreadCountService } from '@peacha-core';
 import { ChatState, Logout } from '@peacha-core/state';
+
 
 
 @Component({
@@ -52,7 +53,8 @@ export class NavbarFragment {
 	enablePaid = app_config.enablePaid;
 	r: string;
 
-	allCount$ = new BehaviorSubject(0);
+	allCount$ = this.msgCount.allCount$;
+	customerCount = this.customer.unreadCounnt;
 	followerCount: number;
 	private currentOverlay: OverlayRef;
 	private portal: TemplatePortal;
@@ -67,23 +69,25 @@ export class NavbarFragment {
 		private modal: ModalService,
 		private customer: CustomerService,
 		private cdr: ChangeDetectorRef,
-		private dialog: ChatStartService
+		private dialog: ChatStartService,
+		private msgCount: MessageUnreadCountService
 	) {
 		this.customer.count();
 		this.isLogin$.subscribe(is => {
 			if (is) {
 				this.dialog.getWebsocketUrl();
+				this.msgCount.getUnreadCount();
 			}
 		});
 	}
 
 	params$ = this.route.queryParams;
-	unread$ = new BehaviorSubject(this.customer.unreadCounnt);
 	isPortalShowing$ = new BehaviorSubject<boolean>(false);
 
-	timer$ = combineLatest([timer(0, 20000), this.unread$])
+
+	timer$ = combineLatest([timer(0, 20000)])
 		.pipe(
-			tap(([_t, u]) => {
+			tap(([_t]) => {
 				this.isLogin$.subscribe(isLogin => {
 					if (isLogin) {
 						this.http
@@ -96,10 +100,12 @@ export class NavbarFragment {
 								cooperation: number;
 							}>('/news/count')
 							.subscribe(s => {
-								this.allCount$.next(s.forum + s.notice + s.star + s.cooperation + u);
 								this.followerCount = s.follow;
 								this.cdr.markForCheck();
 							});
+
+
+
 					}
 				});
 			})

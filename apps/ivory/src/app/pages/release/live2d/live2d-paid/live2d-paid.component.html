@@ -32,7 +32,7 @@
     </div>
 
     <div class="form-item">
-      <div class="title" [ivoNoticeTitle]="'上传封面图片大小5M以下'">上传封面</div>
+      <div class="title" [ivoNoticeTitle]="'上传封面图片大小5M以下，长宽不得超过16384*16384px'">上传封面</div>
       <div class="form-controller required">
         <ivo-thumbnail-upload maxSize="5242880" formControlName="b" ivoErroTip ivoErrorTipString="请上传封面!">
         </ivo-thumbnail-upload>

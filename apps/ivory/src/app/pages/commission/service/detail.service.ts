@@ -108,7 +108,7 @@ export class CommissionDetailService {
 
 	/**取企划截稿时间 */
 	getCommissionLasttime() {
-		return Number(this.detail.commission.startTime) + Number(this.day) * 24 * 60 * 60 * 1000;
+		return Number(this.detail?.commission.startTime) + Number(this.day) * 24 * 60 * 60 * 1000;
 	}
 
 	/**取企划详情 */

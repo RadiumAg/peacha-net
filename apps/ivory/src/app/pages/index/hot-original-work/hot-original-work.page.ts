@@ -1,7 +1,7 @@
-import { Component, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, combineLatest, empty, Subscription } from 'rxjs';
-import { tap, take, switchMap } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import { tap, filter, startWith, mergeMap, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 type HotWork = {
@@ -24,53 +24,45 @@ type HotWork = {
 	styleUrls: ['../reuse.less'],
 })
 export class HotOriginalWorkPage {
-	subscription: Subscription;
-	pageOriginalWork$ = new BehaviorSubject<number>(1);
-	hotOriginalWorkList: Array<any> = [];
-	count$ = new BehaviorSubject<number>(0);
+	count = 0;
+	cache = [];
+	private page = 1;
+	loading = false;
 
-	/**热门原画作品 */
-	hotOriginalWork$ = this.http.get<HotWork>(`/work/hot_work?p=0&s=20&c=1`).pipe(
-		tap(s => {
-			s.list.map(l => {
-				this.hotOriginalWorkList.push(l);
-			});
-			this.pageOriginalWork$.next(1);
-			this.count$.next(s.count);
+	constructor(private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) { }
+
+	private loadByScroll$ = fromEvent(window, 'scroll').pipe(
+		filter(() => {
+			return (
+				window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight * 0.8 &&
+				(this.count === 0 || this.count > this.cache.length)
+			);
+		}),
+		filter(() => !this.loading) // 防止加载过程中滚动事件触发多次加载
+	);
+
+	loadedItems$ = this.loadByScroll$.pipe(
+		startWith(1), //页面首次加载触发
+		mergeMap(() => {
+			this.loading = true;
+			return this.http.get<HotWork>(`/work/hot_work?p=${this.page - 1}&s=20&c=1`).pipe(
+				tap(res => {
+					this.count = res.count;
+					this.cache = [...this.cache, ...res.list];
+					this.page++;
+					this.loading = false;
+				}),
+				map(() => this.cache)
+			);
 		})
 	);
 
-	constructor(private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) {}
 
 	toWork(id: number, c: number) {
 		if (c == 1) {
 			this.router.navigate(['illust', id]);
 		} else {
 			this.router.navigate(['live2d', id]);
-		}
-	}
-
-	@HostListener('window:scroll', ['$event']) public scrolled($event: Event) {
-		if (document.documentElement.scrollHeight - document.documentElement.scrollTop == document.documentElement.clientHeight) {
-			combineLatest(this.count$, this.pageOriginalWork$)
-				.pipe(
-					take(1),
-					switchMap(([c, s]) => {
-						if (c > this.hotOriginalWorkList.length) {
-							return this.http.get<HotWork>(`/work/hot_work?p=${s}&s=20&c=1`).pipe(
-								tap(l => {
-									l.list.map(a => {
-										this.hotOriginalWorkList.push(a);
-									});
-									this.pageOriginalWork$.next(s + 1);
-									this.cdr.markForCheck();
-								})
-							);
-						}
-						return empty();
-					})
-				)
-				.subscribe();
 		}
 	}
 

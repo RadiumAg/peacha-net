@@ -1,23 +1,26 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { NgxsModule } from '@ngxs/store';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { registerLocaleData } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import zh from '@angular/common/locales/zh';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule,Routes } from '@angular/router';
+import { TranslateLoader,TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NgxsModule } from '@ngxs/store';
+import { PeachaCoreModule,PhoneGuard } from '@peacha-core';
+import { environment } from '../environments/environment';
+import { AppComponent } from './app.component';
+import { FooterModule } from './fragments/footer/footer.module';
 // local imports
 import { NavbarModule } from './fragments/navbar/navbar.module';
-import { AppComponent } from './app.component';
-import { registerLocaleData } from '@angular/common';
-import zh from '@angular/common/locales/zh';
-import { FooterModule } from './fragments/footer/footer.module';
-import { AgreementComponent } from './pages/agreement/agreement.component';
-import { UserPrivacyPolicyComponent } from './pages/user-privacy-policy/user-privacy-policy.component';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
-import { ReviewMechanismComponent } from './pages/review-mechanism/review-mechanism.component';
+import { AgreementComponent } from './pages/agreement/agreement.component';
 import { ConventionComponent } from './pages/convention/convention.component';
 import { PlanningAgreementPage } from './pages/planning-agreement/planning-agreement.page';
-import { PeachaCoreModule, PhoneGuard } from '@peacha-core';
-import { environment } from '../environments/environment';
+import { ReviewMechanismComponent } from './pages/review-mechanism/review-mechanism.component';
+import { UserPrivacyPolicyComponent } from './pages/user-privacy-policy/user-privacy-policy.component';
 
 registerLocaleData(zh);
 const routes: Routes = [
@@ -147,6 +150,19 @@ const routes: Routes = [
     PlanningAgreementPage,
   ],
   imports: [
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: (http: HttpClient) => {
+              return new TranslateHttpLoader(
+                  http,
+                  './assets/i18n/',
+                  '.json'
+              );
+          },
+          deps: [HttpClient],
+      },
+  }),
     NavbarModule,
     BrowserModule,
     FooterModule,
@@ -156,7 +172,6 @@ const routes: Routes = [
     }),
     NgxsModule.forRoot([], {
       developmentMode: !environment.production,
-      // executionStrategy: NoopNgxsExecutionStrategy
     }),
     RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'top',

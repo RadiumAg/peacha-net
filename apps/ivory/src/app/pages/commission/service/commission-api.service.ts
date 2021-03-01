@@ -5,7 +5,7 @@ import { CommissionDetail } from '../model/commission-detail';
 
 @Injectable()
 export class CommissionApiService {
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	/**
 	 *
@@ -433,7 +433,7 @@ export class CommissionApiService {
 	 * @version 2020/11/6
 	 */
 	public createOrder = (c: number) =>
-		this.http.post<{ pageRoute: string; payId: number }>('/commission/create_order', {
+		this.http.post<{ orderId: number }>('/commission/create_order', {
 			c,
 		});
 
@@ -719,7 +719,7 @@ export class CommissionApiService {
 	 * @version 2020/11/27
 	 */
 	public auditTips = (t: number, s: number) =>
-		this.http.post<{ payId: number; pageRoute: number }>(`/commission/audit_tips`, {
+		this.http.post<{ orderId: number }>(`/commission/audit_tips`, {
 			t,
 			s,
 		});

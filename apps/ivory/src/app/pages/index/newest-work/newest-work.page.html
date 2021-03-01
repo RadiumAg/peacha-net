@@ -3,16 +3,15 @@
 		已关注用户的更新
 		<span>你关注用户的更新全都在这哦~</span>
 	</li>
-	<ng-container *ngrxLet="newest$">
+	<ng-container>
 		<div class="works">
-			<ng-container *ngFor="let work of newestList">
+			<ng-container *ngFor="let work of loadedItems$ | async">
 				<ivo-work-card [work]="work"></ivo-work-card>
 			</ng-container>
 		</div>
-		<ng-container *ngrxLet="newestOnce$;let newestOnce">
-			<ng-container *ngIf="newestOnce===20">
-				<button>下拉加载更多</button>
-			</ng-container>
+		<ng-container *ngIf="cache.length==0">
+			<ivo-lack-image></ivo-lack-image>
 		</ng-container>
+		<button *ngIf="cache.length < count">下拉加载更多</button>
 	</ng-container>
 </div>

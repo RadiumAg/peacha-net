@@ -1,24 +1,32 @@
-import { HttpInterceptor, HttpEvent, HttpRequest, HttpHandler, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { IvoryError, IvoryUnauthorizedError } from '../error';
-import { Inject, PLATFORM_ID, Optional, Injectable } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
-import { API_GATEWAY, PLATFORM_SERVER_REQUEST } from '../tokens';
+import { HttpErrorResponse,HttpEvent,HttpHandler,HttpInterceptor,HttpRequest } from '@angular/common/http';
+import { Inject,Injectable,Optional,PLATFORM_ID } from '@angular/core';
+import { Observable,throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { IvoryError,IvoryUnauthorizedError } from '../error';
+import { API_GATEWAY,PLATFORM_SERVER_REQUEST } from '../tokens';
+import filterList from './proxy.gateway.filter';
 
 @Injectable()
 export class IvoryAPIInterceptor implements HttpInterceptor {
 	constructor(
-		// eslint-disable-next-line @typescript-eslint/ban-types
 		@Inject(PLATFORM_ID) private platform: Object,
 		@Optional() @Inject(PLATFORM_SERVER_REQUEST) private request: Request,
 		@Inject(API_GATEWAY) private api_gateway: string
 	) { }
 
+    private isFilter(urlString: string){
+		return Boolean(filterList.find(filterString=>
+		 urlString.includes(filterString)
+		));
+	}
+
 	public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+		let prefix = '';
+        this.isFilter(req.url) ? null : prefix = this.api_gateway;
 		const clonedReq = isPlatformServer(this.platform)
 			? req.clone({
-				url: this.api_gateway + req.url,
+				url: prefix + req.url,
 				withCredentials: true,
 				headers: (() => {
 					const myHeaders = req.headers;
@@ -41,7 +49,7 @@ export class IvoryAPIInterceptor implements HttpInterceptor {
 				})(),
 			})
 			: req.clone({
-				url: this.api_gateway + req.url,
+				url: prefix + req.url,
 				withCredentials: true,
 			});
 		return next.handle(clonedReq).pipe(

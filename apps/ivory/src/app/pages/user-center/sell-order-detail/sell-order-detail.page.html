@@ -1,0 +1,38 @@
+<div class="main" *ngrxLet="work$;let item">
+	<div class="head">
+		<span> 订单详情 </span>
+		<span class="return" (click)="goback()"> &lt;返回列表</span>
+	</div>
+
+	<div class="des">
+		<img [src]="item.cover" (click)="toWork(item.workid,item.category)" />
+		<div class="desc">
+			<div class="left">
+				<span class="workname" (click)="toWork(item.workid,item.category)">{{item.work_name}}</span>
+				<!-- <span class="goodname">商品名称：{{item.goods_name}}</span> -->
+				<span class="seller">买家:{{item.buyer_name}}</span>
+				<span class="sell" *ngIf="item.maxstock==1; else elseBlock1">单次出售</span>
+				<ng-template #elseBlock1>
+					<span class="sell"> 多次出售 </span>
+				</ng-template>
+			</div>
+
+			<div class="right">
+				<br />
+				<span class="pre"
+					>价格：
+					<span class="money">￥{{item.price|number}}</span>
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="bottom">
+		<div class="bl">
+			<span>订单号：{{item.orderid}}</span>
+			<span class="b">创建时间：{{item.createtime|date:"y-MM-dd HH:mm"}}</span>
+			<span class="b" *ngIf="item.state==1||item.state==5||item.state==4">支付时间：{{item.completetime|date:"y-MM-dd HH:mm"}}</span>
+			<!-- <span *ngIf="item.state==1||item.state==5||item.state==4">支付交易号：{{item.transaction_id}}</span> -->
+		</div>
+	</div>
+</div>

@@ -1,7 +1,43 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ShopMallApiService } from '@peacha-core';
 import { Steps } from '@peacha-core/components';
 import { CommissionApiService } from '../../service/commission-api.service';
 import { CommissionDetailService } from '../../service/detail.service';
+
+type PayMentList = {
+	id: number,
+	buyerId: number,
+	sellerId: number,
+	remarks: string,
+	payId: string,
+	channel: string,
+	createTime: number,
+	completeTime: number,
+	expressFee: number,
+	discountAmount: number,
+	amount: number,
+	hasExpress: boolean,
+	name: string,
+	platform: string,
+	serviceName: string,
+	status: number,
+	goods: {
+		id: number,
+		category: {
+			id: number,
+			name: string,
+			jumpPage: string
+		},
+		name: string,
+		sourceId: string,
+		price: number,
+		count: number,
+		remarks: string,
+		types: string,
+		expressNumber: string,
+		expressType: string
+	}
+}[];
 
 @Component({
 	selector: 'ivo-commission-payment-history',
@@ -17,25 +53,9 @@ export class CommissionPaymentHistoryPage implements OnInit {
 
 	stopTime: number;
 
-	payList: {
-		id: number;
-		amount: number;
-		channel: string;
-		type: number;
-		createTime: number;
-		completeTime: number;
-		payId: number;
-	}[];
+	payList: PayMentList;
 
-	refundList: {
-		id: number;
-		amount: number;
-		channel: string;
-		type: number;
-		createTime: number;
-		completeTime: number;
-		payId: number;
-	}[];
+	refundList: PayMentList;
 
 	detailList: {
 		expectRate: number;
@@ -43,7 +63,14 @@ export class CommissionPaymentHistoryPage implements OnInit {
 		rateType: number;
 	}[];
 
-	constructor(private detail: CommissionDetailService, private api: CommissionApiService, private cdr: ChangeDetectorRef) { }
+	actualPayment = 0;
+
+	constructor(
+		private detail: CommissionDetailService,
+		private api: CommissionApiService,
+		private cdr: ChangeDetectorRef,
+		private shopApi: ShopMallApiService
+	) { }
 
 	ngOnInit(): void {
 		this.identity = this.detail.getIdentity();
@@ -51,13 +78,23 @@ export class CommissionPaymentHistoryPage implements OnInit {
 		this.stopTime =
 			Number(this.detail.getDetailValue().commission.publishTime) + this.detail.getDetailValue().commission.day * 24 * 60 * 60 * 1000;
 
-		this.api.orders(this.detail.getCommissionId()).subscribe(s => {
+
+		this.shopApi.goodsList('20,21,22,23', this.detail.getCommissionId(), 4, 0, 50).subscribe(s => {
+			console.log(s);
 			if (this.identity === 1) {
-				this.payList = s.list.filter(l => l.type != 20);
-				this.refundList = s.list.filter(l => l.type === 22);
+				this.payList = s.list.filter(l => l.goods.category.id != 20);
+				this.refundList = s.list.filter(l => l.goods.category.id == 22);
+
+				//用于退款详情显示实际支付稿酬
+				s.list.filter(l => l.goods.category.id == 21 || l.goods.category.id == 23).forEach(o => {
+					this.actualPayment = this.actualPayment + o.amount;
+				})
+
 			} else {
-				this.payList = s.list.filter(l => l.type === 20);
+				this.payList = s.list.filter(l => l.goods.category.id == 20);
 			}
+
+
 			this.api.orderDetails(this.detail.getCommissionId()).subscribe(a => {
 				this.detailList = a.list;
 				this.cdr.detectChanges();
@@ -71,6 +108,7 @@ export class CommissionPaymentHistoryPage implements OnInit {
 				});
 			});
 			this.cdr.detectChanges();
-		});
+		})
+
 	}
 }

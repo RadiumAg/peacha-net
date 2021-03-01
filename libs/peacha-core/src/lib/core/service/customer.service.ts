@@ -9,14 +9,14 @@ export class CustomerService {
 	@Select(UserState.isLogin)
 	isLogin$: Observable<boolean>;
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	unreadCounnt = 0;
 
 	count(): void {
 		this.isLogin$.subscribe(is => {
 			if (is) {
-				timer(1000, 60000).subscribe(t => {
+				timer(1000, 60000).subscribe(_t => {
 					this.http.get<{ count: number }>('/webim/unread_count').subscribe(l => {
 						this.unreadCounnt = l.count;
 					});

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalService } from '@peacha-core';
+import { ModalService, ShopMallApiService } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
@@ -42,7 +42,8 @@ export class CommissionCreatetipPage implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private cdr: ChangeDetectorRef,
-		private isError: CommissionDetailErrorService
+		private isError: CommissionDetailErrorService,
+		private shopApi: ShopMallApiService
 	) { }
 
 	tipsList$ = combineLatest([this.refresh$, this.route.queryParams]).pipe(
@@ -106,30 +107,35 @@ export class CommissionCreatetipPage implements OnInit {
 			.subscribe(is => {
 				if (is) {
 					if (this.status === 2) {
-						this.api.auditTips(id, i).subscribe(
-							s => {
-								if (i === 1) {
-									this.router.navigate(['/pay'], {
-										queryParams: {
-											tradeId: s.payId,
-										},
-										queryParamsHandling: 'merge',
-									});
-								} else if (i === 2) {
-									this.underwayTip = undefined;
-									this.tipList.list.splice(0, 1, {
-										...this.tipList.list[0],
-										status: 2,
-										completeTime: new Date().getTime(),
-									});
-									this.refresh$.next(1);
-									this.cdr.detectChanges();
+						this.api.cancelOrders(this.commissionId).subscribe(_ => {
+							this.api.auditTips(id, i).subscribe(
+								a => {
+									if (i === 1) {
+										this.shopApi.orderPay({ o: [a.orderId], c: [] }).subscribe(s => {
+											this.router.navigate(['/pay'], {
+												queryParams: {
+													tradeId: s.payId,
+												},
+												queryParamsHandling: 'merge'
+											})
+										});
+									} else if (i === 2) {
+										this.underwayTip = undefined;
+										this.tipList.list.splice(0, 1, {
+											...this.tipList.list[0],
+											status: 2,
+											completeTime: new Date().getTime(),
+										});
+										this.refresh$.next(1);
+										this.cdr.detectChanges();
+									}
+								},
+								e => {
+									this.isError.ifError(e.code);
 								}
-							},
-							e => {
-								this.isError.ifError(e.code);
-							}
-						);
+							);
+						})
+
 					} else {
 						this.modal.open(PopTips, ['企划当前状态无法处理增加稿酬。', false]);
 					}

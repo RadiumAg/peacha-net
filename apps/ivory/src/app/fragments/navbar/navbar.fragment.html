@@ -28,7 +28,7 @@
 		<ng-template #logined>
 			<span class="cart" (click)="toMessage()">
 				<img src="/assets/image/navbar/bell.svg" />
-				<span class="yuan" *ngIf="(allCount$ |async)>0 ||(chatUnread$|async)>0"></span>
+				<span class="yuan" *ngIf="((allCount$ |async)+customerCount)>0 ||(chatUnread$|async)>0"></span>
 			</span>
 			<img [attr.src]="info.avatar" class="avatar" #avatar (mouseenter)="hoverAvatar($event)" (click)="toUser(info.id)" />
 			<span class="cl">
@@ -69,6 +69,7 @@
 				<li [routerLink]="['./member/manager']">创作中心</li>
 				<li [routerLink]="['./setting']">个人中心</li>
 				<li [routerLink]="['./store']">我的仓库</li>
+				<!-- <li [routerLink]="['./setting/linkagetime']">Prprlive联动时长</li> -->
 				<li class="divider"></li>
 				<li (click)="logout()">退出登录</li>
 			</ul>

@@ -25,10 +25,12 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 	constructor(private http: HttpClient, private sanitizer: DomSanitizer, private message: NzMessageService, private modal: ModalService) {
 		this.init();
 	}
+
 	isSuccess$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	private images$ = new BehaviorSubject<UploadImage[]>([]);
 	// 限制大小 B
 	@Input() maxSize = 20971520;
+  @Input() withAndHeightSize = 16384;
 	@Input() maxCount = 5;
 	@Input() allowType = ['png', 'jpg', 'gif'];
 	@ViewChild('mask', { read: ElementRef })
@@ -50,6 +52,7 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 	/**
 	 *  @description 验证策略对象
 	 */
+	// eslint-disable-next-line @typescript-eslint/member-ordering
 	verify = {
 		typeVerify: (fileType: string): boolean => {
 			return this.allowType.includes(fileType) ? true : false;
@@ -61,6 +64,22 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 			}
 			return true;
 		},
+    withAndHeightSizeVerify: async (e: File) => {
+       const img = new Image();
+       img.src =  window.URL.createObjectURL(e);
+       return await new Promise((res)=>{
+            img.onload = () => {
+              if(img.width > this.withAndHeightSize || img.height > this.withAndHeightSize) {
+                this.modal.open(PopTips, ['长宽超过限制']);
+                res(false);
+               }
+                res(true);
+            }
+            img.onerror = () => {
+                throw new Error('图片加载失败');
+            }
+       })
+    }
 	};
 
 	private init() {
@@ -82,7 +101,7 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 			this.message.error(`请上传${this.allowType.toString()}图片格式`);
 			return;
 		}
-		this.startUploadImage(file);
+	 	this.startUploadImage(file);
 		this.clearFileInput(event);
 	}
 
@@ -90,8 +109,8 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 		(event.target as HTMLInputElement).value = '';
 	}
 
-	startUploadImage(img: File) {
-		if (!this.verify.sizeVerify(img)) {
+  async	startUploadImage(img: File) {
+		if (!this.verify.sizeVerify(img) || ! (await this.verify.withAndHeightSizeVerify(img))) {
 			return;
 		}
 		const form = new FormData();
@@ -147,9 +166,6 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 	drop(e: DragEvent) {
 		e.preventDefault();
 		const data = e.dataTransfer.getData('Text');
-		const targetElement = (e.target as HTMLElement).parentElement.nextSibling;
-		const moveElement = document.getElementById(data);
-
 		const imageArray = this.images$.getValue();
 		const moveObject = imageArray.find(x => x.url === data);
 		const moveIndex = imageArray.findIndex(x => x.url === data);

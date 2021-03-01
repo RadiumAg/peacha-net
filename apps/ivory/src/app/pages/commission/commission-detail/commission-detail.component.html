@@ -60,7 +60,24 @@
 					<ng-container [ngSwitch]="commissionStatus$.value">
 						<ng-container *ngSwitchCase="5"> 企划已关闭 </ng-container>
 						<ng-container *ngSwitchCase="7"> 停止招募 </ng-container>
-						<ng-container *ngSwitchDefault> 企划招募中... </ng-container>
+						<ng-container *ngSwitchDefault>
+							<ng-container *ngIf="detail.commission.expireTime < nowTime; else abled"> 停止招募 </ng-container>
+							<ng-template #abled> 企划招募中... </ng-template>
+							<p class="stop">
+								企划将在{{ detail.commission.expireTime | date: 'yyyy-MM-dd' }}后自动停止招募
+								<img
+									(mouseenter)="isShowExplanation = true"
+									(mouseleave)="isShowExplanation = false"
+									src="/assets/image/commission/why.svg"
+								/>
+							</p>
+							<div class="explanation" [class.show-explanation]="isShowExplanation">
+								<span>
+									发布企划后，平台将会展示该企划{{ abledTime }} 天，企划超过{{ abledTime }}天未开始后，将会自动
+									取消展示。若仍需招募，需要再次重新 发布企划。
+								</span>
+							</div>
+						</ng-container>
 					</ng-container>
 				</div>
 				<ng-container *ngFor="let btn of btnIconList; let i = index">

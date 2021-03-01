@@ -7,11 +7,11 @@ import { ModalService } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 
 @Component({
-	selector: 'ivo-order-detail',
-	templateUrl: './order-detail.page.html',
-	styleUrls: ['./order-detail.page.less'],
+	selector: 'ivo-sell-order-detail',
+	templateUrl: './sell-order-detail.page.html',
+	styleUrls: ['./sell-order-detail.page.less'],
 })
-export class OrderDetailPage {
+export class SellOrderDetailPage {
 	constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private modal: ModalService) { }
 	update$ = new BehaviorSubject<number>(0);
 	id$ = new BehaviorSubject<string[]>([]);
@@ -19,20 +19,22 @@ export class OrderDetailPage {
 		orderid: number;
 		workid: number;
 		work_name: string;
-		work_cover: string;
+		cover: string;
+		goodsid: number;
+		goods_name: string;
 		price: number;
-		sellerid: number;
-		seller_name: string;
-		createtime: string;
-		completetime: string;
-		transaction_id: number;
-		pay_type: number;
+		rate: number;
+		rate_amount: number;
+		share: number;
+		amount: number;
+		buyer_id: number;
+		buyer_name: string;
+		completetime: number;
+		maxstock: number;
 		category: number;
-		sell_type: number;
-		state: number;
 	}> = combineLatest([this.route.params, this.update$]).pipe(
 		switchMap(r => {
-			return this.http.get<any>(`/mall/get_buy_order_detail?o=${r[0].id}`);
+			return this.http.get<any>(`/mall/get_sell_order_detail?o=${r[0].id}`);
 		}),
 		tap(a => {
 			this.id$.next([a.orderid]);

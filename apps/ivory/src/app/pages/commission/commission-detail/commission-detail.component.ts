@@ -69,6 +69,12 @@ export class CommissionDetailComponent implements OnInit, OnDestroy {
 
 	nowTime = new Date().getTime();
 
+	//控制显示自动停止招募解释框
+	isShowExplanation = false;
+
+	//企划可招募时长
+	abledTime = (this.detailState.getDetailValue().commission.expireTime - this.detailState.getDetailValue().commission.publishTime) / 1000 / 60 / 60 / 24;
+
 	// 用于刷新详情左边显示
 	params$ = combineLatest([this.route.queryParams, this.commissionStatus$]).pipe(
 		tap(([p, status]) => {
@@ -277,23 +283,39 @@ export class CommissionDetailComponent implements OnInit, OnDestroy {
 									},
 								];
 							} else if (status != 7) {
-								this.btnIconList = [
-									{
-										text: '编辑企划',
-										fun: 1,
-										i: '/assets/image/commission/edit.svg',
-									},
-									{
-										text: '停止招募',
-										fun: 4,
-										i: '/assets/image/commission/stop-commission.svg',
-									},
-									{
-										text: '关闭企划',
-										fun: 2,
-										i: '/assets/image/commission/close-commission.svg',
-									},
-								];
+								if (this.detail.commission.expireTime > this.nowTime) {
+									this.btnIconList = [
+										{
+											text: '编辑企划',
+											fun: 1,
+											i: '/assets/image/commission/edit.svg',
+										},
+										{
+											text: '停止招募',
+											fun: 4,
+											i: '/assets/image/commission/stop-commission.svg',
+										},
+										{
+											text: '关闭企划',
+											fun: 2,
+											i: '/assets/image/commission/close-commission.svg',
+										},
+									];
+								} else {
+									this.btnIconList = [
+										{
+											text: '编辑企划',
+											fun: 1,
+											i: '/assets/image/commission/edit.svg',
+										},
+										{
+											text: '关闭企划',
+											fun: 2,
+											i: '/assets/image/commission/close-commission.svg',
+										},
+									];
+								}
+
 							}
 						}
 					} else {
