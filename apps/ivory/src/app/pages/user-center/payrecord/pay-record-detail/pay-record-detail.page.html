@@ -23,7 +23,7 @@
 			</li>
 			<li>
 				<span>订单号：{{item.orderId}}</span>
-				<a (click)="toOrderDetail(detail.title,item.page,item.orderId)">查看订单详情</a>
+				<a (click)="toOrderDetail(item.targetRoute,item.requestUrl,item.orderId)">查看订单详情</a>
 				<!-- <span class="spe"  >查看订单详情</span> -->
 			</li>
 		</div>
@@ -42,7 +42,7 @@
 				</li>
 				<li>
 					<span>订单号：{{order.orderId}}</span>
-					<a (click)="toOrderDetail(detail.title,order.page,order.orderId)">查看订单详情</a>
+					<a (click)="toOrderDetail(detail.targetRoute,order.requestUrl,order.orderId)">查看订单详情</a>
 				</li>
 			</div>
 		</ng-container>

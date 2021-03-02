@@ -138,13 +138,19 @@ export class WalletPage {
 		});
 	}
 
-	toOrderDetail(i: string, p: string, id: string) {
-		if (i.includes('企划')) {
-			this.http.get<{ commissionId: number }>(`/commission/order/commission?o=${id}`).subscribe(s => {
-				window.open(location.origin + '/commission/detail/payment?id=' + s.commissionId);
-			});
+	toOrderDetail(targetRoute: string, requestUrl: string, id: string) {
+		if (requestUrl) {
+			this.http.get<{
+				goods: {
+					sourceId: string,
+				}[]
+			}>(requestUrl.split('{orderId}')[0] + id).subscribe(s => {
+				window.open(location.origin + targetRoute.split('?id')[0] + '?id=' + s.goods[0].sourceId);
+
+			})
+
 		} else {
-			window.open(p);
+			window.open(location.origin + targetRoute.split('{orderId}')[0] + (targetRoute.split('{orderId}')[1] ? id : ''));
 		}
 	}
 

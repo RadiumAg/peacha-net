@@ -67,7 +67,9 @@
 								>{{item.amount.toString().startsWith('-')?'-￥'+(item.amount| number:'1.2-2').slice(1):'￥'+(item.amount|
 								number:'1.2-2')}}</span
 							>
-							<a style="color: #333333" (click)="toOrderDetail(item.title,item.page,item.orderId)">查看订单详情</a>
+							<a style="color: #333333" (click)="toOrderDetail(item.targetRoute,item.requestUrl,item.orderId)"
+								>查看订单详情</a
+							>
 							<!-- <span
                             style="cursor: pointer;border: none;outline: none;"
                             [routerLink]="['/setting/wallet',item.id]"
