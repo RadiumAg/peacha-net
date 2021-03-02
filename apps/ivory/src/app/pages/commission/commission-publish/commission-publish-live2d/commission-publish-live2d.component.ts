@@ -452,8 +452,8 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 					result['s'] = _.s;
 					result['sd'] = _.sd;
 					result['d'] = _.d;
-					result['sp'] = _.sp / 100;
-					result['mp'] = _.mp / 100;
+					result['sp'] = _.sp / 10;
+					result['mp'] = _.mp / 10;
 					return result;
 				})
 			)

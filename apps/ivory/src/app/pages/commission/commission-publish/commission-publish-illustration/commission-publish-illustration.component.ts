@@ -531,8 +531,8 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 					result['s'] = _.s;
 					result['sd'] = _.sd;
 					result['d'] = _.d;
-					result['sp'] = _.sp / 100;
-					result['mp'] = _.mp / 100;
+					result['sp'] = _.sp / 10;
+					result['mp'] = _.mp / 10;
 					result['de'] = _.de;
 					return result;
 				})
