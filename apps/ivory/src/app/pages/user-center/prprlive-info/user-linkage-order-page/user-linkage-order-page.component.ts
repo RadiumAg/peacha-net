@@ -14,10 +14,10 @@ export class UserLinkageOrderPage{
 
     page$ = new BehaviorSubject<number>(1);
     orders$ = combineLatest(
-        this.page$
+        [this.page$]
     ).pipe(
         switchMap(([page])=>{
-            return (this.http.get(`/link/v1/client/order?p=${page-1}&s=10`) as Observable<{
+            return (this.http.get(`/link/client/order?p=${page-1}&s=10`) as Observable<{
                 count:number,
                 list:[{
                     hours:number,

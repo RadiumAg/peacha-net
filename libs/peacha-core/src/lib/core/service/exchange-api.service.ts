@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class ExchangeApiSrevice {
   readonly userRate = '/user/rate';
 
-  private readonly  baseUrl = '/link/v1';
+  private readonly  baseUrl = '/link/';
 
   readonly code = this.baseUrl + '/client/code'; // 兑换兑换码
 
