@@ -48,9 +48,11 @@ import { ChangeUnitPipe } from './pipes/change-unit.pipe';
 import { MydatePipe } from './pipes/mydate.pipe';
 import { TimerDatePipe } from './pipes/timer-date.pipe';
 import { IvoNameFriendlyPipe } from './upload/app-name-friendly.pipe';
+import { TimeFormatPipe } from './time-format.pipe';
 
 @NgModule({
   declarations: [
+    TimeFormatPipe,
     ErrorDisplay,
     ErrorDisplayCase,
     Button,
@@ -90,6 +92,7 @@ import { IvoNameFriendlyPipe } from './upload/app-name-friendly.pipe';
     IvoNameFriendlyPipe
   ],
   exports: [
+    TimeFormatPipe,
     ErrorDisplay,
     ErrorDisplayCase,
     Button,
