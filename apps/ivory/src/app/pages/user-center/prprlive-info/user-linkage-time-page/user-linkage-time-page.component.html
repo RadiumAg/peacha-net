@@ -48,8 +48,8 @@
         </div>
       </div>
       <div class="page" *ngIf="logs.count>10">
-        <ivo-page *ngrxLet="page$;let page" [currentPage]="page" [total]="logs.count" [pageSize]="10"
-          (onPageChange)="page$.next($event)"></ivo-page>
+        <ivo-pagination *ngrxLet="page$;let page" [currentPage]="page" [total]="logs.count" [pageSize]="10"
+          (onPageChange)="page$.next($event)"></ivo-pagination>
       </div>
     </div>
   </div>

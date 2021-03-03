@@ -1,5 +1,5 @@
 {
-	"/link/": {
+	"/api/v1/link/": {
 		"target": "http://47.99.94.159:8400"
 	},
 	"/api/v1/commission": {

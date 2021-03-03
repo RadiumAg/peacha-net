@@ -38,9 +38,9 @@
     </div>
   </div>
   <footer *ngIf="exchangeData.count>9">
-    <ivo-page [total]="exchangeData.count" [currentPage]='page$ | async' [pageSize]="pageSize.toString()"
+    <ivo-pagination [total]="exchangeData.count" [currentPage]='page$ | async' [pageSize]="pageSize.toString()"
       (onPageChange)="page$.next($event)">
-    </ivo-page>
+    </ivo-pagination>
   </footer>
 </ng-container>
 

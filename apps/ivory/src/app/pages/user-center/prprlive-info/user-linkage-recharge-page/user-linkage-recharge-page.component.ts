@@ -1,3 +1,4 @@
+import { EPaymentWay } from './../../../pay/pay.page';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { take, map } from 'rxjs/operators';
@@ -25,7 +26,7 @@ export class UserLinkageRechargePage {
                 price: number;
                 free: number;
             }[];
-        }>('/link/v1/client/goods')
+        }>('/link/client/goods')
         .pipe(map((res) => res.list));
 
     checked$ = new BehaviorSubject(0);
@@ -37,7 +38,7 @@ export class UserLinkageRechargePage {
                 if (goods[check]) {
                     this.http
                         .post<{ trade_id: number }>(
-                            '/link/v1/client/create_order',
+                            '/link/client/create_order',
                             {
                                 h: goods[check].time,
                             }
@@ -47,6 +48,7 @@ export class UserLinkageRechargePage {
                                 this.router.navigate(['../pay'], {
                                     queryParams: {
                                         tradeId: s.trade_id,
+                                        a : EPaymentWay.prprlive
                                     },
                                 });
                             },
