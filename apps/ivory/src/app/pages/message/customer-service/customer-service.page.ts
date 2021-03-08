@@ -2,7 +2,7 @@ import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/overlay';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, Input, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Select } from '@ngxs/store';
-import { UserState, ModalService, ZoomService, Toast } from '@peacha-core';
+import { UserState, ModalService, ZoomService, Toast, CustomerService } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { Observable, BehaviorSubject, Subject, timer, EMPTY } from 'rxjs';
 import { switchMap, tap, takeUntil, withLatestFrom } from 'rxjs/operators';
@@ -53,10 +53,11 @@ export class CustomerServicePage implements OnDestroy {
 		private toast: Toast,
 		private scrollDispatcher: ScrollDispatcher
 	) {
+
 		this.id$.subscribe(s => {
 			this.id = s;
 			if (s > 0) {
-				timer(1000, 10000)
+				timer(0, 10000)
 					.pipe(
 						switchMap(_t => {
 							return this.http.get<{

@@ -21,7 +21,7 @@ export class MessagePage {
 	@Select(ChatState.unread)
 	chatUnread$: BehaviorSubject<number>;
 
-	unread$ = new BehaviorSubject(this.customer.unreadCounnt);
+	unread$ = this.customer.unreadCounnt$;
 	notice$ = this.msgCount.systemCount$;
 	star$ = this.msgCount.likeCount$;
 	forum$ = this.msgCount.replyCount$;

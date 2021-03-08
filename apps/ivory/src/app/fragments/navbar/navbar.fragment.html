@@ -28,9 +28,9 @@
 		<ng-template #logined>
 			<span class="cart" (click)="toMessage()">
 				<img src="/assets/image/navbar/bell.svg" />
-				<span class="yuan" *ngIf="((allCount$ |async)+customerCount)>0 ||(chatUnread$|async)>0">
-					<ng-container *ngIf="(allCount$ |async)+customerCount+(chatUnread$|async)>99;else less"> 99 </ng-container>
-					<ng-template #less> {{(allCount$ |async)+customerCount+(chatUnread$|async)}} </ng-template>
+				<span class="yuan" *ngIf="((allCount$ |async)+customerCount$.value)>0 ||(chatUnread$|async)>0">
+					<ng-container *ngIf="(allCount$ |async)+customerCount$.value+(chatUnread$|async)>99;else less"> 99 </ng-container>
+					<ng-template #less> {{(allCount$ |async)+customerCount$.value+(chatUnread$|async)}} </ng-template>
 				</span>
 			</span>
 			<img [attr.src]="info.avatar" class="avatar" #avatar (mouseenter)="hoverAvatar($event)" (click)="toUser(info.id)" />
