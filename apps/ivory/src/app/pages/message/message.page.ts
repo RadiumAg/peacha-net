@@ -65,5 +65,6 @@ export class MessagePage {
 
 	remove(): void {
 		this.unread$.next(0);
+		this.customer.unreadCounnt$.next(0);
 	}
 }
