@@ -35,7 +35,7 @@ export class PayRecordDetailPage {
 			})
 
 		} else {
-			window.open(location.origin + targetRoute.split('{orderId}')[0] + (targetRoute.split('{orderId}')[1] ? id : ''));
+			window.open(location.origin + targetRoute.split('{orderId}')[0] + (targetRoute.split('{orderId}').length === 2 ? id : ''));
 		}
 	}
 }
