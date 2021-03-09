@@ -86,7 +86,8 @@ export class PayPage implements OnInit, OnDestroy {
 					switchMap(() => this.tradeApi.payHeartbeat(s.tradeId)),
 					tap(heartbeat => {
 						if ([2, 4, 5].includes(heartbeat.status)) {
-							this.router.navigate([s.a ? '/pay/results' : '/commission/detail/payment'], {
+              const goToUrl = this.getSuccessUrl(parseInt(s.a,10));
+							this.router.navigate([goToUrl], {
 								queryParamsHandling: 'preserve',
 							});
 						} else if ([3, 31, 32].includes(heartbeat.status)) {
@@ -94,6 +95,7 @@ export class PayPage implements OnInit, OnDestroy {
 								.open(PopTips, [heartbeat.error, false])
 								.afterClosed()
 								.subscribe(_ => {
+
 									this.router.navigate([s.a ? '/setting/order' : '/commission/detail/node'], {
 										queryParams: {
 											id: s.id ?? -1,
@@ -109,7 +111,19 @@ export class PayPage implements OnInit, OnDestroy {
 		});
 	}
 
+  private getSuccessUrl(category: number) {
+    let goToUrl = '/commission/detail/payment';
+    switch (category) {
+      case EPaymentWay.live2dOrIllust:
+        goToUrl = '/pay/results';
+        break;
 
+      case EPaymentWay.prprlive:
+        goToUrl = '/setting/linkagetime/order';
+        break;
+    }
+    return goToUrl;
+  }
 
 	// 确定支付方式按钮
 	next() {
@@ -221,4 +235,9 @@ export class PayPage implements OnInit, OnDestroy {
 	goSelect() {
 		this.steps.goto('select');
 	}
+}
+
+export enum EPaymentWay {
+   live2dOrIllust,
+   prprlive
 }

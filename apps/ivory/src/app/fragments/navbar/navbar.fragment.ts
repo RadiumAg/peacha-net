@@ -9,7 +9,7 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { DASHBOARD_ANIMATION, AVATAR_ANIMATION } from './animations';
 import { PlatformLocation } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { UserState, ModalService, CustomerService, ChatStartService, MessageUnreadCountService } from '@peacha-core';
+import { UserState, CustomerService, ChatStartService, MessageUnreadCountService } from '@peacha-core';
 import { ChatState, Logout } from '@peacha-core/state';
 
 
@@ -54,7 +54,7 @@ export class NavbarFragment {
 	r: string;
 
 	allCount$ = this.msgCount.allCount$;
-	customerCount = this.customer.unreadCounnt;
+	customerCount$ = this.customer.unreadCounnt$;
 	followerCount: number;
 	private currentOverlay: OverlayRef;
 	private portal: TemplatePortal;
@@ -66,15 +66,15 @@ export class NavbarFragment {
 		private vc: ViewContainerRef,
 		private platform: PlatformLocation,
 		private http: HttpClient,
-		private modal: ModalService,
 		private customer: CustomerService,
 		private cdr: ChangeDetectorRef,
 		private dialog: ChatStartService,
 		private msgCount: MessageUnreadCountService
 	) {
-		this.customer.count();
+
 		this.isLogin$.subscribe(is => {
 			if (is) {
+				this.customer.count();
 				this.dialog.getWebsocketUrl();
 				this.msgCount.getUnreadCount();
 			}

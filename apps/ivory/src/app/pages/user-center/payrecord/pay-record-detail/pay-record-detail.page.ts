@@ -1,6 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ShopMallApiService } from '@peacha-core';
 import { combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { TradeApiService } from '../../../pay/trade-api.service';
@@ -14,7 +14,7 @@ export class PayRecordDetailPage {
 	constructor(
 		private tradeapi: TradeApiService,
 		private router: ActivatedRoute,
-		private shopApi: ShopMallApiService
+		private http: HttpClient
 	) { }
 
 	detail$ = combineLatest([this.router.params]).pipe(
@@ -23,13 +23,19 @@ export class PayRecordDetailPage {
 		})
 	);
 
-	toOrderDetail(i: string, p: string, id: string) {
-		if (i.includes('企划')) {
-			this.shopApi.orderDetail(id).subscribe(s => {
-				window.open(location.origin + '/commission/detail/payment?id=' + s.goods[0].sourceId);
+	toOrderDetail(targetRoute: string, requestUrl: string, id: string) {
+		if (requestUrl) {
+			this.http.get<{
+				goods: {
+					sourceId: string,
+				}[]
+			}>(requestUrl.split('{orderId}')[0] + id).subscribe(s => {
+				window.open(location.origin + targetRoute.split('?id')[0] + '?id=' + s.goods[0].sourceId);
+
 			})
+
 		} else {
-			window.open(p);
+			window.open(location.origin + targetRoute.split('{orderId}')[0] + (targetRoute.split('{orderId}').length === 2 ? id : ''));
 		}
 	}
 }

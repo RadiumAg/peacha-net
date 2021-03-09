@@ -16,7 +16,7 @@
 					</div>
 				</ng-container>
 			</div>
-
+			<div class="must tip">支付过程中，请勿关闭此页面。</div>
 			<div class="must">若无付款二维码页面，请检查浏览器是否拦截弹出式窗口。</div>
 			<li class="btn">
 				<button class="fan" (click)="goCart()">返回</button>
@@ -28,6 +28,7 @@
 		<div class="step qrcode" *ivoStep="'qrcode'">
 			<img src="/assets/image/index/unindex-exchange.png" />
 			<li>等待支付完成......</li>
+			<div class="must tip">支付过程中，请勿关闭此页面。</div>
 			<div class="must">若无付款二维码页面，请检查浏览器是否拦截弹出式窗口。</div>
 			<div class="btnlist">
 				<button class="no" (click)="goSelect()">取消支付</button>
