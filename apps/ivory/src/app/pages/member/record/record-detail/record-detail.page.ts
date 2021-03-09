@@ -30,7 +30,11 @@ export class RecordDetailPage {
 			if (s.jk) {
 				this.router.navigate(['/member/record']);
 			} else {
-				history.go(-1);
+				if (window.history.length === 1) {
+					this.router.navigate(['/member/record']);
+				} else {
+					history.go(-1);
+				}
 			}
 		});
 	}
