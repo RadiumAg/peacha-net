@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { ReactiveComponentModule,RoleApiService } from '@peacha-core';
+import { ReactiveComponentModule, RoleApiService } from '@peacha-core';
 import { TradeApiService } from '../pay/trade-api.service';
 import { OrderListPage } from './order-list/order-list.page';
 import { PayRecordDetailPage } from './payrecord/pay-record-detail/pay-record-detail.page';
@@ -18,7 +18,6 @@ import { MydatepickerPage } from './wallet/mydatepicker/mydatepicker.page';
 import { WalletDrawPage } from './wallet/wallet-withdraw/walletdraw.page';
 import { ComponentsModule } from '../commission/components/components.module';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { SellOrderDetailPage } from './sell-order-detail/sell-order-detail.page';
 import { CouponPage } from './coupon/coupon.page';
 import { BuyOrderDetailPage } from './buy-order-detail/buy-order-detail.page';
 import { PeachaComponentsModule } from '@peacha-core/components';
@@ -33,7 +32,6 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 		OrderListPage,
 		BuyOrderDetailPage,
 		CdComponent,
-		SellOrderDetailPage,
 		MydatepickerPage,
 		PayrecordPage,
 		PayRecordDetailPage,
@@ -47,7 +45,7 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 		ReactiveFormsModule,
 		ComponentsModule,
 		NzDatePickerModule,
-    TranslateModule.forChild(),
+		TranslateModule.forChild(),
 		RouterModule.forChild([
 			{
 				path: '',
@@ -58,10 +56,10 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 						path: '',
 						component: UserProfilePage,
 					},
-          {
-            path: 'linkagetime',
-            loadChildren: () => import('./prprlive-info/prprlive-info.module').then(m => m.PrprliveInfoModule),
-          },
+					{
+						path: 'linkagetime',
+						loadChildren: () => import('./prprlive-info/prprlive-info.module').then(m => m.PrprliveInfoModule),
+					},
 					{
 						path: 'security',
 						component: UserSecurityPage,
@@ -83,10 +81,6 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 						component: BuyOrderDetailPage,
 					},
 					{
-						path: 'sell-order/:id',
-						component: SellOrderDetailPage,
-					},
-					{
 						path: 'pay',
 						component: PayrecordPage,
 					},
@@ -102,6 +96,6 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 			},
 		]),
 	],
-	providers: [SettingResolve, TradeApiService, RoleApiService, ],
+	providers: [SettingResolve, TradeApiService, RoleApiService,],
 })
 export class UserCenterModule { }

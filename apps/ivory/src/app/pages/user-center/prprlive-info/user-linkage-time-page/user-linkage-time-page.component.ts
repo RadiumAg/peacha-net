@@ -15,7 +15,7 @@ export class UserLinkageTimePage {
         private translate: TranslateService,
     ) { }
 
-    info$ = (this.http.get('/link/v1/client/info') as Observable<{
+    info$ = (this.http.get('/link/client/info') as Observable<{
         surplus_second: string;
         expiry: number;
         max_time: number;
@@ -67,7 +67,7 @@ export class UserLinkageTimePage {
         .pipe(
             switchMap(([page]) => {
                 return this.http.get(
-                    `/link/v1/client/uselog?p=${page - 1}&s=10`
+                    `/link/client/uselog?p=${page - 1}&s=10`
                 ) as Observable<{
                     count: number;
                     list: [
