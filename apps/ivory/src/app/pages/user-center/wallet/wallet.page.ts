@@ -148,9 +148,8 @@ export class WalletPage {
 				window.open(location.origin + targetRoute.split('?id')[0] + '?id=' + s.goods[0].sourceId);
 
 			})
-
 		} else {
-			window.open(location.origin + targetRoute.split('{orderId}')[0] + (targetRoute.split('{orderId}')[1] ? id : ''));
+			window.open(location.origin + targetRoute.split('{orderId}')[0] + (targetRoute.split('{orderId}').length === 2 ? id : ''));
 		}
 	}
 
