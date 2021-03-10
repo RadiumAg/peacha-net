@@ -106,9 +106,11 @@
 		<a
 			class="kefu"
 			appDebounceClick
-			*ngIf="currentNodeId == commissionNodeList[commissionNodeList.length-1].id && identity===2 && item.id==nodeList[0].id && isShowAppeal"
-			(debounceClick)="discontinue()"
-			>对此驳回/退回有异议，申请平台介入</a
+			*ngIf="currentNodeId == commissionNodeList[commissionNodeList.length-1].id && identity===2 && item.id==nodeList[0].id "
+			(debounceClick)="isShowAppeal?discontinue():isShowRevokeAppeal?revokediscontinue():null"
+		>
+			<ng-container *ngIf="isShowAppeal"> 对此驳回/退回有异议，申请平台介入 </ng-container>
+			<ng-container *ngIf="isShowRevokeAppeal"> 撤回平台接入驳回 </ng-container></a
 		>
 		<!-- <ng-container *ngIf="!item.appeal">
             <img *ngIf="item.status===3" class="result-img"

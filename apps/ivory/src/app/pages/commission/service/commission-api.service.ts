@@ -701,6 +701,23 @@ export class CommissionApiService {
 		});
 
 
+	/**
+* @name 撤销申诉
+*
+* @param  c  企划Id
+*
+* @author ding
+*
+* @description 只能申请最后一个节点最新一次提交
+*
+* @version 2021/3/10
+*/
+	public nodeRevokeAppeal = (c: number) =>
+		this.http.post(`/commission/node/revoke_appeal`, {
+			c
+		});
+
+
 
 
 	/**=============  增加稿酬模块接口  ================== */
@@ -809,6 +826,25 @@ export class CommissionApiService {
 			r,
 			d,
 		});
+
+
+	/**
+* @name 撤回中止企划申请
+*
+* @param  c  申请Id
+*
+* @author ding
+*
+* @description
+*
+* @version 2021/3/10
+*/
+	public revokeDiscontinue = (c: number) =>
+		this.http.post(`/commission/revoke_discontinue`, {
+			c
+		});
+
+
 
 	/**
 	 * @name 是否确认中止企划申请
@@ -920,6 +956,23 @@ export class CommissionApiService {
 				};
 			}[];
 		}>(`/commission/discontinue/file_records?c=${c}`);
+
+	/**
+	 * @name 撤回企划中止后文件提交
+	 *
+	 * @param  c  提交记录id
+	 *
+	 * @author ding
+	 *
+	 * @description
+	 *
+	 * @version 2021/3/10
+	 */
+	public revokeFileRecords = (c: number) =>
+		this.http.post(`/commission/discontinue/revoke_submit_file`, {
+			c
+		});
+
 
 	/**
 	 * @name 用户作品

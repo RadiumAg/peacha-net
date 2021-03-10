@@ -3,6 +3,7 @@ import {
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
+	Input,
 	OnInit,
 	Output,
 	Renderer2
@@ -28,11 +29,16 @@ import { CommissionTimeout } from '../../commission-pop-component/commission-tim
 export class CommissionDetailSteps implements OnInit {
 	// @ViewChild('translate') translateBox: ElementRef;
 
+	// @Input() set changeLastNode(v: number) {
+	// 	if (v === 1) {
+	// 		this.indexNode = { ...this.indexNode, status: 4 };
+	// 	}
+	// }
+
 	@Output() update = new EventEmitter<any>();
 	active: number;
 
 	dataList: Array<any>;
-
 	// showTitle: string;
 
 	// index_type: number;
@@ -920,9 +926,13 @@ export class CommissionDetailSteps implements OnInit {
 		}).afterClosed().subscribe(is => {
 			if (is) {
 				this.commissionApi.nodeRevoke(Number(this.indexNode.id)).subscribe(
-					s => {
-
-					}, e => {
+					_s => {
+						this.indexNode = { ...this.indexNode, status: 0 };
+						this.getNodeSubmitRecord(this.indexNode.id, true);
+						this.fileList = [];
+						this.imageList = [];
+						this.cdr.detectChanges();
+					}, _e => {
 						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' })
 					})
 			}

@@ -8,6 +8,7 @@ import { IllustZoomModalComponent } from '../../../work/illust-zoom-modal/illust
 import { CommissionApiService } from '../../service/commission-api.service';
 import { CommissionDetailService } from '../../service/detail.service';
 import { CommissionDetailErrorService } from '../commission-detail-error.service';
+import { CommissionPrompt } from '../commission-pop-component/commission-prompt/commission-prompt';
 
 
 @Component({
@@ -55,6 +56,8 @@ export class CommissionDetailNodelistPage implements OnInit {
 
 	isShowAppeal = false;
 
+	isShowRevokeAppeal = false;
+
 	list$ = combineLatest([this.change$, this.route.queryParams])
 		.pipe(
 			switchMap(([_c, p]) => {
@@ -62,14 +65,15 @@ export class CommissionDetailNodelistPage implements OnInit {
 					return this.commissionApi.nodeSubmitRecords(p.node).pipe(
 						tap(s => {
 							this.isShowAppeal = false;
+							this.isShowRevokeAppeal = false;
 							this.currentNodeId = p.node;
 							if ((s.list[0]?.status === 2 || s.list[0]?.status === 3) && !s.list[0]?.appeal) {
 								this.isShowAppeal = true;
+							} else if ((s.list[0]?.status === 2 || s.list[0]?.status === 3) && s.list[0]?.appeal && s.list[0]?.appeal.status === 0) {
+								this.isShowRevokeAppeal = true;
 							}
 							this.nodeList = s?.list.filter(l => l.status != 0 && l.status != 1);
-							// if (s.list[0]?.status === 2 && s.list[0]?.appeal?.status === 0) {
-							//   this.nodeList.unshift(s.list[0]);
-							// };
+
 							this.cdr.detectChanges();
 						})
 					);
@@ -109,7 +113,9 @@ export class CommissionDetailNodelistPage implements OnInit {
 		// })
 		this.commissionApi.nodeAppeal(this.detail.getCommissionId()).subscribe(
 			_s => {
-				this.modal.open(PopTips, ['申请平台介入成功！', false, 1]);
+				this.modal.open(PopTips, ['申请平台介入成功！', false, 1]).afterClosed().subscribe(_s => {
+					this.change$.next(2);
+				});
 			},
 			e => {
 				this.isError.ifError(e.code);
@@ -122,5 +128,18 @@ export class CommissionDetailNodelistPage implements OnInit {
 			assets: [data],
 			index: 0,
 		});
+	}
+
+	revokediscontinue(): void {
+		this.modal.open(CommissionPrompt, { title: '撤回平台介入驳回', tips: '是否确定撤回平台介入驳回？' }).afterClosed().subscribe(is => {
+			if (is) {
+				this.commissionApi.nodeRevokeAppeal(this.detail.getCommissionId()).subscribe(
+					_s => {
+						this.change$.next(1);
+					}, _e => {
+						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' })
+					})
+			}
+		})
 	}
 }
