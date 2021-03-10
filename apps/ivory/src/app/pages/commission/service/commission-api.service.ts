@@ -684,6 +684,25 @@ export class CommissionApiService {
 			s,
 		});
 
+	/**
+	 * @name 撤销节点
+	 *
+	 * @param  n  节点Id
+	 *
+	 * @author ding
+	 *
+	 * @description
+	 *
+	 * @version 2021/3/9
+	 */
+	public nodeRevoke = (n: number) =>
+		this.http.post(`/commission/node/revoke`, {
+			n
+		});
+
+
+
+
 	/**=============  增加稿酬模块接口  ================== */
 
 	/**
