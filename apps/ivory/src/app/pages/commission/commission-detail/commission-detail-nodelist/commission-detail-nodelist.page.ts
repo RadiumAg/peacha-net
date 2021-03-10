@@ -131,13 +131,15 @@ export class CommissionDetailNodelistPage implements OnInit {
 	}
 
 	revokediscontinue(): void {
-		this.modal.open(CommissionPrompt, { title: '撤回平台介入驳回', tips: '是否确定撤回平台介入驳回？' }).afterClosed().subscribe(is => {
+		this.modal.open(CommissionPrompt, { title: '撤回平台介入驳回', tips: '是否确定撤回平台介入驳回？', type: true }).afterClosed().subscribe(is => {
 			if (is) {
 				this.commissionApi.nodeRevokeAppeal(this.detail.getCommissionId()).subscribe(
 					_s => {
 						this.change$.next(1);
 					}, _e => {
-						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' })
+						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' }).afterClosed().subscribe(_ => {
+							location.reload();
+						})
 					})
 			}
 		})

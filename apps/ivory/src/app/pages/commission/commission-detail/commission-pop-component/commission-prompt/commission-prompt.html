@@ -5,7 +5,7 @@
 	</li>
 	<div class="tips">{{key.tips}}</div>
 	<div class="btn">
-		<button ivo-button [buttonType]="1" (click)="cancel()">取消</button>
+		<button ivo-button [buttonType]="1" (click)="cancel()" *ngIf="key.type">取消</button>
 		<button ivo-button appDebounceClick (debounceClick)="sure()">确定</button>
 	</div>
 </div>

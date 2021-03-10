@@ -408,14 +408,17 @@ export class CommissionDiscontinuePage implements OnInit {
 	revoke(type: number, id: number): void {
 		this.modal.open(CommissionPrompt, {
 			title: type === 0 ? '撤回协商中止' : '撤回平台介入中止',
-			tips: type === 0 ? '是否确定撤回协商中止？' : '是否确定撤回平台介入中止？'
+			tips: type === 0 ? '是否确定撤回协商中止？' : '是否确定撤回平台介入中止？',
+			type: true
 		}).afterClosed().subscribe(is => {
 			if (is) {
 				this.api.revokeDiscontinue(id).subscribe(
 					_s => {
 						this.refresh$.next(1);
 					}, _e => {
-						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' })
+						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' }).afterClosed().subscribe(_ => {
+							location.reload();
+						})
 					})
 			}
 		})
@@ -425,7 +428,8 @@ export class CommissionDiscontinuePage implements OnInit {
 	revokeFile(id: number): void {
 		this.modal.open(CommissionPrompt, {
 			title: '撤回提交源文件',
-			tips: '是否确定撤回提交源文件？'
+			tips: '是否确定撤回提交源文件？',
+			type: true
 		}).afterClosed().subscribe(is => {
 			if (is) {
 				this.api.revokeFileRecords(id).subscribe(
@@ -433,7 +437,9 @@ export class CommissionDiscontinuePage implements OnInit {
 						this.refresh$.next(1);
 						this.fileList = [];
 					}, _e => {
-						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' })
+						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' }).afterClosed().subscribe(_ => {
+							location.reload();
+						})
 					})
 			}
 		})

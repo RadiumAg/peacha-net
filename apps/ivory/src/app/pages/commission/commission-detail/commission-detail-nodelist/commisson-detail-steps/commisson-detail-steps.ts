@@ -922,7 +922,8 @@ export class CommissionDetailSteps implements OnInit {
 
 		this.modal.open(CommissionPrompt, {
 			title: this.indexNode.type === 0 ? '撤回企划开始确认' : '撤回阶段节点提交',
-			tips: this.indexNode.type === 0 ? '是否确定撤回企划开始确认？' : '是否确定撤回阶段节点提交？'
+			tips: this.indexNode.type === 0 ? '是否确定撤回企划开始确认？' : '是否确定撤回阶段节点提交？',
+			type: true
 		}).afterClosed().subscribe(is => {
 			if (is) {
 				this.commissionApi.nodeRevoke(Number(this.indexNode.id)).subscribe(
@@ -933,7 +934,9 @@ export class CommissionDetailSteps implements OnInit {
 						this.imageList = [];
 						this.cdr.detectChanges();
 					}, _e => {
-						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' })
+						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' }).afterClosed().subscribe(_s => {
+							location.reload();
+						})
 					})
 			}
 		})

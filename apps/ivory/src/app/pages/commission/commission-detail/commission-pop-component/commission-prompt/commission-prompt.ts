@@ -10,7 +10,7 @@ export class CommissionPrompt {
 
     constructor(
         private modalRef: ModalRef<CommissionPrompt>,
-        @Inject(MODAL_DATA_TOKEN) public key: { title: string; tips: string }
+        @Inject(MODAL_DATA_TOKEN) public key: { title: string; tips: string, type?: boolean }
     ) {
     }
 
