@@ -348,7 +348,6 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
               enableFaceTracker: this.modalSetting.enableFaceTracker,
               enableSettingPanel: this.modalSetting.enableSettingPanel,
             });
-            console.log();
             value.c = value.c ? 0 : '';
             value.gl = [
               {

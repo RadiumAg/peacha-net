@@ -22,9 +22,9 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { PeachaComponentsModule } from '@peacha-core/components';
 import { CompressService } from '@peacha-studio-core/zip';
-import { illustratePaidOrFreeComponent } from './select-type/illustrate/illustrate.component';
 import { IllustrateFreeComponent } from './illustrate/illustrate-free/illustrate-free.component';
 import { IllustratePaidComponent } from './illustrate/illustrate-paid/illustrate-paid.component';
+import { illustratePaidOrFreeComponent } from './select-type/illustrate/illustratePaidOrFreeComponent.component';
 
 @NgModule({
   declarations: [

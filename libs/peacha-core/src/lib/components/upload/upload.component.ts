@@ -1,8 +1,8 @@
-import { Component, ViewChild, ElementRef, Renderer2, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Component, ViewChild, ElementRef, Renderer2, Input, OnInit, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { HttpClient, HttpEventType } from '@angular/common/http';
-import { map, filter } from 'rxjs/operators';
+import { map, filter, takeUntil } from 'rxjs/operators';
 import { PopTips } from '../pop-tips/pop-tips';
 import { Process } from '../../core/model/process';
 import { ModalService } from '../../core/service/modals.service';
@@ -34,7 +34,7 @@ export interface IvoUploadFile {
 		},
 	],
 })
-export class UploadComponent implements ControlValueAccessor {
+export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy {
 	constructor(private re2: Renderer2, private http: HttpClient, private modal: ModalService) { }
 
 	@Input() set fileSize(value: number) {
@@ -52,12 +52,15 @@ export class UploadComponent implements ControlValueAccessor {
 	filters$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 	files$: BehaviorSubject<any[]> = new BehaviorSubject([]);
 	url$: BehaviorSubject<any[]> = new BehaviorSubject([]);
-	@Input() fileNumber: number;
+  desctroy$ = new Subject<void>();
+	@Input() fileNumber = 10000;
 	@Input() buttonWord = '';
 	@Input() canUplaod = true;
 	@Input() canDelete = false;
   @Input() uploadType = '*' ;
+
 	progress = false;
+	updata: (o: any[]) => void;
 	Process$: BehaviorSubject<Process> = new BehaviorSubject({
 		success: false,
 		progress: 0,
@@ -76,10 +79,18 @@ export class UploadComponent implements ControlValueAccessor {
 			}
 			return true;
 		},
+
 	};
 
-	updata: (o: any[]) => void;
-	writeValue(files: any[]): void {
+   isCanUpload =()=>{
+    if(this.filters$.getValue().length === this.fileNumber){
+        this.canUplaod = false;
+    }else {
+        this.canUplaod = true;
+    }
+  }
+
+	writeValue(files: {token:string;name:string;url:string}[]): void {
 		const data = files.map(x => {
 			return {
 				token: x.token || '',
@@ -96,7 +107,54 @@ export class UploadComponent implements ControlValueAccessor {
 		this.init();
 	}
 
-	private init() {
+	registerOnTouched(/* fn: any */): void { }
+
+	setDisabledState?(/* isDisabled: boolean */): void { }
+
+	/**
+	 *
+	 * @param e 事件对象
+	 * @description 删除上传文件
+	 */
+	delteFile(symbol: symbol) {
+		let files;
+		this.filters$.pipe(map(x => x.filter(_ => Reflect.get(_, 'symbol') !== symbol))).subscribe(x => {
+			files = x;
+		});
+		this.filters$.next(files);
+    this.isCanUpload();
+	}
+
+	/**
+	 *
+	 * @param fileList 文件列表
+	 * @description 文件上传
+	 */
+	uploadFiles(fileList: FileList): void {
+		this.upload(fileList);
+	}
+
+	onClick(e: Event) {
+		this.filesInput.nativeElement.click();
+		e.preventDefault();
+	}
+
+	/**
+	 * @description 文件发生改变
+	 * @param e 事件对象
+	 */
+	onChange(e: Event): void {
+		if (this.isResertBeforeUpload) {
+			this.resertUpload();
+		}
+		const hie = e.target as HTMLInputElement;
+		if (this.verify.sizeVerify(hie.files[0])) {
+			this.uploadFiles(hie.files);
+		}
+		hie.value = '';
+	}
+
+  private init() {
 		this.filters$.subscribe((x: File[]) => {
 			this.files$.next(
 				x.length === 0
@@ -112,10 +170,10 @@ export class UploadComponent implements ControlValueAccessor {
 						.filter(l => Boolean(l))
 			);
 		});
-		const updata = this.updata;
 		// 订阅token观察对象
 		this.files$.subscribe(x => {
 			this.updata(x);
+		  this.isCanUpload()
 		});
 	}
 
@@ -136,39 +194,13 @@ export class UploadComponent implements ControlValueAccessor {
 		return true;
 	}
 
-	registerOnTouched(/* fn: any */): void { }
-
-	setDisabledState?(/* isDisabled: boolean */): void { }
-
-	/**
-	 *
-	 * @param e 事件对象
-	 * @description 删除上传文件
-	 */
-	delteFile(symbol: symbol) {
-		let files;
-		this.filters$.pipe(map(x => x.filter(_ => Reflect.get(_, 'symbol') !== symbol))).subscribe(x => {
-			files = x;
-		});
-		this.filters$.next(files);
-	}
-
-	/**
-	 *
-	 * @param fileList 文件列表
-	 * @description 文件上传
-	 */
-	uploadFiles(fileList: FileList | File[]): void {
-		this.upload(fileList);
-	}
 
 	/**
 	 * @description 上传文件
 	 * @param fileList 文件列表
 	 */
-	private upload(fileList: any) {
+	private upload(fileList: FileList) {
 		const file = [];
-		// tslint:disable-next-line: forin
 		for (const key in fileList) {
 			if (isNaN(Number(key))) {
 				continue;
@@ -179,8 +211,7 @@ export class UploadComponent implements ControlValueAccessor {
 			return;
 		}
 		this.progress = true;
-
-		for (const files of fileList) {
+		for (const files of Array.from(fileList)) {
 			const form = new FormData();
 			form.append('f', files);
 			this.http
@@ -237,34 +268,30 @@ export class UploadComponent implements ControlValueAccessor {
 		});
 	}
 
-	private setFile(file: any, token: string, fileName?: string, url?: string) {
+	private setFile(file: File, token: string, fileName?: string, url?: string) {
 		Reflect.set(file, 'token', token);
 		Reflect.set(file, 'name', fileName);
 		Reflect.set(file, 'symbol', Symbol());
 		Reflect.set(file, 'url', url);
 	}
 
-	onClick(e: Event) {
-		this.filesInput.nativeElement.click();
-		e.preventDefault();
-	}
-
-	/**
-	 * @description 文件发生改变
-	 * @param e 事件对象
-	 */
-	onChange(e: Event): void {
-		if (this.isResertBeforeUpload) {
-			this.resertUpload();
-		}
-		const hie = e.target as HTMLInputElement;
-		if (this.verify.sizeVerify(hie.files[0])) {
-			this.uploadFiles(hie.files);
-		}
-		hie.value = '';
-	}
+  private subscribeData() {
+    this.filters$.pipe(takeUntil(this.desctroy$)).subscribe((x) => {
+      this.isCanUpload();
+    });
+  }
 
 	private resertUpload() {
 		this.filters$.next([]);
 	}
+
+  ngOnInit(): void {
+    this.subscribeData();
+  }
+
+  ngOnDestroy(): void {
+      this.desctroy$.next();
+      this.desctroy$.unsubscribe();
+  }
+
 }

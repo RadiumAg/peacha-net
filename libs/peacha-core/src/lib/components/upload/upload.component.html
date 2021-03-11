@@ -20,7 +20,7 @@
       </div>
     </div>
   </div>
-  <button ivo-button (click)="onClick($event)" [disabled]="!canUplaod">
+  <button ivo-button (click)="onClick($event)" *ngIf="canUplaod">
     {{ buttonWord }}
   </button>
   <input #files (change)="onChange($event)" type="file" [accept]="uploadType" hidden />

@@ -11,8 +11,8 @@ import { SelectData, ModalService, UserState, SELECT_TOKEN, SELECT_DATA_TOKEN } 
 
 @Component({
 	selector: 'ivo-live2d',
-	templateUrl: './illustrate.component.html',
-	styleUrls: ['./illustrate.component.less'],
+	templateUrl: './illustratePaidOrFreeComponent.component.html',
+	styleUrls: ['./illustratePaidOrFreeComponent.component.less'],
 })
 export class illustratePaidOrFreeComponent implements OnInit, OnDestroy {
 	constructor(
