@@ -19,7 +19,7 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 	submitButton: ElementRef;
 
 	constructor(private fb: FormBuilder, private modal: ModalService, private route: ActivatedRoute, private api: ReleaseApiService) { }
-
+  Fixed = Number.prototype.toFixed;
 	param: {
 		n: string;
 		d: string;
@@ -29,9 +29,10 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 		c: number;
 		cs: number;
 		ss: number;
+    fr: number;
 		f: [];
 		gl: [];
-	};
+	} = {};
 	form = this.fb.group({
 		f: [[], Validators.required],
 		n: ['', [Validators.required, emptyStringValidator()]],
@@ -39,6 +40,9 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 		t: [[]],
 		b: ['', Validators.required],
 		c: ['', Validators.required],
+    p: ['', Validators.required],
+    gl_token:[[],Validators.required],
+    ss: [true],
 		a: [[]],
 		checked: [false, Validators.requiredTrue],
 	});
@@ -50,6 +54,7 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 	});
 	copyrightCheckes$ = new BehaviorSubject<{ id: number; name: string }[]>([]);
 	stateMentStates = [];
+  maxPrice = 99999;
 	copyrightModel = [];
 	isEdit = false;
 	stateMentStrategy = {
@@ -61,7 +66,7 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 			this.stateMentStates = this.stateMentStates.map(_x => false);
 		},
 	};
-
+  call = (x: Function, y: any, ...args) => x.call(y, args);
 	private resetAChecked() {
 		this.checkedForm.patchValue({
 			copychecked: false,
@@ -195,7 +200,7 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 	private subscribeForm() {
 		this.form.valueChanges
 			.pipe(
-				map((value: any) => {
+				map((value) => {
 					if (!this.isEdit) {
 						value.b = value.b.token || '';
 						value.f = value.f.map((s: { remote_token: string }) => s.remote_token);
@@ -207,16 +212,22 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 							t: value.t.toString(),
 							f: value.f,
 							c: value.c,
+              fr: 1,
 							cs: 1,
-							ss: 0,
-							gl: [],
+							ss: value.ss? 1 : 2,
+							gl: [{
+                  n: '付费下载内容',
+                  f: [value.gl_token[0]?.token? value.gl_token[0]?.token : (()=>{})()],
+                  p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0, (this.maxPrice + '').length)), 10) : value.p,
+                  s: value.s,
+              }],
 						};
 					} else {
 						return value;
 					}
 				})
 			)
-			.subscribe((x: any) => {
+			.subscribe((x) => {
 				console.log(this.form.value);
 				this.param = x;
 			});
