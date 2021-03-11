@@ -1,11 +1,11 @@
 import { ScrollDispatcher, CdkScrollable } from '@angular/cdk/overlay';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, Input, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { Select } from '@ngxs/store';
-import { UserState, ModalService, ZoomService, Toast, CustomerService } from '@peacha-core';
+import { Select, Store } from '@ngxs/store';
+import { UserState, ModalService, ZoomService, Toast } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
-import { Observable, BehaviorSubject, Subject, timer, EMPTY } from 'rxjs';
-import { switchMap, tap, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subject, timer, EMPTY, combineLatest } from 'rxjs';
+import { switchMap, tap, takeUntil, withLatestFrom, skip } from 'rxjs/operators';
 import { IllustZoomModalComponent } from '../../work/illust-zoom-modal/illust-zoom-modal.component';
 
 @Component({
@@ -51,39 +51,42 @@ export class CustomerServicePage implements OnDestroy {
 		private modal: ModalService,
 		private zoom: ZoomService,
 		private toast: Toast,
-		private scrollDispatcher: ScrollDispatcher
+		private scrollDispatcher: ScrollDispatcher,
+		private store: Store
 	) {
-
 		this.id$.subscribe(s => {
 			this.id = s;
-			if (s > 0) {
-				timer(0, 10000)
-					.pipe(
-						switchMap(_t => {
-							return this.http.get<{
-								list: {
-									sender_id: number;
-									sender_avatar: string;
-									speaktime: number;
-									message: string;
-									type: number;
-									readstate: number;
-								}[];
-							}>('/webim/unread');
-						}),
-						tap(l => {
-							l.list.forEach(x => {
-								this.histroy = this.histroy.concat(x);
-								this.scrollToBottom();
-								this.cdr.markForCheck();
-							});
-						}),
-						takeUntil(this.destroy$)
-					)
-					.subscribe();
-			}
-		});
+		})
 	}
+
+
+	unreadList$ = combineLatest([
+		this.store
+			.selectOnce<number>(s => s.user.id),
+		timer(0, 10000)
+	]).pipe(
+		switchMap(_t => {
+			return this.http.get<{
+				list: {
+					sender_id: number;
+					sender_avatar: string;
+					speaktime: number;
+					message: string;
+					type: number;
+					readstate: number;
+				}[];
+			}>('/webim/unread');
+		}),
+		skip(1),
+		tap(l => {
+			l.list.forEach(x => {
+				this.histroy = this.histroy.concat(x);
+				this.scrollToBottom();
+				this.cdr.markForCheck();
+			});
+		}),
+		takeUntil(this.destroy$)
+	).subscribe()
 
 	getHistroy$ = this.page$
 		.pipe(
@@ -156,6 +159,7 @@ export class CustomerServicePage implements OnDestroy {
 			}
 		}, 1);
 	};
+
 
 	onDrop(event: DragEvent): void {
 		event.preventDefault();
