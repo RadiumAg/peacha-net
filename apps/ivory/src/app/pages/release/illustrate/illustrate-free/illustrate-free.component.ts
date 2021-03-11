@@ -1,5 +1,5 @@
 import { SuccessTips } from './../../components/success-tips/success-tips';
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewContainerRef } from '@angular/core';
 import { debounce, map } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -7,6 +7,7 @@ import { BehaviorSubject, fromEvent, interval } from 'rxjs';
 import { emptyStringValidator, ModalService, validator, Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { ReleaseApiService } from '../../release-api.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
 
-	constructor(private fb: FormBuilder, private modal: ModalService, private route: ActivatedRoute, private api: ReleaseApiService) { }
+	constructor(private fb: FormBuilder,private cdr: ChangeDetectorRef, private modal: ModalService, private route: ActivatedRoute, private api: ReleaseApiService) { }
 
 	param: {
 		n: string;
@@ -29,6 +30,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 		c: number;
 		cs: number;
 		ss: number;
+    fr: boolean;
 		f: [];
 		gl: [];
 	};
@@ -40,6 +42,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 		b: ['', Validators.required],
 		c: ['', Validators.required],
 		a: [[]],
+    fr: [false],
 		checked: [false, Validators.requiredTrue],
 	});
 	checkedForm = this.fb.group({
@@ -52,6 +55,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 	stateMentStates = [];
 	copyrightModel = [];
 	isEdit = false;
+  isOpenFree = false;
 	stateMentStrategy = {
 		['fllow']: () => {
 			this.stateMentStates = this.stateMentStates.map(_x => true);
@@ -142,6 +146,22 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 		}
 	}
 
+  freeShareChecked($event:boolean){
+     if($event){
+        this.modal.open(PopTips,['确认开启免费分享?',1]).afterClosed().subscribe(x=>{
+          if(!x){
+            this.isOpenFree =false;
+            this.form.patchValue({
+              fr:false
+            });
+          }else {
+            this.isOpenFree = true;
+          }
+          this.cdr.markForCheck();
+        });
+     }
+  }
+
 	submit() {
 		validator(this.form, this.form.controls);
 		if (!this.form.valid) {
@@ -207,6 +227,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 							t: value.t.toString(),
 							f: value.f,
 							c: value.c,
+              fr: value.fr,
 							cs: 1,
 							ss: 0,
 							gl: [],
@@ -234,6 +255,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 			this.setInitstateMentStates();
 		});
 	}
+
 
 	ngOnInit() {
 		this.getCopyRight();

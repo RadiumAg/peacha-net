@@ -12,7 +12,7 @@ export class ErroTipDirective implements OnChanges {
 
 	constructor(private control: NgControl, private message: NzMessageService) {}
 
-	ngOnChanges(changes: SimpleChanges): void {
+	ngOnChanges(): void {
 		let timer;
 		this.control.statusChanges.subscribe(x => {
 			if (x === 'INVALID') {
@@ -28,7 +28,6 @@ export class ErroTipDirective implements OnChanges {
 				} else {
 					const errorList = this.ivoErrorTipString as ValidationErrors;
 					const errors = this.control.errors;
-					// tslint:disable-next-line: forin
 					for (const key in errors) {
 						for (const tipKey in errorList) {
 							if (key === tipKey) {

@@ -56,6 +56,7 @@ export class UploadComponent implements ControlValueAccessor {
 	@Input() buttonWord = '';
 	@Input() canUplaod = true;
 	@Input() canDelete = false;
+  @Input() uploadType = '*' ;
 	progress = false;
 	Process$: BehaviorSubject<Process> = new BehaviorSubject({
 		success: false,

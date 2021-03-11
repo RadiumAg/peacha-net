@@ -40,16 +40,28 @@
       </div>
     </div>
 
-    <div class="form-item">
+    <div class="form-item uplaod-Image">
       <div class="title" [ivoNoticeTitle]="'支持JPEG.PNG.GIF等格式，每张图片不得大于5M，长宽不得超过16384*16384px'">上传图片</div>
       <div class="form-controller required">
         <ivo-illustrate-upload maxSize="5242880" ivoErroTip ivoErrorTipString="请上传插画" formControlName="f" ivoFormNav
           data-control-index="3">
         </ivo-illustrate-upload>
       </div>
+      <div class="form-controller freeChecked">
+        <label formControlName='fr' (ngModelChange)="freeShareChecked($event)" nz-checkbox>免费分享此作品</label>
+      </div>
     </div>
 
-    <div class="form-item">
+    <div class="form-item" *ngIf='isOpenFree'>
+      <div class="title" [ivoNoticeTitle]="'仅支持PSD格式，不得大于200M。请勿上传无具体分层或无意义文件。'">上传免费分享内容</div>
+      <div class="form-controller">
+        <ivo-upload [fileSize]="209715200" [uploadType]="'.psd'" formControlName="f" buttonWord="上传文件"
+          [canDelete]="true" [fileNumber]="1" [isResertBeforeUpload]="true">
+        </ivo-upload>
+      </div>
+    </div>
+
+    <div class="form-item explain">
       <div class="title">版权声明</div>
       <div class="form-controller">
         <nz-radio-group formControlName="c" ivoFormNav data-control-index="4" ivoErroTip ivoErrorTipString="请选择版权声明!"
