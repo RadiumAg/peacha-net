@@ -43,7 +43,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 		c: ['', Validators.required],
 		a: [[]],
     fr: [false],
-    gl_token:[[],Validators.required],
+    gl_token:[[], Validators.required],
 		checked: [false, Validators.requiredTrue],
 	});
 	checkedForm = this.fb.group({

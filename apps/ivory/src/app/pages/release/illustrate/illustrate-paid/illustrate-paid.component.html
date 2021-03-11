@@ -40,8 +40,23 @@
       </div>
     </div>
 
-    <div class="form-item">
+    <div class="form-item uplaod-Image">
       <div class="title" [ivoNoticeTitle]="'支持JPEG.PNG.GIF等格式，每张图片不得大于5M，长宽不得超过16384*16384px'">上传图片</div>
+      <div class="form-controller required">
+        <ivo-illustrate-upload maxSize="5242880" ivoErroTip ivoErrorTipString="请上传插画" formControlName="f" ivoFormNav
+          data-control-index="3">
+        </ivo-illustrate-upload>
+      </div>
+    </div>
+
+    <div class="form-item upload-good">
+      <div class="title" [ivoNoticeTitle]="'仅支持PSD格式，不得大于200M。请勿上传无具体分层或无意义文件'">上传商品内容</div>
+      <div class="form-controller required">
+        <ivo-illustrate-upload maxSize="5242880" ivoErroTip ivoErrorTipString="请上传插画" formControlName="f" ivoFormNav
+          data-control-index="3">
+        </ivo-illustrate-upload>
+      </div>
+
       <div class="form-controller required">
         <ivo-illustrate-upload maxSize="5242880" ivoErroTip ivoErrorTipString="请上传插画" formControlName="f" ivoFormNav
           data-control-index="3">
@@ -101,6 +116,4 @@
       </nz-form-control>
     </nz-form-item>
   </form>
-
-  <!-- <ivo-form-nav class="nav" top='23' [titleList]='["作品信息","添加标签","上传封面","上传图片","版权声明"]'></ivo-form-nav> -->
 </div>

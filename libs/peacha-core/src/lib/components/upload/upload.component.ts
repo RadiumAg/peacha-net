@@ -104,7 +104,6 @@ export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy 
 	registerOnChange(fn: any): void {
 		this.updata = fn;
 		// 订阅文件观察对象
-		this.init();
 	}
 
 	registerOnTouched(/* fn: any */): void { }
@@ -172,8 +171,7 @@ export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy 
 		});
 		// 订阅token观察对象
 		this.files$.subscribe(x => {
-			this.updata(x);
-		  this.isCanUpload()
+			this.updata?.call(this,x);
 		});
 	}
 
@@ -287,6 +285,7 @@ export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy 
 
   ngOnInit(): void {
     this.subscribeData();
+		this.init();
   }
 
   ngOnDestroy(): void {
