@@ -11,10 +11,10 @@ import { SelectData, ModalService, UserState, SELECT_TOKEN, SELECT_DATA_TOKEN } 
 
 @Component({
 	selector: 'ivo-live2d',
-	templateUrl: './live2d.component.html',
-	styleUrls: ['./live2d.component.less'],
+	templateUrl: './illustrate.component.html',
+	styleUrls: ['./illustrate.component.less'],
 })
-export class Live2dFreeOrPaidComponent implements OnInit, OnDestroy {
+export class illustratePaidOrFreeComponent implements OnInit, OnDestroy {
 	constructor(
 		@Inject(SELECT_TOKEN) public select_token: BehaviorSubject<boolean>,
 		@Inject(SELECT_DATA_TOKEN)
@@ -78,7 +78,7 @@ export class Live2dFreeOrPaidComponent implements OnInit, OnDestroy {
 	 * @description 设置页脚信息
 	 */
 	private setSelectData({
-		header_title = ['请选择Live2D的展示方式', '正确选择，让更多人看到你的作品~'],
+		header_title = ['请选择插画的展示方式', '正确选择，让更多人看到你的作品~'],
 		next = 'live2d/free',
 		pre = '/release',
 	}) {

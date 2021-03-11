@@ -1,5 +1,4 @@
 import { app_config } from './../../../global.config';
-import { IllustrateComponent } from './illustrate/illustrate.component';
 import { Live2dFreeComponent } from './live2d/live2d-free/live2d-free.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
@@ -11,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChoseComponent } from './select-type/chose.component';
-import { Live2dComponent } from './select-type/live2d/live2d.component';
+import { Live2dFreeOrPaidComponent } from './select-type/live2d/live2d.component';
 import { ReleaseComponentsModule } from './components/component.module';
 import { Live2dPaidComponent } from './live2d/live2d-paid/live2d-paid.component';
 import { NotFoundPage } from '../error/not-found/not-found.page';
@@ -23,6 +22,9 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { PeachaComponentsModule } from '@peacha-core/components';
 import { CompressService } from '@peacha-studio-core/zip';
+import { illustratePaidOrFreeComponent } from './select-type/illustrate/illustrate.component';
+import { IllustrateFreeComponent } from './illustrate/illustrate-free/illustrate-free.component';
+import { IllustratePaidComponent } from './illustrate/illustrate-paid/illustrate-paid.component';
 
 @NgModule({
   declarations: [
@@ -30,10 +32,12 @@ import { CompressService } from '@peacha-studio-core/zip';
     HeaderComponent,
     FooterComponent,
     Live2dorillustComponent,
-    Live2dComponent,
+    Live2dFreeOrPaidComponent,
     Live2dFreeComponent,
-    IllustrateComponent,
     Live2dPaidComponent,
+    IllustrateFreeComponent,
+    IllustratePaidComponent,
+    illustratePaidOrFreeComponent,
   ],
   imports: [
     CommonModule,
@@ -57,8 +61,12 @@ import { CompressService } from '@peacha-studio-core/zip';
           },
           {
             path: 'live2d',
-            component: Live2dComponent,
+            component: Live2dFreeOrPaidComponent,
           },
+          {
+            path: 'illust',
+            component: illustratePaidOrFreeComponent
+          }
         ],
       },
       {
@@ -72,10 +80,15 @@ import { CompressService } from '@peacha-studio-core/zip';
         canActivate: [PhoneGuard, UserBanStatusGuard],
       },
       {
-        path: 'illust',
-        component: IllustrateComponent,
+        path: 'illust/paid',
+        component: IllustratePaidComponent,
         canActivate: [PhoneGuard, UserBanStatusGuard],
       },
+      {
+        path: 'illust/free',
+        component: IllustrateFreeComponent,
+        canActivate: [PhoneGuard,UserBanStatusGuard]
+      }
     ]),
   ],
   providers: [

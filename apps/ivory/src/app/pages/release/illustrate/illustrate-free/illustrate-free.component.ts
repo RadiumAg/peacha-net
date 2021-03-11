@@ -1,20 +1,20 @@
+import { SuccessTips } from './../../components/success-tips/success-tips';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { debounce, map } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { SuccessTips } from '../components/success-tips/success-tips';
 import { BehaviorSubject, fromEvent, interval } from 'rxjs';
-import { ReleaseApiService } from '../release-api.service';
 import { emptyStringValidator, ModalService, validator, Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
+import { ReleaseApiService } from '../../release-api.service';
 
 
 @Component({
 	selector: 'ivo-illustrate',
-	templateUrl: './illustrate.component.html',
-	styleUrls: ['./illustrate.component.less'],
+	templateUrl: './illustrate-free.component.html',
+	styleUrls: ['./illustrate-free.component.less'],
 })
-export class IllustrateComponent implements OnInit, AfterViewInit {
+export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
 
