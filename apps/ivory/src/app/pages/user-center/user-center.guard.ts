@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, UrlTree } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { map } from 'rxjs/operators';
@@ -18,11 +18,10 @@ export class SettingResolve implements CanActivate {
 					} else {
 						this.router.navigate(['login'], {
 							queryParams: {
-								return: route._routerState.url,
+								return: (route as any)._routerState.url,
 							},
 						});
 						return true;
-						// return this.router.parseUrl('/');
 					}
 				})
 			);
