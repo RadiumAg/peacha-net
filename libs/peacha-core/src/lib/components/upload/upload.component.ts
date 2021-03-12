@@ -91,6 +91,7 @@ export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy 
 	};
 
    isCanUpload =()=>{
+	this.isUploadButtonHidden = false;
     if(this.files$.getValue().length === this.fileNumber){
 		this.canUplaod = false;
 		this.buttonWord = '下载文件';
@@ -161,6 +162,7 @@ export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy 
 
 	private isCanUploadBeforeUpload(hie: HTMLInputElement) {
 		if (hie.files.length >= this.fileNumber) {
+			this.isUploadButtonHidden = true;
 			this.canUplaod = false;
 			this.buttonWord = '下载文件';
 		}
