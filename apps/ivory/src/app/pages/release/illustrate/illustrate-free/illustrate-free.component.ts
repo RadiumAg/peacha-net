@@ -7,7 +7,6 @@ import { BehaviorSubject, fromEvent, interval } from 'rxjs';
 import { emptyStringValidator, ModalService, validator, Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { ReleaseApiService } from '../../release-api.service';
-import { ChangeDetectorRef } from '@angular/core';
 
 
 @Component({
@@ -19,7 +18,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
 
-	constructor(private fb: FormBuilder,private cdr: ChangeDetectorRef, private modal: ModalService, private route: ActivatedRoute, private api: ReleaseApiService) { }
+	constructor(private fb: FormBuilder, private modal: ModalService, private route: ActivatedRoute, private api: ReleaseApiService) { }
 
 	param: {
 		n: string;
@@ -30,7 +29,6 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 		c: number;
 		cs: number;
 		ss: number;
-    fr: boolean;
 		f: [];
 		gl: [];
 	};
@@ -42,8 +40,6 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 		b: ['', Validators.required],
 		c: ['', Validators.required],
 		a: [[]],
-    fr: [false],
-    gl_token:[[], Validators.required],
 		checked: [false, Validators.requiredTrue],
 	});
 	checkedForm = this.fb.group({
@@ -56,9 +52,6 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 	stateMentStates = [];
 	copyrightModel = [];
 	isEdit = false;
-  isOpenFree = false;
-  openFreeModel = false;
-  freeGoodList= [];
 	stateMentStrategy = {
 		['fllow']: () => {
 			this.stateMentStates = this.stateMentStates.map(_x => true);
@@ -118,7 +111,18 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 	}
 
 	private public_work() {
-		this.api.publish_work(this.param).subscribe({
+		this.api.publish_work({	
+			n: this.param.n,
+			d: this.param.d,
+			a: this.param.a,
+			b: this.param.b,
+			t: this.param.t,
+			c: this.param.c,
+			cs: this.param.cs,
+			ss: this.param.ss,
+			f: this.param.f,
+			fr: 0,
+			gl: this.param.gl,}).subscribe({
 			next: _x => {
 				this.modal.open(SuccessTips, {
 					redirectUrl: '/member/manager/illust/auditing',
@@ -148,21 +152,6 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 			}
 		}
 	}
-
-  freeShareChecked($event:boolean){
-     if($event){
-        this.modal.open(PopTips,['确认开启免费分享?',1]).afterClosed().subscribe(x=>{
-          if(x){
-            this.isOpenFree = true;
-            this.openFreeModel = true;
-          }
-          this.cdr.markForCheck();
-        });
-     }else {
-       this.isOpenFree = false;
-       this.openFreeModel = false;
-     }
-  }
 
 	submit() {
 		validator(this.form, this.form.controls);
@@ -208,7 +197,8 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 	}
 
 	private setiToken() {
-		const iUrl = this.form.value.f.map((s) => s.remote_token || s.url);
+		const iUrl = this.form.value.f.map((s: any) => s.remote_token || s.url);
+
 		const i = iUrl;
 		return i;
 	}
@@ -216,13 +206,10 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 	private subscribeForm() {
 		this.form.valueChanges
 			.pipe(
-				map((value) => {
+				map((value: any) => {
 					if (!this.isEdit) {
 						value.b = value.b.token || '';
 						value.f = value.f.map((s: { remote_token: string }) => s.remote_token);
-            if(value.gl_token.length > 0){
-              this.freeGoodList = [{n:'免费商品下载',s:-1,p:0,f:[value.gl_token[0]['token']]}]
-            }
 						return {
 							n: value.n,
 							d: value.d,
@@ -231,17 +218,16 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 							t: value.t.toString(),
 							f: value.f,
 							c: value.c,
-              fr: value.fr ? 1:0,
-              gl: this.freeGoodList,
 							cs: 1,
 							ss: 0,
+							gl: [],
 						};
 					} else {
 						return value;
 					}
 				})
 			)
-			.subscribe((x) => {
+			.subscribe((x: any) => {
 				console.log(this.form.value);
 				this.param = x;
 			});
@@ -259,7 +245,6 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 			this.setInitstateMentStates();
 		});
 	}
-
 
 	ngOnInit() {
 		this.getCopyRight();

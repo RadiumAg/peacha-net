@@ -212,8 +212,6 @@ export class ChatStartService {
 		};
 		// websocket连接失败
 		this.ws.onerror = err => {
-			console.log(err);
-
 			interval(5000)
 				.pipe(
 					take(1),

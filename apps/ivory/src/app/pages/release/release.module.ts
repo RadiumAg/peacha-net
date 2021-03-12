@@ -80,13 +80,13 @@ import { illustratePaidOrFreeComponent } from './select-type/illustrate/illustra
         canActivate: [PhoneGuard, UserBanStatusGuard],
       },
       {
-        path: 'illust/paid',
-        component: IllustratePaidComponent,
-        canActivate: [PhoneGuard, UserBanStatusGuard],
-      },
-      {
         path: 'illust/free',
         component: IllustrateFreeComponent,
+        canActivate: [PhoneGuard,UserBanStatusGuard]
+      },
+      {
+        path: 'illust/paid',
+        component: IllustratePaidComponent,
         canActivate: [PhoneGuard,UserBanStatusGuard]
       }
     ]),

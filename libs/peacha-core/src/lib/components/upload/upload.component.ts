@@ -1,3 +1,4 @@
+import { WalletBindPage } from './../../../../../../apps/ivory/src/app/pages/wallet/wallet-bind/wallet-bind.page';
 import { Component, ViewChild, ElementRef, Renderer2, Input, OnInit, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
@@ -22,6 +23,14 @@ export interface IvoUploadFile {
 	type?: string;
 }
 
+interface  IFileData 
+ {  
+	 dataUrl?: string;
+	 token:string;
+	 url:string;
+	 name:string
+}
+
 @Component({
 	selector: 'ivo-upload',
 	templateUrl: './upload.component.html',
@@ -36,41 +45,40 @@ export interface IvoUploadFile {
 })
 export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy {
 	constructor(private re2: Renderer2, private http: HttpClient, private modal: ModalService) { }
-
+	@Input() buttonWord = '';
+	@Input() canUplaod = true;
+	@Input() canDelete = false;
+	@Input() uploadType = '*' ;
+    @Input() isUploadButtonHidden = false;
+	@Input() isResertBeforeUpload = false;
 	@Input() set fileSize(value: number) {
 		this._fileSzie = Number(value);
 	}
-
-	get fileSizeFriendly(): number {
-		return this._fileSzie * 1024 * 1024;
-	}
-	private _fileSzie: number;
 	@ViewChild('files', { static: false })
 	filesInput: ElementRef<HTMLInputElement>;
 	@ViewChild('scroll_body', { static: false })
 	scrollBody: ElementRef;
-	filters$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-	files$: BehaviorSubject<any[]> = new BehaviorSubject([]);
-	url$: BehaviorSubject<any[]> = new BehaviorSubject([]);
-  desctroy$ = new Subject<void>();
-	@Input() fileNumber = 10000;
-	@Input() buttonWord = '';
-	@Input() canUplaod = true;
-	@Input() canDelete = false;
-  @Input() uploadType = '*' ;
-
+	files$: BehaviorSubject<IFileData[]> = new BehaviorSubject<[]>([]);
+	url$: BehaviorSubject<string[]> = new BehaviorSubject([]);
+	desctroy$ = new Subject<void>();
+	fileNumber = 1;
+	oldButtonWord = '';
+	canUploadButtonDisabled = false;
+	private _fileSzie: number;
+	get fileSizeFriendly(): number {
+		return this._fileSzie * 1024 * 1024;
+	}
 	progress = false;
-	updata: (o: any[]) => void;
+	updata: (o: IFileData[]) => void;
 	Process$: BehaviorSubject<Process> = new BehaviorSubject({
 		success: false,
 		progress: 0,
 	});
 	// 上传之前是否清空
-	@Input() isResertBeforeUpload = false;
 
 	/**
- *  @description 验证策略对象
- */
+    *  @description 验证策略对象
+     */
 	verify = {
 		sizeVerify: (e: File) => {
 			if (e.size > this._fileSzie) {
@@ -83,14 +91,16 @@ export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy 
 	};
 
    isCanUpload =()=>{
-    if(this.filters$.getValue().length === this.fileNumber){
-        this.canUplaod = false;
+    if(this.files$.getValue().length === this.fileNumber){
+		this.canUplaod = false;
+		this.buttonWord = '下载文件';
     }else {
-        this.canUplaod = true;
-    }
-  }
+		this.canUplaod = true;
+	    this.buttonWord = this.oldButtonWord;
+	}
+   }
 
-	writeValue(files: {token:string;name:string;url:string}[]): void {
+	writeValue(files: IFileData[]): void {
 		const data = files.map(x => {
 			return {
 				token: x.token || '',
@@ -98,17 +108,17 @@ export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy 
 				url: x.url || '',
 			};
 		});
-		this.filters$.next(data);
+		this.files$.next(data);
 	}
 
-	registerOnChange(fn: any): void {
+	registerOnChange(fn): void {
 		this.updata = fn;
-		// 订阅文件观察对象
 	}
 
-	registerOnTouched(/* fn: any */): void { }
-
-	setDisabledState?(/* isDisabled: boolean */): void { }
+	registerOnTouched(/*isDisabled*/): void {
+	}
+	setDisabledState?(/*isDisabled*/): void {
+	}
 
 	/**
 	 *
@@ -117,25 +127,20 @@ export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy 
 	 */
 	delteFile(symbol: symbol) {
 		let files;
-		this.filters$.pipe(map(x => x.filter(_ => Reflect.get(_, 'symbol') !== symbol))).subscribe(x => {
+		this.files$.pipe(map(x => x.filter(_ => Reflect.get(_, 'symbol') !== symbol))).subscribe(x => {
 			files = x;
 		});
-		this.filters$.next(files);
-    this.isCanUpload();
-	}
-
-	/**
-	 *
-	 * @param fileList 文件列表
-	 * @description 文件上传
-	 */
-	uploadFiles(fileList: FileList): void {
-		this.upload(fileList);
+		this.files$.next(files);
+        this.isCanUpload();
 	}
 
 	onClick(e: Event) {
-		this.filesInput.nativeElement.click();
-		e.preventDefault();
+		if(this.canUplaod){
+			this.filesInput.nativeElement.click();
+		    e.preventDefault();
+		} else {
+			window.open(this.files$.getValue()[0].url,'_blank');
+		} 
 	}
 
 	/**
@@ -143,36 +148,22 @@ export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy 
 	 * @param e 事件对象
 	 */
 	onChange(e: Event): void {
+		const hie = e.target as HTMLInputElement;
+		this.isCanUploadBeforeUpload(hie);
 		if (this.isResertBeforeUpload) {
 			this.resertUpload();
 		}
-		const hie = e.target as HTMLInputElement;
 		if (this.verify.sizeVerify(hie.files[0])) {
-			this.uploadFiles(hie.files);
+			this.upload(hie.files);
 		}
 		hie.value = '';
 	}
 
-  private init() {
-		this.filters$.subscribe((x: File[]) => {
-			this.files$.next(
-				x.length === 0
-					? []
-					: x
-						.map((_: File) => {
-							return {
-								token: Reflect.get(_, 'token'),
-								url: Reflect.get(_, 'url'),
-								name: Reflect.get(_, 'name'),
-							};
-						})
-						.filter(l => Boolean(l))
-			);
-		});
-		// 订阅token观察对象
-		this.files$.subscribe(x => {
-			this.updata?.call(this,x);
-		});
+	private isCanUploadBeforeUpload(hie: HTMLInputElement) {
+		if (hie.files.length >= this.fileNumber) {
+			this.canUplaod = false;
+			this.buttonWord = '下载文件';
+		}
 	}
 
 	/**
@@ -192,20 +183,20 @@ export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy 
 		return true;
 	}
 
-
 	/**
 	 * @description 上传文件
 	 * @param fileList 文件列表
 	 */
 	private upload(fileList: FileList) {
 		const file = [];
+		this.canUploadButtonDisabled = true;
 		for (const key in fileList) {
 			if (isNaN(Number(key))) {
 				continue;
 			}
 			file.push(fileList.item(Number(key)));
 		}
-		if (!this.validator(file.concat(this.filters$.getValue()))) {
+		if (!this.validator(file.concat(this.files$.getValue()))) {
 			return;
 		}
 		this.progress = true;
@@ -222,8 +213,6 @@ export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy 
 						return s.type === HttpEventType.UploadProgress || s.type === HttpEventType.Response;
 					}),
 					map(e => {
-						this.setScroll();
-
 						if (e.type === HttpEventType.UploadProgress) {
 							this.Process$.next({
 								success: false,
@@ -235,15 +224,17 @@ export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy 
 									token: string;
 									url: string;
 								};
-
 								this.Process$.next({
 									success: true,
 									progress: 1,
 								});
 								this.progress = false;
-								this.reset();
-								this.setFile(files, token, files.name, url);
-								this.filters$.next([...this.filters$.value, files]);
+								this.resetProcess();
+								this.files$.next([...this.files$.value,
+									{
+									 name:files.name,token,
+									 url, 
+								    }]);
 							}
 						} else {
 							throw new Error('unexpected event type.');
@@ -254,39 +245,35 @@ export class UploadComponent implements ControlValueAccessor, OnInit, OnDestroy 
 		}
 	}
 
-	private setScroll() {
-		const elelment = this.scrollBody.nativeElement as HTMLDivElement;
-		elelment.scrollTop = elelment.scrollHeight - elelment.clientHeight;
-	}
-
-	private reset() {
+	private resetProcess() {
 		this.Process$.next({
 			success: false,
 			progress: 0,
 		});
 	}
 
-	private setFile(file: File, token: string, fileName?: string, url?: string) {
-		Reflect.set(file, 'token', token);
-		Reflect.set(file, 'name', fileName);
-		Reflect.set(file, 'symbol', Symbol());
-		Reflect.set(file, 'url', url);
-	}
-
-  private subscribeData() {
-    this.filters$.pipe(takeUntil(this.desctroy$)).subscribe((x) => {
-      this.isCanUpload();
+   private subscribeData() {
+    this.files$.pipe(takeUntil(this.desctroy$)).subscribe((x) => {
+	  this.updata?.call(this,x);
+	  this.isCanUpload();
+	  this.canUploadButtonDisabled = false;
     });
   }
 
 	private resertUpload() {
-		this.filters$.next([]);
+		this.files$.next([]);
 	}
 
+	private setOldButtonWord() {
+		this.oldButtonWord = this.buttonWord;
+	}
+
+
   ngOnInit(): void {
+	this.setOldButtonWord();
     this.subscribeData();
-		this.init();
   }
+
 
   ngOnDestroy(): void {
       this.desctroy$.next();

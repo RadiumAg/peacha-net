@@ -47,19 +47,6 @@
           data-control-index="3">
         </ivo-illustrate-upload>
       </div>
-      <div class="form-controller freeChecked">
-        <label formControlName='fr' [(ngModel)]="openFreeModel" (ngModelChange)="freeShareChecked($event)"
-          nz-checkbox>免费分享此作品</label>
-      </div>
-    </div>
-
-    <div class="form-item" *ngIf='isOpenFree'>
-      <div class="title" [ivoNoticeTitle]="'仅支持PSD格式，不得大于200M。请勿上传无具体分层或无意义文件。'">上传免费分享内容</div>
-      <div class="form-controller required">
-        <ivo-upload ivoErroTip ivoErrorTipString="请上传免费分享内容" formControlName="gl_token" [fileSize]="209715200"
-          [uploadType]="'.psd'" buttonWord="上传文件" [canDelete]="true" [fileNumber]="1" [isResertBeforeUpload]="false">
-        </ivo-upload>
-      </div>
     </div>
 
     <div class="form-item explain">

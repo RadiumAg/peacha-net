@@ -22,11 +22,8 @@ export class SingleManagerPage implements AfterViewInit {
 	 */
 
 	@Input() item: any;
-
 	@Input() type: number;
-
 	@Input() state: number;
-
 	@Output()
 	delete: EventEmitter<true> = new EventEmitter();
 
@@ -70,7 +67,10 @@ export class SingleManagerPage implements AfterViewInit {
 		this.menu.close();
 		if (this.type === 1) {
 			this.router.navigate(['/edit/illust', id]);
-		} else if (this.type === 0) {
+		} else if(this.type === 3){
+			this.router.navigate(['/edit/illust/paid', id]);
+		} 
+		else if (this.type === 0) {
 			this.router.navigate(['/edit/live2d', id]);
 		} else if (this.type === 2) {
 			this.router.navigate(['/edit/live2d/paid', id]);

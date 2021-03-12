@@ -54,12 +54,12 @@
 
       <div class="form-controller required upload-file">
         <ivo-upload ivoErroTip ivoErrorTipString="请上传付费商品内容" formControlName="gl_token" [fileSize]="209715200"
-          [uploadType]="'.psd'" buttonWord="上传文件" [canDelete]="true" [fileNumber]="1" [isResertBeforeUpload]="false">
+          [uploadType]="'.psd'"  [canDelete]="!isEdit" buttonWord="上传文件"  [isResertBeforeUpload]="false">
         </ivo-upload>
       </div>
 
       <div class="form-controller required price">
-        <input class="input" formControlName='p' ivoErroTip ivoErrorTipString="请设置商品价格!"
+        <input class="input" formControlName='p'  ivoErroTip ivoErrorTipString="请设置商品价格!"
           (input)="price.value.length > 5 ? (price.value = price.value.slice(0, price.value.length - 1)) : ''" #price
           placeholder="¥&nbsp;设置商品价格" type="number"><span
           class="price-tip">平台将收取8%的服务费，预计收益{{call(Fixed, price.value * 0.92, 2)}}元</span>

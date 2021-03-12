@@ -23,10 +23,10 @@ import { IllustratePaidComponent } from './illustrate/illustrate-paid/illustrate
 				path: 'illust/:id',
 				component: IllustrateFreeComponent,
 			},
-      {
-        path: 'illust/:id',
-        component: IllustratePaidComponent
-      }
+			{
+				path: 'illust/paid/:id',
+				component: IllustratePaidComponent,
+			},
 		]),
 	],
 })

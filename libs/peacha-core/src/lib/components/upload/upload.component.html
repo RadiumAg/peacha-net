@@ -2,7 +2,7 @@
   <div class="upload">
     <div #scroll_body>
       <div>
-        <div class="upload-item" *ngFor="let item of filters$ | async">
+        <div class="upload-item" *ngFor="let item of (files$ | async)">
           <span>
             <span class="title">{{ item.name | ivoNameFriendly }}</span>
           </span>
@@ -20,7 +20,7 @@
       </div>
     </div>
   </div>
-  <button ivo-button (click)="onClick($event)" *ngIf="canUplaod">
+  <button ivo-button *ngIf="!isUploadButtonHidden" (click)="onClick($event)" [disabled]="canUploadButtonDisabled">
     {{ buttonWord }}
   </button>
   <input #files (change)="onChange($event)" type="file" [accept]="uploadType" hidden />

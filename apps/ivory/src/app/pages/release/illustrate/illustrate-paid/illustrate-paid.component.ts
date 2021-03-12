@@ -19,20 +19,10 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 	submitButton: ElementRef;
 
 	constructor(private fb: FormBuilder, private modal: ModalService, private route: ActivatedRoute, private api: ReleaseApiService) { }
-  Fixed = Number.prototype.toFixed;
+    Fixed = Number.prototype.toFixed;
 	param: {
-		n: string;
-		d: string;
-		a: number;
-		b: string;
-		t: string;
-		c: number;
-		cs: number;
-		ss: number;
-    fr: number;
-		f: [];
-		gl: [];
-	} = {};
+	 [keys:string]: any;
+	};
 	form = this.fb.group({
 		f: [[], Validators.required],
 		n: ['', [Validators.required, emptyStringValidator()]],
@@ -52,9 +42,9 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 		copyright: [[]],
 		copychecked: [false],
 	});
-	copyrightCheckes$ = new BehaviorSubject<{ id: number; name: string }[]>([]);
+    copyrightCheckes$ = new BehaviorSubject<{ id: number; name: string }[]>([]);
 	stateMentStates = [];
-  maxPrice = 99999;
+    maxPrice = 99999;
 	copyrightModel = [];
 	isEdit = false;
 	stateMentStrategy = {
@@ -66,7 +56,7 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 			this.stateMentStates = this.stateMentStates.map(_x => false);
 		},
 	};
-  call = (x: Function, y: any, ...args) => x.call(y, args);
+    call = (x: Function, y: any, ...args) => x.call(y, args);
 	private resetAChecked() {
 		this.checkedForm.patchValue({
 			copychecked: false,
@@ -103,11 +93,11 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 						d: r.description,
 						b: { url: r.cover },
 						t: r.tag,
-						f: r.assets.map(_ => {
-							return {
+						f: r.assets.map(_ => ({
 								url: _,
-							};
-						}),
+						})),
+						p: r.goods_list[0].price,
+						gl_token: [{token: r.goods_list[0].file,url:'',name:r.goods_list[0].name}],
 						c: r.copyright,
 					});
 				});
@@ -116,7 +106,19 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 	}
 
 	private public_work() {
-		this.api.publish_work(this.param).subscribe({
+		this.api.publish_work({
+			n: this.param.n,
+			d: this.param.d,
+			a: this.param.a,
+			b: this.param.b,
+			t: this.param.t,
+			c: this.param.c,
+			cs: this.param.cs,
+			ss: this.param.ss,
+			f: this.param.f,
+			fr: 0,
+			gl: this.param.gl,
+		  }).subscribe({
 			next: _x => {
 				this.modal.open(SuccessTips, {
 					redirectUrl: '/member/manager/illust/auditing',
@@ -160,18 +162,16 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 	}
 
 	private sure_edit() {
-		const i = this.setiToken();
 		this.api
 			.update_work({
 				w: this.route.snapshot.params.id,
-				d: this.form.value.d,
-				i,
-				t: this.form.value.t.join(','),
-				b: this.form.value.b.token ?? this.form.value.b.url,
-				n: this.form.value.n,
+				d: this.param.d,
+				i: this.param.f,
+				t: this.param.t,
+				b: this.param.b,
+				n: this.param.n,
 				a: this.copyrightModel,
-				gl: [],
-				gd: '',
+				gl: this.param.gl,
 			})
 			.subscribe({
 				next: () => {
@@ -190,46 +190,37 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 			});
 	}
 
-	private setiToken() {
-		const iUrl = this.form.value.f.map((s: any) => s.remote_token || s.url);
-
-		const i = iUrl;
-		return i;
-	}
 
 	private subscribeForm() {
 		this.form.valueChanges
 			.pipe(
 				map((value) => {
-					if (!this.isEdit) {
-						value.b = value.b.token || '';
-						value.f = value.f.map((s: { remote_token: string }) => s.remote_token);
-						return {
-							n: value.n,
-							d: value.d,
-							a: value.a,
-							b: value.b,
-							t: value.t.toString(),
-							f: value.f,
-							c: value.c,
-              fr: 1,
-							cs: 1,
-							ss: value.ss? 1 : 2,
-							gl: [{
-                  n: '付费下载内容',
-                  f: [value.gl_token[0]?.token? value.gl_token[0]?.token : (()=>{})()],
-                  p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0, (this.maxPrice + '').length)), 10) : value.p,
-                  s: value.s,
-              }],
-						};
-					} else {
-						return value;
-					}
+					value.b = value.b.token || value.b.url || '';
+					value.f = value.f.map((s: { remote_token: string;url:string; }) => s.remote_token || s.url);
+					return {
+						n: value.n,
+						d: value.d,
+						a: value.a,
+						b: value.b,
+						t: value.t.toString(),
+						f: value.f,
+						c: value.c,
+						fr: 0,
+						cs: 1,
+						ss: value.ss? 1 : 2,
+						gl: [{
+							n: '付费下载内容',
+							f: [value.gl_token[0]?  value.gl_token[0]?.token || value.gl_token[0].url : ''],
+							p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0, (this.maxPrice + '').length)), 10) : value.p,
+							s: value.s,
+						   }],
+				  };
+					
 				})
 			)
 			.subscribe((x) => {
-				console.log(this.form.value);
 				this.param = x;
+				console.log(x);
 			});
 	}
 
