@@ -257,5 +257,5 @@ export class MemberApiService {
                 type: number,
                 sell_type: number
             }[]
-        }>(`/mall/get_sell_order?k=${k ?? ''}&p=${p ? p - 1 : 0}&s=${s}$c=${c}`)
+        }>(`/mall/get_sell_order?k=${k ?? ''}&p=${p ? p - 1 : 0}&s=${s}&c=${c}`)
 }
