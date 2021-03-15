@@ -1,8 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { combineLatest, BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
+import { MemberApiService } from '../../member-api.service';
+
 
 @Component({
 	selector: 'ivo-goods-manager',
@@ -14,11 +15,15 @@ export class GoodsManagerPage implements OnInit {
 
 	good$ = combineLatest([this.update$]).pipe(
 		switchMap(_s => {
-			return this.http.get<any>(`/work/get_goods?w=${this.id}`);
+			return this.memberApi.getGoods(this.id);
 		})
 	);
 
-	constructor(private modalRef: ModalRef<GoodsManagerPage>, @Inject(MODAL_DATA_TOKEN) public id: number, private http: HttpClient) { }
+	constructor(
+		private modalRef: ModalRef<GoodsManagerPage>,
+		@Inject(MODAL_DATA_TOKEN) public id: number,
+		private memberApi: MemberApiService,
+	) { }
 
 	ngOnInit(): void {
 		this.update$.next(23);
@@ -26,11 +31,7 @@ export class GoodsManagerPage implements OnInit {
 
 
 	up(id: number, ss: number) {
-		this.http
-			.post('/work/update_sellstate', {
-				g: id,
-				ss: ss,
-			})
+		this.memberApi.updateSellstate(id, ss)
 			.subscribe(_s => {
 				this.update$.next(2);
 			});

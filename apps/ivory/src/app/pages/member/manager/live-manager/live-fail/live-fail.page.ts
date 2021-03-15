@@ -1,22 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { tap, switchMap } from 'rxjs/operators';
+import { MemberApiService } from '../../../member-api.service';
 import { SharedService } from '../live.service';
-type ProductionTwo = {
-	count: number;
-	list: {
-		id: number;
-		cover: string;
-		name: string;
-		category: number;
-		auditresult: string;
-		submittime: string;
-		audittime: string;
-	}[];
-};
+
+
 @Component({
 	selector: 'ivo-live-fail',
 	templateUrl: './live-fail.page.html',
@@ -24,15 +14,19 @@ type ProductionTwo = {
 })
 export class LiveFailPage {
 	key: FormControl = new FormControl('');
-	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private _sharedService: SharedService) { }
+	constructor(
+		private router: Router,
+		private route: ActivatedRoute,
+		private _sharedService: SharedService,
+		private memberApi: MemberApiService,
+	) { }
 	update$ = new BehaviorSubject<boolean>(true);
 	currentPage$ = new BehaviorSubject(0);
 	showList = [];
 
 	works$ = combineLatest([this.update$, this.route.queryParams]).pipe(
 		switchMap(([_up, params]) => {
-			return this.http
-				.get<ProductionTwo>(`/work/get_apply_works?k=${params.k ?? ''}&p=${params.p ? params.p - 1 : 0}&s=6&c=0&a=2`)
+			return this.memberApi.getApplyWork(params.k, params.p, 6, 0, 2)
 				.pipe(
 					tap(s => {
 						this.showList = s.list;
