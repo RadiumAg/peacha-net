@@ -2,8 +2,51 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	// padding-top: 20px;
 }
+ .tips {
+	margin: 0 auto;
+	display: flex;
+	width: 100%;
+	min-width: 1200px;
+	height: 56px;
+	background: rgba(250, 225, 162, 0.7);
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
 
+	& > span {
+		height: 24px;
+		font-size: 16px;
+		line-height: 24px;
+		color: rgba(92, 94, 102, 1);
+		opacity: 1;
+
+		& > p {
+			display: inline;
+			color: #ff6398;
+		}
+	}
+
+	& > button {
+		width: 56px;
+		height: 24px;
+		margin-left: 60px;
+		background: rgba(255, 255, 255, 1);
+		opacity: 1;
+		border-radius: 4px;
+		border: none;
+
+		& > span {
+			width: 36px;
+			height: 18px;
+			font-size: 12px;
+			line-height: 18px;
+			color: rgba(102, 102, 102, 1);
+			opacity: 1;
+		}
+	}
+}
 .opera {
 	width: 100px;
 	text-align: center;
