@@ -4,7 +4,7 @@ import { debounce, map } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, fromEvent, interval } from 'rxjs';
-import { emptyStringValidator, ModalService, validator, Work } from '@peacha-core';
+import { emptyStringValidator, live2dPriceValidator, ModalService, validator, Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { ReleaseApiService } from '../../release-api.service';
 
@@ -30,7 +30,7 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 		t: [[]],
 		b: ['', Validators.required],
 		c: [0, Validators.required],
-    p: ['', Validators.required],
+    p: ['', live2dPriceValidator],
     gl_token:[[],Validators.required],
     ss: [true],
 		a: [[]],
@@ -133,6 +133,12 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 				}
 			},
 		});
+	}
+    
+	priceValidate(e:Event){
+		const price = e.target as HTMLInputElement;
+		price.value.length > 5 ? (price.value = price.value.slice(0, price.value.length - 1)) : 
+          (price.value.includes('.')? price.value = price.value.slice(0, price.value.lastIndexOf('.')): '')
 	}
 
 	changeCopyrightState($event: number) {

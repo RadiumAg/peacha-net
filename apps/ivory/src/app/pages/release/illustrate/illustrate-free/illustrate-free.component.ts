@@ -62,6 +62,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 		},
 	};
 
+
 	private resetAChecked() {
 		this.checkedForm.patchValue({
 			copychecked: false,
