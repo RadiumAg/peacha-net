@@ -9,6 +9,7 @@ import { CommissionApiService } from '../../service/commission-api.service';
 import { CommissionDetailService } from '../../service/detail.service';
 import { CommissionDetailErrorService } from '../commission-detail-error.service';
 import { CommissionPrevent } from '../commission-pop-component/commission-prevent/commission-prevent';
+import { CommissionPrompt } from '../commission-pop-component/commission-prompt/commission-prompt';
 import { CommissionReject } from '../commission-pop-component/commission-reject/commission-reject';
 import { CommissionTimeout } from '../commission-pop-component/commission-timeout/commission-timeout';
 
@@ -401,5 +402,46 @@ export class CommissionDiscontinuePage implements OnInit {
 		this.router.navigate(['/commission/detail/reject-file'], {
 			queryParamsHandling: 'merge',
 		});
+	}
+
+	/**撤回中止    type:0 协商中止  type:1 撤回平台介入 */
+	revoke(type: number, id: number): void {
+		this.modal.open(CommissionPrompt, {
+			title: type === 0 ? '撤回协商中止' : '撤回平台介入中止',
+			tips: type === 0 ? '是否确定撤回协商中止？' : '是否确定撤回平台介入中止？',
+			type: true
+		}).afterClosed().subscribe(is => {
+			if (is) {
+				this.api.revokeDiscontinue(id).subscribe(
+					_s => {
+						this.refresh$.next(1);
+					}, _e => {
+						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' }).afterClosed().subscribe(_ => {
+							location.reload();
+						})
+					})
+			}
+		})
+	}
+
+	/**撤回提交源文件 */
+	revokeFile(id: number): void {
+		this.modal.open(CommissionPrompt, {
+			title: '撤回提交源文件',
+			tips: '是否确定撤回提交源文件？',
+			type: true
+		}).afterClosed().subscribe(is => {
+			if (is) {
+				this.api.revokeFileRecords(id).subscribe(
+					_s => {
+						this.refresh$.next(1);
+						this.fileList = [];
+					}, _e => {
+						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' }).afterClosed().subscribe(_ => {
+							location.reload();
+						})
+					})
+			}
+		})
 	}
 }

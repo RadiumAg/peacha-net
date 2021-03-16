@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, of } from 'rxjs';
-import { switchMap, tap, catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable, combineLatest, of, EMPTY } from 'rxjs';
+import { switchMap, tap, catchError, take } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -12,17 +12,16 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class StorePage implements AfterViewInit {
 	constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private render: Renderer2) { }
 
-	page$ = new BehaviorSubject<number>(0);
 	workCount$ = new BehaviorSubject(0);
 	workId$ = new BehaviorSubject(0);
-	paramsPage$ = new BehaviorSubject(0);
+	page$ = new BehaviorSubject(1);
 
 	params$ = this.route.queryParams.subscribe(r => {
 		if (r.id && r.id != this.workId$.value) {
 			this.workId$.next(r.id);
 		}
-		if (r.p && r.p != this.paramsPage$.value) {
-			this.paramsPage$.next(r.p);
+		if (r.p && r.p != this.page$.value) {
+			this.page$.next(r.p);
 		}
 	});
 
@@ -32,25 +31,53 @@ export class StorePage implements AfterViewInit {
 			id: number;
 			cover: string;
 			name: number;
-			type: number;
-			publishtime: string;
-			download_address: string;
-			state: number;
+			createTime: string;
+			price: number;
+			category: number;
 		}[];
-	}> = this.paramsPage$.pipe(
+	}> = this.page$.pipe(
 		switchMap(r => {
-			return this.http.get<any>(`/work/get_own_works?p=${r != 0 ? r - 1 : 0}&s=12`).pipe(
-				tap(s => {
-					this.workCount$.next(s.count);
-					this.page$.next(r ?? 1);
-				})
-			);
+			if (r) {
+				return this.http.get<{
+					count: number;
+					list: {
+						id: number;
+						cover: string;
+						name: number;
+						createTime: string;
+						price: number;
+						category: number;
+					}[];
+				}>(`/work/get_own_works?p=${r ? r - 1 : 0}&s=6`).pipe(
+					tap(s => {
+						this.workCount$.next(s.count);
+					})
+				);
+			} else {
+				return EMPTY;
+			}
+
 		})
 	);
 
 	item$ = combineLatest([this.workId$, this.works$]).pipe(
 		switchMap(([id, w]) => {
-			return this.http.get<any>(`/work/get_own_work_detail?w=${id == 0 ? w.list[0].id : id}`);
+			return this.http.get<{
+				id: number,
+				cover: string,
+				name: string,
+				category: number,
+				publishtime: number,
+				seller_id: number,
+				seller_name: string,
+				list: {
+					id: number,
+					name: string,
+					createtime: number,
+					maxstock: number,
+					filesize: number
+				}[]
+			}>(`/work/get_own_work_detail?w=${id == 0 ? w.list[0].id : id}`);
 		}),
 		catchError(_e => {
 			return of({ count: 0 });

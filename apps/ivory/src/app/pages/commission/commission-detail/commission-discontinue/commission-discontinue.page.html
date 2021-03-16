@@ -43,26 +43,42 @@
 		<span> {{timeWord}}{{time|date:'yyyy-MM-dd HH:mm'}} </span>
 		<div class="btn">
 			<ng-container *ngIf="(status$|async)!=6">
-				<ng-container
-					*ngIf="latestRecord.type===0 &&  latestRecord.status===0 && ((sponsor.id === latestRecord.userid && receiver.id===(id$|async)) ||(receiver.id === latestRecord.userid && sponsor.id===(id$|async)))"
-				>
-					<button ivo-button [buttonType]="1" appDebounceClick (debounceClick)="confirm(latestRecord.id,2)">拒绝中止</button>
-					<button ivo-button appDebounceClick (debounceClick)="confirm(latestRecord.id,1)">同意中止</button>
-				</ng-container>
-				<ng-container>
-					<a appDebounceClick *ngIf="isReject>0" (debounceClick)="toFileRecord()">驳回记录</a>
+				<ng-container *ngIf="latestRecord.type===0 &&  latestRecord.status===0 ">
 					<ng-container
-						*ngIf="(latestRecord.type===0||(latestRecord.type===3&& receiver.id === latestRecord.userid)) &&latestRecord.status===1&& (latestSubmit?.list.length==0 || latestSubmit.list[0]?.status===2) && identity===2"
+						*ngIf=" ((sponsor.id === latestRecord.userid && receiver.id===(id$|async)) ||(receiver.id === latestRecord.userid && sponsor.id===(id$|async)));else stop"
 					>
-						<button ivo-button appDebounceClick (debounceClick)="submitFile()">提交审核</button>
+						<button ivo-button [buttonType]="1" appDebounceClick (debounceClick)="confirm(latestRecord.id,2)">拒绝中止</button>
+						<button ivo-button appDebounceClick (debounceClick)="confirm(latestRecord.id,1)">同意中止</button>
 					</ng-container>
-					<ng-container *ngIf="latestSubmit?.list[0]?.status===0 && identity===1 && latestRecord.type===0">
+					<ng-template #stop>
+						<button ivo-button [buttonType]="1" appDebounceClick (debounceClick)="revoke(0,latestRecord.id)">
+							撤回协商中止
+						</button>
+					</ng-template>
+				</ng-container>
+
+				<a appDebounceClick *ngIf="isReject>0" (debounceClick)="toFileRecord()">驳回记录</a>
+				<ng-container
+					*ngIf="(latestRecord.type===0||(latestRecord.type===3&& receiver.id === latestRecord.userid)) &&latestRecord.status===1&& (latestSubmit?.list.length==0 || latestSubmit.list[0]?.status===2) && identity===2"
+				>
+					<button ivo-button appDebounceClick (debounceClick)="submitFile()">提交审核</button>
+				</ng-container>
+				<ng-container *ngIf="latestSubmit?.list[0]?.status===0 && latestRecord.type===0">
+					<ng-container *ngIf="identity===1">
 						<button ivo-button [buttonType]="1" appDebounceClick (debounceClick)="auditFile(latestRecord.id,2)">
 							源文件有误
 						</button>
 						<button ivo-button appDebounceClick (debounceClick)="auditFile(latestRecord.id,1)">源文件无误</button>
 					</ng-container>
+					<ng-container *ngIf="identity===2">
+						<button ivo-button [buttonType]="1" appDebounceClick (debounceClick)="revokeFile(latestSubmit?.list[0].id)">
+							撤回提交源文件
+						</button>
+					</ng-container>
 				</ng-container>
+			</ng-container>
+			<ng-container *ngIf="latestRecord.type===2 &&  latestRecord.status===0 &&latestRecord.userid===(id$|async)">
+				<button ivo-button [buttonType]="1" appDebounceClick (debounceClick)="revoke(1,latestRecord.id)">撤回平台介入中止</button>
 			</ng-container>
 		</div>
 	</div>

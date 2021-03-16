@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, UrlTree } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class SettingResolve implements CanActivate {
-	constructor(private store: Store, private router: Router) {}
+	constructor(private store: Store, private router: Router) { }
 
-	canActivate(): Observable<boolean | UrlTree> {
+	canActivate(route: ActivatedRouteSnapshot): Observable<boolean | UrlTree> {
 		return this.store
 			.selectOnce<number>(s => s.user.id)
 			.pipe(
@@ -16,7 +16,12 @@ export class SettingResolve implements CanActivate {
 					if (id > 0) {
 						return true;
 					} else {
-						return this.router.parseUrl('/');
+						this.router.navigate(['login'], {
+							queryParams: {
+								return: (route as any)._routerState.url,
+							},
+						});
+						return true;
 					}
 				})
 			);

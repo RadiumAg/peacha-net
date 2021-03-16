@@ -30,6 +30,7 @@ import { CommissionDetailErrorService } from './commission-detail/commission-det
 import { TechnologicalProcessComponent } from './technological-process/technological-process.component';
 import { PhoneGuard, ReactiveComponentModule } from '@peacha-core';
 import { PeachaComponentsModule } from '@peacha-core/components';
+import { CommissionPrompt } from './commission-detail/commission-pop-component/commission-prompt/commission-prompt';
 
 @NgModule({
 	declarations: [
@@ -52,6 +53,7 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 		CommissionPaymentHistoryPage,
 		CommissionTopNav,
 		CommissionDiscontinueRejectFilePage,
+		CommissionPrompt
 	],
 	imports: [
 		PeachaComponentsModule,
