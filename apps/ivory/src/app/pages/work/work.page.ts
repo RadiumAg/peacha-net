@@ -1,6 +1,6 @@
 import { Component, ViewContainerRef, ViewChild, ElementRef, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap, switchMap, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { IllustZoomModalComponent } from './illust-zoom-modal/illust-zoom-modal.component';
@@ -33,6 +33,8 @@ export class WorkPage {
 	copyrights$ = this.http.get<CopyrightList>('/work/copyright?c=1');
 	authorRole: Array<number> = [];
 
+	publicityPeriod$: Observable<number>;
+
 	get page$() {
 		return {
 			work: this.work$,
@@ -53,6 +55,7 @@ export class WorkPage {
 			map(d => d.work),
 			tap(i => {
 				this.requesting$.next(false);
+				this.publicityPeriod$ = of(i.publishtime + 7 * 24 * 60 * 60 * 1000 - Date.now());
 				this.http
 					.get<{
 						avatar: string;

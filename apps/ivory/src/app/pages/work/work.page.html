@@ -1,88 +1,96 @@
 <ng-container *ngrxLet="requesting$;let requesting">
 	<ng-container *ngrxLet="work$;let work">
-		<div class="container">
-			<div class="left">
-				<!-- content -->
-				<ng-container *ngrxLet="illIndex$;let illIndex">
-					<div class="illustrations">
-						<img
-							class="work-img"
-							[src]="work.assets[illIndex]+'?x-oss-process=image/interlace,1/resize,m_lfit,w_800'"
-							(click)="zoomIn(work.assets,illIndex)"
-						/>
-						<img class="gif-tip" *ngIf="work.assets[illIndex].includes('.gif')" src="/assets/image/svg/gif-tip.svg" />
-					</div>
-
-					<div class="ill-checker">
-						<img
-							*ngFor="let asset of work.assets;index as i"
-							[attr.checked]="illIndex===i?true:null"
-							[src]="asset+'?x-oss-process=image/interlace,1/resize,m_lfit,w_800'"
-							(click)="chooseIll(i)"
-						/>
-					</div>
-				</ng-container>
-				<!-- description -->
-				<div class="block">
-					<h5>作品介绍</h5>
-					<p>{{work.description}}</p>
-				</div>
-				<!-- tags -->
-				<div class="block play" *ngIf="work.tag.length>0">
-					<h5>作品标签</h5>
-					<ivo-tags [tags]="work.tag"></ivo-tags>
-				</div>
-				<!-- comment -->
-				<div class="block">
-					<h5>作品评论</h5>
-				</div>
-				<ivo-comment-area [aid]="work.comment_areaid"></ivo-comment-area>
+		<ng-container *ngrxLet="publicityPeriod$; let period">
+			<div class="tips" *ngIf="period > 0 && work.goods?.length > 0">
+				<span>
+					该作品处于公示期（剩余
+					<p>{{ period | timerdate }}</p>
+					），公示期后可购买/下载
+				</span>
 			</div>
-			<div class="right">
-				<div class="block" style="display: flex">
-					<ivo-creator-block
-						[userAvatar]="work.author_avatar"
-						[userId]="work.author_id"
-						[userName]="work.author_name"
-						[followState]="work.follow_state"
-						[role]="authorRole"
-					>
-					</ivo-creator-block>
-				</div>
+			<div class="container">
+				<div class="left">
+					<!-- content -->
+					<ng-container *ngrxLet="illIndex$;let illIndex">
+						<div class="illustrations">
+							<img
+								class="work-img"
+								[src]="work.assets[illIndex]+'?x-oss-process=image/interlace,1/resize,m_lfit,w_800'"
+								(click)="zoomIn(work.assets,illIndex)"
+							/>
+							<img class="gif-tip" *ngIf="work.assets[illIndex].includes('.gif')" src="/assets/image/svg/gif-tip.svg" />
+						</div>
 
-				<!-- work info -->
-				<div class="work-info">
-					<h5>插画</h5>
-					<div class="title">
-						<h3>{{work.name}}</h3>
+						<div class="ill-checker">
+							<img
+								*ngFor="let asset of work.assets;index as i"
+								[attr.checked]="illIndex===i?true:null"
+								[src]="asset+'?x-oss-process=image/interlace,1/resize,m_lfit,w_800'"
+								(click)="chooseIll(i)"
+							/>
+						</div>
+					</ng-container>
+					<!-- description -->
+					<div class="block">
+						<h5>作品介绍</h5>
+						<p>{{work.description}}</p>
 					</div>
-					<div class="publish-info">
-						<div>
-							<p>发布时间: {{work.publishtime | date:'yyyy-MM-dd HH:mm'}}</p>
-							<p class="decorator"><span *ngIf="!work.copyright">原</span>{{work.copyright?'同人作品':'原创作品'}}</p>
-							<p class="rep" (click)="report(work.id)"><img src="/assets/image/live-2d/svg/wenhao.svg" />举报作品</p>
+					<!-- tags -->
+					<div class="block play" *ngIf="work.tag.length>0">
+						<h5>作品标签</h5>
+						<ivo-tags [tags]="work.tag"></ivo-tags>
+					</div>
+					<!-- comment -->
+					<div class="block">
+						<h5>作品评论</h5>
+					</div>
+					<ivo-comment-area [aid]="work.comment_areaid"></ivo-comment-area>
+				</div>
+				<div class="right">
+					<div class="block" style="display: flex">
+						<ivo-creator-block
+							[userAvatar]="work.author_avatar"
+							[userId]="work.author_id"
+							[userName]="work.author_name"
+							[followState]="work.follow_state"
+							[role]="authorRole"
+						>
+						</ivo-creator-block>
+					</div>
+
+					<!-- work info -->
+					<div class="work-info">
+						<h5>插画</h5>
+						<div class="title">
+							<h3>{{work.name}}</h3>
+						</div>
+						<div class="publish-info">
+							<div>
+								<p>发布时间: {{work.publishtime | date:'yyyy-MM-dd HH:mm'}}</p>
+								<p class="decorator"><span *ngIf="!work.copyright">原</span>{{work.copyright?'同人作品':'原创作品'}}</p>
+								<p class="rep" (click)="report(work.id)"><img src="/assets/image/live-2d/svg/wenhao.svg" />举报作品</p>
+							</div>
+						</div>
+						<div class="actions">
+							<ivo-work-actions [work]="work"> </ivo-work-actions>
 						</div>
 					</div>
-					<div class="actions">
-						<ivo-work-actions [work]="work"> </ivo-work-actions>
-					</div>
-				</div>
 
-				<div class="copyright-card">
-					<p class="title">使用规则</p>
-					<div class="item" *ngFor="let item of (copyrights$|async)?.list">
-						<ng-container *ngIf="work.authority.includes(item.id); else elseTemplate">
-							<img [src]="copyrightIconMap[item.id][0]" />
-							<span>{{item.name}}</span>
-						</ng-container>
-						<ng-template #elseTemplate>
-							<img [src]="copyrightIconMap[item.id][1]" />
-							<span>不{{item.name}}</span>
-						</ng-template>
+					<div class="copyright-card">
+						<p class="title">使用规则</p>
+						<div class="item" *ngFor="let item of (copyrights$|async)?.list">
+							<ng-container *ngIf="work.authority.includes(item.id); else elseTemplate">
+								<img [src]="copyrightIconMap[item.id][0]" />
+								<span>{{item.name}}</span>
+							</ng-container>
+							<ng-template #elseTemplate>
+								<img [src]="copyrightIconMap[item.id][1]" />
+								<span>不{{item.name}}</span>
+							</ng-template>
+						</div>
 					</div>
-				</div>
-				<!-- cooperate -->
-				<!-- <ng-container *ngrxLet="cooperate$;let coop">
+					<!-- cooperate -->
+					<!-- <ng-container *ngrxLet="cooperate$;let coop">
                     <div class="block" *ngIf="coop">
                         <h5 id='reply0_-1_680'>关联作品</h5>
                         <ivo-related-work [id]="coop.workid" [authorName]="coop.username" [cover]="coop.cover"
@@ -90,23 +98,48 @@
                         </ivo-related-work>
                     </div>
                 </ng-container> -->
-				<!-- suggestions -->
-				<div class="block">
-					<h5>相关推荐</h5>
-					<ng-container *ngFor="let rw of relevants$|async">
-						<ivo-related-work
-							ivo-image-shadow
-							[authorName]="rw.username"
-							[cover]="rw.cover"
-							[name]="rw.name"
-							[time]="rw.publishtime"
-							[id]="rw.id"
-							[category]="rw.category"
-						>
-						</ivo-related-work>
+
+					<!-- goods -->
+					<ng-container *ngIf="work.goods.length != 0">
+						<div class="block">
+							<ng-container *ngFor="let good of work.goods">
+								<ivo-good-info
+									ivo-image-shadow
+									*ngIf="good.sell_state === 1"
+									[authorId]="work.author_id"
+									[workId]="work.id"
+									[goodId]="good.id"
+									[own]="good.own_state"
+									[name]="good.name"
+									[price]="good.price"
+									[size]="good.file_size"
+									[maxStock]="good.max_stock"
+									[saleNumber]="good.sale_number"
+									[sellState]="good.sell_state"
+									[period]="period"
+								>
+								</ivo-good-info>
+							</ng-container>
+						</div>
 					</ng-container>
+					<!-- suggestions -->
+					<div class="block">
+						<h5>相关推荐</h5>
+						<ng-container *ngFor="let rw of relevants$|async">
+							<ivo-related-work
+								ivo-image-shadow
+								[authorName]="rw.username"
+								[cover]="rw.cover"
+								[name]="rw.name"
+								[time]="rw.publishtime"
+								[id]="rw.id"
+								[category]="rw.category"
+							>
+							</ivo-related-work>
+						</ng-container>
+					</div>
 				</div>
 			</div>
-		</div>
+		</ng-container>
 	</ng-container>
 </ng-container>
