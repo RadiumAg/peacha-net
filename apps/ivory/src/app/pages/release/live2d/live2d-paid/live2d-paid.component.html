@@ -77,6 +77,7 @@
       </div>
       <div class="form-controller">
         <input nz-button type="number" #price min="0" [max]="maxPrice"
+          onpaste="return false"
           (input)="price.value.length > 5 ? (price.value = price.value.slice(0, price.value.length - 1)) : ''"
           maxlength="5" ivoErroTip [ivoErrorTipString]="{
 						nullPrice: '请设置商品价格!',

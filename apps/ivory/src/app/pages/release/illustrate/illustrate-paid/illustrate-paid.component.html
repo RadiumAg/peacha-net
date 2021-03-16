@@ -59,8 +59,9 @@
       </div>
 
       <div class="form-controller required price">
-        <input class="input" formControlName='p'  ivoErroTip ivoErrorTipString="请设置商品价格!"
-          (input)="price.value.length > 5 ? (price.value = price.value.slice(0, price.value.length - 1)) : ''" #price
+        <input class="input" formControlName='p' #price ivoErroTip ivoErrorTipString="请设置商品价格!"
+          onpaste="return false"
+          (input)="price.value.length > 5 ? (price.value = price.value.slice(0, price.value.length - 1)) : ''" 
           placeholder="¥&nbsp;设置商品价格" type="number"><span
           class="price-tip">平台将收取8%的服务费，预计收益{{call(Fixed, price.value * 0.92, 2)}}元</span>
       </div>
