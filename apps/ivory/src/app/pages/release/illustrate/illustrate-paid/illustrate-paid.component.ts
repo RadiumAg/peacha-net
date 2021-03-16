@@ -212,7 +212,7 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 							n: '付费下载内容',
 							f: [value.gl_token[0]?  value.gl_token[0]?.token || value.gl_token[0].url : ''],
 							p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0, (this.maxPrice + '').length)), 10) : value.p,
-							s: value.s,
+							s: -1
 						   }],
 				  };
 					
