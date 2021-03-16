@@ -1,7 +1,7 @@
 <div class="live2dorillust-container">
   <div class="left" [ngClass]="{ active: activeList[0] }" (click)="select(0, 'illust/free')">
     <img src="/assets/image/release/01.png" alt="" />
-    <div>仅展示/免费分享</div>
+    <div>仅展示</div>
   </div>
   <div *ngIf="paid_enabled" class="right" [ngClass]="{ active: activeList[1] }" (click)="select(1, 'illust/paid')">
     <img src="/assets/image/release/03.png" alt="" />
