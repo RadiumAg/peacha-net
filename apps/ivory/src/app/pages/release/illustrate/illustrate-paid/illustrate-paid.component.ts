@@ -29,7 +29,7 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 		d: ['', [Validators.required, emptyStringValidator()]],
 		t: [[]],
 		b: ['', Validators.required],
-		c: ['', Validators.required],
+		c: [0, Validators.required],
     p: ['', Validators.required],
     gl_token:[[],Validators.required],
     ss: [true],
