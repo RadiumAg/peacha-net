@@ -74,7 +74,7 @@
 										<ng-container *ngSwitchDefault> 多次出售 </ng-container>
 									</span>
 								</div>
-								<button [ngClass]="{no: it?.goods.file_size==0}" [disabled]="it?.goods.file_size==0" (click)="download(it?.goods.id,1)">
+								<button (click)="download(it?.goods.id,1)">
 									<ng-container *ngIf="it?.goods.maxstock!=-1;else free"> 下载商品文件 </ng-container>
 									<ng-template #free> 下载免费分享文件 </ng-template>
 								</button>
