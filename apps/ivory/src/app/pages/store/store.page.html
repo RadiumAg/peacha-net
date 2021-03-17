@@ -67,12 +67,18 @@
 									</span>
 								</div>
 								<div class="bbb">
+									<ng-container *ngIf="it?.goods.price!=0">
+										<span *ngIf="it?.goods.file_size!=0">文件大小：{{(it?.goods.file_size/ 1048576).toFixed(2)}}M</span>
+										<span class="type" [ngSwitch]="it?.goods.maxstock" *ngIf="it?.goods.maxstock>0">
+											<ng-container *ngSwitchCase="1"> 单次出售 </ng-container>
+											<ng-container *ngSwitchDefault> 多次出售 </ng-container>
+										</span>
+									</ng-container>
+									<ng-container *ngIf="it?.goods.price===0">
+										<span *ngIf="it?.file_size!=0">文件大小：{{(it?.file_size/ 1048576).toFixed(2)}}M</span>
+									</ng-container>
 									<!-- <span>购买时间：{{item.createtime|date:"yyyy-MM-dd HH:mm"}}</span> -->
-									<span *ngIf="it?.goods.file_size!=0">文件大小：{{(it?.goods.file_size/ 1048576).toFixed(2)}}M</span>
-									<span class="type" [ngSwitch]="it?.goods.maxstock" *ngIf="it?.goods.maxstock>0">
-										<ng-container *ngSwitchCase="1"> 单次出售 </ng-container>
-										<ng-container *ngSwitchDefault> 多次出售 </ng-container>
-									</span>
+									
 								</div>
 								<button (click)="download(it?.goods.id,1)">
 									<ng-container *ngIf="it?.goods.maxstock!=-1;else free"> 下载商品文件 </ng-container>
