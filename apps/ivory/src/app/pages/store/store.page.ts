@@ -70,13 +70,15 @@ export class StorePage implements AfterViewInit {
 				publishtime: number,
 				seller_id: number,
 				seller_name: string,
-				list: {
+				file_size: number,
+				goods: {
 					id: number,
 					name: string,
 					createtime: number,
 					maxstock: number,
-					filesize: number
-				}[]
+					file_size: number,
+					price: number
+				}
 			}>(`/work/get_own_work_detail?w=${id == 0 ? w.list[0].id : id}`);
 		}),
 		catchError(_e => {
@@ -113,19 +115,11 @@ export class StorePage implements AfterViewInit {
 			queryParamsHandling: 'merge',
 		});
 	}
-	download(id: number) {
+	download(id: number, t: number) {
 		this.http
 			.post('/work/download_goods', {
 				g: id,
-			})
-			.subscribe((s: any) => {
-				window.open(s.url);
-			});
-	}
-	downloadwork(id: number) {
-		this.http
-			.post('/work/download_work', {
-				g: id,
+				t: t
 			})
 			.subscribe((s: any) => {
 				window.open(s.url);
