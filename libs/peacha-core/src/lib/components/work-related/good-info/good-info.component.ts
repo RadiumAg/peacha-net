@@ -29,6 +29,7 @@ export class GoodInfoComponent {
 	@Input() saleNumber: number;
 	@Input() sellState: number;
 	@Input() period: number;
+	@Input() category?: number;
 
 	@Select(UserState.id)
 	id$: Observable<number>;

@@ -3,7 +3,18 @@
 </h3>
 
 <div class="hello">
-	<a (click)="showFileList()">查看文件列表</a>
+	<ng-container *ngIf="category===1;else filebox">
+      <span>文件大小:{{
+		size >= 1024 * 1024
+			? (size / (1024 * 1024)).toFixed(2) + 'MB'
+			: size > 1024
+			? (size / 1024).toFixed(2) + 'KB'
+			: size + 'B'
+	}}</span>
+	</ng-container>
+	<ng-template #filebox>
+		<a (click)="showFileList()">查看文件列表</a>
+	</ng-template>
 </div>
 <div class="three">
 	<span class="price" *ngIf="price > 0">{{ price | currency: '¥' }}</span>
