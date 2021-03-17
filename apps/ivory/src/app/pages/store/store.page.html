@@ -44,7 +44,7 @@
 						<!-- <div class="b">
 							<button (click)="downloadwork(it.list[0].id)">下载模型文件</button>
 						</div> -->
-						<div class="good" *ngIf="it?.category!=1 && it?.goods.price!=0">
+						<div class="good" *ngIf="it?.category!=1 && it?.goods.price>0">
 							<div class="aaa">
 								<span class="name">
 								预览文件
@@ -62,12 +62,12 @@
 						<div class="good" >
 								<div class="aaa">
 									<span class="name">
-										<ng-container *ngIf="it?.goods.price!=0"> 商品文件 </ng-container>
+										<ng-container *ngIf="it?.goods.price>0"> 商品文件 </ng-container>
 										<ng-container *ngIf="it?.goods.price===0"> 免费分享文件 </ng-container>
 									</span>
 								</div>
 								<div class="bbb">
-									<ng-container *ngIf="it?.goods.price!=0">
+									<ng-container *ngIf="it?.goods.price>0">
 										<span *ngIf="it?.goods.file_size!=0">文件大小：{{(it?.goods.file_size/ 1048576).toFixed(2)}}M</span>
 										<span class="type" [ngSwitch]="it?.goods.maxstock" *ngIf="it?.goods.maxstock>0">
 											<ng-container *ngSwitchCase="1"> 单次出售 </ng-container>
@@ -80,8 +80,8 @@
 									<!-- <span>购买时间：{{item.createtime|date:"yyyy-MM-dd HH:mm"}}</span> -->
 									
 								</div>
-								<button (click)="download(it?.goods.id,1)">
-									<ng-container *ngIf="it?.goods.maxstock!=-1;else free"> 下载商品文件 </ng-container>
+								<button (click)="download(it?.goods.id,it?.goods.price>0?1:0)">
+									<ng-container *ngIf="it?.goods.price>0;else free"> 下载商品文件 </ng-container>
 									<ng-template #free> 下载免费分享文件 </ng-template>
 								</button>
 						</div>
