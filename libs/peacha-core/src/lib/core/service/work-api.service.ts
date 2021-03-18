@@ -33,16 +33,16 @@ export enum DateDiff {
 interface Work {
 	id: number;
 	name: string;
-	like_count: number;
-	collect_count?: number;
+	likeCount: number;
+	collectCount: number;
+	publishTime: number;
+	avatar: string;
 	cover: string;
-	stock?: number;
 	category: number;
 	price: number;
-	userid: number;
-	nickname: string;
-	publishtime: number;
-	avatar?: string;
+	userId: number;
+	nickName: string;
+	stock: number;
 }
 
 export interface WorkDetail {
@@ -96,7 +96,7 @@ interface WorkList {
 
 @Injectable()
 export class WorkApiService {
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	getRecommentWork(): Observable<{
 		count: number;

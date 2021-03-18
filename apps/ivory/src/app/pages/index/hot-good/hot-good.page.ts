@@ -17,7 +17,6 @@ export class HotGoodPage {
 	@ViewChild('overlayTwo') overlayTwo: TemplateRef<any>;
 
 	currentPage$ = new BehaviorSubject<number>(1);
-	worksList: Array<any> = [];
 
 	order: FormControl = new FormControl(6);
 	time: FormControl = new FormControl(0);

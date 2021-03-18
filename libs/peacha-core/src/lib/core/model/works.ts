@@ -3,15 +3,15 @@ export interface Works {
 	list: {
 		id: number;
 		name: string;
-		like_count: number;
-		collect_count: number;
-		publishtime: number;
+		likeCount: number;
+		collectCount: number;
+		publishTime: number;
 		avatar: string;
 		cover: string;
 		category: number;
 		price: number;
-		userid: number;
-		nickname: string;
+		userId: number;
+		nickName: string;
 		stock: number;
 	}[];
 }
