@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Works } from '../model';
 
 export enum OrderBy {
 	Keyword,
@@ -30,20 +31,6 @@ export enum DateDiff {
 	LastYear = -360,
 }
 
-interface Work {
-	id: number;
-	name: string;
-	likeCount: number;
-	collectCount: number;
-	publishTime: number;
-	avatar: string;
-	cover: string;
-	category: number;
-	price: number;
-	userId: number;
-	nickName: string;
-	stock: number;
-}
 
 export interface WorkDetail {
 	id: number;
@@ -89,40 +76,37 @@ export interface WorkDetail {
 	];
 }
 
-interface WorkList {
-	count: number;
-	list: Work[];
-}
-
+/**
+ * 2021/3/18
+ * 获取作品列表返回数据类型统一使用  model/Works
+ * by ding
+ */
 @Injectable()
 export class WorkApiService {
 	constructor(private http: HttpClient) { }
 
-	getRecommentWork(): Observable<{
-		count: number;
-		list: Work[];
-	}> {
-		return this.http.get<WorkList>(`/work/recommend`);
+	getRecommentWork(): Observable<Works> {
+		return this.http.get<Works>(`/work/recommend`);
 	}
 
-	getHotIllWork(): Observable<WorkList> {
-		return this.http.get<WorkList>(`/work/hot_work?p=0&s=10&c=1`);
+	getHotIllWork(): Observable<Works> {
+		return this.http.get<Works>(`/work/hot_work?p=0&s=10&c=1`);
 	}
 
-	getHotLive2dWork(): Observable<WorkList> {
-		return this.http.get<WorkList>(`/work/hot_work?p=0&s=10&c=0`);
+	getHotLive2dWork(): Observable<Works> {
+		return this.http.get<Works>(`/work/hot_work?p=0&s=10&c=0`);
 	}
 
-	getPublicWork(): Observable<WorkList> {
-		return this.http.get<WorkList>(`/work/public_work?p=0&s=6`);
+	getPublicWork(): Observable<Works> {
+		return this.http.get<Works>(`/work/public_work?p=0&s=6`);
 	}
 
-	getHotGood(): Observable<WorkList> {
-		return this.http.get<WorkList>(`/work/hot_goods?p=0&s=10`);
+	getHotGood(): Observable<Works> {
+		return this.http.get<Works>(`/work/hot_goods?p=0&s=10`);
 	}
 
-	getFollowedNewestWork(): Observable<WorkList> {
-		return this.http.get<WorkList>(`/news/newest?page=0&size=5`);
+	getFollowedNewestWork(): Observable<Works> {
+		return this.http.get<Works>(`/news/newest?page=0&size=5`);
 	}
 
 	getWork(id: number): Observable<WorkDetail> {
@@ -136,8 +120,8 @@ export class WorkApiService {
 		key: string,
 		workSale: WorkSale,
 		category: WorkCategory
-	): Observable<WorkList> {
-		return this.http.get<WorkList>('/work/get_works', {
+	): Observable<Works> {
+		return this.http.get<Works>('/work/get_works', {
 			params: {
 				u: `${userId}`,
 				p: `${page - 1}`,
@@ -149,8 +133,8 @@ export class WorkApiService {
 		});
 	}
 
-	getRepresentWork(userId: number): Observable<WorkList> {
-		return this.http.get<WorkList>('/work/get_represent_work', {
+	getRepresentWork(userId: number): Observable<Works> {
+		return this.http.get<Works>('/work/get_represent_work', {
 			params: {
 				u: `${userId}`,
 			},
@@ -164,8 +148,8 @@ export class WorkApiService {
 		orderBy: OrderBy,
 		category: WorkCategory,
 		dateDiff: DateDiff
-	): Observable<WorkList> {
-		return this.http.get<WorkList>(`/work/search_work`, {
+	): Observable<Works> {
+		return this.http.get<Works>(`/work/search_work`, {
 			params: {
 				k: key,
 				p: `${page - 1}`,
