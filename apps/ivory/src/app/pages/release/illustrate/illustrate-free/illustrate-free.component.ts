@@ -122,7 +122,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 			cs: this.param.cs,
 			ss: this.param.ss,
 			f: this.param.f,
-			fr: 0,
+			fr: 1,
 			gl: this.param.gl,}).subscribe({
 			next: _x => {
 				this.modal.open(SuccessTips, {
@@ -178,6 +178,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 				n: this.form.value.n,
 				a: this.copyrightModel,
 				gl: [],
+				fr: 1,
 				gd: '',
 			})
 			.subscribe({
