@@ -66,7 +66,7 @@ export class MemberApiService {
                 submittime: string;
                 audittime: string;
             }[];
-        }>(`/work/get_apply_work?k=${k ?? ''}&p=${p ? p - 1 : 0}&s=${s}&c=${c}&a=${a}`)
+        }>(`/work/get_apply_works?k=${k ?? ''}&p=${p ? p - 1 : 0}&s=${s}&c=${c}&a=${a}`)
 
 
 
