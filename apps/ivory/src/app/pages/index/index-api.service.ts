@@ -1,25 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Works } from '@peacha-core';
 
-
-
-type Work = {
-    count: number;
-    list: {
-        id: number;
-        name: string;
-        like_count: number;
-        collect_count: number;
-        publishtime: number;
-        avatar: string;
-        cover: string;
-        category: number;
-        price: number;
-        userid: number;
-        nickname: string;
-        stock: number;
-    }[];
-};
 
 type HotTag = {
     list: {
@@ -79,7 +61,7 @@ export class IndexApiService {
     *
     * @version 2021/3/18
     */
-    public getHotWork = (p: number, s: number, c: number, t: number) => this.http.get<Work>(`/work/hot_work?p=${p}&s=${s}&c=${c}&t=${t}`)
+    public getHotWork = (p: number, s: number, c: number, t: number) => this.http.get<Works>(`/work/hot_work?p=${p}&s=${s}&c=${c}&t=${t}`)
 
 
     /**
@@ -110,7 +92,7 @@ export class IndexApiService {
     *
     * @version 2021/3/18
     */
-    public getTagSearch = (t: number, p: number, s: number) => this.http.get<Work>(`/work/tag_search?t=${t}&p=${p}&s=${s}`)
+    public getTagSearch = (t: number, p: number, s: number) => this.http.get<Works>(`/work/tag_search?t=${t}&p=${p}&s=${s}`)
 
 
 
@@ -143,7 +125,7 @@ export class IndexApiService {
     *
     * @version 2021/3/18
     */
-    public getNewest = (p: number, s: number, k: string, c: number, cd: number) => this.http.get<Work>(`/work/follow?p=${p}&s=${s}&k=${k}&c=${c}&cd=${cd}`)
+    public getNewest = (p: number, s: number, k: string, c: number, cd: number) => this.http.get<Works>(`/work/follow?p=${p}&s=${s}&k=${k}&c=${c}&cd=${cd}`)
 
     /**
     *
@@ -155,7 +137,7 @@ export class IndexApiService {
     *
     * @version 2021/3/18
     */
-    public getRecommendWork = () => this.http.get<Work>(`/work/recommend`)
+    public getRecommendWork = () => this.http.get<Works>(`/work/recommend`)
 
 
 
@@ -172,7 +154,7 @@ export class IndexApiService {
     *
     * @version 2021/3/18
     */
-    public getPublicWork = (p: number, s: number) => this.http.get<Work>(`/work/public_work?p=${p}&s=${s}`)
+    public getPublicWork = (p: number, s: number) => this.http.get<Works>(`/work/public_work?p=${p}&s=${s}`)
 
 
     /**
