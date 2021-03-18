@@ -1,92 +1,9 @@
 import { Component, HostListener, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { of, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { IndexApiService } from '../index-api.service';
 
-type Banner = {
-	name: string;
-	imageurl: string;
-	url: string;
-}[];
-
-type Newest = {
-	count: number;
-	list: {
-		id: number;
-		public_date: number;
-		public_userid: number;
-		public_username: string;
-		public_useravatar: string;
-		work: {
-			work_id: number;
-			work_name: string;
-			description: string;
-			collect_count: number;
-			state: number;
-			cover: string;
-			type: number;
-		};
-	}[];
-};
-
-type Hot = {
-	count: number;
-	list: {
-		id: number;
-		name: string;
-		like_count: number;
-		collect_count: number;
-		cover: string;
-		state: number;
-		category: number;
-		price: number;
-		userid: number;
-		nickname: string;
-		publishtime: number;
-	}[];
-};
-
-type HotGood = {
-	count: number;
-	list: {
-		id: number;
-		name: string;
-		like_count: number;
-		cover: string;
-		type: number;
-		price: number;
-		userid: number;
-		nickname: string;
-		publishtime: number;
-	}[];
-};
-
-type HotTag = {
-	list: {
-		name: string;
-		color: string;
-		id: number;
-	}[];
-};
-
-type HotUser = {
-	count: number;
-	list: {
-		uid: number;
-		nickname: string;
-		follow_state: number;
-		avatar: string;
-		description: string;
-		like_count: number;
-		num_followed: number;
-		work_list: {
-			id: number;
-			cover: string;
-			category: number;
-		};
-	}[];
-};
 
 @Component({
 	selector: 'ivo-login-index',
@@ -94,7 +11,11 @@ type HotUser = {
 	styleUrls: ['./login-index.page.less'],
 })
 export class LoginIndexPage {
-	constructor(private http: HttpClient, private router: Router, private render: Renderer2) { }
+	constructor(
+		private indexApi: IndexApiService,
+		private router: Router,
+		private render: Renderer2
+	) { }
 
 	loadOne = true;
 	loadTwo = true;
@@ -109,7 +30,7 @@ export class LoginIndexPage {
 	@ViewChild('show') show: ElementRef;
 
 	/**banner图片 */
-	banners$ = this.http.get<Banner>('/common/index_banner').pipe(
+	banners$ = this.indexApi.getIndexBanner().pipe(
 		tap(() => {
 			this.loadBanner = false;
 		}),
@@ -123,7 +44,7 @@ export class LoginIndexPage {
 	);
 
 	/**最新作品动态 */
-	newest$ = this.http.get<Newest>(`/news/newest?page=0&size=5`).pipe(
+	newest$ = this.indexApi.getNewest(0, 5, '', -1, new Date().getTime()).pipe(
 		catchError(() => {
 			return of({
 				count: 0,
@@ -137,7 +58,7 @@ export class LoginIndexPage {
 	changeHotUser$ = new BehaviorSubject<number>(0);
 
 	/**热门标签 */
-	hotTags$ = this.http.get<HotTag>(`/work/hot_tag`).pipe(
+	hotTags$ = this.indexApi.getHotTag().pipe(
 		tap(() => {
 			this.loadFour = false;
 		})
@@ -145,7 +66,7 @@ export class LoginIndexPage {
 	/**热门全部作品 */
 	hotlWork$ = this.changeOriginalWork$.pipe(
 		switchMap(() => {
-			return this.http.get<Hot>(`/work/recommend`).pipe(
+			return this.indexApi.getRecommendWork().pipe(
 				tap(s => {
 					console.log(s.list.length);
 				})
@@ -160,7 +81,7 @@ export class LoginIndexPage {
 	/**热门原画作品 */
 	hotOriginalWork$ = this.changeOriginalWork$.pipe(
 		switchMap(_ => {
-			return this.http.get<Hot>(`/work/hot_work?p=0&s=10&c=1`).pipe(
+			return this.indexApi.getHotWork(0, 10, 1, 0).pipe(
 				tap(_s => {
 					this.loadOne = false;
 				})
@@ -176,7 +97,7 @@ export class LoginIndexPage {
 	/**热门作品 */
 	hotLiveWork$ = this.changeLiveWork$.pipe(
 		switchMap(_ => {
-			return this.http.get<Hot>(`/work/hot_work?p=0&s=10&c=0`).pipe(
+			return this.indexApi.getHotWork(0, 10, 0, 0).pipe(
 				tap(_s => {
 					this.loadTwo = false;
 				})
@@ -190,7 +111,7 @@ export class LoginIndexPage {
 		})
 	);
 	/**公示期作品 */
-	publicWork$ = this.http.get<Hot>(`/work/public_work?p=0&s=5`).pipe(
+	publicWork$ = this.indexApi.getPublicWork(0, 5).pipe(
 		tap(_s => {
 			this.loadThree = false;
 		}),
@@ -204,7 +125,7 @@ export class LoginIndexPage {
 	/**热门作者 */
 	hotUser$ = this.changeHotUser$.pipe(
 		switchMap(_s => {
-			return this.http.get<HotUser>(`/user/hot_user?p=0&s=4`).pipe(
+			return this.indexApi.getHotUser(0, 4).pipe(
 				tap(() => {
 					this.loadFive = false;
 				})
@@ -218,7 +139,7 @@ export class LoginIndexPage {
 		})
 	);
 	/**热门商品 */
-	hotGoods$ = this.http.get<HotGood>(`/work/hot_goods?p=0&s=10`).pipe(
+	hotGoods$ = this.indexApi.getHotWork(0, 10, -1, 1).pipe(
 		tap(_s => {
 			this.loadSix = false;
 		}),

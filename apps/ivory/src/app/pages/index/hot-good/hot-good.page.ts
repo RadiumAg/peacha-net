@@ -1,23 +1,10 @@
 import { Component, ViewChild, ElementRef, TemplateRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
 import { switchMap, tap, catchError } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
+import { IndexApiService } from '../index-api.service';
 
-type HotGood = {
-	count: number;
-	list: {
-		id: number;
-		name: string;
-		like_count: number;
-		cover: string;
-		category: number;
-		price: number;
-		userid: number;
-		nickname: string;
-	}[];
-};
 @Component({
 	selector: 'ivo-hot-good',
 	templateUrl: './hot-good.page.html',
@@ -77,7 +64,7 @@ export class HotGoodPage {
 	/**热门商品 */
 	hotGoods$ = this.route.queryParams.pipe(
 		switchMap(params => {
-			return this.http.get<HotGood>(`/work/hot_goods?k=&p=${params.page - 1 ?? 0}&s=20`).pipe(
+			return this.indexApi.getHotWork(params.page - 1 ?? 0, 20, -1, 1).pipe(
 				tap(() => {
 					this.currentPage$.next(params.page ?? 1);
 				}),
@@ -90,7 +77,11 @@ export class HotGoodPage {
 			);
 		})
 	);
-	constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
+	constructor(
+		private indexApi: IndexApiService,
+		private router: Router,
+		private route: ActivatedRoute
+	) { }
 
 	toPage(p: number) {
 		this.router.navigate([], {

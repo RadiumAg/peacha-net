@@ -22,6 +22,7 @@ import { PeachaStudioCoreModule } from '@peacha-studio-core';
 import { Carousel } from './login-index/carousel/carousel';
 import { FollowModule } from '@peacha-core/feature';
 import { PeachaComponentsModule, WorkRelatedModule } from '@peacha-core/components';
+import { IndexApiService } from './index-api.service';
 
 @NgModule({
 	declarations: [
@@ -89,6 +90,6 @@ import { PeachaComponentsModule, WorkRelatedModule } from '@peacha-core/componen
 		PeachaStudioCoreModule,
 		WorkRelatedModule,
 	],
-	providers: [IndexResolve, UnindexResolve],
+	providers: [IndexResolve, UnindexResolve, IndexApiService],
 })
 export class IndexModule { }

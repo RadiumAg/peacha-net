@@ -1,31 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { switchMap, tap, catchError, map } from 'rxjs/operators';
 import { of, BehaviorSubject } from 'rxjs';
-
-type HotTag = {
-	list: {
-		name: string;
-		color: string;
-		id: number;
-	}[];
-};
-
-type TagWork = {
-	count: number;
-	list: {
-		id: number;
-		cover: string;
-		name: string;
-		like_count: number;
-		price: number;
-		nickname: string;
-		category: number;
-		userid: number;
-		state: number;
-	};
-};
+import { IndexApiService } from '../index-api.service';
 
 @Component({
 	selector: 'ivo-hot-tag',
@@ -39,12 +16,12 @@ export class HotTagPage {
 		return this.route.queryParams.pipe(map(s => s.k as string));
 	}
 	/**热门标签 */
-	hotTags$ = this.http.get<HotTag>(`/work/hot_tag`);
+	hotTags$ = this.indexApi.getHotTag();
 
 	/**标签作品 */
 	works$ = this.route.queryParams.pipe(
 		switchMap(s => {
-			return this.http.get<TagWork>(`/work/tag_search?t=${s.id}&p=${s.page - 1 ?? 0}&s=20`).pipe(
+			return this.indexApi.getTagSearch(s.id, s.page - 1 ?? 0, 20).pipe(
 				tap(() => {
 					this.pageWorks$.next(s.page ?? 1);
 				}),
@@ -57,7 +34,11 @@ export class HotTagPage {
 			);
 		})
 	);
-	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) { }
+	constructor(
+		private router: Router,
+		private route: ActivatedRoute,
+		private indexApi: IndexApiService
+	) { }
 
 	searchWork(i: number, name: string) {
 		this.router.navigate(['hotTagWork'], {

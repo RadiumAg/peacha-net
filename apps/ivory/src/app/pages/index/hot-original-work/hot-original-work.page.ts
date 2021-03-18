@@ -1,23 +1,10 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { tap, filter, startWith, mergeMap, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { IndexApiService } from '../index-api.service';
 
-type HotWork = {
-	count: number;
-	list: {
-		id: number;
-		cover: string;
-		name: string;
-		like_count: number;
-		collect_count: number;
-		price: number;
-		state: number;
-		nickname: string;
-		category: number;
-	}[];
-};
+
 @Component({
 	selector: 'ivo-hot-original-work',
 	templateUrl: './hot-original-work.page.html',
@@ -29,7 +16,10 @@ export class HotOriginalWorkPage {
 	private page = 1;
 	loading = false;
 
-	constructor(private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) { }
+	constructor(
+		private indexApi: IndexApiService,
+		private router: Router
+	) { }
 
 	private loadByScroll$ = fromEvent(window, 'scroll').pipe(
 		filter(() => {
@@ -45,7 +35,7 @@ export class HotOriginalWorkPage {
 		startWith(1), //页面首次加载触发
 		mergeMap(() => {
 			this.loading = true;
-			return this.http.get<HotWork>(`/work/hot_work?p=${this.page - 1}&s=20&c=1`).pipe(
+			return this.indexApi.getHotWork(this.page - 1, 20, 1, 0).pipe(
 				tap(res => {
 					this.count = res.count;
 					this.cache = [...this.cache, ...res.list];
