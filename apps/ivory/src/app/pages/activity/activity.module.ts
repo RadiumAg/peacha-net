@@ -6,14 +6,14 @@ import { CommentModule } from '../../fragments/comment/comment.module';
 import { PeachaComponentsModule, WorkRelatedModule } from '@peacha-core/components';
 import { EfeActivityPage } from './pages/efe/efe-activity.page';
 import { VupDebutPage } from './pages/vup-debut/vup-debut.page';
-import { LiveActivityPage } from './pages/live-activity/live-activity.page';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PeachaStudioCoreModule } from '@peacha-studio-core';
 import { FollowModule } from '@peacha-core/feature';
+import { AkaActivityPage } from './pages/aka-activity/aka-activity.page';
 
 
 @NgModule({
-	declarations: [EfeActivityPage, VupDebutPage, LiveActivityPage],
+	declarations: [EfeActivityPage, VupDebutPage, AkaActivityPage],
 	imports: [
 		CommonModule,
 		CommentModule,
@@ -38,7 +38,7 @@ import { FollowModule } from '@peacha-core/feature';
 			},
 			{
 				path: 'aka',
-				component: LiveActivityPage
+				component: AkaActivityPage
 			}
 		]),
 	],

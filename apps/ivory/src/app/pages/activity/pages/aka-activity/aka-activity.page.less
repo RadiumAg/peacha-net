@@ -5,20 +5,21 @@ button{
 :host {
 	display: flex;
 	justify-content: center;
-	img {
-		width: 1920px;
+	.bg{
+		width: 100%;
+		min-width: 1902px;
+		max-width: 1920px;
 	}
     .show{
         position: absolute;
 		z-index: 99;
 		width: 1200px;
-		top: 1090px;
+		top: 1135px;
 		height: 1000px;
 
 		&>.live2d-preview{
 			width:1200px;
-			height: 670px;
-			background-color: yellow;
+			height: 685px;
 		}
 
 		&>.btn{
@@ -46,7 +47,7 @@ button{
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			margin-top: 50px;
+			margin-top: 1250px;
 
 
 			&>a{
@@ -100,3 +101,4 @@ button{
     }
 
 }
+

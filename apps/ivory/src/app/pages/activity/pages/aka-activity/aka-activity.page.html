@@ -1,4 +1,4 @@
-<img src="/assets/image/activity/aka-bg.jpg">
+<img class="bg" src="/assets/image/activity/aka-bg.jpg">
 <div class="show">
     <ng-container *ngrxLet="work$;let work">
         <div class="live2d-preview" *ngrxLet="live2d$;let live2d">
@@ -6,7 +6,7 @@
                 fileType="opal"
                 [vfs]="live2d"
                 width="1200"
-                height="670"
+                height="685"
                 [transformData]="transformData"
                 [enableFaceTracker]="enableFaceTracker"
                 [enableSettingPanel]="enableSettingPanel"
@@ -25,7 +25,7 @@
     <div class="user" *ngrxLet="user$;let user">
         <a target="_blank" href="/user/21437">
             <h4>{{user.nickname}}</h4>
-        </a>
+        </a> 
         <a target="_blank" href="/user/21437">
             <img [attr.src]="user.avatar">
         </a>
