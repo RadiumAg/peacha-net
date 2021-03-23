@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ModalService, DropDownService } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { MemberApiService } from '../../member-api.service';
-import { GoodsManagerPage } from '../goods-manager/goods-manager.page';
+import { GoodsManager } from './goods-manager/goods-manager';
 
 
 @Component({
@@ -65,9 +65,9 @@ export class SingleManagerPage implements AfterViewInit {
 		this.menu.close();
 		if (this.type === 1) {
 			this.router.navigate(['/edit/illust', id]);
-		} else if(this.type === 3){
+		} else if (this.type === 3) {
 			this.router.navigate(['/edit/illust/paid', id]);
-		} 
+		}
 		else if (this.type === 0) {
 			this.router.navigate(['/edit/live2d', id]);
 		} else if (this.type === 2) {
@@ -108,7 +108,7 @@ export class SingleManagerPage implements AfterViewInit {
 	manager(id: number, time: number) {
 		this.menu.close();
 		if (time + 7 * 24 * 60 * 60 * 1000 - Date.now() < 0) {
-			this.modal.open(GoodsManagerPage, id);
+			this.modal.open(GoodsManager, id);
 		} else {
 			this.modal.open(PopTips, ['商品正处于公示期，无法管理！', false]);
 		}

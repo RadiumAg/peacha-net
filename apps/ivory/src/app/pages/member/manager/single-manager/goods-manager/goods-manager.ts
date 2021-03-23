@@ -2,27 +2,35 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { combineLatest, BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
-import { MemberApiService } from '../../member-api.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
 	selector: 'ivo-goods-manager',
-	templateUrl: './goods-manager.page.html',
-	styleUrls: ['./goods-manager.page.less'],
+	templateUrl: './goods-manager.html',
+	styleUrls: ['./goods-manager.less'],
 })
-export class GoodsManagerPage implements OnInit {
+export class GoodsManager implements OnInit {
 	update$ = new BehaviorSubject<number>(0);
 
 	good$ = combineLatest([this.update$]).pipe(
 		switchMap(_s => {
-			return this.memberApi.getGoods(this.id);
+			return this.http.get<{
+				list: {
+					id: number,
+					name: string,
+					max_stock: number,
+					sale_number: number,
+					sellstate: boolean
+				}[]
+			}>(`/work/get_goods?w=${this.id}`);
 		})
 	);
 
 	constructor(
-		private modalRef: ModalRef<GoodsManagerPage>,
+		private modalRef: ModalRef<GoodsManager>,
 		@Inject(MODAL_DATA_TOKEN) public id: number,
-		private memberApi: MemberApiService,
+		private http: HttpClient
 	) { }
 
 	ngOnInit(): void {
@@ -31,10 +39,12 @@ export class GoodsManagerPage implements OnInit {
 
 
 	up(id: number, ss: number) {
-		this.memberApi.updateSellstate(id, ss)
-			.subscribe(_s => {
-				this.update$.next(2);
-			});
+		this.http.post('/work/update_sellstate', {
+			g: id,
+			ss: ss
+		}).subscribe(_s => {
+			this.update$.next(2);
+		});
 	}
 
 	close() {

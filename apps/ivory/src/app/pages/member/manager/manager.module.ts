@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ManagerPage } from './manager.page';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { GoodsManagerPage } from './goods-manager/goods-manager.page';
 import { LiveManagerPage } from './live-manager/live-manager.page';
 import { IllustManagerPage } from './illust-manager/illust-manager.page';
 import { LiveSuccessPage } from './live-manager/live-success/live-success.page';
@@ -16,11 +15,12 @@ import { SharedService } from './live-manager/live.service';
 import { SingleManagerPage } from './single-manager/single-manager.page';
 import { ReactiveComponentModule } from '@peacha-core';
 import { PeachaComponentsModule } from '@peacha-core/components';
+import { GoodsManager } from './single-manager/goods-manager/goods-manager';
 
 @NgModule({
 	declarations: [
 		ManagerPage,
-		GoodsManagerPage,
+		GoodsManager,
 		LiveManagerPage,
 		IllustManagerPage,
 		LiveSuccessPage,
