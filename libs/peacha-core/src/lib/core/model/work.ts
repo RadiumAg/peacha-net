@@ -14,7 +14,14 @@ export interface Work {
 	file_data?: string;
 	file_size?: number;
 	follow_state?: number;
-	goods_list?: any[];
+	goods_list?:{file: '';
+	file_name_list: [];
+	file_size: string;
+	id: number;
+	max_stock: number;
+	name: string;
+	price: number;
+	sell_state: number;}[];
 	id?: number;
 	is_collect?: number;
 	is_like?: number;

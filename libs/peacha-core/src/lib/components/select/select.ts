@@ -9,7 +9,7 @@ import {
 	ElementRef,
 	Input,
 	Renderer2,
-	AfterContentInit,
+	AfterContentInit
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Option } from '../option/option';
@@ -73,6 +73,7 @@ export class Select implements ControlValueAccessor, SelectFather, AfterContentI
 		this.optionClicked.next(option);
 		this.fnOnChange(option.value);
 		this.overlayRef.detach();
+		this.render.removeClass(this.hello?.nativeElement, 'zhuan');
 		this.selected = false;
 		this.y = this.options.toArray().indexOf(option);
 	}

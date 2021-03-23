@@ -4,6 +4,7 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, Validators } from '@angular/forms';
+import { Works } from '@peacha-core';
 
 @Component({
 	selector: 'ivo-work-search',
@@ -11,7 +12,7 @@ import { FormControl, Validators } from '@angular/forms';
 	styleUrls: ['./work-search.page.less'],
 })
 export class WorkSearchPage {
-	input$: Observable<any> = this.route.queryParams.pipe(
+	input$ = this.route.queryParams.pipe(
 		map(s => {
 			return s.keyword;
 		})
@@ -32,7 +33,7 @@ export class WorkSearchPage {
 		switchMap(([r, _sp]) => {
 			const key: string = encodeURIComponent(r.keyword ?? '');
 			return this.http
-				.get<any>(
+				.get<Works>(
 					`/work/search_work?k=${key ?? ''}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ? r.o : key ? 0 : 1}&dd=${r.dd ?? 0}&c=${r.c === undefined ? '-1' : r.c
 					}`
 				)

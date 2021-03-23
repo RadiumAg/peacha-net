@@ -14,7 +14,7 @@ import { SelectData, ModalService, UserState, SELECT_TOKEN, SELECT_DATA_TOKEN } 
 	templateUrl: './live2d.component.html',
 	styleUrls: ['./live2d.component.less'],
 })
-export class Live2dComponent implements OnInit, OnDestroy {
+export class Live2dFreeOrPaidComponent implements OnInit, OnDestroy {
 	constructor(
 		@Inject(SELECT_TOKEN) public select_token: BehaviorSubject<boolean>,
 		@Inject(SELECT_DATA_TOKEN)

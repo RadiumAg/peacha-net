@@ -122,6 +122,13 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
     }
   }
 
+  priceValidate(e:Event){
+		const price = e.target as HTMLInputElement;
+		price.value.length > 5 ? (price.value = price.value.slice(0, price.value.length - 1)) : 
+          (price.value.includes('.')? price.value = price.value.slice(0, price.value.lastIndexOf('.')): '')
+	}
+
+
   onTransformDataUpdate(data: Live2dTransformData): void {
     this.transformData = data;
     this.form.patchValue({
@@ -348,7 +355,6 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
               enableFaceTracker: this.modalSetting.enableFaceTracker,
               enableSettingPanel: this.modalSetting.enableSettingPanel,
             });
-            console.log();
             value.c = value.c ? 0 : '';
             value.gl = [
               {

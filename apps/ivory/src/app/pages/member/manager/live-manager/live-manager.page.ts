@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { SharedService } from './live.service';
 import { tap, switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { MemberApiService } from '../../member-api.service';
+
 
 @Component({
 	selector: 'ivo-live-manager',
@@ -14,7 +15,11 @@ import { BehaviorSubject } from 'rxjs';
 export class LiveManagerPage {
 	key: FormControl = new FormControl('');
 	refresh$ = new BehaviorSubject(1);
-	constructor(private http: HttpClient, private router: Router, private _sharedService: SharedService) { }
+	constructor(
+		private memberApi: MemberApiService,
+		private router: Router,
+		private _sharedService: SharedService
+	) { }
 	re$ = this._sharedService.changeEmitted$
 		.pipe(
 			tap(_s => {
@@ -25,7 +30,7 @@ export class LiveManagerPage {
 
 	countList$ = this.refresh$.pipe(
 		switchMap(_s => {
-			return this.http.get(`/work/get_create_works_count?c=0`);
+			return this.memberApi.getCreateWorksCount(0);
 		})
 	);
 

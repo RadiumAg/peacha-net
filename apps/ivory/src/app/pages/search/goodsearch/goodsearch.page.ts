@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { switchMap, catchError, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Works } from '@peacha-core';
 
 @Component({
 	selector: 'ivo-goodsearch',
@@ -14,15 +15,11 @@ export class GoodsearchPage {
 
 	page$ = new BehaviorSubject<number>(1);
 
-	workdata$: Observable<{
-		count: number;
-		// eslint-disable-next-line @typescript-eslint/ban-types
-		list: {};
-	}> = this.route.queryParams.pipe(
+	workdata$ = this.route.queryParams.pipe(
 		switchMap(r => {
 			const key: string = encodeURIComponent(r.keyword ?? '');
 			return this.http
-				.get<any>(`/work/search_goods?k=${key ?? ''}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ? r.o : key ? 0 : 1}&dd=${r.dd ?? 0}`)
+				.get<Works>(`/work/search_goods?k=${key ?? ''}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ? r.o : key ? 0 : 1}&dd=${r.dd ?? 0}`)
 				.pipe(
 					tap(_s => {
 						this.page$.next(r.p ?? 1);

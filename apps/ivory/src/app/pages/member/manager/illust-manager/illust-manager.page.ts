@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { SharedService } from '../live-manager/live.service';
 import { tap, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { MemberApiService } from '../../member-api.service';
+
 
 @Component({
 	selector: 'ivo-illust-manager',
@@ -15,7 +16,11 @@ export class IllustManagerPage {
 	key: FormControl = new FormControl('');
 	refresh$ = new BehaviorSubject(1);
 
-	constructor(private http: HttpClient, private _sharedService: SharedService, private router: Router) { }
+	constructor(
+		private memberApi: MemberApiService,
+		private _sharedService: SharedService,
+		private router: Router
+	) { }
 
 	re$ = this._sharedService.changeEmitted$
 		.pipe(
@@ -27,7 +32,7 @@ export class IllustManagerPage {
 
 	countList$ = this.refresh$.pipe(
 		switchMap(_s => {
-			return this.http.get(`/work/get_create_works_count?c=1`);
+			return this.memberApi.getCreateWorksCount(1);
 		})
 	);
 

@@ -3,6 +3,7 @@ import {
 	ChangeDetectorRef,
 	Component,
 	EventEmitter,
+	Input,
 	OnInit,
 	Output,
 	Renderer2
@@ -15,6 +16,7 @@ import { IllustZoomModalComponent } from '../../../../work/illust-zoom-modal/ill
 import { CommissionApiService } from '../../../service/commission-api.service';
 import { CommissionDetailService } from '../../../service/detail.service';
 import { CommissionDetailErrorService } from '../../commission-detail-error.service';
+import { CommissionPrompt } from '../../commission-pop-component/commission-prompt/commission-prompt';
 import { CommissionReject } from '../../commission-pop-component/commission-reject/commission-reject';
 import { CommissionTimeout } from '../../commission-pop-component/commission-timeout/commission-timeout';
 
@@ -27,11 +29,16 @@ import { CommissionTimeout } from '../../commission-pop-component/commission-tim
 export class CommissionDetailSteps implements OnInit {
 	// @ViewChild('translate') translateBox: ElementRef;
 
+	// @Input() set changeLastNode(v: number) {
+	// 	if (v === 1) {
+	// 		this.indexNode = { ...this.indexNode, status: 4 };
+	// 	}
+	// }
+
 	@Output() update = new EventEmitter<any>();
 	active: number;
 
 	dataList: Array<any>;
-
 	// showTitle: string;
 
 	// index_type: number;
@@ -139,6 +146,9 @@ export class CommissionDetailSteps implements OnInit {
 				{ t: '企划有误', color: 1, fun: 'two', p: 1 },
 				{ t: '企划确认无误', color: 0, fun: 'two', p: 0 },
 			],
+			cbtn: [
+				{ t: '撤回企划开始确认', color: 1, fun: 'ten' },
+			],
 			express: [{ p: '企划方发起开始确认时间：', t: 1 }],
 		},
 		{
@@ -149,6 +159,9 @@ export class CommissionDetailSteps implements OnInit {
 			pbtn: [
 				{ t: '企划有误', color: 1, fun: 'two', p: 1 },
 				{ t: '企划确认无误', color: 0, fun: 'two', p: 0 },
+			],
+			cbtn: [
+				{ t: '撤回企划开始确认', color: 1, fun: 'ten' },
 			],
 			express: [{ p: '企划方发起开始确认时间：', t: 1 }],
 		},
@@ -218,6 +231,9 @@ export class CommissionDetailSteps implements OnInit {
 				{ t: '绑定文件有误', color: 1, fun: 'five', p: 2 },
 				{ t: '绑定文件无误', color: 0, fun: 'five', p: 1 },
 			],
+			cbtn: [
+				{ t: '撤回阶段节点审核', color: 1, fun: 'ten' },
+			],
 			express: [{ p: '企划方提交绑定文件时间：', t: 1 }],
 			note: '退回记录',
 		},
@@ -269,7 +285,10 @@ export class CommissionDetailSteps implements OnInit {
 				{ t: '审核通过', color: 0, fun: 'nine', p: 1 },
 				{ t: '审核通过，企划完成', color: 0, fun: 'eight', p: 1 },
 			],
-			pbtn: [{ t: '企划方长时间不审核？', color: 0, fun: 'six', p: 3, time: 1 }],
+			pbtn: [
+				{ t: '企划方长时间不审核？', color: 0, fun: 'six', p: 3, time: 1 },
+				{ t: '撤回阶段节点审核', color: 1, fun: 'ten' }
+			],
 			express: [{ p: '画师提交审核时间：', t: 1 }],
 			note: '驳回/退回记录',
 		},
@@ -284,7 +303,10 @@ export class CommissionDetailSteps implements OnInit {
 				{ t: '审核通过', color: 0, fun: 'nine', p: 1 },
 				{ t: '审核通过，企划完成', color: 0, fun: 'eight', p: 1 },
 			],
-			pbtn: [{ t: '企划方长时间不审核？', color: 0, fun: 'six', p: 3, time: 1 }],
+			pbtn: [
+				{ t: '企划方长时间不审核？', color: 0, fun: 'six', p: 3, time: 1 },
+				{ t: '撤回阶段节点审核', color: 1, fun: 'ten' }
+			],
 			express: [{ p: '模型师提交审核时间：', t: 1 }],
 			note: '退回记录',
 		},
@@ -569,6 +591,9 @@ export class CommissionDetailSteps implements OnInit {
 				break;
 			case 'nine':
 				this.audit(p);
+				break;
+			case 'ten':
+				this.revoke();
 				break;
 		}
 	}
@@ -890,6 +915,32 @@ export class CommissionDetailSteps implements OnInit {
 				},
 			}
 		);
+	}
+
+	/**撤销节点提交 */
+	revoke() {
+
+		this.modal.open(CommissionPrompt, {
+			title: this.indexNode.type === 0 ? '撤回企划开始确认' : '撤回阶段节点提交',
+			tips: this.indexNode.type === 0 ? '是否确定撤回企划开始确认？' : '是否确定撤回阶段节点提交？',
+			type: true
+		}).afterClosed().subscribe(is => {
+			if (is) {
+				this.commissionApi.nodeRevoke(Number(this.indexNode.id)).subscribe(
+					_s => {
+						this.indexNode = { ...this.indexNode, status: 0 };
+						this.getNodeSubmitRecord(this.indexNode.id, true);
+						this.fileList = [];
+						this.imageList = [];
+						this.cdr.detectChanges();
+					}, _e => {
+						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' }).afterClosed().subscribe(_s => {
+							location.reload();
+						})
+					})
+			}
+		})
+
 	}
 
 	showDetail(data: string): void {

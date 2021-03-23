@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
+import { MemberApiService } from '../../member-api.service';
 
 @Component({
 	selector: 'ivo-record-detail',
@@ -9,11 +10,15 @@ import { switchMap } from 'rxjs/operators';
 	styleUrls: ['./record-detail.page.less'],
 })
 export class RecordDetailPage {
-	constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute) { }
+	constructor(
+		private router: Router,
+		private memberApi: MemberApiService,
+		private route: ActivatedRoute
+	) { }
 
 	order$ = this.route.queryParams.pipe(
 		switchMap(r => {
-			return this.http.get<any>(`/mall/get_sell_order_detail?o=${r.id}`);
+			return this.memberApi.getSellOrderDetail(r.id);
 		})
 	);
 

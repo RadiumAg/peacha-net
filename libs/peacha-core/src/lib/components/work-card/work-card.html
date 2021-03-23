@@ -2,7 +2,7 @@
 	<a [href]="work?.category==1?['/illust/'+work?.id]:['/live2d/'+work?.id]">
 		<div class="empty"></div>
 		<img
-			[attr.src]="work?.category?'/assets/image/work-card/ikon-tag.svg':work?.price==0?'/assets/image/work-card/free-tag.svg':'/assets/image/work-card/Live2D-tag.svg'"
+			[attr.src]="work?.price==0?'/assets/image/work-card/free-tag.svg':work?.category?'/assets/image/work-card/ikon-tag.svg':'/assets/image/work-card/Live2D-tag.svg'"
 			class="good-icon"
 		/>
 		<ivo-lazy-img [ngLazyLoad]="work?.cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'" [border]="1"> </ivo-lazy-img>
@@ -20,7 +20,7 @@
 		<span class="sad">
 			<span class="like-count">
 				<img src="/assets/image/svg/i-thumbs-up.svg" />
-				<ng-container *ngIf="work?.like_count;else add"> {{work?.like_count | changeUnit}} </ng-container>
+				<ng-container *ngIf="work?.likeCount;else add"> {{work?.likeCount | changeUnit}} </ng-container>
 				<ng-template #add> 点个赞吧 </ng-template>
 			</span>
 			<ng-container *ngIf="work?.category==0">
@@ -40,10 +40,10 @@
 	</a>
 
 	<div class="work-buttom">
-		<a [href]="['/user/'+work?.userid]">
-			<span *ngIf="work?.userid" class="user">
+		<a [href]="['/user/'+work?.userId]">
+			<span *ngIf="work?.userId" class="user">
 				<img [attr.src]="work?.avatar+'?x-oss-process=image/resize,m_fixed,w_22,h_22'" />
-				<span class="nickname">{{work?.nickname}}</span>
+				<span class="nickname">{{work?.nickName}}</span>
 			</span>
 		</a>
 		<span class="publishtime"> {{showtime}} </span>
