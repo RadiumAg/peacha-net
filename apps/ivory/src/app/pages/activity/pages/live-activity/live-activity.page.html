@@ -1,0 +1,51 @@
+<img src="/assets/image/activity/aka-bg.jpg">
+<div class="show">
+    <ng-container *ngrxLet="work$;let work">
+        <div class="live2d-preview" *ngrxLet="live2d$;let live2d">
+            <peacha-live2d-preview
+                fileType="opal"
+                [vfs]="live2d"
+                width="1200"
+                height="670"
+                [transformData]="transformData"
+                [enableFaceTracker]="enableFaceTracker"
+                [enableSettingPanel]="enableSettingPanel"
+            ></peacha-live2d-preview>
+    </div>
+    </ng-container>
+    
+    <div class="btn">
+        <a target="_blank" href="/live2d/10960">     
+             <button>免费内容下载</button>
+        </a>
+        <a target="_blank" href="/live2d/10961">     
+            <button>付费内容购买</button>
+        </a>
+    </div>
+    <div class="user" *ngrxLet="user$;let user">
+        <a target="_blank" href="/user/21437">
+            <h4>{{user.nickname}}</h4>
+        </a>
+        <a target="_blank" href="/user/21437">
+            <img [attr.src]="user.avatar">
+        </a>
+         <ng-container ivo-follow [follow-id]="user?.id" [follow-state]="user?.follow_state" #fffff="follow">
+            <ng-container *ngrxLet="fffff.follow$;let f" [ngSwitch]="f">
+              <button [class.checked]="f!=0" (click)="fffff.request()">
+                <ng-container *ngSwitchCase="0">
+                  关注
+                </ng-container>
+                <ng-container *ngSwitchCase="1">
+                  已关注
+                </ng-container>
+                <ng-container *ngSwitchCase="2">
+                  已关注
+                </ng-container>
+                <ng-container *ngSwitchCase="3">
+                  已拉黑
+                </ng-container>
+              </button>
+            </ng-container>
+          </ng-container>
+    </div>
+</div>
