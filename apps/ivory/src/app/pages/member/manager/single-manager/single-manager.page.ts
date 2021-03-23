@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Input, ViewContainerRef, ElementRef, TemplateRef, Output, EventEmitter, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalService, DropDownService } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
+import { MemberApiService } from '../../member-api.service';
 import { GoodsManagerPage } from '../goods-manager/goods-manager.page';
+
 
 @Component({
 	selector: 'ivo-single-manager',
@@ -30,7 +31,7 @@ export class SingleManagerPage implements AfterViewInit {
 	constructor(
 		private router: Router,
 		private modal: ModalService,
-		private http: HttpClient,
+		private memberApi: MemberApiService,
 		private menu: DropDownService,
 		private vc: ViewContainerRef,
 		private render: Renderer2
@@ -52,10 +53,7 @@ export class SingleManagerPage implements AfterViewInit {
 			.afterClosed()
 			.subscribe(s => {
 				if (s) {
-					this.http
-						.post('/work/cannel_apply', {
-							w: id,
-						})
+					this.memberApi.cancelApply(id)
 						.subscribe(_s => {
 							this.delete.emit(true);
 						});
@@ -84,10 +82,7 @@ export class SingleManagerPage implements AfterViewInit {
 			.afterClosed()
 			.subscribe(s => {
 				if (s) {
-					this.http
-						.post('/work/delete_work', {
-							w: id,
-						})
+					this.memberApi.deleteWork(id)
 						.subscribe(_s => {
 							this.delete.emit(true);
 						});
@@ -102,10 +97,7 @@ export class SingleManagerPage implements AfterViewInit {
 			.afterClosed()
 			.subscribe(s => {
 				if (s) {
-					this.http
-						.post('/work/delete_apply', {
-							w: id,
-						})
+					this.memberApi.deleteApply(id)
 						.subscribe(_s => {
 							this.delete.emit(true);
 						});

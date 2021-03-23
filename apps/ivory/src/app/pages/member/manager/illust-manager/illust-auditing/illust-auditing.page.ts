@@ -1,23 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { switchMap, tap } from 'rxjs/operators';
 import { combineLatest, BehaviorSubject } from 'rxjs';
 import { SharedService } from '../../live-manager/live.service';
+import { MemberApiService } from '../../../member-api.service';
 
-type ProductionTwo = {
-	count: number;
-	list: {
-		id: number;
-		cover: string;
-		name: string;
-		category: number;
-		auditresult: string;
-		submittime: string;
-		audittime: string;
-	}[];
-};
+
 @Component({
 	selector: 'ivo-illust-auditing',
 	templateUrl: './illust-auditing.page.html',
@@ -32,17 +21,22 @@ export class IllustAuditingPage {
 
 	works$ = combineLatest([this.route.queryParams, this.update$]).pipe(
 		switchMap(([params, _i]) => {
-			return this.http
-				.get<ProductionTwo>(`/work/get_apply_works?k=${params.k ?? ''}&p=${params.p ? params.p - 1 : 0}&s=6&c=1&a=0`)
+			return this.memberApi.getApplyWork(params.k, params.p, 6, 1, 0)
 				.pipe(
 					tap(s => {
 						this.showList = s.list;
 						this.currentPage$.next(params.p ?? 1);
 					})
 				);
+
 		})
 	);
-	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private _sharedService: SharedService) { }
+	constructor(
+		private router: Router,
+		private route: ActivatedRoute,
+		private _sharedService: SharedService,
+		private memberApi: MemberApiService
+	) { }
 
 	params$ = this.route.queryParams.pipe(
 		tap(params => {

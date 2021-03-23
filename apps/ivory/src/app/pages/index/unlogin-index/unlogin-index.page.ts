@@ -2,26 +2,10 @@ import { Component } from '@angular/core';
 import { Select } from '@ngxs/store';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { UserState } from '@peacha-core';
 import { HttpVirtualFileSystem } from '@peacha-studio-core/vfs';
-
-type Hot = {
-	count: number;
-	list: {
-		id: number;
-		name: string;
-		like_count: number;
-		collect_count: number;
-		cover: string;
-		state: number;
-		category: number;
-		price: number;
-		userid: number;
-		nickname: string;
-	}[];
-};
+import { IndexApiService } from '../index-api.service';
 
 @Component({
 	selector: 'ivo-unlogin-index',
@@ -41,13 +25,16 @@ export class UnloginIndexPage {
 	workList = [];
 
 	/**未登录主页作品 */
-	unloginWork$ = this.http.get<Hot>(`/work/hot_work?p=0&s=5&c=-1`).pipe(
+	unloginWork$ = this.indexApi.getHotWork(0, 5, -1, 0).pipe(
 		tap(_s => {
 			this.load = false;
 		})
 	);
 
-	constructor(private http: HttpClient, private router: Router) {}
+	constructor(
+		private indexApi: IndexApiService,
+		private router: Router
+	) { }
 
 	toWork(id: number, c: number) {
 		if (c == 1) {

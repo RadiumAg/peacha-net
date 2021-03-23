@@ -1,28 +1,9 @@
-import { Component, ChangeDetectorRef, HostListener } from '@angular/core';
-import { BehaviorSubject, combineLatest, empty, fromEvent, Subscription } from 'rxjs';
-import { tap, take, switchMap, filter, startWith, mergeMap, map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { tap, filter, startWith, mergeMap, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { IndexApiService } from '../index-api.service';
 
-type Newest = {
-	count: number,
-	list: {
-		id: number;
-		public_date: number;
-		public_userid: number;
-		public_username: string;
-		public_useravatar: string;
-		work: {
-			work_id: number;
-			work_name: string;
-			description: string;
-			collect_count: number;
-			state: number;
-			cover: string;
-			type: number;
-		};
-	}[];
-};
 @Component({
 	selector: 'ivo-newest-work',
 	templateUrl: './newest-work.page.html',
@@ -34,7 +15,10 @@ export class NewestWorkPage {
 	private page = 1;
 	loading = false;
 
-	constructor(private http: HttpClient, private router: Router, private cdr: ChangeDetectorRef) { }
+	constructor(
+		private indexApi: IndexApiService,
+		private router: Router
+	) { }
 
 	private loadByScroll$ = fromEvent(window, 'scroll').pipe(
 		filter(() => {
@@ -50,7 +34,7 @@ export class NewestWorkPage {
 		startWith(1), //页面首次加载触发
 		mergeMap(() => {
 			this.loading = true;
-			return this.http.get<Newest>(`/news/newest?page=${this.page - 1}&size=20`).pipe(
+			return this.indexApi.getNewest(this.page - 1, 20, '', -1, this.page === 1 ? new Date().getTime() : this.cache[this.cache.length - 1].publishtime).pipe(
 				tap(res => {
 					this.count = res.count;
 					this.cache = [...this.cache, ...res.list];

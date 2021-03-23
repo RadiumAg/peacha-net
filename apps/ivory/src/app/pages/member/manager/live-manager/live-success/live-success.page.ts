@@ -1,24 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { SharedService } from '../live.service';
+import { MemberApiService } from '../../../member-api.service';
 
-type Production = {
-	count: number;
-	list: {
-		id: number;
-		cover: string;
-		name: string;
-		type: number;
-		publishtime: number;
-		state: number;
-		time: number;
-		is_cooperates: number;
-	}[];
-};
+
 @Component({
 	selector: 'ivo-live-success',
 	templateUrl: './live-success.page.html',
@@ -34,8 +22,7 @@ export class LiveSuccessPage {
 
 	works$ = combineLatest([this.update$, this.route.queryParams]).pipe(
 		switchMap(([_up, params]) => {
-			return this.http
-				.get<Production>(`/work/get_create_live?k=${params.k ?? ''}&p=${params.p ? params.p - 1 : 0}&s=6&ss=${params.m ?? -1}`)
+			return this.memberApi.getCreateWork(params.k, params.p, 6, 0)
 				.pipe(
 					tap(s => {
 						this.showList = s.list;
@@ -45,9 +32,16 @@ export class LiveSuccessPage {
 						});
 					})
 				);
+
+
 		})
 	);
-	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private _sharedService: SharedService) { }
+	constructor(
+		private router: Router,
+		private route: ActivatedRoute,
+		private _sharedService: SharedService,
+		private memberApi: MemberApiService
+	) { }
 
 
 	b = this.m.valueChanges

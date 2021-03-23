@@ -2,12 +2,16 @@ export interface Works {
 	count: number;
 	list: {
 		id: number;
-		cover: string;
 		name: string;
-		like_count: number;
-		collect_count: number;
-		price: number;
-		state: number;
+		likeCount: number;
+		collectCount: number;
+		publishTime: number;
+		avatar: string;
+		cover: string;
 		category: number;
-	};
+		price: number;
+		userId: number;
+		nickName: string;
+		stock: number;
+	}[];
 }

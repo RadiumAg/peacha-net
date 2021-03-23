@@ -43,7 +43,7 @@
 						<span class="sad">
 							<span class="like-count">
 								<img src="/assets/image/svg/i-thumbs-up.svg" />
-								<ng-container *ngIf="represent.like_count"> {{represent.like_count | changeUnit}} </ng-container>
+								<ng-container *ngIf="represent.likeCount"> {{represent.likeCount | changeUnit}} </ng-container>
 							</span>
 							<ng-container *ngIf="represent.category==0">
 								<span class="price" [ngSwitch]="represent?.price">

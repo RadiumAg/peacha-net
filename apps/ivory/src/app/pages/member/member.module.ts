@@ -7,6 +7,7 @@ import { RecordPage } from './record/record.page';
 import { RecordDetailPage } from './record/record-detail/record-detail.page';
 import { ReactiveComponentModule } from '@peacha-core';
 import { PeachaComponentsModule } from '@peacha-core/components';
+import { MemberApiService } from './member-api.service';
 
 @NgModule({
 	declarations: [MemberPage, RecordPage, RecordDetailPage],
@@ -41,5 +42,6 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 			},
 		]),
 	],
+	providers: [MemberApiService],
 })
 export class MemberModule { }
