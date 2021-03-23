@@ -34,7 +34,7 @@ export class SearchPage implements OnInit, OnDestroy {
 		switchMap(s => {
 			this.order.setValue(s.keyword === undefined ? 1 : s.o === undefined ? '0' : s.o, { emitEvent: false });
 			this.time.setValue(s.dd === undefined ? '0' : s.dd, { emitEvent: false });
-			this.userOrder.setValue(s.keyword === undefined ? 1 : s.o === undefined ? '0' : s.o, { emitEvent: false });
+			this.userOrder.setValue((s.keyword != undefined && s.keyword != this.keyword$.value) ? 0 : s.o, { emitEvent: false });
 			this.userType.setValue(s.r === undefined ? '0' : s.r, {
 				emitEvent: false,
 			});
