@@ -27,12 +27,12 @@ export class AkaActivityPage {
   enableFaceTracker: boolean;
   enableSettingPanel: boolean;
 
-  user$ = this.http.get<OpalUser>(`/user/get_user?i=10018`);
+  user$ = this.http.get<OpalUser>(`/user/get_user?i=21437`);
 
   // work$ = this.http.get<any>(`/work/get_work?w=10961`).subscribe(S => {
 
   // });
-  work$ = this.http.get<Work>(`/work/get_work?w=439`).pipe(
+  work$ = this.http.get<Work>(`/work/get_work?w=10961`).pipe(
     map(s => {
       this.live2d$ = of(new HttpVirtualFileSystem(s.file));
       const previewData = s.file_data ? JSON.parse(s.file_data) : null;
