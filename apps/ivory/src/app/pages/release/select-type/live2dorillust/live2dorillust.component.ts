@@ -1,24 +1,24 @@
 import { BehaviorSubject } from 'rxjs';
-import { Inject, OnDestroy } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
-import { SelectData, SELECT_DATA_TOKEN, SELECT_TOKEN } from '@peacha-core';
+import { Inject,OnDestroy } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
+import { SelectData,SELECT_DATA_TOKEN,SELECT_TOKEN } from '@peacha-core';
 
 @Component({
 	selector: 'ivo-live2dorillust',
 	templateUrl: './live2dorillust.component.html',
 	styleUrls: ['./live2dorillust.component.less'],
 })
-export class Live2dorillustComponent implements OnInit, OnDestroy {
+export class Live2dorillustComponent implements OnInit,OnDestroy {
 	constructor(
 		@Inject(SELECT_TOKEN) public select_token: BehaviorSubject<boolean>,
 		@Inject(SELECT_DATA_TOKEN)
 		public select_data_token: BehaviorSubject<SelectData>
 	) { }
 
-	activeList = [false, false];
+	activeList = [false,false,false];
 	nexturl = '';
 
-	select(index: number, url: string): void {
+	select(index: number,url: string): void {
 		this.checkedIcon(index);
 		this.setSelectData({ next: url });
 	}
@@ -42,7 +42,7 @@ export class Live2dorillustComponent implements OnInit, OnDestroy {
 	}
 
 	private setSelectData({
-		header_title = ['请选择你要发布的作品类型', '请上传Live2D或人物立绘相关作品'],
+		header_title = ['请选择你要发布的作品类型','请上传Live2D或人物立绘相关作品'],
 		next = '/live2d',
 		pre = '',
 	}): void {

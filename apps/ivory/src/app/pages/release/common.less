@@ -57,6 +57,10 @@
 			}
 		}
 
+		.button {
+			border-radius: 4px;
+		}
+
 		input::-ms-input-placeholder {
 			font-size: 16px;
 			color: #c1c1c1;
@@ -109,7 +113,8 @@
 			height: 182px;
 		}
 
-		.required {
+		.required,
+		.required-center {
 			position: relative;
 			display: flex;
 			align-items: center;
@@ -124,6 +129,12 @@
 				border-radius: 50%;
 				background: #ff6398;
 				left: 26px;
+			}
+		}
+		.required-center {
+			&::before {
+				top: 50%;
+				transform: translateY(-50%);
 			}
 		}
 

@@ -1,0 +1,15 @@
+<div class="live2dorillust-container">
+  <div class="left" [ngClass]="{ active: activeList[0] }" (click)="select(0, '3d/onlyShow')">
+    <img src="/assets/image/release/01.png" alt="" />
+    <div>仅展示</div>
+  </div>
+  <div class="right" [ngClass]="{ active: activeList[1] }" (click)="select(1, '3d/free')">
+    <img src="/assets/image/release/06.png" alt="" />
+    <div>免费分享</div>
+  </div>
+
+  <div class="right" [ngClass]="{ active: activeList[2] }" (click)="select(2, '3d/paid')">
+    <img src="/assets/image/release/03.png" alt="" />
+    <div>作为商品出售</div>
+  </div>
+</div>

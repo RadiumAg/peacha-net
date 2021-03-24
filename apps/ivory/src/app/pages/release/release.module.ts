@@ -1,6 +1,8 @@
+import { ThreeModelFreeComponent } from './3dModel/3dModel-free/3dModel-free.component';
+import { ThreeDModelSelectComponent } from './select-type/3dModel/3dmodel.component';
 import { app_config } from './../../../global.config';
 import { Live2dFreeComponent } from './live2d/live2d-free/live2d-free.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
 import { Live2dorillustComponent } from './select-type/live2dorillust/live2dorillust.component';
@@ -15,7 +17,7 @@ import { ReleaseComponentsModule } from './components/component.module';
 import { Live2dPaidComponent } from './live2d/live2d-paid/live2d-paid.component';
 import { NotFoundPage } from '../error/not-found/not-found.page';
 import { ReleaseApiService } from './release-api.service';
-import { FORM_NAV_TOKEN, PhoneGuard, SELECT_DATA_TOKEN, SELECT_TOKEN, UserBanStatusGuard } from '@peacha-core';
+import { FORM_NAV_TOKEN,PhoneGuard,SELECT_DATA_TOKEN,SELECT_TOKEN,UserBanStatusGuard } from '@peacha-core';
 import { PeachaStudioCoreModule } from '@peacha-studio-core';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -28,6 +30,7 @@ import { illustratePaidOrFreeComponent } from './select-type/illustrate/illustra
 
 @NgModule({
   declarations: [
+    ThreeDModelSelectComponent,
     ChoseComponent,
     HeaderComponent,
     FooterComponent,
@@ -38,6 +41,7 @@ import { illustratePaidOrFreeComponent } from './select-type/illustrate/illustra
     IllustrateFreeComponent,
     IllustratePaidComponent,
     illustratePaidOrFreeComponent,
+    ThreeModelFreeComponent
   ],
   imports: [
     CommonModule,
@@ -60,6 +64,10 @@ import { illustratePaidOrFreeComponent } from './select-type/illustrate/illustra
             component: Live2dorillustComponent,
           },
           {
+            path: '3d',
+            component: ThreeDModelSelectComponent
+          },
+          {
             path: 'live2d',
             component: Live2dFreeOrPaidComponent,
           },
@@ -72,12 +80,12 @@ import { illustratePaidOrFreeComponent } from './select-type/illustrate/illustra
       {
         path: 'live2d/free',
         component: Live2dFreeComponent,
-        canActivate: [PhoneGuard, UserBanStatusGuard],
+        canActivate: [PhoneGuard,UserBanStatusGuard],
       },
       {
         path: 'live2d/paid',
         component: app_config.enablePaid ? Live2dPaidComponent : NotFoundPage,
-        canActivate: [PhoneGuard, UserBanStatusGuard],
+        canActivate: [PhoneGuard,UserBanStatusGuard],
       },
       {
         path: 'illust/free',
@@ -87,6 +95,11 @@ import { illustratePaidOrFreeComponent } from './select-type/illustrate/illustra
       {
         path: 'illust/paid',
         component: IllustratePaidComponent,
+        canActivate: [PhoneGuard,UserBanStatusGuard]
+      },
+      {
+        path: '3d/free',
+        component: ThreeModelFreeComponent,
         canActivate: [PhoneGuard,UserBanStatusGuard]
       }
     ]),
