@@ -14,7 +14,6 @@ export class CursorComponent implements AfterViewChecked {
 	flag = false;
 	ngAfterViewChecked(): void {
 		const child = (this.el.element.nativeElement as HTMLElement).previousElementSibling.children;
-		console.log(child);
 		this.flag = false;
 		for (let i = 0; i < child.length; i++) {
 			const childElement = child.item(i) as HTMLElement;
