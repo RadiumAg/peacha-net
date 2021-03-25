@@ -6,7 +6,7 @@ import { Component, Renderer2, ViewContainerRef, Input, AfterViewChecked } from 
 	template: '',
 })
 export class CursorComponent implements AfterViewChecked {
-	constructor(private el: ViewContainerRef, private re2: Renderer2) {}
+	constructor(private el: ViewContainerRef, private re2: Renderer2) { }
 
 	@Input() activeClassName = 'active';
 	oldLeft = 0;
@@ -14,6 +14,7 @@ export class CursorComponent implements AfterViewChecked {
 	flag = false;
 	ngAfterViewChecked(): void {
 		const child = (this.el.element.nativeElement as HTMLElement).previousElementSibling.children;
+		console.log(child);
 		this.flag = false;
 		for (let i = 0; i < child.length; i++) {
 			const childElement = child.item(i) as HTMLElement;

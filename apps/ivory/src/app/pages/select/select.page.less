@@ -1,0 +1,30 @@
+.all{
+    width: 1200px;
+    margin: 0 auto;
+    padding-top: 30px;
+
+    &>.works{
+        display: grid;
+	    grid-template-columns: repeat(5, 224px);
+	    grid-column-gap: 20px;
+	    row-gap: 30px;
+	    font-size: 12px;
+	    outline: none;
+    }
+
+    &>.default {
+        width: 227px;
+        margin: 100px auto;
+        font-size: 16px;
+        text-align: center;
+        span {
+            display: block;
+        }
+    }
+    
+    &>.page {
+        width: 958px;
+        text-align: center;
+        margin: 20px auto 50px auto;
+    }
+}

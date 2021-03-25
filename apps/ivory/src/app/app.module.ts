@@ -5,11 +5,11 @@ import zh from '@angular/common/locales/zh';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule,Routes } from '@angular/router';
-import { TranslateLoader,TranslateModule } from '@ngx-translate/core';
+import { RouterModule, Routes } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxsModule } from '@ngxs/store';
-import { PeachaCoreModule,PhoneGuard } from '@peacha-core';
+import { PeachaCoreModule, PhoneGuard } from '@peacha-core';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { FooterModule } from './fragments/footer/footer.module';
@@ -72,6 +72,10 @@ const routes: Routes = [
   {
     path: 'search',
     loadChildren: () => import('./pages/search/search.module').then(m => m.SearchModule),
+  },
+  {
+    path: 'select',
+    loadChildren: () => import('./pages/select/select.module').then(m => m.SelectModule),
   },
   {
     path: 'user',
@@ -152,17 +156,17 @@ const routes: Routes = [
   imports: [
     TranslateModule.forRoot({
       loader: {
-          provide: TranslateLoader,
-          useFactory: (http: HttpClient) => {
-              return new TranslateHttpLoader(
-                  http,
-                  './assets/i18n/',
-                  '.json'
-              );
-          },
-          deps: [HttpClient],
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(
+            http,
+            './assets/i18n/',
+            '.json'
+          );
+        },
+        deps: [HttpClient],
       },
-  }),
+    }),
     NavbarModule,
     BrowserModule,
     FooterModule,
