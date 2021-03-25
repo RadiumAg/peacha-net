@@ -29,12 +29,13 @@
     <ivo-cursor></ivo-cursor>
     <div class="choice">
         <ivo-select class="ok" [formControl]="money">
-            <ivo-option value="0" text="免费分享" [selected]="true"></ivo-option>
-            <ivo-option value="1" text="低于￥500"></ivo-option>
-            <ivo-option value="2" text="￥500~￥1000"></ivo-option>
-            <ivo-option value="3" text="￥1000~￥2000"></ivo-option>
-            <ivo-option value="4" text="￥2000~￥3000"></ivo-option>
-            <ivo-option value="5" text="高于￥3000"></ivo-option>
+            <ivo-option value="0" text="无" [selected]="true"></ivo-option>
+            <ivo-option value="1" text="免费分享"></ivo-option>
+            <ivo-option value="2" text="低于￥500"></ivo-option>
+            <ivo-option value="3" text="￥500~￥1000"></ivo-option>
+            <ivo-option value="4" text="￥1000~￥2000"></ivo-option>
+            <ivo-option value="5" text="￥2000~￥3000"></ivo-option>
+            <ivo-option value="6" text="高于￥3000"></ivo-option>
         </ivo-select>
         <ivo-select class="ok" [formControl]="format" *ngIf="(params$|async).c==2">
             <ivo-option value="-1" text="全部" [selected]="true"></ivo-option>

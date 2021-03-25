@@ -22,6 +22,7 @@ export class SelectPage {
     ) { }
 
     priceRegion = [
+        { sp: -1, ep: 0 },
         { sp: 0, ep: 0 },
         { sp: 0, ep: 500 },
         { sp: 500, ep: 1000 },
@@ -35,7 +36,7 @@ export class SelectPage {
             return this.http
                 .get<Works>(
                     // eslint-disable-next-line max-len
-                    `/work/search_work?p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ?? 1}&sp=${r.m ? this.priceRegion[r.m].sp : this.router.url.includes('/select/work') ? -1 : 0}&ep=${r.m ? this.priceRegion[r.m].ep : 0}&dd=${r.dd ?? 0}&c=${r.c === undefined ? '-1' : r.c}&ws=${this.router.url.includes('/select/work') ? 0 : 1}&ft=${r.ft === undefined ? '-1' : r.ft}
+                    `/work/search_work?p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ?? 1}&sp=${r.m ? this.priceRegion[r.m].sp : -1}&ep=${r.m ? this.priceRegion[r.m].ep : 0}&dd=${r.dd ?? 0}&c=${r.c === undefined ? '-1' : r.c}&ws=${this.router.url.includes('/select/work') ? 0 : 1}&ft=${r.ft === undefined ? '-1' : r.ft}
                     `
                 )
                 .pipe(
