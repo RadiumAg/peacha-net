@@ -4,7 +4,7 @@
             [routerLink]="[]"
             [queryParams]="{c:-1,p:1}"
             [queryParamsHandling]="'merge'"
-            [class.active]="(params$|async).c==-1"
+            [class.active]="(params$|async).c==-1 ||!(params$|async).c"
             >全部</span>
         <span
             [routerLink]="[]"
