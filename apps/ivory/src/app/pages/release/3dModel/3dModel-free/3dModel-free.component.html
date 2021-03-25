@@ -76,12 +76,19 @@
       </div>
     </div>
 
-    <div class="form-item">
-      <div class="title" [ivoNoticeTitle]="'最多添加5个免费分享内容'"><span>新增免费分享内容</span></div>
-    </div>
+    <div formArrayName="gl">
+      <ng-container *ngFor="let item of glArray.controls; index as i">
+        <div class="form-item">
+          <form>
+            <div class="title" [ivoNoticeTitle]="'文件大小不得大于210M。'"><span>上传免费分享内容-{{i+1}}</span></div>
+          </form>
+        </div>
+      </ng-container>
 
-    <div class="form-item">
-      <div class="title" [ivoNoticeTitle]="'最多添加5个免费分享内容'"><span>新增免费分享内容</span></div>
+    </div>
+    <div class="form-item add-free-goodList">
+      <div class="title" (click)="addGoodsList()" [ivoNoticeTitle]="'最多添加5个免费分享内容'"><span
+          class="ivo-icon-add-circle add-free-goodList-operate">新增免费分享内容</span></div>
     </div>
 
     <div class="form-item explain">

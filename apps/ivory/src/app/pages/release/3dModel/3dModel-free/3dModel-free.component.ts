@@ -2,7 +2,7 @@ import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 import { SuccessTips } from './../../components/success-tips/success-tips';
 import { Component,OnInit,ViewChild,ElementRef,AfterViewInit,ChangeDetectorRef } from '@angular/core';
 import { debounce,map } from 'rxjs/operators';
-import { FormBuilder,Validators } from '@angular/forms';
+import { FormArray,FormBuilder,Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject,fromEvent,interval } from 'rxjs';
 import { emptyStringValidator,ModalService,validator,Work } from '@peacha-core';
@@ -53,6 +53,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		checked: [false,Validators.requiredTrue],
 		gl: this.fb.array([]),
 	});
+
 	checkedForm = this.fb.group({
 		aCheckedOne: [false],
 		aCheckedTwo: [false],
@@ -75,10 +76,28 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		},
 	};
 
+	get glArray() {
+		return <FormArray>this.form.get('gl');
+	}
+
+	addGlItem() {
+		this.glArray.push(this.fb.group({
+			n: ['',Validators.required],
+			f: ['',Validators.required]
+		}))
+	}
+
 	changeCopyright($event: number[]) {
 		this.form.patchValue({
 			a: $event,
 		});
+	}
+
+	addGoodsList() {
+		if (this.glArray.controls.length === 5) {
+			return;
+		}
+		this.addGlItem();
 	}
 
 	setBvNumber(bvNumber: string) {
@@ -260,7 +279,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 					}
 				})
 			)
-			.subscribe((x: any) => {
+			.subscribe((x) => {
 				console.log(this.form.value);
 				this.param = x;
 			});
