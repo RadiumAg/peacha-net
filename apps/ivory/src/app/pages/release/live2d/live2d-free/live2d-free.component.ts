@@ -12,7 +12,6 @@ import { emptyStringValidator, ModalService, validator, Work } from '@peacha-cor
 import { Live2dTransformData } from '@peacha-studio-core';
 import { PopTips } from '@peacha-core/components';
 
-
 @Component({
 	selector: 'ivo-live2d-free',
 	templateUrl: './live2d-free.component.html',
@@ -25,7 +24,7 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 		private route: ActivatedRoute,
 		private api: ReleaseApiService,
 		private cdr: ChangeDetectorRef
-	) { }
+	) {}
 
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
@@ -82,10 +81,10 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 		enableFaceTracker: boolean;
 		enableSettingPanel: boolean;
 	} = {
-			transformData: {},
-			enableFaceTracker: false,
-			enableSettingPanel: false,
-		};
+		transformData: {},
+		enableFaceTracker: false,
+		enableSettingPanel: false,
+	};
 	freeModal = [];
 	isEdit = false;
 	stateMentStrategy = {
@@ -346,7 +345,6 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 	}
 
 	private setModalCheckedDisabled(): void {
-		console.log(this.form.value.g);
 		if (this.form.value.g) {
 			this.modelCheckedSet = false;
 		} else {
