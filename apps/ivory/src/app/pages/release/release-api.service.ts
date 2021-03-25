@@ -4,7 +4,7 @@ import { Work } from '@peacha-core';
 
 @Injectable()
 export class ReleaseApiService {
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	/**
 	 *
@@ -64,7 +64,7 @@ export class ReleaseApiService {
 		fr: number;
 		f: [];
 		gl: [];
-	}) => this.http.post(`/work/publish_work`, p);
+	}) => this.http.post(`/work/publish_work`,p);
 
 	/**
 	 *
@@ -91,5 +91,5 @@ export class ReleaseApiService {
 		fr?: number;
 		gd?: string;
 		dg?: any[];
-	}) => this.http.post(`/work/update_work`, p);
+	}) => this.http.post(`/work/update_work`,p);
 }

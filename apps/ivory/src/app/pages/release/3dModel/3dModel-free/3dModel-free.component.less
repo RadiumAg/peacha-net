@@ -123,6 +123,69 @@
 			}
 		}
 
+		div.form-item.free-share-file-upload {
+			.ivo-icon-delete-circle {
+				display: inline-block;
+				width: 12px;
+				height: 12px;
+				cursor: pointer;
+				&::after {
+					right: 40px;
+					left: unset;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+			}
+			.share-file {
+				width: 530px;
+				display: flex;
+				align-items: center;
+			}
+
+			.free-share-file-tip {
+				margin-left: 20px;
+				font-size: 16px;
+				color: @grey-color7;
+			}
+
+			.select-upload-type {
+				width: 180px;
+				height: 50px;
+				border-radius: 4px;
+				display: flex;
+				align-items: center;
+				border: 1px solid @grey-color6;
+				margin-left: 34px;
+
+				&::before {
+					left: -10px;
+				}
+
+				ivo-select {
+					flex: 1;
+				}
+			}
+			.share-file-name {
+				position: relative;
+
+				.input-area {
+					.input {
+						width: 440px;
+					}
+
+					position: relative;
+
+					.word-count {
+						position: absolute;
+						left: unset;
+						right: 10px;
+						top: 50%;
+						transform: translateY(-50%);
+					}
+				}
+			}
+		}
+
 		div.form-item.bv {
 			.input {
 				width: 305px;

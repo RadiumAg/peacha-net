@@ -1,0 +1,26 @@
+<section class="file-upload">
+    <span class="ivo-icon-upload upload-button" *ngIf="!file$.getValue()" (click)="file_input.click()">上传</span>
+    <div class="file-upload-area" *ngIf="file$.getValue() ">
+        <ng-container *ngrxLet="file$; let file;">
+            <section class="file-upload-item" *ngIf="file">
+                <div class="file-upload-item-file">
+                    <span class="ivo-icon-psd" *ngIf="file && file.name.includes('psd')"></span>
+                    <span class="ivo-icon-zip" *ngIf="file && file.name.includes('zip')"></span>
+                    <span class="file-upload-item-name">{{file.name}}</span>
+                </div>
+                <div class="file-upload-item-operate">
+                    <div class="progress" class="progress" *ngIf="file &&!(file.Process$ | async).success"
+                        [ngStyle]="{width: (file.Process$ | async).progress * 60 + 'px'}">
+                    </div>
+                    <span class="ivo-icon-trash"
+                        [ngStyle]="{ visibility : file && (file.Process$ | async).success ? 'visible':'hidden'}"
+                        (click)="delteFile(file.symbol)"></span>
+                    <span class="ivo-icon-download"
+                        [ngStyle]="{ visibility : file && (file.Process$ | async).success ? 'visible':'hidden'}"
+                        (click)="downloadFile(file.url)"></span>
+                </div>
+            </section>
+        </ng-container>
+    </div>
+    <input #file_input type="file" [accept]="acceptType" (change)="onFileChange($event)" style="display: none">
+</section>

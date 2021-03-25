@@ -1,5 +1,5 @@
-import { Directive, Input, OnInit } from '@angular/core';
-import { NgControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { Directive,Input,OnInit } from '@angular/core';
+import { NgControl,ValidationErrors } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Directive({
@@ -10,7 +10,7 @@ export class ErroTipDirective implements OnInit {
 
 	private lastChange: number;
 
-	constructor(private control: NgControl, private message: NzMessageService) {}
+	constructor(private control: NgControl,private message: NzMessageService) { }
 
 	ngOnInit(): void {
 		let timer;
@@ -24,7 +24,7 @@ export class ErroTipDirective implements OnInit {
 				if (typeof this.ivoErrorTipString === 'string') {
 					timer = setTimeout(() => {
 						this.message.error(this.ivoErrorTipString as string);
-					}, 400);
+					},400);
 				} else {
 					const errorList = this.ivoErrorTipString as ValidationErrors;
 					const errors = this.control.errors;
@@ -33,7 +33,7 @@ export class ErroTipDirective implements OnInit {
 							if (key === tipKey) {
 								timer = setTimeout(() => {
 									this.message.error(this.ivoErrorTipString[tipKey]);
-								}, 400);
+								},400);
 								return;
 							}
 						}

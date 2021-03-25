@@ -1,4 +1,4 @@
-import { AbstractControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { AbstractControl,FormGroup,ValidatorFn,FormArray } from '@angular/forms';
 
 /**
  * @description 转换为Blob对象
@@ -16,7 +16,7 @@ export function dataURLtoBlob(dataurl: any): Blob {
 	while (n--) {
 		u8arr[n] = bstr.charCodeAt(n);
 	}
-	return new Blob([u8arr], { type: mime });
+	return new Blob([u8arr],{ type: mime });
 }
 
 /**
@@ -24,11 +24,13 @@ export function dataURLtoBlob(dataurl: any): Blob {
  * @param form 响应式表单
  * @param control 响应式表单中的控件
  */
-export function validator(form: FormGroup, control: { [key: string]: AbstractControl }): void {
+export function validator(form: FormGroup,control: { [key: string]: AbstractControl }): void {
 	// tslint:disable-next-line: forin
-	for (const key in control) {
-		form.controls[key].markAsDirty();
-		form.controls[key].updateValueAndValidity();
+	if (form instanceof FormGroup) {
+		for (const key in control) {
+			form.controls[key].markAsDirty();
+			form.controls[key].updateValueAndValidity();
+		}
 	}
 }
 

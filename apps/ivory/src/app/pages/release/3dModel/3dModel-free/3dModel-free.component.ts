@@ -1,8 +1,9 @@
+import { length } from './../../../../../../../../libs/peacha-studio-core/src/lib/core/devkit/brf5/utils/geom';
 import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 import { SuccessTips } from './../../components/success-tips/success-tips';
 import { Component,OnInit,ViewChild,ElementRef,AfterViewInit,ChangeDetectorRef } from '@angular/core';
 import { debounce,map } from 'rxjs/operators';
-import { FormArray,FormBuilder,Validators } from '@angular/forms';
+import { FormArray,FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject,fromEvent,interval } from 'rxjs';
 import { emptyStringValidator,ModalService,validator,Work } from '@peacha-core';
@@ -28,7 +29,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 	ESelectPreviewType: ('image' | 'tv')[] = [];
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
-	param: {
+	publishParam: {
 		n: string;
 		d: string;
 		a: number;
@@ -39,16 +40,31 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		ss: number;
 		f: [];
 		bv: string;
-		gl: [];
+		gl: any;
 	};
+
+	editParam: {
+		n: string;
+		d: string;
+		a: number;
+		b: string;
+		t: string;
+		c: number;
+		cs: number;
+		ss: number;
+		f: [];
+		bv: string;
+		gl: any;
+	};
+
 	form = this.fb.group({
-		f: [[],Validators.required],
+		f: [[]],
 		n: ['',[Validators.required,emptyStringValidator()]],
 		d: ['',[Validators.required,emptyStringValidator()]],
 		t: [[]],
 		b: ['',Validators.required],
 		c: ['',Validators.required],
-		bv: ['',Validators.required],
+		bv: [''],
 		a: [[]],
 		checked: [false,Validators.requiredTrue],
 		gl: this.fb.array([]),
@@ -77,14 +93,18 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 	};
 
 	get glArray() {
-		return <FormArray>this.form.get('gl');
+		return <FormArray>(this.form.get('gl'));
 	}
 
+
 	addGlItem() {
-		this.glArray.push(this.fb.group({
+		const createGlGroup = this.fb.group({
 			n: ['',Validators.required],
-			f: ['',Validators.required]
-		}))
+			f: [null,Validators.required],
+			ft: [0,Validators.required]
+		});
+		Reflect.set(createGlGroup,'symbol',Symbol());
+		this.glArray.push(createGlGroup);
 	}
 
 	changeCopyright($event: number[]) {
@@ -109,8 +129,17 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		this.form.patchValue({ bv: bvNumber });
 	}
 
-	changeSelectPreviewType(event: []) {
+	changeSelectPreviewType(event: any[]) {
 		this.ESelectPreviewType = [...event];
+		this.form.get('bv') && this.form.get('bv').clearValidators();
+		this.form.get('f') && this.form.get('f').clearValidators();
+		if (event.includes('tv')) {
+			this.form.get('bv') && this.form.get('bv').setValidators(Validators.required);
+		}
+		if (event.includes('image')) {
+			this.form.get('f') && this.form.get('f').setValidators(Validators.requiredTrue);
+
+		}
 		this.cdr.markForCheck();
 	}
 
@@ -162,17 +191,17 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 
 	private public_work() {
 		this.api.publish_work({
-			n: this.param.n,
-			d: this.param.d,
-			a: this.param.a,
-			b: this.param.b,
-			t: this.param.t,
-			c: this.param.c,
-			cs: this.param.cs,
-			ss: this.param.ss,
-			f: this.param.f,
+			n: this.publishParam.n,
+			d: this.publishParam.d,
+			a: this.publishParam.a,
+			b: this.publishParam.b,
+			t: this.publishParam.t,
+			c: this.publishParam.c,
+			cs: 3,
+			ss: this.publishParam.ss,
+			f: this.publishParam.f,
 			fr: 1,
-			gl: this.param.gl,
+			gl: this.publishParam.gl,
 		}).subscribe({
 			next: _x => {
 				this.modal.open(SuccessTips,{
@@ -190,6 +219,15 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		});
 	}
 
+	deleteGl(symbol: symbol) {
+		console.log(this.glArray.controls.findIndex(_ => Reflect.get(_,'symbol') === symbol));
+		this.glArray.controls.splice(this.glArray.controls.findIndex(_ => Reflect.get(_,'symbol') === symbol),1);
+	}
+
+	trackBy(index: number,model: { symbol: symbol }): symbol {
+		return model.symbol;
+	}
+
 	changeCopyrightState($event: number) {
 		if (!this.isEdit) {
 			switch ($event) {
@@ -205,10 +243,22 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 	}
 
 	submit() {
+
+		if (!this.ESelectPreviewType.length) {
+			this.modal.open(PopTips,['请选择预览方式','0']);
+			return;
+		}
+
+		if (!this.publishParam.gl) {
+			this.modal.open(PopTips,['请添加至少一个免费商品','0']);
+			return;
+		}
 		validator(this.form,this.form.controls);
+		this.glArray.controls.forEach(_ => { validator((_ as FormGroup),(_ as FormGroup).controls) });
 		if (!this.form.valid) {
 			return;
 		}
+
 		if (this.isEdit) {
 			this.sure_edit();
 		} else {
@@ -249,8 +299,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 	}
 
 	private setiToken() {
-		const iUrl = this.form.value.f.map((s: any) => s.remote_token || s.url);
-
+		const iUrl = this.form.value.f.map((s) => s.remote_token || s.url);
 		const i = iUrl;
 		return i;
 	}
@@ -258,30 +307,27 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 	private subscribeForm() {
 		this.form.valueChanges
 			.pipe(
-				map((value: any) => {
-					if (!this.isEdit) {
-						value.b = value.b.token || '';
-						value.f = value.f.map((s: { remote_token: string }) => s.remote_token);
-						return {
-							n: value.n,
-							d: value.d,
-							a: value.a,
-							b: value.b,
-							t: value.t.toString(),
-							f: value.f,
-							c: value.c,
-							cs: 1,
-							ss: 0,
-							gl: [],
-						};
-					} else {
-						return value;
-					}
+				map((value) => {
+					const gl = value.gl.length && [{ f: value.gl?.f?.token || value.gl?.f?.url || '',n: value.gl.n,ft: value.gl.ft,p: 0,s: -1 }];
+					value.b = value.b.token || '';
+					value.f = value.f.map((s: { remote_token: string; url: string }) => s.remote_token || s.url);
+					return {
+						n: value.n,
+						d: value.d,
+						a: value.a,
+						b: value.b,
+						t: value.t.toString(),
+						f: value.f,
+						bv: value.bv,
+						c: value.c,
+						cs: 1,
+						ss: 0,
+						gl,
+					};
 				})
 			)
 			.subscribe((x) => {
-				console.log(this.form.value);
-				this.param = x;
+				this.isEdit ? this.editParam = x : this.publishParam = x;
 			});
 	}
 
@@ -292,7 +338,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 	}
 
 	private getCopyRight() {
-		this.api.copyright(1).subscribe((x: { list: { name: string; id: number }[] }) => {
+		this.api.copyright(2).subscribe((x: { list: { name: string; id: number }[] }) => {
 			this.copyrightCheckes$.next(x.list);
 			this.setInitstateMentStates();
 		});

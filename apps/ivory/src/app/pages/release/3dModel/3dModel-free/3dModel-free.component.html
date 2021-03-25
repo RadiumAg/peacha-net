@@ -58,7 +58,7 @@
     <div class="form-item uplaod-Image" *ngIf="ESelectPreviewType.includes('image')">
       <div class="title" [ivoNoticeTitle]="'支持JPEG.PNG.GIF等格式，每张图片不得大于5M，长宽不得超过16384*16384px'">上传图片/GIF</div>
       <div class="form-controller required-center">
-        <ivo-illustrate-upload maxSize="5242880" ivoErroTip ivoErrorTipString="请上传插画" formControlName="f"
+        <ivo-illustrate-upload maxSize="5242880" ivoErroTip ivoErrorTipString="请上传图片" formControlName="f"
           data-control-index="3">
         </ivo-illustrate-upload>
       </div>
@@ -67,23 +67,51 @@
     <div class="form-item bv" *ngIf="ESelectPreviewType.includes('tv')">
       <div class="title">上传Bilibili视频</div>
       <div class="form-controller required-center">
-        Bilibili视频BV号:&nbsp;&nbsp;&nbsp;&nbsp;<input #bv_input type="text" class="input" #copyright formArrayName="bv"
-          data-control-index="4" />
+        Bilibili视频BV号:&nbsp;&nbsp;&nbsp;&nbsp;<input ivoErroTip ivoErrorTipString="请上传bv号" #bv_input type="text"
+          class="input" #copyright formControlName="bv" data-control-index="4" />
         <button class="button" ivo-button (click)="setBvNumber(bv_input.value)">预览视频</button>
       </div>
       <div class="form-controller">
-        <iframe [attr.src]="bvUrl" class="bv-video"></iframe>
+        <iframe [attr.src]="bvUrl" class="bv-video" *ngIf="bvUrl"></iframe>
       </div>
     </div>
 
     <div formArrayName="gl">
-      <ng-container *ngFor="let item of glArray.controls; index as i">
-        <div class="form-item">
-          <form>
-            <div class="title" [ivoNoticeTitle]="'文件大小不得大于210M。'"><span>上传免费分享内容-{{i+1}}</span></div>
-          </form>
+      <div *ngFor="let item of glArray.controls; index as i;trackBy:trackBy" class="form-item  free-share-file-upload"
+        [formGroupName]="i">
+        <div class="title" [ivoNoticeTitle]="'文件大小不得大于210M。'"><span>上传免费分享内容-{{i+1}}</span><span
+            class="ivo-icon-delete-circle" (click)="deleteGl(item.symbol)"></span></div>
+        <div class="form-controller required-center">
+          <div class="share-file">
+            <span class="">分享文件:</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <ivo-file-upload formControlName="f" ivoErroTip ivoErrorTipString="请上传分享文件!" [acceptType]="'.zip'">
+            </ivo-file-upload>
+          </div>
+
+          <span class="select-upload-type required-center">
+            <ivo-select fontSize="16px" formControlName="ft" ivoErroTip ivoErrorTipString="请选择类型!">
+              <ivo-option [value]='0' text='.psd'></ivo-option>
+              <ivo-option [value]='1' text='.moc3'></ivo-option>
+              <ivo-option [value]='2' text='.vrm'></ivo-option>
+              <ivo-option [value]='3' text='.vup'></ivo-option>
+              <ivo-option [value]='4' text='.unitypackage'></ivo-option>
+              <ivo-option [value]='5' text='.fbx'></ivo-option>
+              <ivo-option [value]='99' text='其他'></ivo-option>
+            </ivo-select>
+          </span>
+
+          <span class="free-share-file-tip" *ngIf="item.value.ft === 4">模型内包含的插件或shader请在详情内具体说明</span>
         </div>
-      </ng-container>
+
+        <div class="form-controller no-top-line required-center share-file-name">
+          <div class="input-area">
+            <span class="word-count">{{ share_name_input.value.length }}/20</span>
+            免费分享名称:&nbsp;&nbsp;&nbsp;&nbsp;<input placeholder="请输入商品名称请输入商品名称请输入商品名称" ivoErroTip
+              ivoErrorTipString="请填写免费商品名称!" #share_name_input type="text" formControlName="n" maxlength="20"
+              class="input">
+          </div>
+        </div>
+      </div>
 
     </div>
     <div class="form-item add-free-goodList">
