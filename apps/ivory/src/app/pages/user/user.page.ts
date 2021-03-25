@@ -29,6 +29,7 @@ export class UserPage {
 	routerState = true;
 	routerStateCode = 'active';
 	userRole: Array<number> = [];
+	params$ = this.route.queryParams;
 	constructor(
 		private route: ActivatedRoute,
 		private store: Store,
