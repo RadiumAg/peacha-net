@@ -123,7 +123,7 @@
           <div class="input-area">
             商品价格:&nbsp;&nbsp;&nbsp;&nbsp;
             <span *ngIf="!item.value.fr">
-              <input placeholder="设置商品价格" [ivoErrorTipString]="{
+              <input placeholder="设置商品价格" ivoErroTip [ivoErrorTipString]="{
               nullPrice: '请设置商品价格!',
               floatPrice: '价格只能为整数!',
               negativePrice: '价格不能为负数!',

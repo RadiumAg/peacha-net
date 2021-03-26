@@ -10,6 +10,7 @@ import { PopTips } from '@peacha-core/components';
 import { IPublishFileType,ReleaseApiService } from '../../release-api.service';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { IFileItem } from 'libs/peacha-core/src/lib/components/file-upload/file-upload.component';
+import { ConfirmComponent } from '../../components/confirm/confirm.component';
 
 
 @Component({
@@ -274,11 +275,31 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 			return;
 		}
 
-		if (this.isEdit) {
-			this.sure_edit();
+		const isAllFree = this.isAllFree();
+		if (isAllFree) {
+			// eslint-disable-next-line no-sparse-arrays
+			this.modal.open(ConfirmComponent,[`<section style='width:390px;font-size:16px;color:#333;'>
+			您发布的作品中，未含有付费商品内容，因此作品将作为“免费分享”类型发布。<br/>若想添加付费商品内容，请点击“再次编辑“<section>`,'发布提示',,,'ivo-icon-piece'])
+				.afterClosed().subscribe(x => {
+					if (x) {
+						if (this.isEdit) {
+							this.sure_edit();
+						} else {
+							this.public_work();
+						}
+					}
+				})
 		} else {
-			this.public_work();
+			if (this.isEdit) {
+				this.sure_edit();
+			} else {
+				this.public_work();
+			}
 		}
+	}
+
+	private isAllFree() {
+		return this.isEdit ? this.editParam.gl.every(_ => _.p === 0) : this.publishParam.gl.every(_ => _.p === 0);
 	}
 
 	private sure_edit() {

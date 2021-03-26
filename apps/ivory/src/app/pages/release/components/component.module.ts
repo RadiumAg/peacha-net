@@ -1,10 +1,11 @@
+import { ConfirmComponent } from './confirm/confirm.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TagInputComponent } from './tag-input/tag-input.component';
 import { Live2dUploadComponent } from './live2d-upload/live2d-upload.component';
 import { SelectCompanyComponent } from './select-company/select-company.component';
 import { CompanyModalComponent } from './company-modal/company-modal.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { SuccessTips } from './success-tips/success-tips';
 import { NoticeTitleDirective } from './notice-title.directive';
 import { FormNavComponent } from './form-nav/form-nav.component';
@@ -31,6 +32,7 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 		NoticeTitleDirective,
 		FormNavComponent,
 		FormNavDirective,
+		ConfirmComponent,
 	],
 	imports: [
 		CommonModule,
