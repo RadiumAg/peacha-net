@@ -16,6 +16,8 @@ import { SingleManagerPage } from './single-manager/single-manager.page';
 import { ReactiveComponentModule } from '@peacha-core';
 import { PeachaComponentsModule } from '@peacha-core/components';
 import { GoodsManager } from './single-manager/goods-manager/goods-manager';
+import { ChangePrice } from './single-manager/change-price/change-price'
+
 
 @NgModule({
 	declarations: [
@@ -30,6 +32,7 @@ import { GoodsManager } from './single-manager/goods-manager/goods-manager';
 		IllustSuccessPage,
 		IllustFailPage,
 		SingleManagerPage,
+		ChangePrice
 	],
 	imports: [
 		ReactiveFormsModule,

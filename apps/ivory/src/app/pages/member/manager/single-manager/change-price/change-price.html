@@ -1,0 +1,18 @@
+<div class="box">
+    <h1>
+        <img src="/assets/image/member/money.svg">更改价格
+    </h1>
+    <div class="line">商品名称：<span>哈哈哈哈哈哈</span></div>
+    <div class="line">原价格：<span class="move">¥ {{price}}</span></div>
+    <div class="line">新价格：<input class="move" type="number" [formControl]="money"> <span class="money">元</span></div>
+    <span class="tip">平台将收取8%的服务费，预计收益{{(money.value*0.92).toFixed(2)}}元</span>
+    <div class="error-inset" [errorDisplay]="money">
+      <ng-container *errorCase="'required'"> 请填写修改价格 </ng-container>
+      <ng-container *errorCase="'pattern'"> 请输入非整数 </ng-container>
+      <ng-container *errorCase="'max'"> 价格最大为999999 </ng-container>
+    </div>
+    <div class="btn">
+      <button class="cancel" (click)="cancel()">取消</button>
+      <button (click)="sure()">确定</button>
+    </div>
+</div>
