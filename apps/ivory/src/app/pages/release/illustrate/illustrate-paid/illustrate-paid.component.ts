@@ -97,7 +97,7 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 							url: _,
 						})),
 						p: r.goodsList[0].price,
-						gl_token: [{ token: r.goodsList[0].file,url: '',name: r.goodslist[0].name }],
+						gl_token: [{ token: r.goodsList[0].file,url: '',name: r.goodsList[0].name }],
 						c: r.copyright,
 					});
 				});

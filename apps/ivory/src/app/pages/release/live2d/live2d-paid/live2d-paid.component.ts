@@ -1,15 +1,15 @@
-import { map, tap, debounce } from 'rxjs/operators';
-import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { map,tap,debounce } from 'rxjs/operators';
+import { AfterViewInit,ElementRef,ViewChild } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
+import { FormBuilder,Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Live2dUploadComponent } from '../../components/live2d-upload/live2d-upload.component';
 import { SuccessTips } from '../../components/success-tips/success-tips';
-import { BehaviorSubject, fromEvent, interval } from 'rxjs';
+import { BehaviorSubject,fromEvent,interval } from 'rxjs';
 import { ReleaseApiService } from '../../release-api.service';
-import { ModalService, Work } from '@peacha-core';
+import { ModalService,Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
-import { emptyStringValidator, live2dPriceValidator, validator } from '@peacha-core';
+import { emptyStringValidator,live2dPriceValidator,validator } from '@peacha-core';
 import { Live2dTransformData } from '@peacha-studio-core';
 
 @Component({
@@ -17,8 +17,8 @@ import { Live2dTransformData } from '@peacha-studio-core';
   templateUrl: './live2d-paid.component.html',
   styleUrls: ['./live2d-paid.component.less'],
 })
-export class Live2dPaidComponent implements OnInit, AfterViewInit {
-  constructor(private fb: FormBuilder, private modal: ModalService, private route: ActivatedRoute, private api: ReleaseApiService) { }
+export class Live2dPaidComponent implements OnInit,AfterViewInit {
+  constructor(private fb: FormBuilder,private modal: ModalService,private route: ActivatedRoute,private api: ReleaseApiService) { }
 
   @ViewChild('submitButton')
   submitButton: ElementRef;
@@ -43,17 +43,17 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
     gl: [];
   };
   form = this.fb.group({
-    n: ['', [Validators.required, emptyStringValidator()]],
-    d: ['', [Validators.required, emptyStringValidator()]],
-    b: ['', Validators.required],
-    g: ['', Validators.required],
+    n: ['',[Validators.required,emptyStringValidator()]],
+    d: ['',[Validators.required,emptyStringValidator()]],
+    b: ['',Validators.required],
+    g: ['',Validators.required],
     a: [[]],
-    c: [false, Validators.requiredTrue],
-    s: [-2, Validators.min(-1)],
-    p: ['', live2dPriceValidator()],
-    gl_token: ['', Validators.required],
+    c: [false,Validators.requiredTrue],
+    s: [-2,Validators.min(-1)],
+    p: ['',live2dPriceValidator()],
+    gl_token: ['',Validators.required],
     t: [[]],
-    checked: [false, Validators.requiredTrue],
+    checked: [false,Validators.requiredTrue],
   });
   checkedForm = this.fb.group({
     enableFaceTrackerChecked: [false],
@@ -100,7 +100,7 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
       this.stateMentStates = this.stateMentStates.map(x => true);
     },
   };
-  call = (x: Function, y: any, ...args) => x.call(y, args);
+  call = (x: Function,y: any,...args) => x.call(y,args);
   setSaleDisabledState(): void {
     if (this.form.value.gl_token) {
       this.saleDisabled = false;
@@ -122,11 +122,11 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
     }
   }
 
-  priceValidate(e:Event){
-		const price = e.target as HTMLInputElement;
-		price.value.length > 5 ? (price.value = price.value.slice(0, price.value.length - 1)) : 
-          (price.value.includes('.')? price.value = price.value.slice(0, price.value.lastIndexOf('.')): '')
-	}
+  priceValidate(e: Event) {
+    const price = e.target as HTMLInputElement;
+    price.value.length > 5 ? (price.value = price.value.slice(0,price.value.length - 1)) :
+      (price.value.includes('.') ? price.value = price.value.slice(0,price.value.lastIndexOf('.')) : '')
+  }
 
 
   onTransformDataUpdate(data: Live2dTransformData): void {
@@ -171,7 +171,7 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
         this.api.get_edit_work(Number(x.get('id'))).subscribe((r: Work) => {
           this.setMainForm(r);
           this.setModelChecked(r);
-          this.goodsLivewdUpload.loadFileFromOpal(r.goods_list[0].file, null);
+          this.goodsLivewdUpload.loadFileFromOpal(r.goods_list[0].file,null);
         });
       }
     });
@@ -184,7 +184,7 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
         enableFaceTrackerChecked: fileData.enableFaceTracker || false,
         enableSettingPanelChecked: fileData.enableSettingPanel || false,
       });
-      this.modalSet([fileData.enableFaceTracker ? '0' : '', fileData.enableSettingPanel ? '1' : '']);
+      this.modalSet([fileData.enableFaceTracker ? '0' : '',fileData.enableSettingPanel ? '1' : '']);
     }
   }
 
@@ -198,12 +198,12 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
       c: !r.copyright && true,
       g: this.token,
       a: r.authority,
-      p: r.goods_list[0].price,
-      s: r.goods_list[0].max_stock,
-      gl_token: r.goods_list[0].file,
+      p: r.goodsList[0].price,
+      s: r.goodsList[0].max_stock,
+      gl_token: r.goodsList[0].file,
     });
     this.copyrightModel = r.authority;
-    this.live2dUpload.loadFileFromOpal(r.file, r.file_data ? JSON.parse(r.file_data) : null);
+    this.live2dUpload.loadFileFromOpal(r.file,r.file_data ? JSON.parse(r.file_data) : null);
   }
 
   private getCopyRight(): void {
@@ -229,16 +229,16 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
     };
     this.api.update_work(params).subscribe({
       next: () => {
-        this.modal.open(SuccessTips, {
+        this.modal.open(SuccessTips,{
           redirectUrl: 'user',
           tip: '已成功提交审核，请等待后台人员审核!',
         });
       },
       error: (x: { descrption: string }) => {
         if (x.descrption) {
-          this.modal.open(PopTips, [x.descrption]);
+          this.modal.open(PopTips,[x.descrption]);
         } else {
-          this.modal.open(PopTips, ['系统繁忙']);
+          this.modal.open(PopTips,['系统繁忙']);
         }
       },
     });
@@ -247,16 +247,16 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
   private public_work(): void {
     this.api.publish_work(this.param).subscribe({
       next: x => {
-        this.modal.open(SuccessTips, {
+        this.modal.open(SuccessTips,{
           redirectUrl: '/member/manager/live2D/auditing',
           tip: '已成功提交审核，请等待后台人员审核！',
         });
       },
       error: (x: { descrption: string }) => {
         if (x.descrption) {
-          this.modal.open(PopTips, [x.descrption, false, 0]);
+          this.modal.open(PopTips,[x.descrption,false,0]);
         } else {
-          this.modal.open(PopTips, ['系统繁忙', false, 0]);
+          this.modal.open(PopTips,['系统繁忙',false,0]);
         }
       },
     });
@@ -296,7 +296,7 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
   }
 
   submit(): void {
-    validator(this.form, this.form.controls);
+    validator(this.form,this.form.controls);
     if (!this.validator()) {
       return;
     }
@@ -328,7 +328,7 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
                 {
                   n: '付费下载内容',
                   f: [value.gl_token],
-                  p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0, (this.maxPrice + '').length)), 10) : value.p,
+                  p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0,(this.maxPrice + '').length)),10) : value.p,
                   s: value.s,
                 },
               ];
@@ -360,7 +360,7 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
               {
                 n: '付费下载内容',
                 f: [value.gl_token],
-                p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0, (this.maxPrice + '').length)), 10) : value.p,
+                p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0,(this.maxPrice + '').length)),10) : value.p,
                 s: value.s,
               },
             ];
@@ -418,7 +418,7 @@ export class Live2dPaidComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    fromEvent(this.submitButton.nativeElement, 'click')
+    fromEvent(this.submitButton.nativeElement,'click')
       .pipe(debounce(() => interval(500)))
       .subscribe(() => {
         this.submit();

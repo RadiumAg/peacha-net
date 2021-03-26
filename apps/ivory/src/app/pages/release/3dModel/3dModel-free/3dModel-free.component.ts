@@ -1,4 +1,3 @@
-import { IFileItem } from './../../../../../../../../libs/peacha-core/src/lib/components/file-upload/file-upload.component';
 import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 import { SuccessTips } from './../../components/success-tips/success-tips';
 import { Component,OnInit,ViewChild,ElementRef,AfterViewInit,ChangeDetectorRef } from '@angular/core';
@@ -9,6 +8,8 @@ import { BehaviorSubject,fromEvent,interval } from 'rxjs';
 import { emptyStringValidator,ModalService,validator,Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { IPublishFileType,ReleaseApiService } from '../../release-api.service';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { IFileItem } from 'libs/peacha-core/src/lib/components/file-upload/file-upload.component';
 
 
 @Component({
@@ -192,6 +193,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 						c: r.copyright,
 					});
 				});
+				this.cdr.markForCheck();
 			}
 		});
 	}
@@ -265,15 +267,16 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 	}
 
 	submit() {
-
 		if (!this.ESelectPreviewType.length) {
 			this.modal.open(PopTips,['请选择预览方式','0']);
 			return;
 		}
-
-		if (!this.publishParam.gl) {
-			this.modal.open(PopTips,['请添加至少一个免费商品','0']);
-			return;
+		if (this.isEdit) { }
+		else if (!this.isEdit) {
+			if (!this.publishParam.gl) {
+				this.modal.open(PopTips,['请添加至少一个免费商品','0']);
+				return;
+			}
 		}
 		validator(this.form,this.form.controls);
 		this.glArray.controls.forEach(_ => { validator((_ as FormGroup),(_ as FormGroup).controls) });
@@ -289,19 +292,17 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 	}
 
 	private sure_edit() {
-		const i = this.setiToken();
 		this.api
 			.update_work({
 				w: this.route.snapshot.params.id,
 				d: this.editParam.d,
-				i,
+				i: this.editParam.f,
 				t: this.editParam.t,
 				b: this.editParam.b,
 				n: this.editParam.n,
 				a: this.copyrightModel,
 				gl: this.editParam.gl,
 				fr: 1,
-				gd: '',
 			})
 			.subscribe({
 				next: () => {
@@ -331,7 +332,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 			.pipe(
 				map((value) => {
 					const gl = value.gl.length && value.gl.map(_ => ({ f: _.f?.token || _?.f?.url || '',n: _.n,ft: _.ft,p: 0,s: -1 }));
-					value.b = value.b.token || '';
+					value.b = value.b.token || value.b.url || '';
 					value.f = value.f.map((s: { remote_token: string; url: string }) => s.remote_token || s.url);
 					return {
 						n: value.n,
