@@ -94,6 +94,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/work-live2d/work-live2d.module').then(m => m.WorkLive2dModule),
   },
   {
+    path: '3d',
+    loadChildren: () => import('./pages/work-3D/work-3D.module').then(m => m.Work3DModule),
+  },
+  {
     path: 'pay',
     loadChildren: () => import('./pages/pay/pay.module').then(m => m.PayModule),
   },
