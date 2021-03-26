@@ -2,22 +2,20 @@ import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 import { SuccessTips } from './../../components/success-tips/success-tips';
 import { Component,OnInit,ViewChild,ElementRef,AfterViewInit,ChangeDetectorRef } from '@angular/core';
 import { debounce,map } from 'rxjs/operators';
-import { FormArray,FormBuilder,FormGroup,Validators } from '@angular/forms';
+import { FormBuilder,Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject,fromEvent,interval } from 'rxjs';
 import { emptyStringValidator,ModalService,validator,Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
-import { IPublishFileType,ReleaseApiService } from '../../release-api.service';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { IFileItem } from 'libs/peacha-core/src/lib/components/file-upload/file-upload.component';
+import { ReleaseApiService } from '../../release-api.service';
 
 
 @Component({
 	selector: 'ivo-3dmodel',
-	templateUrl: './3dModel-free.component.html',
-	styleUrls: ['./3dModel-free.component.less'],
+	templateUrl: './3dModel-only-show.component.html',
+	styleUrls: ['./3dModel-only-show.component.less'],
 })
-export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
+export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 	constructor(
 		public sanitizer: DomSanitizer,
 		private fb: FormBuilder,
@@ -41,7 +39,6 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		ss: number;
 		f: [];
 		bv: string;
-		gl: IPublishFileType[];
 	};
 
 	editParam: {
@@ -55,7 +52,6 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		ss: number;
 		f: [];
 		bv: string;
-		gl: IPublishFileType[];
 	};
 
 	form = this.fb.group({
@@ -93,32 +89,10 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		},
 	};
 
-	get glArray() {
-		return <FormArray>(this.form.get('gl'));
-	}
-
-
-	addGlItem(n?: string,f?: IFileItem,ft?: number) {
-		const createGlGroup = this.fb.group({
-			n: [n || '',Validators.required],
-			f: [f || null,Validators.required],
-			ft: [ft || 0,Validators.required]
-		});
-		Reflect.set(createGlGroup,'symbol',Symbol());
-		this.glArray.push(createGlGroup);
-	}
-
 	changeCopyright($event: number[]) {
 		this.form.patchValue({
 			a: $event,
 		});
-	}
-
-	addGoodsList() {
-		if (this.glArray.controls.length === 5) {
-			return;
-		}
-		this.addGlItem();
 	}
 
 	setBvNumber(bvNumber: string) {
@@ -177,9 +151,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 				this.api.get_edit_work(parseInt(x.get('id'),10)).subscribe((r: Work) => {
 					this.setPreviewType(r);
 					this.copyrightModel = r.authority;
-					r.goodsList.forEach(x => {
-						this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType);
-					})
+
 					this.form.patchValue({
 						n: r.name,
 						d: r.description,
@@ -224,8 +196,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 			cs: 2,
 			ss: this.publishParam.ss,
 			f: this.publishParam.f,
-			gl: this.publishParam.gl,
-			bv: this.publishParam.bv,
+			gl: [],
 		}).subscribe({
 			next: _x => {
 				this.modal.open(SuccessTips,{
@@ -241,11 +212,6 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 				}
 			},
 		});
-	}
-
-	deleteGl(symbol: symbol) {
-		console.log(this.glArray.controls.findIndex(_ => Reflect.get(_,'symbol') === symbol));
-		this.glArray.controls.splice(this.glArray.controls.findIndex(_ => Reflect.get(_,'symbol') === symbol),1);
 	}
 
 	trackBy(index: number,model: { symbol: symbol }): symbol {
@@ -271,15 +237,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 			this.modal.open(PopTips,['请选择预览方式','0']);
 			return;
 		}
-		if (this.isEdit) { }
-		else if (!this.isEdit) {
-			if (!this.publishParam.gl) {
-				this.modal.open(PopTips,['请添加至少一个免费商品','0']);
-				return;
-			}
-		}
 		validator(this.form,this.form.controls);
-		this.glArray.controls.forEach(_ => { validator((_ as FormGroup),(_ as FormGroup).controls) });
 		if (!this.form.valid) {
 			return;
 		}
@@ -301,7 +259,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 				b: this.editParam.b,
 				n: this.editParam.n,
 				a: this.copyrightModel,
-				gl: this.editParam.gl,
+				gl: [],
 				fr: 1,
 			})
 			.subscribe({
@@ -331,7 +289,6 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		this.form.valueChanges
 			.pipe(
 				map((value) => {
-					const gl = value.gl.length && value.gl.map(_ => ({ f: _.f?.token || _?.f?.url || '',n: _.n,ft: _.ft,p: 0,s: -1 }));
 					value.b = value.b.token || value.b.url || '';
 					value.f = value.f.map((s: { remote_token: string; url: string }) => s.remote_token || s.url);
 					return {
@@ -345,7 +302,6 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 						c: value.c,
 						cs: 1,
 						ss: 0,
-						gl,
 					};
 				})
 			)

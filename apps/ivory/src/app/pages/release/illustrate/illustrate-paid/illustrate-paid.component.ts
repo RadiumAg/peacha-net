@@ -116,7 +116,6 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 			cs: this.param.cs,
 			ss: this.param.ss,
 			f: this.param.f,
-			fr: 0,
 			gl: this.param.gl,
 		}).subscribe({
 			next: _x => {

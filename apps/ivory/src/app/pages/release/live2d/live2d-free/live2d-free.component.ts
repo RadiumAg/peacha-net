@@ -1,14 +1,14 @@
-import { map, tap, debounce } from 'rxjs/operators';
+import { map,tap,debounce } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AfterViewInit,ElementRef,ViewChild } from '@angular/core';
+import { Component,OnInit,ChangeDetectorRef } from '@angular/core';
+import { FormBuilder,Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Live2dUploadComponent } from '../../components/live2d-upload/live2d-upload.component';
 import { SuccessTips } from '../../components/success-tips/success-tips';
-import { BehaviorSubject, fromEvent, interval } from 'rxjs';
+import { BehaviorSubject,fromEvent,interval } from 'rxjs';
 import { ReleaseApiService } from '../../release-api.service';
-import { emptyStringValidator, ModalService, validator, Work } from '@peacha-core';
+import { emptyStringValidator,ModalService,validator,Work } from '@peacha-core';
 import { Live2dTransformData } from '@peacha-studio-core';
 import { PopTips } from '@peacha-core/components';
 
@@ -18,7 +18,7 @@ import { PopTips } from '@peacha-core/components';
 	templateUrl: './live2d-free.component.html',
 	styleUrls: ['./live2d-free.component.less'],
 })
-export class Live2dFreeComponent implements OnInit, AfterViewInit {
+export class Live2dFreeComponent implements OnInit,AfterViewInit {
 	constructor(
 		private fb: FormBuilder,
 		private modal: ModalService,
@@ -48,14 +48,14 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 		gl: [];
 	};
 	form = this.fb.group({
-		n: ['', [emptyStringValidator(), Validators.required]],
-		d: ['', [emptyStringValidator(), Validators.required]],
-		b: ['', Validators.required],
-		g: ['', Validators.required],
+		n: ['',[emptyStringValidator(),Validators.required]],
+		d: ['',[emptyStringValidator(),Validators.required]],
+		b: ['',Validators.required],
+		g: ['',Validators.required],
 		a: [[]],
-		c: ['', Validators.required],
+		c: ['',Validators.required],
 		t: [[]],
-		checked: [false, Validators.requiredTrue],
+		checked: [false,Validators.requiredTrue],
 	});
 	checkedForm = this.fb.group({
 		enableFaceTrackerChecked: [false],
@@ -157,7 +157,7 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 			a: r.authority,
 		});
 		this.copyrightModel = r.authority;
-		this.live2dUpload.loadFileFromOpal(r.file, r.file_data ? JSON.parse(r.file_data) : null);
+		this.live2dUpload.loadFileFromOpal(r.file,r.file_data ? JSON.parse(r.file_data) : null);
 	}
 
 	private setModelChecked(r: Work): void {
@@ -165,13 +165,12 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 			this.checkedForm.patchValue({
 				enableFaceTrackerChecked: JSON.parse(r.file_data).enableFaceTracker ? true : false,
 				enableSettingPanelChecked: JSON.parse(r.file_data).enableSettingPanel ? true : false,
-				freeModelDownLoadChecked: r.goods_list.length && r.goods_list[0].sell_state > 0 ? true : false,
+				freeModelDownLoadChecked: r.goodsList.length && r.goodsList[0].sell_state > 0 ? true : false,
 			});
 		}
 	}
 
 	private getCopyRight(): void {
-		const httpParams = new HttpParams().set('c', '0');
 		this.api.copyright(0).subscribe((x: { list: { name: string; id: number }[] }) => {
 			this.copyrightCheckes$.next(x.list);
 			this.setInitstateMentStates();
@@ -194,16 +193,16 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 		};
 		this.api.update_work(params).subscribe({
 			next: () => {
-				this.modal.open(SuccessTips, {
+				this.modal.open(SuccessTips,{
 					redirectUrl: 'user',
 					tip: '已成功提交审核，请等待后台人员审核!',
 				});
 			},
 			error: (x: { descrption: string }) => {
 				if (x.descrption) {
-					this.modal.open(PopTips, [x.descrption]);
+					this.modal.open(PopTips,[x.descrption]);
 				} else {
-					this.modal.open(PopTips, ['系统繁忙']);
+					this.modal.open(PopTips,['系统繁忙']);
 				}
 			},
 		});
@@ -212,16 +211,16 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 	private public_work(): void {
 		this.api.publish_work(this.param).subscribe({
 			next: _x => {
-				this.modal.open(SuccessTips, {
+				this.modal.open(SuccessTips,{
 					redirectUrl: '/member/manager/live2D/auditing',
 					tip: '已成功提交审核，请等待后台人员审核！',
 				});
 			},
 			error: (x: { descrption: string }) => {
 				if (x.descrption) {
-					this.modal.open(PopTips, [x.descrption, false, 0]);
+					this.modal.open(PopTips,[x.descrption,false,0]);
 				} else {
-					this.modal.open(PopTips, ['系统繁忙', false, 0]);
+					this.modal.open(PopTips,['系统繁忙',false,0]);
 				}
 			},
 		});
@@ -274,7 +273,7 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 	}
 
 	submit(): void {
-		validator(this.form, this.form.controls);
+		validator(this.form,this.form.controls);
 		if (!this.validator()) {
 			return;
 		}
@@ -362,7 +361,7 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 	isModalFreeDownloadTip(): void {
 		if (this.checkedForm.value['freeModelDownLoadChecked']) {
 			this.modal
-				.open(PopTips, ['是否确定免费提供该模型文件下载', true, 2])
+				.open(PopTips,['是否确定免费提供该模型文件下载',true,2])
 				.afterClosed()
 				.subscribe(x => {
 					if (!x) {
@@ -404,7 +403,7 @@ export class Live2dFreeComponent implements OnInit, AfterViewInit {
 	}
 
 	ngAfterViewInit(): void {
-		fromEvent(this.submitButton.nativeElement, 'click')
+		fromEvent(this.submitButton.nativeElement,'click')
 			.pipe(debounce(() => interval(500)))
 			.subscribe(() => {
 				this.submit();

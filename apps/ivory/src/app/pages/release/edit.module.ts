@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { IllustratePaidComponent } from './illustrate/illustrate-paid/illustrate-paid.component';
 import { ThreeModelFreeComponent } from './3dModel/3dModel-free/3dModel-free.component';
 import { PhoneGuard,UserBanStatusGuard } from '@peacha-core';
+import { ThreeModelPaidComponent } from './3dModel/3dModel-paid/3dModel-paid.component';
 
 @NgModule({
 	declarations: [],
@@ -32,6 +33,16 @@ import { PhoneGuard,UserBanStatusGuard } from '@peacha-core';
 			{
 				path: '3d/free/:id',
 				component: ThreeModelFreeComponent,
+				canActivate: [PhoneGuard,UserBanStatusGuard]
+			},
+			{
+				path: '3d/onlyShow/:id',
+				component: ThreeModelFreeComponent,
+				canActivate: [PhoneGuard,UserBanStatusGuard]
+			},
+			{
+				path: '3d/paid',
+				component: ThreeModelPaidComponent,
 				canActivate: [PhoneGuard,UserBanStatusGuard]
 			}
 		]),

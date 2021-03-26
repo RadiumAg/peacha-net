@@ -11,7 +11,7 @@
           作品标题
           <span class="word-count">{{ title.value.length }}/20</span>
         </div>
-        <input ivoErroTip ivoErrorTipString="请输入标题!" ivoFormNav formControlName="n" class="input" maxlength="20"
+        <input ivoErroTip ivoErrorTipString="请输入标题!" formControlName="n" class="input" maxlength="20"
           placeholder="请输入作品标题" data-control-index="0" #title />
       </div>
       <div class="form-controller">
@@ -20,39 +20,66 @@
           <span class="word-count">{{ des.value.length }}/1000</span>
         </div>
         <textarea ivoErroTip ivoErrorTipString="请输入作品简介!" formControlName="d" class="textarea" maxlength="1000" rows="4"
-          placeholder="请输入作品简介…&#10;&#10;" ivoFormNav data-control-index="0" #des></textarea>
+          placeholder="请输入作品简介…&#10;&#10;" data-control-index="0" #des></textarea>
       </div>
     </div>
 
     <div class="form-item">
       <div class="title" [ivoNoticeTitle]="'标签能让更多小伙伴看到你的作品(最多输入5个)'">标签</div>
       <div class="form-controller">
-        <ivo-tag-input formControlName="t" ivoFormNav data-control-index="1"></ivo-tag-input>
+        <ivo-tag-input formControlName="t" data-control-index="1"></ivo-tag-input>
       </div>
     </div>
 
     <div class="form-item">
       <div class="title" [ivoNoticeTitle]="'上传封面图片大小5M以下，长宽不得超过16384*16384px'">上传封面</div>
       <div class="form-controller required">
-        <ivo-thumbnail-upload maxSize="5242880" formControlName="b" ivoErroTip ivoErrorTipString="请上传封面!" ivoFormNav
+        <ivo-thumbnail-upload maxSize="5242880" formControlName="b" ivoErroTip ivoErrorTipString="请上传封面!"
           data-control-index="2">
         </ivo-thumbnail-upload>
       </div>
     </div>
 
-    <div class="form-item uplaod-Image">
-      <div class="title" [ivoNoticeTitle]="'支持JPEG.PNG.GIF等格式，每张图片不得大于5M，长宽不得超过16384*16384px'">上传图片</div>
-      <div class="form-controller required">
-        <ivo-illustrate-upload maxSize="5242880" ivoErroTip ivoErrorTipString="请上传插画" formControlName="f" ivoFormNav
+    <div class="form-item  select-preview">
+      <div class="title" [ivoNoticeTitle]="'可多选'">选择预览方式</div>
+      <div class="form-controller 	required-center">
+        <form [formGroup]="checkedForm">
+          <nz-checkbox-wrapper (nzOnChange)="changeSelectPreviewType($event)">
+            <label nz-checkbox [nzValue]="'image'" formControlName="selectPreViewImage"><span
+                class="select-preview-checkbox">图片/GIF预览</span></label>
+
+            <label nz-checkbox [nzValue]="'bv'" formControlName="selectPreViewTv"><span
+                class="select-preview-checkbox">Bilibili视频预览</span></label>
+          </nz-checkbox-wrapper>
+        </form>
+      </div>
+    </div>
+
+    <div class="form-item uplaod-Image" *ngIf="ESelectPreviewType.includes('image')">
+      <div class="title" [ivoNoticeTitle]="'支持JPEG.PNG.GIF等格式，每张图片不得大于5M，长宽不得超过16384*16384px'">上传图片/GIF</div>
+      <div class="form-controller required-center">
+        <ivo-illustrate-upload maxSize="5242880" ivoErroTip ivoErrorTipString="请上传图片" formControlName="f"
           data-control-index="3">
         </ivo-illustrate-upload>
+      </div>
+    </div>
+
+    <div class="form-item bv" *ngIf="ESelectPreviewType.includes('bv')">
+      <div class="title">上传Bilibili视频</div>
+      <div class="form-controller required-center">
+        Bilibili视频BV号:&nbsp;&nbsp;&nbsp;&nbsp;<input ivoErroTip ivoErrorTipString="请上传bv号" #bv_input type="text"
+          class="input" #copyright formControlName="bv" data-control-index="4" />
+        <button class="button" ivo-button (click)="setBvNumber(bv_input.value)">预览视频</button>
+      </div>
+      <div class="form-controller">
+        <iframe [attr.src]="bvUrl" class="bv-video" *ngIf="bvUrl"></iframe>
       </div>
     </div>
 
     <div class="form-item explain">
       <div class="title">版权声明</div>
       <div class="form-controller">
-        <nz-radio-group formControlName="c" ivoFormNav data-control-index="4" ivoErroTip ivoErrorTipString="请选择版权声明!"
+        <nz-radio-group formControlName="c" data-control-index="4" ivoErroTip ivoErrorTipString="请选择版权声明!"
           (ngModelChange)="changeCopyrightState($event)">
           <label nz-radio [nzValue]="0" [nzDisabled]="isEdit">此作品为原创作品</label>
           <label nz-radio [nzValue]="1" [nzDisabled]="isEdit">此作品为同人作品</label>
@@ -63,11 +90,11 @@
               <ng-container *ngFor="let item of copyrightCheckes$ | async; let i = index">
                 <div>
                   <label nz-checkbox [nzValue]="item['id']" (click)="(copyright.click)" formControlName="copychecked"
-                    [nzChecked]="copyrightModel.includes(item['id'])"
-                    [nzDisabled]="isEdit || stateMentStates[i]">{{ item['name'] }}</label>
+                    [nzChecked]="copyrightModel.includes(item['id'])" [nzDisabled]="isEdit || stateMentStates[i]">{{
+                    item['name'] }}</label>
                 </div>
               </ng-container>
-              <input type="hidden" formControlName="copyright" #copyright ivoFormNav data-control-index="4" />
+              <input type="hidden" formControlName="copyright" #copyright data-control-index="4" />
             </div>
           </form>
         </nz-checkbox-wrapper>
@@ -102,5 +129,4 @@
     </nz-form-item>
   </form>
 
-  <!-- <ivo-form-nav class="nav" top='23' [titleList]='["作品信息","添加标签","上传封面","上传图片","版权声明"]'></ivo-form-nav> -->
 </div>

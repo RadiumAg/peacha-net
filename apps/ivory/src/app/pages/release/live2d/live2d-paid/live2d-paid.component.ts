@@ -171,7 +171,7 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
         this.api.get_edit_work(Number(x.get('id'))).subscribe((r: Work) => {
           this.setMainForm(r);
           this.setModelChecked(r);
-          this.goodsLivewdUpload.loadFileFromOpal(r.goods_list[0].file,null);
+          this.goodsLivewdUpload.loadFileFromOpal(r.goodsList[0].file,null);
         });
       }
     });

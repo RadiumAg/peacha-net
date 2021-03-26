@@ -5,7 +5,7 @@ import { debounce,map } from 'rxjs/operators';
 import { FormArray,FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject,fromEvent,interval } from 'rxjs';
-import { emptyStringValidator,ModalService,validator,Work } from '@peacha-core';
+import { emptyStringValidator,live2dPriceValidator,ModalService,validator,Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { IPublishFileType,ReleaseApiService } from '../../release-api.service';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
@@ -14,10 +14,10 @@ import { IFileItem } from 'libs/peacha-core/src/lib/components/file-upload/file-
 
 @Component({
 	selector: 'ivo-3dmodel',
-	templateUrl: './3dModel-free.component.html',
-	styleUrls: ['./3dModel-free.component.less'],
+	templateUrl: './3dModel-paid.component.html',
+	styleUrls: ['./3dModel-paid.component.less'],
 })
-export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
+export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 	constructor(
 		public sanitizer: DomSanitizer,
 		private fb: FormBuilder,
@@ -72,13 +72,12 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 	});
 
 	checkedForm = this.fb.group({
-		aCheckedOne: [false],
-		aCheckedTwo: [false],
 		copyright: [[]],
 		copychecked: [false],
 		selectPreViewImage: [false],
-		selectPreViewTv: [false]
+		selectPreViewTv: [false],
 	});
+
 	copyrightCheckes$ = new BehaviorSubject<{ id: number; name: string }[]>([]);
 	stateMentStates = [];
 	copyrightModel = [];
@@ -92,7 +91,8 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 			this.stateMentStates = this.stateMentStates.map(_x => false);
 		},
 	};
-
+	toFixed = Number.prototype.toFixed;
+	call = (x: Function,y,...arg) => x.call(y,arg);
 	get glArray() {
 		return <FormArray>(this.form.get('gl'));
 	}
@@ -102,7 +102,10 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		const createGlGroup = this.fb.group({
 			n: [n || '',Validators.required],
 			f: [f || null,Validators.required],
-			ft: [ft || 0,Validators.required]
+			ft: [ft || 0,Validators.required],
+			s: [-1,Validators.required],
+			p: ['',live2dPriceValidator()],
+			fr: [false]
 		});
 		Reflect.set(createGlGroup,'symbol',Symbol());
 		this.glArray.push(createGlGroup);
@@ -156,19 +159,6 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 			copychecked: false,
 		});
 	}
-
-	/**
-	 * @description 验证
-	 */
-	private validator(): boolean {
-		let flag = true;
-
-		if (!this.form.valid) {
-			flag = false;
-		}
-		return flag;
-	}
-
 
 	private getEditWork() {
 		this.route.paramMap.subscribe(x => {
@@ -274,7 +264,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		if (this.isEdit) { }
 		else if (!this.isEdit) {
 			if (!this.publishParam.gl) {
-				this.modal.open(PopTips,['请添加至少一个免费商品','0']);
+				this.modal.open(PopTips,['请添加至少一个商品','0']);
 				return;
 			}
 		}
@@ -321,17 +311,11 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 			});
 	}
 
-	private setiToken() {
-		const iUrl = this.form.value.f.map((s) => s.remote_token || s.url);
-		const i = iUrl;
-		return i;
-	}
-
 	private subscribeForm() {
 		this.form.valueChanges
 			.pipe(
 				map((value) => {
-					const gl = value.gl.length && value.gl.map(_ => ({ f: _.f?.token || _?.f?.url || '',n: _.n,ft: _.ft,p: 0,s: -1 }));
+					const gl = value.gl.length && value.gl.map(_ => ({ ..._,f: _.f?.token || _?.f?.url || '',p: _.fr ? 0 : _.p }));
 					value.b = value.b.token || value.b.url || '';
 					value.f = value.f.map((s: { remote_token: string; url: string }) => s.remote_token || s.url);
 					return {

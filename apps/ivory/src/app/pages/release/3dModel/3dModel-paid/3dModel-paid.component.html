@@ -79,17 +79,17 @@
     <div formArrayName="gl">
       <div *ngFor="let item of glArray.controls; index as i;trackBy:trackBy" class="form-item  free-share-file-upload"
         [formGroupName]="i">
-        <div class="title" [ivoNoticeTitle]="'文件大小不得大于210M。'"><span>上传免费分享内容-{{i+1}}</span><span
+        <div class="title" [ivoNoticeTitle]="'文件大小不得大于210M。'"><span>上传商品内容-{{i+1}}</span><span
             class="ivo-icon-delete-circle" *ngIf="!isEdit" (click)="deleteGl(item.symbol)"></span></div>
         <div class="form-controller required-center">
           <div class="share-file">
-            <span class="">分享文件:</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>分享文件:</span>&nbsp;&nbsp;&nbsp;&nbsp;
             <ivo-file-upload formControlName="f" ivoErroTip ivoErrorTipString="请上传分享文件!" [acceptType]="'.zip'">
             </ivo-file-upload>
           </div>
 
           <span class="select-upload-type required-center" *ngIf="item.value.f">
-            <ivo-select [height]="'50px'"  [disabled]="isEdit" fontSize="16px" formControlName="ft" ivoErroTip
+            <ivo-select [height]="'50px'" [disabled]="isEdit" fontSize="16px" formControlName="ft" ivoErroTip
               ivoErrorTipString="请选择类型!">
               <ivo-option [value]='2' text='.vrm'></ivo-option>
               <ivo-option [value]='3' text='.vup'></ivo-option>
@@ -101,20 +101,46 @@
           <span class="free-share-file-tip" *ngIf="item.value.ft === 4">模型内包含的插件或shader请在详情内具体说明</span>
         </div>
 
-        <div class="form-controller no-top-line required-center share-file-name">
+        <div class="form-controller no-top-line required-center good-file-name">
           <div class="input-area">
             <span class="word-count">{{ share_name_input.value.length }}/20</span>
-            免费分享名称:&nbsp;&nbsp;&nbsp;&nbsp;<input placeholder="请输入商品名称请输入商品名称请输入商品名称" ivoErroTip
+            商品名称:&nbsp;&nbsp;&nbsp;&nbsp;<input placeholder="请输入商品名称请输入商品名称请输入商品名称" ivoErroTip
               ivoErrorTipString="请填写免费商品名称!" #share_name_input type="text" formControlName="n" maxlength="20"
               class="input">
+          </div>
+
+          <div class="sale-type required-center">
+            出售类型：
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <nz-radio-group formControlName="s" ivoErroTip ivoErrorTipString="请选择销售类型">
+              <label nz-radio [nzValue]="1"><span class="label-inner">单次销售</span></label>
+              <label nz-radio [nzValue]="-1"><span class="label-inner">多次销售</span></label>
+            </nz-radio-group>
+          </div>
+        </div>
+
+        <div class="form-controller no-top-line required-center good-file-name">
+          <div class="input-area">
+            商品价格:&nbsp;&nbsp;&nbsp;&nbsp;
+            <span *ngIf="!item.value.fr">
+              <input placeholder="设置商品价格" [ivoErrorTipString]="{
+              nullPrice: '请设置商品价格!',
+              floatPrice: '价格只能为整数!',
+              negativePrice: '价格不能为负数!',
+              zeroPrice: '价格不能设置为零!'
+            }" #good_price_input type="number" formControlName="p" maxlength="20" class="input price">
+              &nbsp;&nbsp;&nbsp;&nbsp;平台将收取8%的服务费，预计收益{{ call(toFixed,good_price_input.value * 0.92,2)}}
+              &nbsp;&nbsp;&nbsp;&nbsp;
+            </span><label nz-checkbox formControlName="fr">
+              <span class="label-inner">免费分享</span></label>
           </div>
         </div>
       </div>
 
     </div>
     <div class="form-item add-free-goodList">
-      <div class="title" (click)="addGoodsList()" [ivoNoticeTitle]="'最多添加5个免费分享内容'"><span
-          class="ivo-icon-add-circle add-free-goodList-operate">新增免费分享内容</span></div>
+      <div class="title" (click)="addGoodsList()" [ivoNoticeTitle]="'最多添加5个商品。若作品内包含多个商品，则全部商品无法选择“单次销售”的出售类型'"><span
+          class="ivo-icon-add-circle add-free-goodList-operate">新增商品</span></div>
     </div>
 
     <div class="form-item explain">

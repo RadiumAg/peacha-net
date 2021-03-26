@@ -1,3 +1,5 @@
+import { ThreeModelPaidComponent } from './3dModel/3dModel-paid/3dModel-paid.component';
+import { ThreeModelOnlyShowComponent } from './3dModel/3dModel-only-show/3dModel-only-showcomponent';
 import { ThreeModelFreeComponent } from './3dModel/3dModel-free/3dModel-free.component';
 import { ThreeDModelSelectComponent } from './select-type/3dModel/3dmodel.component';
 import { app_config } from './../../../global.config';
@@ -41,7 +43,9 @@ import { illustratePaidOrFreeComponent } from './select-type/illustrate/illustra
     IllustrateFreeComponent,
     IllustratePaidComponent,
     illustratePaidOrFreeComponent,
-    ThreeModelFreeComponent
+    ThreeModelFreeComponent,
+    ThreeModelOnlyShowComponent,
+    ThreeModelPaidComponent,
   ],
   imports: [
     CommonModule,
@@ -100,6 +104,16 @@ import { illustratePaidOrFreeComponent } from './select-type/illustrate/illustra
       {
         path: '3d/free',
         component: ThreeModelFreeComponent,
+        canActivate: [PhoneGuard,UserBanStatusGuard]
+      },
+      {
+        path: '3d/onlyShow',
+        component: ThreeModelOnlyShowComponent,
+        canActivate: [PhoneGuard,UserBanStatusGuard]
+      },
+      {
+        path: '3d/paid',
+        component: ThreeModelPaidComponent,
         canActivate: [PhoneGuard,UserBanStatusGuard]
       }
     ]),
