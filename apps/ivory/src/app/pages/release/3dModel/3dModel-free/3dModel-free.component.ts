@@ -1,3 +1,4 @@
+import { IFileItem } from './../../../../../../../../libs/peacha-core/src/lib/components/file-upload/file-upload.component';
 import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 import { SuccessTips } from './../../components/success-tips/success-tips';
 import { Component,OnInit,ViewChild,ElementRef,AfterViewInit,ChangeDetectorRef } from '@angular/core';
@@ -96,11 +97,11 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 	}
 
 
-	addGlItem() {
+	addGlItem(n?: string,f?: IFileItem,ft?: number) {
 		const createGlGroup = this.fb.group({
-			n: ['',Validators.required],
-			f: [null,Validators.required],
-			ft: [0,Validators.required]
+			n: [n || '',Validators.required],
+			f: [f || null,Validators.required],
+			ft: [ft || 0,Validators.required]
 		});
 		Reflect.set(createGlGroup,'symbol',Symbol());
 		this.glArray.push(createGlGroup);
@@ -167,13 +168,17 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		return flag;
 	}
 
+
 	private getEditWork() {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.api.get_edit_work(Number(x.get('id'))).subscribe((r: Work) => {
-					console.log(r);
+				this.api.get_edit_work(parseInt(x.get('id'),10)).subscribe((r: Work) => {
+					this.setPreviewType(r);
 					this.copyrightModel = r.authority;
+					r.goodsList.forEach(x => {
+						this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType);
+					})
 					this.form.patchValue({
 						n: r.name,
 						d: r.description,
@@ -189,6 +194,21 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 				});
 			}
 		});
+	}
+
+	private setPreviewType(r: Work) {
+		if (r.assets.length > 0) {
+			this.ESelectPreviewType.push('image');
+			this.checkedForm.patchValue({
+				selectPreViewImage: true
+			});
+		}
+		if (r.bv) {
+			this.ESelectPreviewType.push('bv');
+			this.checkedForm.patchValue({
+				selectPreViewTv: true
+			});
+		}
 	}
 
 	private public_work() {

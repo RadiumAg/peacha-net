@@ -7,7 +7,7 @@ import { filter,map,takeUntil } from 'rxjs/operators';
 import { PopTips } from '../pop-tips/pop-tips';
 
 
-interface IFileItem {
+export interface IFileItem {
   name: string;
   url?: string;
   token?: string;
@@ -64,7 +64,7 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
 
 
   writeValue(files: IFileItem): void {
-    this.file$.next(files);
+    this.file$.next({ ...files,Process$: new BehaviorSubject({ progress: 1,success: true }) });
   }
 
   registerOnChange(fn: (o: IFileItem) => void): void {
@@ -119,7 +119,9 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
   private subscribeData() {
     this.file$.pipe(takeUntil(this.distroy$)).subscribe(x => {
       if (x && x.url) {
-        this.updata?.call(this,{ name: x.name,token: x.token,url: x.url });
+        this.updata?.call(this,{ token: x.token,url: x.url });
+      } else if (!x) {
+        this.updata?.call(this,null);
       }
     })
   }

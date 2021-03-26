@@ -1,10 +1,10 @@
 import { SuccessTips } from './../../components/success-tips/success-tips';
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { debounce, map } from 'rxjs/operators';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component,OnInit,ViewChild,ElementRef,AfterViewInit } from '@angular/core';
+import { debounce,map } from 'rxjs/operators';
+import { FormBuilder,Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, fromEvent, interval } from 'rxjs';
-import { emptyStringValidator, live2dPriceValidator, ModalService, validator, Work } from '@peacha-core';
+import { BehaviorSubject,fromEvent,interval } from 'rxjs';
+import { emptyStringValidator,live2dPriceValidator,ModalService,validator,Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { ReleaseApiService } from '../../release-api.service';
 
@@ -14,27 +14,27 @@ import { ReleaseApiService } from '../../release-api.service';
 	templateUrl: './illustrate-paid.component.html',
 	styleUrls: ['./illustrate-paid.component.less'],
 })
-export class IllustratePaidComponent implements OnInit, AfterViewInit {
+export class IllustratePaidComponent implements OnInit,AfterViewInit {
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
 
-	constructor(private fb: FormBuilder, private modal: ModalService, private route: ActivatedRoute, private api: ReleaseApiService) { }
-    Fixed = Number.prototype.toFixed;
+	constructor(private fb: FormBuilder,private modal: ModalService,private route: ActivatedRoute,private api: ReleaseApiService) { }
+	Fixed = Number.prototype.toFixed;
 	param: {
-	 [keys:string]: any;
+		[keys: string]: any;
 	};
 	form = this.fb.group({
-		f: [[], Validators.required],
-		n: ['', [Validators.required, emptyStringValidator()]],
-		d: ['', [Validators.required, emptyStringValidator()]],
+		f: [[],Validators.required],
+		n: ['',[Validators.required,emptyStringValidator()]],
+		d: ['',[Validators.required,emptyStringValidator()]],
 		t: [[]],
-		b: ['', Validators.required],
-		c: [0, Validators.required],
-    p: [null, [live2dPriceValidator()]],
-    gl_token:[[],Validators.required],
-    ss: [true],
+		b: ['',Validators.required],
+		c: [0,Validators.required],
+		p: [null,[live2dPriceValidator()]],
+		gl_token: [[],Validators.required],
+		ss: [true],
 		a: [[]],
-		checked: [false, Validators.requiredTrue],
+		checked: [false,Validators.requiredTrue],
 	});
 	checkedForm = this.fb.group({
 		aCheckedOne: [false],
@@ -42,9 +42,9 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 		copyright: [[]],
 		copychecked: [false],
 	});
-    copyrightCheckes$ = new BehaviorSubject<{ id: number; name: string }[]>([]);
+	copyrightCheckes$ = new BehaviorSubject<{ id: number; name: string }[]>([]);
 	stateMentStates = [];
-    maxPrice = 99999;
+	maxPrice = 99999;
 	copyrightModel = [];
 	isEdit = false;
 	stateMentStrategy = {
@@ -56,7 +56,7 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 			this.stateMentStates = this.stateMentStates.map(_x => false);
 		},
 	};
-    call = (x: Function, y: any, ...args) => x.call(y, args);
+	call = (x: Function,y: any,...args) => x.call(y,args);
 	private resetAChecked() {
 		this.checkedForm.patchValue({
 			copychecked: false,
@@ -94,10 +94,10 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 						b: { url: r.cover },
 						t: r.tag,
 						f: r.assets.map(_ => ({
-								url: _,
+							url: _,
 						})),
-						p: r.goods_list[0].price,
-						gl_token: [{token: r.goods_list[0].file,url:'',name:r.goods_list[0].name}],
+						p: r.goodsList[0].price,
+						gl_token: [{ token: r.goodsList[0].file,url: '',name: r.goodslist[0].name }],
 						c: r.copyright,
 					});
 				});
@@ -118,27 +118,27 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 			f: this.param.f,
 			fr: 0,
 			gl: this.param.gl,
-		  }).subscribe({
+		}).subscribe({
 			next: _x => {
-				this.modal.open(SuccessTips, {
+				this.modal.open(SuccessTips,{
 					redirectUrl: '/member/manager/illust/auditing',
 					tip: '已成功提交审核，请等待后台人员审核！',
 				});
 			},
 			error: (x: { descrption: string }) => {
 				if (x.descrption) {
-					this.modal.open(PopTips, [x.descrption, false, 0]);
+					this.modal.open(PopTips,[x.descrption,false,0]);
 				} else {
-					this.modal.open(PopTips, ['系统繁忙', false, 0]);
+					this.modal.open(PopTips,['系统繁忙',false,0]);
 				}
 			},
 		});
 	}
-    
-	priceValidate(e:Event){
+
+	priceValidate(e: Event) {
 		const price = e.target as HTMLInputElement;
-		price.value.length > 5 ? (price.value = price.value.slice(0, price.value.length - 1)) : 
-          (price.value.includes('.')? price.value = price.value.slice(0, price.value.lastIndexOf('.')): '')
+		price.value.length > 5 ? (price.value = price.value.slice(0,price.value.length - 1)) :
+			(price.value.includes('.') ? price.value = price.value.slice(0,price.value.lastIndexOf('.')) : '')
 	}
 
 	changeCopyrightState($event: number) {
@@ -156,7 +156,7 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 	}
 
 	submit() {
-		validator(this.form, this.form.controls);
+		validator(this.form,this.form.controls);
 		if (!this.form.valid) {
 			return;
 		}
@@ -181,16 +181,16 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 			})
 			.subscribe({
 				next: () => {
-					this.modal.open(SuccessTips, {
+					this.modal.open(SuccessTips,{
 						redirectUrl: 'user',
 						tip: '已成功提交审核，请等待后台人员审核!',
 					});
 				},
 				error: (x: { descrption: string }) => {
 					if (x.descrption) {
-						this.modal.open(PopTips, [x.descrption, false, 0]);
+						this.modal.open(PopTips,[x.descrption,false,0]);
 					} else {
-						this.modal.open(PopTips, ['系统繁忙', false, 0]);
+						this.modal.open(PopTips,['系统繁忙',false,0]);
 					}
 				},
 			});
@@ -202,7 +202,7 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 			.pipe(
 				map((value) => {
 					value.b = value.b.token || value.b.url || '';
-					value.f = value.f.map((s: { remote_token: string;url:string; }) => s.remote_token || s.url);
+					value.f = value.f.map((s: { remote_token: string; url: string; }) => s.remote_token || s.url);
 					return {
 						n: value.n,
 						d: value.d,
@@ -213,15 +213,15 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 						c: value.c,
 						fr: 0,
 						cs: 1,
-						ss: value.ss? 1 : 2,
+						ss: value.ss ? 1 : 2,
 						gl: [{
 							n: '付费下载内容',
-							f: [value.gl_token[0]?  value.gl_token[0]?.token || value.gl_token[0].url : ''],
-							p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0, (this.maxPrice + '').length)), 10) : value.p,
+							f: [value.gl_token[0] ? value.gl_token[0]?.token || value.gl_token[0].url : ''],
+							p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0,(this.maxPrice + '').length)),10) : value.p,
 							s: 1,
-						   }],
-				  };
-					
+						}],
+					};
+
 				})
 			)
 			.subscribe((x) => {
@@ -250,7 +250,7 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		fromEvent(this.submitButton.nativeElement, 'click')
+		fromEvent(this.submitButton.nativeElement,'click')
 			.pipe(debounce(() => interval(500)))
 			.subscribe(() => {
 				this.submit();

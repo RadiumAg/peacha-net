@@ -13,15 +13,19 @@ export interface Work {
 	file?: string;
 	file_data?: string;
 	file_size?: number;
+	bv?: string;
 	follow_state?: number;
-	goods_list?:{file: '';
-	file_name_list: [];
-	file_size: string;
-	id: number;
-	max_stock: number;
-	name: string;
-	price: number;
-	sell_state: number;}[];
+	goodsList?: {
+		file: '';
+		file_name_list: [];
+		file_size: string;
+		id: number;
+		max_stock: number;
+		name: string;
+		price: number;
+		sell_state: number;
+		fileType: number;
+	}[];
 	id?: number;
 	is_collect?: number;
 	is_like?: number;

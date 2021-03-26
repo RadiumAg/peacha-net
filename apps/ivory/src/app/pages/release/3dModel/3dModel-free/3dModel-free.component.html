@@ -80,7 +80,7 @@
       <div *ngFor="let item of glArray.controls; index as i;trackBy:trackBy" class="form-item  free-share-file-upload"
         [formGroupName]="i">
         <div class="title" [ivoNoticeTitle]="'文件大小不得大于210M。'"><span>上传免费分享内容-{{i+1}}</span><span
-            class="ivo-icon-delete-circle" (click)="deleteGl(item.symbol)"></span></div>
+            class="ivo-icon-delete-circle" *ngIf="!isEdit" (click)="deleteGl(item.symbol)"></span></div>
         <div class="form-controller required-center">
           <div class="share-file">
             <span class="">分享文件:</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -88,15 +88,12 @@
             </ivo-file-upload>
           </div>
 
-          <span class="select-upload-type required-center">
-            <ivo-select fontSize="16px" formControlName="ft" ivoErroTip ivoErrorTipString="请选择类型!">
-              <ivo-option [value]='0' text='.psd'></ivo-option>
-              <ivo-option [value]='1' text='.moc3'></ivo-option>
+          <span class="select-upload-type required-center" *ngIf="item.value.f">
+            <ivo-select [disable]="isEdit" fontSize="16px" formControlName="ft" ivoErroTip ivoErrorTipString="请选择类型!">
               <ivo-option [value]='2' text='.vrm'></ivo-option>
               <ivo-option [value]='3' text='.vup'></ivo-option>
               <ivo-option [value]='4' text='.unitypackage'></ivo-option>
               <ivo-option [value]='5' text='.fbx'></ivo-option>
-              <ivo-option [value]='99' text='其他'></ivo-option>
             </ivo-select>
           </span>
 
