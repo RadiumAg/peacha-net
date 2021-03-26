@@ -1,4 +1,3 @@
-import { length } from './../../../../../../../../libs/peacha-studio-core/src/lib/core/devkit/brf5/utils/geom';
 import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 import { SuccessTips } from './../../components/success-tips/success-tips';
 import { Component,OnInit,ViewChild,ElementRef,AfterViewInit,ChangeDetectorRef } from '@angular/core';
@@ -8,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject,fromEvent,interval } from 'rxjs';
 import { emptyStringValidator,ModalService,validator,Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
-import { ReleaseApiService } from '../../release-api.service';
+import { IPublishFileType,ReleaseApiService } from '../../release-api.service';
 
 
 @Component({
@@ -26,7 +25,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		private cdr: ChangeDetectorRef) { }
 
 	bvUrl: SafeResourceUrl;
-	ESelectPreviewType: ('image' | 'tv')[] = [];
+	ESelectPreviewType: ('image' | 'bv')[] = [];
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
 	publishParam: {
@@ -40,7 +39,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		ss: number;
 		f: [];
 		bv: string;
-		gl: any;
+		gl: IPublishFileType[];
 	};
 
 	editParam: {
@@ -54,7 +53,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		ss: number;
 		f: [];
 		bv: string;
-		gl: any;
+		gl: IPublishFileType[];
 	};
 
 	form = this.fb.group({
@@ -129,16 +128,19 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		this.form.patchValue({ bv: bvNumber });
 	}
 
-	changeSelectPreviewType(event: any[]) {
+	changeSelectPreviewType(event: ('image' | 'bv')[]) {
 		this.ESelectPreviewType = [...event];
 		this.form.get('bv') && this.form.get('bv').clearValidators();
 		this.form.get('f') && this.form.get('f').clearValidators();
-		if (event.includes('tv')) {
+		if (event.includes('bv')) {
 			this.form.get('bv') && this.form.get('bv').setValidators(Validators.required);
+		} else {
+			this.form.patchValue({ bv: '' });
 		}
 		if (event.includes('image')) {
-			this.form.get('f') && this.form.get('f').setValidators(Validators.requiredTrue);
-
+			this.form.get('f') && this.form.get('f').setValidators(Validators.required);
+		} else {
+			this.form.patchValue({ f: [] });
 		}
 		this.cdr.markForCheck();
 	}
@@ -197,7 +199,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 			b: this.publishParam.b,
 			t: this.publishParam.t,
 			c: this.publishParam.c,
-			cs: 3,
+			cs: 2,
 			ss: this.publishParam.ss,
 			f: this.publishParam.f,
 			fr: 1,
@@ -271,13 +273,13 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		this.api
 			.update_work({
 				w: this.route.snapshot.params.id,
-				d: this.form.value.d,
+				d: this.editParam.d,
 				i,
-				t: this.form.value.t.join(','),
-				b: this.form.value.b.token ?? this.form.value.b.url,
-				n: this.form.value.n,
+				t: this.editParam.t,
+				b: this.editParam.b,
+				n: this.editParam.n,
 				a: this.copyrightModel,
-				gl: [],
+				gl: this.editParam.gl,
 				fr: 1,
 				gd: '',
 			})
@@ -308,7 +310,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		this.form.valueChanges
 			.pipe(
 				map((value) => {
-					const gl = value.gl.length && [{ f: value.gl?.f?.token || value.gl?.f?.url || '',n: value.gl.n,ft: value.gl.ft,p: 0,s: -1 }];
+					const gl = value.gl.length && value.gl.map(_ => ({ f: _.f?.token || _?.f?.url || '',n: _.n,ft: _.ft,p: 0,s: -1 }));
 					value.b = value.b.token || '';
 					value.f = value.f.map((s: { remote_token: string; url: string }) => s.remote_token || s.url);
 					return {

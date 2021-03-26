@@ -48,7 +48,7 @@
             <label nz-checkbox [nzValue]="'image'" formControlName="selectPreViewImage"><span
                 class="select-preview-checkbox">图片/GIF预览</span></label>
 
-            <label nz-checkbox [nzValue]="'tv'" formControlName="selectPreViewTv"><span
+            <label nz-checkbox [nzValue]="'bv'" formControlName="selectPreViewTv"><span
                 class="select-preview-checkbox">Bilibili视频预览</span></label>
           </nz-checkbox-wrapper>
         </form>
@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <div class="form-item bv" *ngIf="ESelectPreviewType.includes('tv')">
+    <div class="form-item bv" *ngIf="ESelectPreviewType.includes('bv')">
       <div class="title">上传Bilibili视频</div>
       <div class="form-controller required-center">
         Bilibili视频BV号:&nbsp;&nbsp;&nbsp;&nbsp;<input ivoErroTip ivoErrorTipString="请上传bv号" #bv_input type="text"
@@ -172,5 +172,4 @@
     </nz-form-item>
   </form>
 
-  <!-- <ivo-form-nav class="nav" top='23' [titleList]='["作品信息","添加标签","上传封面","上传图片","版权声明"]'></ivo-form-nav> -->
 </div>

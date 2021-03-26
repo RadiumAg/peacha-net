@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Work } from '@peacha-core';
 
+export interface IPublishFileType { n: string; s: number; p: number; f: string; ft: 1 | 2 | 3 | 4 | 5 | 99 }
+
 @Injectable()
 export class ReleaseApiService {
 	constructor(private http: HttpClient) { }
@@ -62,8 +64,8 @@ export class ReleaseApiService {
 		cs: number;
 		ss: number;
 		fr: number;
-		f: [];
-		gl: [];
+		f: string[];
+		gl: IPublishFileType[];
 	}) => this.http.post(`/work/publish_work`,p);
 
 	/**

@@ -119,7 +119,7 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
   private subscribeData() {
     this.file$.pipe(takeUntil(this.distroy$)).subscribe(x => {
       if (x && x.url) {
-        this.updata?.call(this,x);
+        this.updata?.call(this,{ name: x.name,token: x.token,url: x.url });
       }
     })
   }
