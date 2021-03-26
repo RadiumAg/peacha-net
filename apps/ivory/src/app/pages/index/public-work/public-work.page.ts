@@ -47,15 +47,5 @@ export class PublicWorkPage {
 		document.documentElement.scrollTop = 0;
 	}
 
-	toWork(id: number, c: number) {
-		//console.log(c)
-		if (c == 1) {
-			this.router.navigate(['illust', id]);
-		} else {
-			this.router.navigate(['live2d', id]);
-		}
-	}
-	toUser(id: number) {
-		this.router.navigate(['user', id]);
-	}
+
 }

@@ -36,13 +36,6 @@ export class UnloginIndexPage {
 		private router: Router
 	) { }
 
-	toWork(id: number, c: number) {
-		if (c == 1) {
-			this.router.navigate(['illust', id]);
-		} else {
-			this.router.navigate(['live2d', id]);
-		}
-	}
 
 	toTop() {
 		document.documentElement.scrollTop = 0;

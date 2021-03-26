@@ -127,8 +127,10 @@ export class StorePage implements AfterViewInit {
 	toWork(id: number, c: number) {
 		if (c == 1) {
 			this.router.navigate(['illust', id]);
-		} else {
+		} else if (c == 0) {
 			this.router.navigate(['live2d', id]);
+		} else {
+			this.router.navigate(['3d', id]);
 		}
 	}
 }

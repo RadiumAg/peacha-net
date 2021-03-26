@@ -113,11 +113,4 @@ export class WorkLive2dComponent {
 		});
 	}
 
-	toWork(id: number, type: number) {
-		if (type == 1) {
-			this.router.navigate(['illust', id]);
-		} else {
-			this.router.navigate(['live2d', id]);
-		}
-	}
 }

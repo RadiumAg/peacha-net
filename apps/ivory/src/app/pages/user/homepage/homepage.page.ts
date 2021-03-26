@@ -111,14 +111,6 @@ export class HomepagePage {
 			});
 	}
 
-	toWork(id: number, c: number): void {
-		if (c == 1) {
-			this.router.navigate(['illust', id]);
-		} else {
-			this.router.navigate(['live2d', id]);
-		}
-	}
-
 	cancel(): void {
 		this.showEdit$.next(true);
 		this.representidList = JSON.parse(JSON.stringify(this.originalidList));

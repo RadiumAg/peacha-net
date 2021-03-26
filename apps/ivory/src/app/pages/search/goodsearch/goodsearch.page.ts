@@ -38,17 +38,6 @@ export class GoodsearchPage {
 		})
 	);
 
-	toWork(id: number, c: number): void {
-		if (c == 1) {
-			this.router.navigate(['illust', id]);
-		} else {
-			this.router.navigate(['live2d', id]);
-		}
-	}
-
-	toUser(id: number): void {
-		this.router.navigate(['user', id]);
-	}
 	page(data: number): void {
 		this.router.navigate([], {
 			queryParams: {
