@@ -98,15 +98,14 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		return <FormArray>(this.form.get('gl'));
 	}
 
-
-	addGlItem(n?: string,f?: IFileItem,ft?: number) {
+	addGlItem(n?: string,f?: IFileItem,ft?: number,s?: number,p?: number,fr?: boolean) {
 		const createGlGroup = this.fb.group({
 			n: [n || '',Validators.required],
 			f: [f || null,Validators.required],
 			ft: [ft || 0,Validators.required],
-			s: [-1,Validators.required],
-			p: ['',live2dPriceValidator()],
-			fr: [false]
+			s: [s || -1,Validators.required],
+			p: [p || '',live2dPriceValidator()],
+			fr: [fr || false]
 		});
 		Reflect.set(createGlGroup,'symbol',Symbol());
 		this.glArray.push(createGlGroup);
@@ -169,7 +168,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 					this.setPreviewType(r);
 					this.copyrightModel = r.authority;
 					r.goodsList.forEach(x => {
-						this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType);
+						this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType,x.max_stock,x.price,x.price > 0 ? true : false);
 					})
 					this.form.patchValue({
 						n: r.name,

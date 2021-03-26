@@ -41,7 +41,7 @@ import { ThreeModelPaidComponent } from './3dModel/3dModel-paid/3dModel-paid.com
 				canActivate: [PhoneGuard,UserBanStatusGuard]
 			},
 			{
-				path: '3d/paid',
+				path: '3d/paid/:id',
 				component: ThreeModelPaidComponent,
 				canActivate: [PhoneGuard,UserBanStatusGuard]
 			}
