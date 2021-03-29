@@ -17,9 +17,10 @@
                 (order.workid,order.category)"
 					>{{order.work_name}}</span
 				>
-				<span class="name">买家：{{order.buyer_name}}</span>
+				<span class="type">商品名称：{{order.goods_name}}</span>
 				<div class="type" *ngIf="order.maxstock==1;else duo">单次出售</div>
 				<ng-template #duo>多次出售</ng-template>
+				<span class="type">买家：{{order.buyer_name}}</span>
 			</div>
 		</div>
 	</div>
