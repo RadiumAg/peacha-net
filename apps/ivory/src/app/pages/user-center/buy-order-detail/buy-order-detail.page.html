@@ -9,7 +9,7 @@
 		<div class="desc">
 			<div class="left">
 				<span class="workname" (click)="toWork(item.workid,item.category)">{{item.work_name}}</span>
-				<!-- <span class="goodname">商品名称：{{item.goods_name}}</span> -->
+				<span class="seller">商品名称：{{item.goods_name}}</span>
 				<span class="seller">卖家:{{item.seller_name}}</span>
 				<span class="sell" *ngIf="item.maxstock==1; else elseBlock1">单次出售</span>
 				<ng-template #elseBlock1>
