@@ -1,6 +1,6 @@
 <ng-container *ngrxLet="work$; let work">
 	<ng-container *ngrxLet="publicityPeriod$; let period">
-		<div class="menu">
+		<div class="menu" *ngIf="work.assets.length>0 && work.bvNumber">
 			<span [class.active]="selectedMenu$.value===0" (click)="selectedMenu$.next(0)">图片/GIF预览</span>
 			<span [class.active]="selectedMenu$.value===1" (click)="selectedMenu$.next(1)">视频预览</span>
 		</div>
@@ -11,7 +11,7 @@
 				），公示期后可购买/下载
 			</span>
 		</div>
-		<ng-container *ngIf="selectedMenu$.value===0">
+		<ng-container *ngIf="selectedMenu$.value===0 && work.assets.length>0">
 			<ng-container *ngrxLet="illIndex$;let illIndex">
 				<div class="illustrations">
 					<img
@@ -32,7 +32,7 @@
 				</div>
 			</ng-container>
 		</ng-container>
-		<ng-container *ngIf="selectedMenu$.value===1">
+		<ng-container *ngIf="selectedMenu$.value===1 || work.assets.length===0">
 			<ng-container *ngrxLet="id$; let id">
 				<div class="live2d-preview">
 					<iframe
