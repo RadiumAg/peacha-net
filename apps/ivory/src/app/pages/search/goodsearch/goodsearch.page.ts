@@ -26,8 +26,23 @@ export class GoodsearchPage {
 		switchMap(r => {
 			const key: string = encodeURIComponent(r.keyword ?? '');
 			return this.http
-				// eslint-disable-next-line max-len
-				.get<Works>(`/work/search_work?k=${key}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ?? 1}&sp=${r.m ? this.priceRegion[r.m].sp : 0}&ep=${r.m ? this.priceRegion[r.m].ep : 0}&dd=${r.dd ?? 0}&c=${r.c === undefined ? '-1' : r.c}&ws=1&ft=${r.ft === undefined ? '-1' : r.ft}
+				.get<{
+					count: number;
+					list: {
+						id: number;
+						name: string;
+						likeCount: number;
+						collectCount: number;
+						publishTime: number;
+						cover: string;
+						category: number;
+						userId: number;
+						nickName: string;
+						price: number;
+						stock: number
+					}[]
+					// eslint-disable-next-line max-len
+				}>(`/work/search_work?k=${key}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ?? 1}&sp=${r.m ? this.priceRegion[r.m].sp : 0}&ep=${r.m ? this.priceRegion[r.m].ep : 0}&dd=${r.dd ?? 0}&c=${r.c === undefined ? '-1' : r.c}&ws=1&ft=${r.ft === undefined ? '-1' : r.ft}
 				`)
 				.pipe(
 					tap(_s => {

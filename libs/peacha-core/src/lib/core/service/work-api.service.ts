@@ -76,8 +76,23 @@ export class WorkApiService {
 		key: string,
 		workSale: WorkSale,
 		category: WorkCategory
-	): Observable<Works> {
-		return this.http.get<Works>('/work/get_works', {
+	) {
+		return this.http.get<{
+			count: number;
+			list: {
+				id: number;
+				name: string;
+				likeCount: number;
+				collectCount: number;
+				publishTime: number;
+				cover: string;
+				category: number;
+				userId: number;
+				nickName: string;
+				price: number;
+				stock: number
+			}[]
+		}>('/work/get_works', {
 			params: {
 				u: `${userId}`,
 				p: `${page - 1}`,
@@ -89,8 +104,23 @@ export class WorkApiService {
 		});
 	}
 
-	getRepresentWork(userId: number): Observable<Works> {
-		return this.http.get<Works>('/work/get_represent_work', {
+	getRepresentWork(userId: number) {
+		return this.http.get<{
+			count: number;
+			list: {
+				id: number;
+				name: string;
+				likeCount: number;
+				collectCount: number;
+				publishTime: number;
+				cover: string;
+				category: number;
+				userId: number;
+				nickName: string;
+				price: number;
+				stock: number
+			}[]
+		}>('/work/get_represent_work', {
 			params: {
 				u: `${userId}`,
 			},

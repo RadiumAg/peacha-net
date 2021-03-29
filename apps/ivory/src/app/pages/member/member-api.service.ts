@@ -31,7 +31,10 @@ export class MemberApiService {
                 id: number,
                 cover: string,
                 name: string,
-                publishtime: number,
+                userId: number,
+                category: number,
+                nickName: string,
+                publishTime: number,
                 time: number
             }[]
         }>(`/work/get_create_work?k=${k ?? ''}&p=${p ? p - 1 : 0}&s=${s}&c=${c}`)
@@ -62,9 +65,10 @@ export class MemberApiService {
                 cover: string;
                 name: string;
                 category: number;
-                auditresult: string;
-                submittime: string;
-                audittime: string;
+                auditResult: string;
+                submitTime: string;
+                auditTime: string;
+                price: number
             }[];
         }>(`/work/get_apply_works?k=${k ?? ''}&p=${p ? p - 1 : 0}&s=${s}&c=${c}&a=${a}`)
 
@@ -160,9 +164,9 @@ export class MemberApiService {
             list: {
                 id: number,
                 name: string,
-                max_stock: number,
-                sale_number: number,
-                sellstate: boolean
+                maxStock: number,
+                saleNumber: number,
+                sellState: boolean
             }[]
         }>(`/work/get_goods?w=${id}`)
 
