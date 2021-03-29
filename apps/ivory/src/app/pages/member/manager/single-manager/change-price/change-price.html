@@ -6,7 +6,7 @@
 	<span class="tip">平台将收取8%的服务费，预计收益{{(money.value*0.92).toFixed(2)}}元</span>
 	<div class="error-inset" [errorDisplay]="money">
 		<ng-container *errorCase="'required'"> 请填写修改价格 </ng-container>
-		<ng-container *errorCase="'pattern'"> 请输入非整数 </ng-container>
+		<ng-container *errorCase="'pattern'"> 请输入正整数 </ng-container>
 		<ng-container *errorCase="'max'"> 价格最大为999999 </ng-container>
 	</div>
 	<div class="btn">

@@ -18,7 +18,7 @@ export class ChangePrice {
         }
     ) { }
 
-    money = new FormControl('', [Validators.required, Validators.pattern('^[1-9]d*|0$'), Validators.max(999999)]);
+    money = new FormControl('', [Validators.required, Validators.pattern('^[1-9]\\d*$'), Validators.max(999999)]);
 
     cancel(): void {
         this.modalRef.close();
