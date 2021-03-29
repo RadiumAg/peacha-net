@@ -8,3 +8,4 @@ export * from './tag';
 export * from './cooperateDetail';
 export * from './trade';
 export * from './exchange';
+export * from './work-detail';

@@ -1,7 +1,7 @@
 import { Directive, Input, HostListener } from '@angular/core';
-import { BehaviorSubject, combineLatest, empty, Subject, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, EMPTY, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { switchMap, take, tap, catchError } from 'rxjs/operators';
+import { switchMap, take, tap } from 'rxjs/operators';
 import { Store, Select } from '@ngxs/store';
 import { Router } from '@angular/router';
 import { PlatformLocation } from '@angular/common';
@@ -15,16 +15,24 @@ export class WorkLikeDirective {
 	work$ = new BehaviorSubject<number>(0);
 	like$ = new BehaviorSubject<ELikeState>(0);
 
+	// eslint-disable-next-line @angular-eslint/no-input-rename
 	@Input('work')
-	set work(v: { id: number; is_like: number; like_count: number; is_collect: number; collect_count: number }) {
+	set work(
+		v: {
+			id: number;
+			isLike: number;
+			likeCount: number;
+			isCollect: number;
+			collectCount: number
+		}) {
 		this.work$.next(v.id);
-		this.like$.next(v.is_like);
+		this.like$.next(v.isLike);
 	}
 
 	@Select(UserState.id)
 	id$: Observable<number>;
 
-	constructor(private http: HttpClient, private store: Store, private router: Router, private platform: PlatformLocation) {}
+	constructor(private http: HttpClient, private store: Store, private router: Router, private platform: PlatformLocation) { }
 
 	@HostListener('click')
 	request() {
@@ -48,7 +56,7 @@ export class WorkLikeDirective {
 								return: this.platform.pathname,
 							},
 						});
-						return empty();
+						return EMPTY;
 					}
 					// if (state == EFollowState.None) {
 					//     this.requesting$.next(true);

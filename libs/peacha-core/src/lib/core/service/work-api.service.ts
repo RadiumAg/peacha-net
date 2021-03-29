@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Works } from '../model';
+import { WorkDetail, Works } from '../model';
 
 export enum OrderBy {
 	Keyword,
@@ -31,50 +31,6 @@ export enum DateDiff {
 	LastYear = -360,
 }
 
-
-export interface WorkDetail {
-	id: number;
-	name: string;
-	category: number;
-	file: string;
-	file_data: string;
-	file_size: number;
-	publishtime: number;
-	updatetime: number;
-	copyright: number;
-	cover: string;
-	authority: number[];
-	tag: {
-		id: number;
-		name: string;
-	};
-	assets: string[];
-	author_id: number;
-	author_name: string;
-	author_avatar: string;
-	follow_state: number;
-	like_count: number;
-	is_like: number;
-	collect_count: number;
-	is_collect: number;
-	share_count: number;
-	description: string;
-	comment_areaid: number;
-	comment_count: number;
-	goods: [
-		{
-			id: number;
-			name: string;
-			max_stock: number;
-			file_size: number;
-			sale_number: number;
-			publishtime: number;
-			price: number;
-			sell_state: number;
-			own_state: number;
-		}
-	];
-}
 
 /**
  * 2021/3/18

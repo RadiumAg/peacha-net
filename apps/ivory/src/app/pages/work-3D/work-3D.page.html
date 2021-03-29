@@ -1,32 +1,60 @@
 <ng-container *ngrxLet="work$; let work">
 	<ng-container *ngrxLet="publicityPeriod$; let period">
-		<div class="tips" *ngIf="period > 0 && work.goods?.length > 0">
+		<div class="menu">
+			<span [class.active]="selectedMenu$.value===0" (click)="selectedMenu$.next(0)">图片/GIF预览</span>
+			<span [class.active]="selectedMenu$.value===1" (click)="selectedMenu$.next(1)">视频预览</span>
+		</div>
+		<div class="tips" *ngIf="period > 0 && work.goodsList?.length > 0">
 			<span>
 				该作品处于公示期（剩余
 				<p>{{ period | timerdate }}</p>
 				），公示期后可购买/下载
 			</span>
 		</div>
-		<ng-container *ngrxLet="id$; let id">
-			<div class="live2d-preview">
-				<iframe
-					height="100%"
-					width="100%"
-					[src]="'//player.bilibili.com/player.html?bvid='+work.bvNumber+'&page=1&high_quality=1'"
-					scrolling="no"
-					frameborder="no"
-					framespacing="0"
-					allowfullscreen="true"
-				>
-				</iframe>
-				<ng-template #elseTemplate>
-					<div class="mask">
-						<img src="/assets/image/live2d-mask.png" />
-						<button (click)="toLogin()">立即登录</button>
-					</div>
-				</ng-template>
-			</div>
+		<ng-container *ngIf="selectedMenu$.value===0">
+			<ng-container *ngrxLet="illIndex$;let illIndex">
+				<div class="illustrations">
+					<img
+						class="work-img"
+						[src]="work.assets[illIndex]+'?x-oss-process=image/interlace,1/resize,m_lfit,w_800'"
+						(click)="zoomIn(work.assets,illIndex)"
+					/>
+					<img class="gif-tip" *ngIf="work.assets[illIndex]?.includes('.gif')" src="/assets/image/svg/gif-tip.svg" />
+				</div>
+
+				<div class="ill-checker">
+					<img
+						*ngFor="let asset of work.assets;index as i"
+						[attr.checked]="illIndex===i?true:null"
+						[src]="asset+'?x-oss-process=image/interlace,1/resize,m_lfit,w_800'"
+						(click)="chooseIll(i)"
+					/>
+				</div>
+			</ng-container>
 		</ng-container>
+		<ng-container *ngIf="selectedMenu$.value===1">
+			<ng-container *ngrxLet="id$; let id">
+				<div class="live2d-preview">
+					<iframe
+						height="100%"
+						width="100%"
+						[src]="safeUrl"
+						scrolling="no"
+						frameborder="no"
+						framespacing="0"
+						allowfullscreen="true"
+					>
+					</iframe>
+					<ng-template #elseTemplate>
+						<div class="mask">
+							<img src="/assets/image/live2d-mask.png" />
+							<button (click)="toLogin()">立即登录</button>
+						</div>
+					</ng-template>
+				</div>
+			</ng-container>
+		</ng-container>
+
 		<div class="container">
 			<div class="left">
 				<div class="work-info">
@@ -51,18 +79,14 @@
 				</div>
 				<div class="block" style="display: flex">
 					<ivo-creator-block
-						[userAvatar]="work.authorAvatar"
-						[userId]="work.authorId"
-						[userName]="work.authorName"
+						[userAvatar]="work.avatar"
+						[userId]="work.userId"
+						[userName]="work.nickName"
 						[followState]="work.followState"
 						[role]="authorRole"
 						style="margin-top: 20px"
 					>
 					</ivo-creator-block>
-					<!-- <ivo-creator-block role="drawer" *ngIf="coop && coop.uid !=work.author_id "
-                            [userAvatar]="coop.avatar" [userId]="coop.uid" [userName]="coop.username"
-                            [followState]="coop.follow_state" style="margin-left: 40px;margin-top: 20px;">
-                        </ivo-creator-block> -->
 				</div>
 				<div class="block">
 					<h5>作品介绍</h5>
@@ -77,7 +101,7 @@
 				<div class="block">
 					<h5>作品评论</h5>
 				</div>
-				<ivo-comment-area [aid]="work.commentAreaid"></ivo-comment-area>
+				<ivo-comment-area [aid]="work.commentAreaId"></ivo-comment-area>
 			</div>
 			<div class="right">
 				<div class="copyright-card">
@@ -94,9 +118,9 @@
 					</div>
 				</div>
 				<!-- goods -->
-				<ng-container *ngIf="work.goods.length != 0">
+				<ng-container *ngIf="work.goodsList.length != 0">
 					<div class="block">
-						<ng-container *ngFor="let good of work.goods">
+						<ng-container *ngFor="let good of work.goodsList">
 							<ivo-good-info
 								ivo-image-shadow
 								*ngIf="good.sellState === 1"
@@ -124,10 +148,10 @@
 						<ng-container *ngFor="let rw of relevants">
 							<ivo-related-work
 								ivo-image-shadow
-								[authorName]="rw.username"
+								[authorName]="rw.nickName"
 								[cover]="rw.cover"
 								[name]="rw.name"
-								[time]="rw.publishtime"
+								[time]="rw.publishTime"
 								[id]="rw.id"
 								[category]="rw.category"
 							>

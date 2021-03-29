@@ -6,15 +6,12 @@
 	& > .tips {
 		margin: 0 auto;
 		display: flex;
-		width: 100%;
-		min-width: 1200px;
+		width: 1200px;
 		height: 56px;
 		background: rgba(250, 225, 162, 0.7);
 		align-items: center;
 		justify-content: center;
 		flex-direction: row;
-		position: absolute;
-		z-index: 110;
 
 		& > span {
 			height: 24px;
@@ -49,11 +46,87 @@
 		}
 	}
 
+	& > .menu {
+		width: 1200px;
+		margin-top: 30px;
+		margin-bottom: 9px;
+		& > span {
+			padding: 10px 15px;
+			font-size: 14px;
+			color: #666666;
+			border: 1px solid #e5e5e5;
+			border-radius: 6px 6px 0px 0px;
+			margin-right: 10px;
+			cursor: pointer;
+		}
+		& > .active {
+			background-color: #ff6398;
+			color: #ffffff;
+			border: 1px solid #ff6398;
+		}
+	}
+	& > .illustrations {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		width: 1200px;
+		height: 600px;
+		border-radius: 4px;
+		background-color: #f8f8f8;
+		overflow: hidden;
+
+		& > .work-img {
+			height: auto;
+			width: auto;
+			max-width: 1200px;
+			max-height: 600px;
+			cursor: zoom-in;
+			border-radius: 4px;
+			background-color: white;
+		}
+		& > .gif-tip {
+			position: absolute;
+			height: auto;
+			width: auto;
+			max-width: 1200px;
+			margin-top: 565px;
+			margin-left: 400px;
+		}
+	}
+
+	& > .ill-checker {
+		position: relative;
+		margin-top: 10px;
+		margin-bottom: 20px;
+		width: 1200px;
+		height: 60px;
+		display: flex;
+
+		& > img {
+			width: auto;
+			height: 60px;
+			border-radius: 4px;
+			margin-right: 10px;
+			cursor: pointer;
+			transition: filter 0.2s 0s;
+			border: 1px solid #e6e6e6;
+
+			&[checked] {
+				// box-shadow: 0 0 8px rgba(255, 99, 152, 1);
+				box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.16);
+			}
+
+			&:hover {
+				filter: opacity(80%);
+			}
+		}
+	}
 	& > .live2d-preview {
 		width: 1200px;
 		height: 600px;
 		position: relative;
-		margin-top: 40px;
+		margin-top: 9px;
 
 		& > .mask {
 			width: 100%;
