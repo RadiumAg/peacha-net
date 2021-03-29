@@ -35,7 +35,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 	param: {
 		n: string;
 		d: string;
-		a: number;
+		a: number[];
 		b: string;
 		g: string;
 		gd: string;
@@ -137,7 +137,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.api.get_edit_work(Number(x.get('id'))).subscribe((r: Work) => {
+				this.api.getEditWork(Number(x.get('id'))).subscribe((r: Work) => {
 					this.token = r.file;
 					this.setMainForm(r);
 					this.setModelChecked(r);
@@ -191,7 +191,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 			fr: this.param.fr,
 			dg: [],
 		};
-		this.api.update_work(params).subscribe({
+		this.api.updateWork(params).subscribe({
 			next: () => {
 				this.modal.open(SuccessTips,{
 					redirectUrl: 'user',
@@ -209,7 +209,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 	}
 
 	private public_work(): void {
-		this.api.publish_work(this.param).subscribe({
+		this.api.publishWork(this.param).subscribe({
 			next: _x => {
 				this.modal.open(SuccessTips,{
 					redirectUrl: '/member/manager/live2D/auditing',

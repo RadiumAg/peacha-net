@@ -2,8 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Work } from '@peacha-core';
 
-export interface IPublishFileType { n: string; s: number; p: number; f: string; ft: 1 | 2 | 3 | 4 | 5 | 99 }
+export interface IPublishFileType {
+	n: string;
+	s: number;
+	p: number;
+	f: string;
+	ft: 1 | 2 | 3 | 4 | 5 | 99;
+}
 
+export interface IUpdateWork {
+	i: number;
+	n: string;
+	f: string;
+}
 @Injectable()
 export class ReleaseApiService {
 	constructor(private http: HttpClient) { }
@@ -40,7 +51,7 @@ export class ReleaseApiService {
 	 *
 	 * @version 2021/1/4
 	 */
-	public get_edit_work = (w: number) => this.http.get<Work>(`/work/get_edit_work?w=${w}`);
+	public getEditWork = (w: number) => this.http.get<Work>(`/work/get_edit_work?w=${w}`);
 
 	/**
 	 *
@@ -54,10 +65,10 @@ export class ReleaseApiService {
 	 *
 	 * @version 2021/1/4
 	 */
-	public publish_work = (p: {
+	public publishWork = (p: {
 		n: string;
 		d: string;
-		a: number;
+		a: number[];
 		b: string;
 		t: string;
 		c: number;
@@ -81,18 +92,24 @@ export class ReleaseApiService {
 	 *
 	 * @version 2021/1/4
 	 */
-	public update_work = (p: {
+	public updateWork = (p: {
 		w: number;
 		n: string;
 		d: string;
-		g?: string;
-		i: any[];
+		i: string[];
 		t: string;
 		b: string;
-		gl: any[];
-		a?: Array<number>;
+		gl: IUpdateWork[];
+		g?: string;
 		fr?: number;
 		gd?: string;
-		dg?: any[];
 	}) => this.http.post(`/work/update_work`,p);
+
+
+	/**
+	 * @description 更新价格
+	 *  
+	 * @param param g 商品, p 价格
+	 */
+	public updatePrice = (param: { g: number; p: number; }) => this.http.post(`/work/update_price`,param);
 }

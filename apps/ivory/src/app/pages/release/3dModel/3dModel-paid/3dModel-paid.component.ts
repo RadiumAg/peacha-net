@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject,fromEvent,interval } from 'rxjs';
 import { emptyStringValidator,live2dPriceValidator,ModalService,validator,Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
-import { IPublishFileType,ReleaseApiService } from '../../release-api.service';
+import { IPublishFileType,IUpdateWork,ReleaseApiService } from '../../release-api.service';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { IFileItem } from 'libs/peacha-core/src/lib/components/file-upload/file-upload.component';
 import { ConfirmComponent } from '../../components/confirm/confirm.component';
@@ -28,13 +28,13 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		private cdr: ChangeDetectorRef) { }
 
 	bvUrl: SafeResourceUrl;
-	ESelectPreviewType: ('image' | 'bv')[] = [];
+	ESelectPreviewType: [('bv' | 'image')?,('bv' | 'image')?] = [];
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
 	publishParam: {
 		n: string;
 		d: string;
-		a: number;
+		a: number[];
 		b: string;
 		t: string;
 		c: number;
@@ -45,19 +45,17 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		gl: IPublishFileType[];
 	};
 
-	editParam: {
+	editParam: Partial<{
+		w: number;
 		n: string;
 		d: string;
-		a: number;
 		b: string;
 		t: string;
 		c: number;
-		cs: number;
-		ss: number;
 		f: [];
 		bv: string;
-		gl: IPublishFileType[];
-	};
+		gl: (IUpdateWork & { p: number })[]
+	}> = {};
 
 	form = this.fb.group({
 		f: [[]],
@@ -98,12 +96,13 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		return <FormArray>(this.form.get('gl'));
 	}
 
-	addGlItem(n?: string,f?: IFileItem,ft?: number,s?: number,p?: number,fr?: boolean) {
+	addGlItem(n?: string,f?: IFileItem,ft?: number,s?: number,p?: number,fr?: boolean,i?: number) {
 		const createGlGroup = this.fb.group({
 			n: [n || '',Validators.required],
 			f: [f || null,Validators.required],
-			ft: [ft || 0,Validators.required],
-			s: [s || -1,Validators.required],
+			ft: [ft || 0,Validators.min(1)],
+			s: [s || -1],
+			i: [i || -1],
 			p: [p || '',live2dPriceValidator()],
 			fr: [fr || false]
 		});
@@ -133,7 +132,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		this.form.patchValue({ bv: bvNumber });
 	}
 
-	changeSelectPreviewType(event: ('image' | 'bv')[]) {
+	changeSelectPreviewType(event: [('image' | 'bv')?,('image' | 'bv')?]) {
 		this.ESelectPreviewType = [...event];
 		this.form.get('bv') && this.form.get('bv').clearValidators();
 		this.form.get('f') && this.form.get('f').clearValidators();
@@ -164,11 +163,12 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.api.get_edit_work(parseInt(x.get('id'),10)).subscribe((r: Work) => {
+				this.api.getEditWork(parseInt(x.get('id'),10)).subscribe((r: Work) => {
 					this.setPreviewType(r);
+					this.editParam.w = parseInt(x.get('id'),10);
 					this.copyrightModel = r.authority;
 					r.goodsList.forEach(x => {
-						this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType,x.max_stock,x.price,x.price > 0 ? true : false);
+						this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType,x.max_stock,x.price,x.price > 0 ? false : true,x.id);
 					})
 					this.form.patchValue({
 						n: r.name,
@@ -204,7 +204,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 	}
 
 	private public_work() {
-		this.api.publish_work({
+		this.api.publishWork({
 			n: this.publishParam.n,
 			d: this.publishParam.d,
 			a: this.publishParam.a,
@@ -256,6 +256,12 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		}
 	}
 
+	priceValidate(e: Event) {
+		const price = e.target as HTMLInputElement;
+		price.value.length > 5 ? (price.value = price.value.slice(0,price.value.length - 1)) :
+			(price.value.includes('.') ? price.value = price.value.slice(0,price.value.lastIndexOf('.')) : '')
+	}
+
 	submit() {
 		if (!this.ESelectPreviewType.length) {
 			this.modal.open(PopTips,['请选择预览方式','0']);
@@ -303,23 +309,32 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 
 	private sure_edit() {
 		this.api
-			.update_work({
-				w: this.route.snapshot.params.id,
+			.updateWork({
+				w: this.editParam.w,
 				d: this.editParam.d,
 				i: this.editParam.f,
 				t: this.editParam.t,
 				b: this.editParam.b,
 				n: this.editParam.n,
-				a: this.copyrightModel,
 				gl: this.editParam.gl,
-				fr: 1,
 			})
 			.subscribe({
 				next: () => {
-					this.modal.open(SuccessTips,{
-						redirectUrl: 'user',
-						tip: '已成功提交审核，请等待后台人员审核!',
-					});
+					this.api.updatePrice({ g: this.editParam.gl[0].i,p: this.editParam.gl[0].p }).subscribe({
+						next: () => {
+							this.modal.open(SuccessTips,{
+								redirectUrl: 'user',
+								tip: '已成功提交审核，请等待后台人员审核!',
+							});
+						},
+						error: (x: { descrption: string }) => {
+							if (x.descrption) {
+								this.modal.open(PopTips,[x.descrption,false,0]);
+							} else {
+								this.modal.open(PopTips,['系统繁忙',false,0]);
+							}
+						},
+					})
 				},
 				error: (x: { descrption: string }) => {
 					if (x.descrption) {
@@ -354,7 +369,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 				})
 			)
 			.subscribe((x) => {
-				this.isEdit ? this.editParam = x : this.publishParam = x;
+				this.isEdit ? this.editParam = { ...this.editParam,...x } : this.publishParam = x;
 			});
 	}
 

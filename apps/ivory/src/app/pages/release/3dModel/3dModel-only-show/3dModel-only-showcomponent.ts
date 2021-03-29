@@ -31,7 +31,7 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 	publishParam: {
 		n: string;
 		d: string;
-		a: number;
+		a: number[];
 		b: string;
 		t: string;
 		c: number;
@@ -148,7 +148,7 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.api.get_edit_work(parseInt(x.get('id'),10)).subscribe((r: Work) => {
+				this.api.getEditWork(parseInt(x.get('id'),10)).subscribe((r: Work) => {
 					this.setPreviewType(r);
 					this.copyrightModel = r.authority;
 
@@ -186,7 +186,7 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 	}
 
 	private public_work() {
-		this.api.publish_work({
+		this.api.publishWork({
 			n: this.publishParam.n,
 			d: this.publishParam.d,
 			a: this.publishParam.a,
@@ -251,14 +251,13 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 
 	private sure_edit() {
 		this.api
-			.update_work({
+			.updateWork({
 				w: this.route.snapshot.params.id,
 				d: this.editParam.d,
 				i: this.editParam.f,
 				t: this.editParam.t,
 				b: this.editParam.b,
 				n: this.editParam.n,
-				a: this.copyrightModel,
 				gl: [],
 				fr: 1,
 			})

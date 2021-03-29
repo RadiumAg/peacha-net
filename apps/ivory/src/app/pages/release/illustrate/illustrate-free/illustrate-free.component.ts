@@ -23,7 +23,7 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 	param: {
 		n: string;
 		d: string;
-		a: number;
+		a: number[];
 		b: string;
 		t: string;
 		c: number;
@@ -91,7 +91,7 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.api.get_edit_work(Number(x.get('id'))).subscribe((r: Work) => {
+				this.api.getEditWork(Number(x.get('id'))).subscribe((r: Work) => {
 					console.log(r);
 					this.copyrightModel = r.authority;
 					this.form.patchValue({
@@ -112,7 +112,7 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 	}
 
 	private public_work() {
-		this.api.publish_work({
+		this.api.publishWork({
 			n: this.param.n,
 			d: this.param.d,
 			a: this.param.a,
@@ -169,14 +169,13 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 	private sure_edit() {
 		const i = this.setiToken();
 		this.api
-			.update_work({
+			.updateWork({
 				w: this.route.snapshot.params.id,
 				d: this.form.value.d,
 				i,
 				t: this.form.value.t.join(','),
 				b: this.form.value.b.token ?? this.form.value.b.url,
 				n: this.form.value.n,
-				a: this.copyrightModel,
 				gl: [],
 				fr: 1,
 				gd: '',

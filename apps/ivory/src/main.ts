@@ -13,7 +13,7 @@ function protectCode(): string {
 }
 
 function protect() {
-	new Function(protectCode()).apply(null);
+	// new Function(protectCode()).apply(null);
 }
 
 if (environment.production) {

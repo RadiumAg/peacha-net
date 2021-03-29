@@ -85,7 +85,7 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.api.get_edit_work(Number(x.get('id'))).subscribe((r: Work) => {
+				this.api.getEditWork(Number(x.get('id'))).subscribe((r: Work) => {
 					console.log(r);
 					this.copyrightModel = r.authority;
 					this.form.patchValue({
@@ -106,7 +106,7 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 	}
 
 	private public_work() {
-		this.api.publish_work({
+		this.api.publishWork({
 			n: this.param.n,
 			d: this.param.d,
 			a: this.param.a,
@@ -168,14 +168,13 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 
 	private sure_edit() {
 		this.api
-			.update_work({
+			.updateWork({
 				w: this.route.snapshot.params.id,
 				d: this.param.d,
 				i: this.param.f,
 				t: this.param.t,
 				b: this.param.b,
 				n: this.param.n,
-				a: this.copyrightModel,
 				gl: this.param.gl,
 			})
 			.subscribe({
