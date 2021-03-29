@@ -29,11 +29,9 @@
 									<div>
 										<li class="left">
 											<span class="name" (click)="toWork(good.workid)">{{good.work_name}}</span>
-											<!-- 2020/11/4
-                                            去掉商品名称
-                                            by kinori -->
-											<!-- <span class="goodname"
-                                                (click)="toWork(good.workid)">商品名称:&nbsp;&nbsp;{{good.goods_name}}</span> -->
+											<span class="goodname" (click)="toWork(good.workid)"
+												>商品名称:&nbsp;&nbsp;{{good.goods_name}}</span
+											>
 											<span class="author" [routerLink]="['/user',good.seller_id]"
 												>卖家:&nbsp;&nbsp;{{good.seller_name}}</span
 											>
@@ -104,6 +102,7 @@
 									<span class="name g">{{good.work_name}}</span>
 									<span class="goodname g">商品名称：{{good.goods_name}}</span>
 									<span class="author g">作者:{{good.seller_name}}</span>
+									<span class="type"></span>
 								</li>
 							</div>
 

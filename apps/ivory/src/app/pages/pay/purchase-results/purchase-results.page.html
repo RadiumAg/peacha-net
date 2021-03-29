@@ -12,11 +12,11 @@
 					<img [attr.src]="good.cover" />
 					<li class="good-left">
 						<span class="name"> {{good.work_name}} </span>
-						<!-- <span class="good-name">商品名称:&nbsp;&nbsp;{{good.goods_name}}</span> -->
-						<span class="ower">卖家:&nbsp;&nbsp;{{good.seller_name}}</span>
-						<span style="font-size: 12px; color: #999999" *ngIf="good.maxstock==1;else otherWay">单次出售</span>
+						<span class="good-name">商品名称:&nbsp;&nbsp;{{good.goods_name}}</span>
+						<span class="good-name">卖家:&nbsp;&nbsp;{{good.seller_name}}</span>
+						<span class="good-name" *ngIf="good.maxstock==1;else otherWay">单次出售</span>
 						<ng-template #otherWay>
-							<span style="font-size: 12px; color: #999999">多次出售</span>
+							<span class="good-name">多次出售</span>
 						</ng-template>
 					</li>
 					<li class="good-right">
