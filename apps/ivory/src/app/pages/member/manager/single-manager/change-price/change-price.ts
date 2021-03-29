@@ -13,7 +13,9 @@ export class ChangePrice {
 
     constructor(
         private modalRef: ModalRef<ChangePrice>,
-        @Inject(MODAL_DATA_TOKEN) public price: number
+        @Inject(MODAL_DATA_TOKEN) public work: {
+            price: number, name: string
+        }
     ) { }
 
     money = new FormControl('', [Validators.required, Validators.pattern('^[1-9]d*|0$'), Validators.max(999999)]);

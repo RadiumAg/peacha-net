@@ -54,8 +54,8 @@ export class GoodsManager implements OnInit {
 	}
 
 
-	changePrice(price: number, id: number): void {
-		this.modal.open(ChangePrice, price).afterClosed().subscribe(s => {
+	changePrice(price: number, id: number, name: string): void {
+		this.modal.open(ChangePrice, { price: price, name: name }).afterClosed().subscribe(s => {
 			if (s) {
 				this.http.post(`/work/update_price`, {
 					g: id,

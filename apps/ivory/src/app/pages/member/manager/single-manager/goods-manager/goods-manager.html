@@ -1,6 +1,6 @@
 <div class="main" *ngrxLet="good$;let good">
 	<div class="ma">
-		<img src="/assets/image/member/manage.svg">
+		<img src="/assets/image/member/manage.svg" />
 		商品管理
 		<!-- <img src="/assets/image/svg/close.svg" (click)="close()"> -->
 	</div>
@@ -33,8 +33,12 @@
 				<ng-template #on>
 					<span class="can"> 出售中</span>
 				</ng-template>
-				<span class="change" [class.cannot-change]="item.sellState==0 || item.price==0" (click)="changePrice(item.price,item.id)">
-                    改价
+				<span
+					class="change"
+					[class.cannot-change]="item.sellState==0 || item.price==0"
+					(click)="changePrice(item.price,item.id,item.name)"
+				>
+					改价
 				</span>
 				<span class="do red" *ngIf="item.sellState==0;else down" (click)="up(item.id,1)">上架</span>
 				<ng-template #down>
