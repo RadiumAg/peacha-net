@@ -18,6 +18,10 @@
 				<span class="name">
 					<span [class.line]="item.sellState==0">{{item.name}}</span>
 				</span>
+				<span class="not" *ngIf="item.sellState==0;else on" [class.line]="item.sellState==0">已下架</span>
+				<ng-template #on>
+					<span class="can"> 出售中</span>
+				</ng-template>
 				<span [class.line]="item.sellState==0">{{item.saleNumber}}</span>
 				<span>
 					<span *ngIf="item.maxStock==1;else no" [class.line]="item.sellState==0">单次出售</span>
@@ -29,10 +33,7 @@
 				<span class="price">
 					<span [class.line]="item.sellState==0">¥{{item.price|number}}</span>
 				</span>
-				<span class="not" *ngIf="item.sellState==0;else on" [class.line]="item.sellState==0">已下架</span>
-				<ng-template #on>
-					<span class="can"> 出售中</span>
-				</ng-template>
+
 				<span
 					class="change"
 					[class.cannot-change]="item.sellState==0 || item.price==0"
