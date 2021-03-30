@@ -27,7 +27,7 @@
 					/>
 					<a [href]="represent?.category==1?['/illust/'+represent?.id]:['/live2d/'+represent?.id]">
 						<img
-							[attr.src]="represent?.category?'/assets/image/work-card/ikon-tag.svg':represent?.price==0?'/assets/image/work-card/free-tag.svg':'/assets/image/work-card/Live2D-tag.svg'"
+							[attr.src]="represent.price==0?'/assets/image/work-card/free-tag.svg':represent?.category===1?'/assets/image/work-card/ikon-tag.svg':represent?.category===0?'/assets/image/work-card/Live2D-tag.svg':'/assets/image/work-card/3D-tag.svg'"
 							class="good-icon"
 						/>
 
