@@ -7,7 +7,7 @@
 					<div class="show" *ngIf="items?.count>0">
 						<div class="des" [class.focus]="item.id==it.id" *ngFor="let item of items.list" (click)="selectOne(item.id)">
 							<img
-								[attr.src]="item?.price==0?'/assets/image/work-card/free-tag.svg':item?.category?'/assets/image/work-card/ikon-tag.svg':'/assets/image/work-card/Live2D-tag.svg'"
+								[attr.src]="item.price==0?'/assets/image/work-card/free-tag.svg':item?.category===1?'/assets/image/work-card/ikon-tag.svg':item?.category===0?'/assets/image/work-card/Live2D-tag.svg':'/assets/image/work-card/3D-tag.svg'"
 								class="good-icon"
 							/>
 							<img [src]="item.cover" [attr.checked]="it.id===item.id?true:null" />
@@ -36,6 +36,7 @@
 									>类型：
 									<ng-container *ngSwitchCase="0"> Live2D </ng-container>
 									<ng-container *ngSwitchCase="1"> 插画 </ng-container>
+									<ng-container *ngSwitchCase="2"> 3D模型 </ng-container>
 								</span>
 								<span class="detail">作者：{{it.sellerName}}</span>
 								<!-- <span class="detail">获取时间：{{it?.goods.createtime|date:"yyyy-MM-dd HH:mm"}}</span> -->
