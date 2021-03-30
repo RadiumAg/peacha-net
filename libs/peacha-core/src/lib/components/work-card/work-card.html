@@ -11,10 +11,11 @@
 		<span class="name">{{work?.name}}</span>
 	</a>
 	<span class="first">
-		<span class="type" *ngIf="work?.category==1;else other">插画</span>
-		<ng-template #other>
-			<span class="type">Live2D</span>
-		</ng-template>
+		<span class="type" [ngSwitch]="work?.category">
+			<ng-container *ngSwitchCase="1"> 插画 </ng-container>
+			<ng-container *ngSwitchCase="2"> 3D模型 </ng-container>
+			<ng-container *ngSwitchDefault> Live2D </ng-container>
+		</span>
 	</span>
 	<a [href]="work?.category==1?['/illust/'+work?.id]:work?.category==2?['/3d/'+work?.id]:['/live2d/'+work?.id]">
 		<span class="sad">
