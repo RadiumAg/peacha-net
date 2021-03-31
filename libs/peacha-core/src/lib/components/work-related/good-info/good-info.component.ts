@@ -30,6 +30,7 @@ export class GoodInfoComponent {
 	@Input() sellState: number;
 	@Input() period: number;
 	@Input() category?: number;
+	@Input() fileType?: number;
 
 	@Select(UserState.id)
 	id$: Observable<number>;

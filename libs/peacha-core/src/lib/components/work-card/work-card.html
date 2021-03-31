@@ -46,7 +46,7 @@
 		<span class="like-count">
 			<img src="/assets/image/svg/i-thumbs-up.svg" />
 			<ng-container *ngIf="work?.likeCount;else add"> {{work?.likeCount | changeUnit}} </ng-container>
-			<ng-template #add> 暂无 </ng-template>
+			<ng-template #add> </ng-template>
 		</span>
 	</div>
 </div>
