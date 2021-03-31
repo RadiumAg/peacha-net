@@ -1,64 +1,52 @@
 <div class="select">
-    <div class="menu">
-        <span
-            [routerLink]="[]"
-            [queryParams]="{c:-1,p:1}"
-            [queryParamsHandling]="'merge'"
-            [class.active]="(params$|async).c==-1 ||!(params$|async).c"
-            >全部</span>
-        <span
-            [routerLink]="[]"
-            [queryParams]="{c:1,p:1}"
-            [queryParamsHandling]="'merge'"
-            [class.active]="(params$|async).c==1"
-            >插画</span>
-        <span
-            [routerLink]="[]"
-            [queryParams]="{c:0,p:1}"
-            [queryParamsHandling]="'merge'"
-            [class.active]="(params$|async).c==0"
-            >Live2D</span>
-        <span
-            [routerLink]="[]"
-            [queryParams]="{c:2,p:1}"
-            [queryParamsHandling]="'merge'"
-            [class.active]="(params$|async).c==2"
-            >3D模型</span>
-
-    </div>
-    <ivo-cursor></ivo-cursor>
-    <div class="choice">
-        <ivo-select class="ok" [formControl]="money">
-            <ivo-option value="0" text="价格筛选" [selected]="true"></ivo-option>
-            <ivo-option value="1" text="免费分享"></ivo-option>
-            <ivo-option value="2" text="低于￥500"></ivo-option>
-            <ivo-option value="3" text="￥500~￥1000"></ivo-option>
-            <ivo-option value="4" text="￥1000~￥2000"></ivo-option>
-            <ivo-option value="5" text="￥2000~￥3000"></ivo-option>
-            <ivo-option value="6" text="高于￥3000"></ivo-option>
-        </ivo-select>
-        <ivo-select class="ok" [formControl]="format" *ngIf="(params$|async).c==2">
-            <ivo-option value="-1" text="文件格式" [selected]="true"></ivo-option>
-            <ivo-option value="2" text=".vrm"></ivo-option>
-            <ivo-option value="3" text=".vup"></ivo-option>
-            <ivo-option value="4" text=".unitypackage"></ivo-option>
-            <ivo-option value="5" text=".fbx"></ivo-option>
-        </ivo-select>
-        <ivo-select class="ok" [formControl]="order">
-            <ivo-option value="1" text="最新发布" [selected]="true"></ivo-option>
-            <ivo-option value="2" text="最多点赞"></ivo-option>
-            <ivo-option value="4" text="价格升序"></ivo-option>
-            <ivo-option value="5" text="价格降序"></ivo-option>
-        </ivo-select>
-        <ivo-select class="ok" [formControl]="time">
-            <ivo-option value="0" text="发布时间" [selected]="true"></ivo-option>
-            <ivo-option value="-1" text="本日"></ivo-option>
-            <ivo-option value="-7" text="七日内"></ivo-option>
-            <ivo-option value="-30" text="一个月内"></ivo-option>
-            <ivo-option value="-90" text="三个月"></ivo-option>
-            <ivo-option value="-180" text="六个月"></ivo-option>
-            <ivo-option value="-360" text="一年"></ivo-option>
-        </ivo-select>
-
-    </div>
+	<div class="menu">
+		<span
+			[routerLink]="[]"
+			[queryParams]="{c:-1,p:1}"
+			[queryParamsHandling]="'merge'"
+			[class.active]="(params$|async).c==-1 ||!(params$|async).c"
+			>全部</span
+		>
+		<span [routerLink]="[]" [queryParams]="{c:1,p:1}" [queryParamsHandling]="'merge'" [class.active]="(params$|async).c==1">插画</span>
+		<span [routerLink]="[]" [queryParams]="{c:0,p:1}" [queryParamsHandling]="'merge'" [class.active]="(params$|async).c==0"
+			>Live2D</span
+		>
+		<span [routerLink]="[]" [queryParams]="{c:2,p:1}" [queryParamsHandling]="'merge'" [class.active]="(params$|async).c==2"
+			>3D模型</span
+		>
+	</div>
+	<ivo-cursor></ivo-cursor>
+	<div class="choice">
+		<ivo-select class="ok" [formControl]="money">
+			<ivo-option value="0" text="价格筛选" [selected]="true"></ivo-option>
+			<ivo-option value="1" text="免费分享"></ivo-option>
+			<ivo-option value="2" text="低于￥500"></ivo-option>
+			<ivo-option value="3" text="￥500~￥1000"></ivo-option>
+			<ivo-option value="4" text="￥1000~￥2000"></ivo-option>
+			<ivo-option value="5" text="￥2000~￥3000"></ivo-option>
+			<ivo-option value="6" text="高于￥3000"></ivo-option>
+		</ivo-select>
+		<ivo-select class="ok" [formControl]="format" *ngIf="(params$|async).c==2">
+			<ivo-option value="-1" text="文件格式" [selected]="true"></ivo-option>
+			<ivo-option value="2" text=".vrm"></ivo-option>
+			<!-- <ivo-option value="3" text=".vup"></ivo-option> -->
+			<ivo-option value="4" text=".unitypackage"></ivo-option>
+			<ivo-option value="5" text=".fbx"></ivo-option>
+		</ivo-select>
+		<ivo-select class="ok" [formControl]="order">
+			<ivo-option value="1" text="最新发布" [selected]="true"></ivo-option>
+			<ivo-option value="2" text="最多点赞"></ivo-option>
+			<ivo-option value="4" text="价格升序"></ivo-option>
+			<ivo-option value="5" text="价格降序"></ivo-option>
+		</ivo-select>
+		<ivo-select class="ok" [formControl]="time">
+			<ivo-option value="0" text="发布时间" [selected]="true"></ivo-option>
+			<ivo-option value="-1" text="本日"></ivo-option>
+			<ivo-option value="-7" text="七日内"></ivo-option>
+			<ivo-option value="-30" text="一个月内"></ivo-option>
+			<ivo-option value="-90" text="三个月"></ivo-option>
+			<ivo-option value="-180" text="六个月"></ivo-option>
+			<ivo-option value="-360" text="一年"></ivo-option>
+		</ivo-select>
+	</div>
 </div>

@@ -19,38 +19,25 @@
 			<div class="menu">
 				<ng-container *ngIf="(searchType$|async)!=2">
 					<span
-					[routerLink]="[]"
-					[queryParams]="{c:-1,p:1}"
-					[class.active]="(params$|async).c==-1 ||!(params$|async).c"
-					[queryParamsHandling]="'merge'"
-					>全部</span
-				>
-				<span
-					[routerLink]="[]"
-					[queryParams]="{c:1,p:1}"
-					[class.active]="(params$|async).c==1"
-					[queryParamsHandling]="'merge'"
-					>插画</span
-				>
-				<span
-					[routerLink]="[]"
-					[queryParams]="{c:0,p:1}"
-					[class.active]="(params$|async).c==0"
-					[queryParamsHandling]="'merge'"
-					>Live2D</span
-				>
-				<span
-					[routerLink]="[]"
-					[queryParams]="{c:2,p:1}"
-					[class.active]="(params$|async).c==2"
-					[queryParamsHandling]="'merge'"
-					>3D模型</span
-				>
+						[routerLink]="[]"
+						[queryParams]="{c:-1,p:1}"
+						[class.active]="(params$|async).c==-1 ||!(params$|async).c"
+						[queryParamsHandling]="'merge'"
+						>全部</span
+					>
+					<span [routerLink]="[]" [queryParams]="{c:1,p:1}" [class.active]="(params$|async).c==1" [queryParamsHandling]="'merge'"
+						>插画</span
+					>
+					<span [routerLink]="[]" [queryParams]="{c:0,p:1}" [class.active]="(params$|async).c==0" [queryParamsHandling]="'merge'"
+						>Live2D</span
+					>
+					<span [routerLink]="[]" [queryParams]="{c:2,p:1}" [class.active]="(params$|async).c==2" [queryParamsHandling]="'merge'"
+						>3D模型</span
+					>
 				</ng-container>
-
 			</div>
 			<ng-container *ngIf="(searchType$|async)!=2">
-			<ivo-cursor></ivo-cursor>
+				<ivo-cursor></ivo-cursor>
 			</ng-container>
 			<div class="choice">
 				<ng-container [ngSwitch]="searchType$ | async">
@@ -83,7 +70,7 @@
 						<ivo-select class="ok" [formControl]="format" *ngIf="(params$|async).c==2">
 							<ivo-option value="-1" text="全部" [selected]="true"></ivo-option>
 							<ivo-option value="2" text=".vrm"></ivo-option>
-							<ivo-option value="3" text=".vup"></ivo-option>
+							<!-- <ivo-option value="3" text=".vup"></ivo-option> -->
 							<ivo-option value="4" text=".unitypackage"></ivo-option>
 							<ivo-option value="5" text=".fbx"></ivo-option>
 						</ivo-select>
