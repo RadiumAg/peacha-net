@@ -422,7 +422,7 @@ export class CommissionDetailComponent implements OnInit, OnDestroy {
 					this.goToRegistration();
 				} else {
 					this.model
-						.open(PopTips, ['您还未完成画师认证，无法报名此企划，请前往认证！', false])
+						.open(PopTips, ['您还未完成画师认证，无法报名此企划，请前往认证！', true])
 						.afterClosed()
 						.subscribe(_ => {
 							this.router.navigate(['/setting/security']);
@@ -433,7 +433,7 @@ export class CommissionDetailComponent implements OnInit, OnDestroy {
 					this.goToRegistration();
 				} else {
 					this.model
-						.open(PopTips, ['您还未完成模型师认证，无法报名此企划，请前往认证！', false])
+						.open(PopTips, ['您还未完成模型师认证，无法报名此企划，请前往认证！', true])
 						.afterClosed()
 						.subscribe(_ => {
 							this.router.navigate(['/setting/security']);
