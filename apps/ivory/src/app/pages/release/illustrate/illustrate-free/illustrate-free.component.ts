@@ -124,7 +124,6 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 			t: this.param.t,
 			c: this.param.c,
 			cs: this.param.cs,
-			ss: this.param.ss,
 			f: this.param.f,
 			gl: this.param.gl,
 		}).subscribe({
@@ -196,13 +195,6 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 					}
 				},
 			});
-	}
-
-	private setiToken() {
-		const iUrl = this.form.value.f.map((s) => s.remote_token || s.url);
-
-		const i = iUrl;
-		return i;
 	}
 
 	private subscribeForm() {

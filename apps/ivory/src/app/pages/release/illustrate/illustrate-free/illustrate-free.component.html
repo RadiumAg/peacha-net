@@ -49,6 +49,14 @@
       </div>
     </div>
 
+    <div class="form-item uplaod-Image">
+      <div class="title" [ivoNoticeTitle]="'仅支持PSD格式，不得大于200M。请勿上传无具体分层或无意义文件。'">上传免费分享内容</div>
+      <div class="form-controller required-center">
+        <ivo-file-upload formControlName="gl_token" ivoErroTip ivoErrorTipString="请上传免费商品内容!" [acceptType]="'.psd'">
+        </ivo-file-upload>
+      </div>
+    </div>
+
     <div class="form-item explain">
       <div class="title">版权声明</div>
       <div class="form-controller">
@@ -71,14 +79,6 @@
             </div>
           </form>
         </nz-checkbox-wrapper>
-      </div>
-    </div>
-
-    <div class="form-item uplaod-Image">
-      <div class="title" [ivoNoticeTitle]="'支持JPEG.PNG.GIF等格式，每张图片不得大于5M，长宽不得超过16384*16384px'">上传图片</div>
-      <div class="form-controller required">
-        <ivo-live2d-upload #godds_live2d formControlName="gl_token" ivoErroTip ivoErrorTipString="请添加商品Live2D模型!"
-          isGood="true"></ivo-live2d-upload>
       </div>
     </div>
 

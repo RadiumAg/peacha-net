@@ -41,7 +41,7 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
     cs: number;
     fr: number;
     f: string[];
-    gl: [];
+    gl: any[];
   }>;
 
   editParam: Partial<{
@@ -52,7 +52,7 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
     g: string;
     gd: string;
     t: string;
-    gl: [];
+    gl: any[];
   }>;
 
   form = this.fb.group({
@@ -259,7 +259,23 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
   }
 
   private public_work(): void {
-    this.api.publishWork(this.param).subscribe({
+    this.api.publishWork({
+      n: this.param.n,
+      d: this.param.d,
+      a: this.param.a,
+      b: this.param.b,
+      g: this.param.g,
+      t: this.param.t,
+      c: this.param.c,
+      cs: this.param.cs,
+      f: this.param.f,
+      gl: [{
+        n: this.param.gl[0].n,
+        s: this.param.gl[0].s,
+        p: this.param.gl[0].p,
+        f: this.param.gl[0].f,
+      }],
+    }).subscribe({
       next: () => {
         this.modal.open(SuccessTips,{
           redirectUrl: '/member/manager/live2D/auditing',
@@ -343,6 +359,7 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
                   n: value.gn,
                   f: [value.gl_token],
                   s: value.gl_s,
+                  p: value.p
                 },
               ];
             }

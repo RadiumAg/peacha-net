@@ -7,7 +7,7 @@ export interface IPublishFileType {
 	s: number;
 	p: number;
 	f: string;
-	ft: 1 | 2 | 3 | 4 | 5 | 99;
+	ft?: 1 | 2 | 3 | 4 | 5 | 99;
 }
 
 export interface IUpdateWork {
@@ -73,7 +73,6 @@ export class ReleaseApiService {
 		t: string;
 		c: number;
 		cs: number;
-		ss: number;
 		f: string[];
 		gl: IPublishFileType[];
 		g?: string;

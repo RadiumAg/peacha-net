@@ -237,7 +237,23 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 	}
 
 	private public_work(): void {
-		this.api.publishWork(this.param).subscribe({
+		this.api.publishWork({
+			n: this.param.n,
+			d: this.param.d,
+			a: this.param.a,
+			b: this.param.b,
+			g: this.param.g,
+			t: this.param.t,
+			c: this.param.c,
+			cs: this.param.cs,
+			f: this.param.f,
+			gl: [{
+				n: this.param.gl[0].n,
+				s: this.param.gl[0].s,
+				p: this.param.gl[0].p,
+				f: this.param.gl[0].f,
+			}],
+		}).subscribe({
 			next: _x => {
 				this.modal.open(SuccessTips,{
 					redirectUrl: '/member/manager/live2D/auditing',
