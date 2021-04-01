@@ -22,13 +22,13 @@ export class SelectPage {
     ) { }
 
     priceRegion = [
-        { sp: -1, ep: 0 },
+        { sp: -1, ep: -1 },
         { sp: 0, ep: 0 },
         { sp: 0, ep: 500 },
         { sp: 500, ep: 1000 },
         { sp: 1000, ep: 2000 },
         { sp: 2000, ep: 3000 },
-        { sp: 3000, ep: '' },
+        { sp: 3000, ep: -1 },
     ];
     page$ = new BehaviorSubject(1);
     works$ = this.route.queryParams.pipe(

@@ -20,7 +20,7 @@ export class GoodsearchPage {
 		{ sp: 500, ep: 1000 },
 		{ sp: 1000, ep: 2000 },
 		{ sp: 2000, ep: 3000 },
-		{ sp: 3000, ep: '' },
+		{ sp: 3000, ep: -1 },
 	];
 	workdata$ = this.route.queryParams.pipe(
 		switchMap(r => {
