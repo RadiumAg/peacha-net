@@ -1,8 +1,7 @@
 import { map,tap,debounce } from 'rxjs/operators';
-import { HttpParams } from '@angular/common/http';
 import { AfterViewInit,ElementRef,ViewChild } from '@angular/core';
 import { Component,OnInit,ChangeDetectorRef } from '@angular/core';
-import { FormBuilder,Validators } from '@angular/forms';
+import { FormBuilder,Validators,AbstractControl,NgControl,FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Live2dUploadComponent } from '../../components/live2d-upload/live2d-upload.component';
 import { SuccessTips } from '../../components/success-tips/success-tips';
@@ -43,9 +42,9 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 		c: number;
 		cs: number;
 		ss: number;
-		f: [];
+		f: string[];
 		fr: number;
-		gl: [];
+		gl: any[];
 	};
 	form = this.fb.group({
 		n: ['',[emptyStringValidator(),Validators.required]],
@@ -53,6 +52,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 		b: ['',Validators.required],
 		g: ['',Validators.required],
 		a: [[]],
+		fr: ['',Validators.required],
 		c: ['',Validators.required],
 		t: [[]],
 		checked: [false,Validators.requiredTrue],
@@ -60,14 +60,9 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 	checkedForm = this.fb.group({
 		enableFaceTrackerChecked: [false],
 		enableSettingPanelChecked: [false],
-		freeModelDownLoadChecked: [false],
 		copyright: [[]],
 		copychecked: [false],
 	});
-	aCheckedOne = false;
-	aCheckedTwo = false;
-	aCheckedThree = false;
-	aCheckedFour = false;
 	enableFaceTrackerChecked = false;
 	enableSettingPanelChecked = false;
 	freeModelDownLoadChecked = false;
@@ -115,6 +110,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 		});
 	}
 
+
 	/**
 	 * @description 验证
 	 */
@@ -125,6 +121,17 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 			flag = false;
 		}
 		return flag;
+	}
+
+	selectTypeChange(type: 0 | 1) {
+		if (type === 1) {
+			this.form.addControl('fg',new FormControl('',Validators.required));
+			this.form.addControl('fgn',new FormControl('',Validators.required));
+		} else {
+			this.form.removeControl('fg');
+			this.form.removeControl('fgn');
+		}
+		this.cdr.markForCheck();
 	}
 
 	changeCopyright($event: string[]): void {
@@ -262,12 +269,6 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 		this.form.patchValue({ gd: new_gd });
 	}
 
-	onFreeModelDownloadChanged($event): void {
-		if ($event) {
-			this.isModalFreeDownloadTip();
-		}
-	}
-
 	openPDF(url: string): void {
 		window.open(url);
 	}
@@ -291,7 +292,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 					this.setModalCheckedDisabled();
 					this.setFreeGoodList();
 				}),
-				map((value: any) => {
+				map((value) => {
 					if (!this.isEdit) {
 						value.gd = JSON.stringify({
 							transformData: { ...this.transformData },
@@ -310,7 +311,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 							f: [],
 							c: value.c,
 							cs: 0,
-							fr: this.checkedForm.value.freeModelDownLoadChecked ? 1 : 0,
+							fr: value.fr,
 							ss: 0,
 							gl: this.freeModal,
 						};
@@ -339,13 +340,12 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 					}
 				})
 			)
-			.subscribe((x: any) => {
+			.subscribe((x) => {
 				this.param = x;
 			});
 	}
 
 	private setModalCheckedDisabled(): void {
-		console.log(this.form.value.g);
 		if (this.form.value.g) {
 			this.modelCheckedSet = false;
 		} else {
@@ -353,7 +353,6 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 			this.checkedForm.patchValue({
 				enableFaceTrackerChecked: false,
 				enableSettingPanelChecked: false,
-				freeModelDownLoadChecked: false,
 			});
 		}
 	}
@@ -375,13 +374,13 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 	}
 
 	private setFreeGoodList(): void {
-		if (this.checkedForm.value['freeModelDownLoadChecked']) {
+		if (this.form.value.fr === 1) {
 			this.freeModal = [
 				{
-					n: '免费下载内容',
+					n: this.form.value.fgn,
 					s: -1,
 					p: 0,
-					f: [],
+					f: this.form.value.fg,
 				},
 			];
 		} else {

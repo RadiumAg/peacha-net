@@ -1,3 +1,4 @@
+import { FormInputComponent } from './form-input/form-input.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -33,6 +34,7 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 		FormNavComponent,
 		FormNavDirective,
 		ConfirmComponent,
+		FormInputComponent,
 	],
 	imports: [
 		CommonModule,
@@ -58,6 +60,7 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 		NoticeTitleDirective,
 		FormNavComponent,
 		FormNavDirective,
+		FormInputComponent,
 	],
 })
 export class ReleaseComponentsModule { }

@@ -1,0 +1,3 @@
+<input #input [placeholder]="ivoPlaceholder" [minlength]="ivoMinLength" [maxlength]="ivoMaxLength"
+    [(ngModel)]="ivoValue" (ngModelChange)="innerInputChange($event)" [disabled]="ivoDisabled" />
+<span class="word-count">{{input.value.length}}</span>

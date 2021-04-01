@@ -152,17 +152,17 @@ const routes: Routes = [
   imports: [
     TranslateModule.forRoot({
       loader: {
-          provide: TranslateLoader,
-          useFactory: (http: HttpClient) => {
-              return new TranslateHttpLoader(
-                  http,
-                  './assets/i18n/',
-                  '.json'
-              );
-          },
-          deps: [HttpClient],
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => {
+          return new TranslateHttpLoader(
+            http,
+            './assets/i18n/',
+            '.json'
+          );
+        },
+        deps: [HttpClient],
       },
-  }),
+    }),
     NavbarModule,
     BrowserModule,
     FooterModule,
@@ -170,13 +170,13 @@ const routes: Routes = [
     PeachaCoreModule.forRoot({
       api_gateway: environment.api_gateway,
     }),
-    NgxsModule.forRoot([], {
+    NgxsModule.forRoot([],{
       developmentMode: !environment.production,
     }),
-    RouterModule.forRoot(routes, {
+    RouterModule.forRoot(routes,{
       scrollPositionRestoration: 'top',
       anchorScrolling: 'enabled',
-      scrollOffset: [0, 0],
+      scrollOffset: [0,0],
     }),
     OverlayModule,
   ],
