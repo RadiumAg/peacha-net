@@ -96,12 +96,12 @@ export class ReleaseApiService {
 		w: number;
 		n: string;
 		d: string;
-		i: string[];
 		t: string;
 		b: string;
 		gl: IUpdateWork[];
+		i?: string[];
 		g?: string;
-		fr?: number;
+		bv?: string;
 		gd?: string;
 	}) => this.http.post(`/work/update_work`,p);
 

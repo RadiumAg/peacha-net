@@ -19,19 +19,23 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 	submitButton: ElementRef;
 
 	constructor(private fb: FormBuilder,private modal: ModalService,private route: ActivatedRoute,private api: ReleaseApiService) { }
-
+	illustGoodsId: number = undefined;
 	param: {
+		[key: string]: any;
+	};
+
+	editParam: Partial<{
+		w: number;
 		n: string;
 		d: string;
-		a: number[];
 		b: string;
+		g: string;
+		gd: string;
 		t: string;
-		c: number;
-		cs: number;
-		ss: number;
-		f: [];
-		gl: [];
-	};
+		i: string[];
+		gl: any[];
+	}>;
+
 	form = this.fb.group({
 		f: [[],Validators.required],
 		n: ['',[Validators.required,emptyStringValidator()]],
@@ -92,7 +96,7 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 			if (x.get('id')) {
 				this.isEdit = true;
 				this.api.getEditWork(Number(x.get('id'))).subscribe((r: Work) => {
-					console.log(r);
+					this.illustGoodsId = r.goodsList[0].id;
 					this.copyrightModel = r.authority;
 					this.form.patchValue({
 						n: r.name,
@@ -167,18 +171,15 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 	}
 
 	private sure_edit() {
-		const i = this.setiToken();
 		this.api
 			.updateWork({
-				w: this.route.snapshot.params.id,
-				d: this.form.value.d,
-				i,
-				t: this.form.value.t.join(','),
-				b: this.form.value.b.token ?? this.form.value.b.url,
-				n: this.form.value.n,
-				gl: [],
-				fr: 1,
-				gd: '',
+				w: this.illustGoodsId,
+				d: this.editParam.d,
+				i: this.editParam.i,
+				t: this.editParam.t,
+				b: this.editParam.b,
+				n: this.editParam.n,
+				gl: this.editParam.gl,
 			})
 			.subscribe({
 				next: () => {
@@ -198,7 +199,7 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 	}
 
 	private setiToken() {
-		const iUrl = this.form.value.f.map((s: any) => s.remote_token || s.url);
+		const iUrl = this.form.value.f.map((s) => s.remote_token || s.url);
 
 		const i = iUrl;
 		return i;
@@ -207,7 +208,7 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 	private subscribeForm() {
 		this.form.valueChanges
 			.pipe(
-				map((value: any) => {
+				map((value) => {
 					if (!this.isEdit) {
 						value.b = value.b.token || '';
 						value.f = value.f.map((s: { remote_token: string }) => s.remote_token);
@@ -219,18 +220,29 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 							t: value.t.toString(),
 							f: value.f,
 							c: value.c,
+							i: value.f,
 							cs: 1,
-							ss: 0,
-							gl: [],
+							gl: [{ s: -1,n: value.gn,f: value.gl_token,ft: 0,p: 0 }],
 						};
 					} else {
-						return value;
+						return {
+							w: this.illustGoodsId,
+							n: value.gl,
+							d: value.d,
+							b: value.b,
+							g: value.g,
+							t: value.t,
+							gl: [{
+								n: value.gn,
+								f: [value.gl_token[0] ? value.gl_token[0]?.token || value.gl_token[0].url : ''],
+								s: value.gl_s,
+							}],
+						};
 					}
 				})
 			)
-			.subscribe((x: any) => {
-				console.log(this.form.value);
-				this.param = x;
+			.subscribe((x) => {
+				this.isEdit ? this.editParam = x : this.param = x;
 			});
 	}
 

@@ -73,7 +73,7 @@
     <div class="form-item">
       <div class="title">作品类型</div>
       <div class=" form-controller">
-        <nz-radio-group formControlName="fr" ivoErroTip ivoErrorTipString="请选择作品类型!"
+        <nz-radio-group formControlName="fr" [nzDisabled]="isEdit" ivoErroTip ivoErrorTipString="请选择作品类型!"
           (ngModelChange)="selectTypeChange($event)">
           <label nz-radio [nzValue]="0"><span class="label-inner">仅展示</span></label>
           <label nz-radio [nzValue]="1"><span class="label-inner">免费分享</span></label>

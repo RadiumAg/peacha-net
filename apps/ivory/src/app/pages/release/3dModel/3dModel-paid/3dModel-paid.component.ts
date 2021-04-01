@@ -168,7 +168,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 					this.editParam.w = parseInt(x.get('id'),10);
 					this.copyrightModel = r.authority;
 					r.goodsList.forEach(x => {
-						this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType,x.max_stock,x.price,x.price > 0 ? false : true,x.id);
+						this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType,x.maxStock,x.price,x.price > 0 ? false : true,x.id);
 					})
 					this.form.patchValue({
 						n: r.name,
@@ -242,20 +242,6 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		return model.symbol;
 	}
 
-	changeCopyrightState($event: number) {
-		if (!this.isEdit) {
-			switch ($event) {
-				case 0:
-					this.stateMentStrategy.orgin();
-					break;
-
-				case 1:
-					this.stateMentStrategy.fllow();
-					break;
-			}
-		}
-	}
-
 	priceValidate(e: Event) {
 		const price = e.target as HTMLInputElement;
 		price.value.length > 5 ? (price.value = price.value.slice(0,price.value.length - 1)) :
@@ -317,6 +303,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 				b: this.editParam.b,
 				n: this.editParam.n,
 				gl: this.editParam.gl,
+				bv: this.editParam.bv,
 			})
 			.subscribe({
 				next: () => {

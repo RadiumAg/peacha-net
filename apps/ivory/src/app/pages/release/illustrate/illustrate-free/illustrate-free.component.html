@@ -4,7 +4,7 @@
       <div class="title">发布作品</div>
     </div>
 
-    <div class="form-item">
+    <div class="form-item works-info">
       <div class="title">作品信息</div>
       <div class="form-controller">
         <div class="title required">
@@ -63,14 +63,22 @@
               <ng-container *ngFor="let item of copyrightCheckes$ | async; let i = index">
                 <div>
                   <label nz-checkbox [nzValue]="item['id']" (click)="(copyright.click)" formControlName="copychecked"
-                    [nzChecked]="copyrightModel.includes(item['id'])"
-                    [nzDisabled]="isEdit || stateMentStates[i]">{{ item['name'] }}</label>
+                    [nzChecked]="copyrightModel.includes(item['id'])" [nzDisabled]="isEdit || stateMentStates[i]">{{
+                    item['name'] }}</label>
                 </div>
               </ng-container>
               <input type="hidden" formControlName="copyright" #copyright ivoFormNav data-control-index="4" />
             </div>
           </form>
         </nz-checkbox-wrapper>
+      </div>
+    </div>
+
+    <div class="form-item uplaod-Image">
+      <div class="title" [ivoNoticeTitle]="'支持JPEG.PNG.GIF等格式，每张图片不得大于5M，长宽不得超过16384*16384px'">上传图片</div>
+      <div class="form-controller required">
+        <ivo-live2d-upload #godds_live2d formControlName="gl_token" ivoErroTip ivoErrorTipString="请添加商品Live2D模型!"
+          isGood="true"></ivo-live2d-upload>
       </div>
     </div>
 
@@ -101,6 +109,4 @@
       </nz-form-control>
     </nz-form-item>
   </form>
-
-  <!-- <ivo-form-nav class="nav" top='23' [titleList]='["作品信息","添加标签","上传封面","上传图片","版权声明"]'></ivo-form-nav> -->
 </div>

@@ -20,9 +20,21 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 
 	constructor(private fb: FormBuilder,private modal: ModalService,private route: ActivatedRoute,private api: ReleaseApiService) { }
 	Fixed = Number.prototype.toFixed;
+	illustGoodsId: number = undefined;
 	param: {
 		[keys: string]: any;
 	};
+
+	editParam: Partial<{
+		w: number;
+		n: string;
+		d: string;
+		b: string;
+		g: string;
+		t: string;
+		gl: any[];
+	}>;
+
 	form = this.fb.group({
 		f: [[],Validators.required],
 		n: ['',[Validators.required,emptyStringValidator()]],
@@ -31,8 +43,9 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 		b: ['',Validators.required],
 		c: [0,Validators.required],
 		p: [null,[live2dPriceValidator()]],
-		gl_token: [[],Validators.required],
-		ss: [true],
+		gn: [null,Validators.required],
+		gl_s: ['',Validators.required],
+		gl_token: [null,Validators.required],
 		a: [[]],
 		checked: [false,Validators.requiredTrue],
 	});
@@ -86,7 +99,7 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 			if (x.get('id')) {
 				this.isEdit = true;
 				this.api.getEditWork(Number(x.get('id'))).subscribe((r: Work) => {
-					console.log(r);
+					this.illustGoodsId = r.goodsList[0].id;
 					this.copyrightModel = r.authority;
 					this.form.patchValue({
 						n: r.name,
@@ -97,7 +110,9 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 							url: _,
 						})),
 						p: r.goodsList[0].price,
-						gl_token: [{ token: r.goodsList[0].file,url: '',name: r.goodsList[0].name }],
+						gn: r.goodsList[0].name,
+						gl_token: { url: r.goodsList[0].file,name: r.goodsList[0].file.slice(-10) },
+						gl_s: r.goodsList[0].maxStock,
 						c: r.copyright,
 					});
 				});
@@ -138,20 +153,6 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 		const price = e.target as HTMLInputElement;
 		price.value.length > 5 ? (price.value = price.value.slice(0,price.value.length - 1)) :
 			(price.value.includes('.') ? price.value = price.value.slice(0,price.value.lastIndexOf('.')) : '')
-	}
-
-	changeCopyrightState($event: number) {
-		if (!this.isEdit) {
-			switch ($event) {
-				case 0:
-					this.stateMentStrategy.orgin();
-					break;
-
-				case 1:
-					this.stateMentStrategy.fllow();
-					break;
-			}
-		}
 	}
 
 	submit() {
@@ -199,32 +200,46 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 		this.form.valueChanges
 			.pipe(
 				map((value) => {
-					value.b = value.b.token || value.b.url || '';
-					value.f = value.f.map((s: { remote_token: string; url: string; }) => s.remote_token || s.url);
-					return {
-						n: value.n,
-						d: value.d,
-						a: value.a,
-						b: value.b,
-						t: value.t.toString(),
-						f: value.f,
-						c: value.c,
-						fr: 0,
-						cs: 1,
-						ss: value.ss ? 1 : 2,
-						gl: [{
-							n: '付费下载内容',
-							f: [value.gl_token[0] ? value.gl_token[0]?.token || value.gl_token[0].url : ''],
-							p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0,(this.maxPrice + '').length)),10) : value.p,
-							s: 1,
-						}],
-					};
-
+					if (!this.isEdit) {
+						value.b = value.b.token || value.b.url || '';
+						value.f = value.f.map((s: { remote_token: string; url: string; }) => s.remote_token || s.url);
+						return {
+							n: value.n,
+							d: value.d,
+							a: value.a,
+							b: value.b,
+							t: value.t.toString(),
+							f: value.f,
+							c: value.c,
+							cs: 1,
+							gl: [{
+								n: value.gn,
+								f: [value.gl_token[0] ? value.gl_token[0]?.token || value.gl_token[0].url : ''],
+								p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0,(this.maxPrice + '').length)),10) : value.p,
+								s: value.gl_s,
+							}],
+						};
+					} else {
+						value.b = value.b.token || value.b.url || '';
+						value.f = value.f.map((s: { remote_token: string; url: string; }) => s.remote_token || s.url);
+						return {
+							w: this.illustGoodsId,
+							n: value.gl,
+							d: value.d,
+							b: value.b,
+							g: value.g,
+							t: value.t,
+							gl: [{
+								n: value.gn,
+								f: [value.gl_token[0] ? value.gl_token[0]?.token || value.gl_token[0].url : ''],
+								s: value.gl_s,
+							}],
+						};
+					}
 				})
 			)
 			.subscribe((x) => {
-				this.param = x;
-				console.log(x);
+				this.isEdit ? this.editParam = x : this.param = x;
 			});
 	}
 

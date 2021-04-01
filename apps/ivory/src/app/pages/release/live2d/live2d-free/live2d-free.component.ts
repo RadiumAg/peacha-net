@@ -1,7 +1,7 @@
 import { map,tap,debounce } from 'rxjs/operators';
-import { AfterViewInit,ElementRef,ViewChild } from '@angular/core';
+import { AfterViewInit,ElementRef,ViewChild,QueryList,ViewChildren,AfterViewChecked } from '@angular/core';
 import { Component,OnInit,ChangeDetectorRef } from '@angular/core';
-import { FormBuilder,Validators,AbstractControl,NgControl,FormControl } from '@angular/forms';
+import { FormBuilder,Validators,FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Live2dUploadComponent } from '../../components/live2d-upload/live2d-upload.component';
 import { SuccessTips } from '../../components/success-tips/success-tips';
@@ -17,7 +17,7 @@ import { PopTips } from '@peacha-core/components';
 	templateUrl: './live2d-free.component.html',
 	styleUrls: ['./live2d-free.component.less'],
 })
-export class Live2dFreeComponent implements OnInit,AfterViewInit {
+export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecked {
 	constructor(
 		private fb: FormBuilder,
 		private modal: ModalService,
@@ -25,13 +25,13 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 		private api: ReleaseApiService,
 		private cdr: ChangeDetectorRef
 	) { }
-
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
-
-	@ViewChild(Live2dUploadComponent)
-	live2dUpload: Live2dUploadComponent;
-	param: {
+	@ViewChildren(Live2dUploadComponent)
+	live2dUpload: QueryList<Live2dUploadComponent>;
+	freeGoodsId: number = undefined;
+	goodsId: number = undefined;
+	param: Partial<{
 		n: string;
 		d: string;
 		a: number[];
@@ -45,7 +45,18 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 		f: string[];
 		fr: number;
 		gl: any[];
-	};
+	}>;
+
+	editParam: Partial<{
+		w: number;
+		n: string;
+		d: string;
+		b: string;
+		g: string;
+		gd: string;
+		t: string;
+		gl: any[];
+	}>;
 	form = this.fb.group({
 		n: ['',[emptyStringValidator(),Validators.required]],
 		d: ['',[emptyStringValidator(),Validators.required]],
@@ -63,9 +74,9 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 		copyright: [[]],
 		copychecked: [false],
 	});
+	freeModelFile = '';
 	enableFaceTrackerChecked = false;
 	enableSettingPanelChecked = false;
-	freeModelDownLoadChecked = false;
 	modelCheckedSet = false;
 	transformData: Live2dTransformData;
 	token: string;
@@ -110,7 +121,6 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 		});
 	}
 
-
 	/**
 	 * @description 验证
 	 */
@@ -154,7 +164,10 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 	}
 
 	private setMainForm(r: Work): void {
-		this.form.patchValue({
+		this.freeModelFile = r.goodsList[0].file;
+		this.freeGoodsId = r.goodsList[0].id;
+		this.goodsId = r.id;
+		this.form.patchValue(r.goodsList[0].fileType === 1 ? {
 			n: r.name,
 			d: r.description,
 			b: { url: r.cover },
@@ -162,17 +175,29 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 			c: r.copyright,
 			g: this.token,
 			a: r.authority,
-		});
+			fr: r.goodsList[0].fileType,
+			fg: r.goodsList[0].file,
+			fgn: r.goodsList[0].name,
+		} : {
+				n: r.name,
+				d: r.description,
+				b: { url: r.cover },
+				t: r.tag,
+				c: r.copyright,
+				g: this.token,
+				a: r.authority,
+				fr: r.goodsList[0].fileType,
+			});
 		this.copyrightModel = r.authority;
-		this.live2dUpload.loadFileFromOpal(r.file,r.file_data ? JSON.parse(r.file_data) : null);
+		this.live2dUpload.first.loadFileFromOpal(r.file,r.fileData ? JSON.parse(r.fileData) : null);
+		this.cdr.markForCheck();
 	}
 
 	private setModelChecked(r: Work): void {
-		if (JSON.parse(r.file_data)) {
+		if (JSON.parse(r.fileData)) {
 			this.checkedForm.patchValue({
-				enableFaceTrackerChecked: JSON.parse(r.file_data).enableFaceTracker ? true : false,
-				enableSettingPanelChecked: JSON.parse(r.file_data).enableSettingPanel ? true : false,
-				freeModelDownLoadChecked: r.goodsList.length && r.goodsList[0].sell_state > 0 ? true : false,
+				enableFaceTrackerChecked: JSON.parse(r.fileData).enableFaceTracker ? true : false,
+				enableSettingPanelChecked: JSON.parse(r.fileData).enableSettingPanel ? true : false,
 			});
 		}
 	}
@@ -185,20 +210,16 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 	}
 
 	private sure_edit(): void {
-		const params = {
-			w: this.route.snapshot.params.id,
-			d: this.param.d,
-			i: [],
-			t: this.param.t,
-			b: this.param.b,
-			n: this.param.n,
-			g: this.param.g,
-			gl: this.freeModal,
-			gd: this.param.gd,
-			fr: this.param.fr,
-			dg: [],
-		};
-		this.api.updateWork(params).subscribe({
+		this.api.updateWork({
+			w: this.editParam.w,
+			n: this.editParam.n,
+			g: this.editParam.g,
+			d: this.editParam.d,
+			gd: this.editParam.gd,
+			t: this.editParam.t,
+			b: this.editParam.b,
+			gl: this.editParam.gl,
+		}).subscribe({
 			next: () => {
 				this.modal.open(SuccessTips,{
 					redirectUrl: 'user',
@@ -312,7 +333,6 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 							c: value.c,
 							cs: 0,
 							fr: value.fr,
-							ss: 0,
 							gl: this.freeModal,
 						};
 					} else {
@@ -323,6 +343,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 							enableSettingPanel: this.modalSetting.enableSettingPanel,
 						});
 						return {
+							w: this.goodsId,
 							n: value.n,
 							d: value.d,
 							a: value.a,
@@ -330,18 +351,13 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 							g: value.g,
 							gd: value.gd,
 							t: value.t.toString(),
-							f: [],
-							c: value.c,
-							cs: 0,
-							ss: 0,
-							fr: this.checkedForm.value.freeModelDownLoadChecked ? 1 : 0,
 							gl: this.freeModal,
 						};
 					}
 				})
 			)
 			.subscribe((x) => {
-				this.param = x;
+				this.isEdit ? this.editParam = x : this.param = x;
 			});
 	}
 
@@ -368,21 +384,31 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 							freeModelDownLoadChecked: false,
 						});
 					}
-					// this.setFreeGoodList();
 				});
 		}
 	}
 
 	private setFreeGoodList(): void {
 		if (this.form.value.fr === 1) {
-			this.freeModal = [
-				{
-					n: this.form.value.fgn,
-					s: -1,
-					p: 0,
-					f: this.form.value.fg,
-				},
-			];
+			if (this.isEdit) {
+				this.freeModal = [
+					{
+						i: this.freeGoodsId,
+						n: this.form.value.fgn,
+						f: this.form.value.fg,
+					},
+				];
+
+			} else if (!this.isEdit) {
+				this.freeModal = [
+					{
+						n: this.form.value.fgn,
+						s: -1,
+						p: 0,
+						f: this.form.value.fg,
+					},
+				];
+			}
 		} else {
 			this.freeModal = [];
 		}
@@ -407,5 +433,14 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit {
 			.subscribe(() => {
 				this.submit();
 			});
+	}
+
+	ngAfterViewChecked(): void {
+		if (this.live2dUpload.length > 1) {
+			if (this.live2dUpload.last.live2dLoadStatus$.getValue() === 0 && this.freeModelFile) {
+				this.live2dUpload.last.loadFileFromOpal(this.freeModelFile,null);
+				this.freeModelFile = '';
+			}
+		}
 	}
 }

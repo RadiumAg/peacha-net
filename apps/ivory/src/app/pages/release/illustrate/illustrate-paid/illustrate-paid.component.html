@@ -52,46 +52,47 @@
     <div class="form-item upload-good">
       <div class="title" [ivoNoticeTitle]="'仅支持PSD格式，不得大于200M。请勿上传无具体分层或无意义文件'">上传商品内容</div>
 
-      <div class="form-controller required upload-file">
-        <ivo-upload ivoErroTip ivoErrorTipString="请上传付费商品内容" formControlName="gl_token" [fileSize]="209715200"
-          [uploadType]="'.psd'"  [canDelete]="!isEdit" buttonWord="上传文件"  [isResertBeforeUpload]="false">
-        </ivo-upload>
+      <div class="form-controller required-center upload-file">
+        商品文件:&nbsp;&nbsp;&nbsp;&nbsp;
+        <ivo-file-upload formControlName="gl_token" ivoErroTip ivoErrorTipString="请上传付费商品内容!" [acceptType]="'.psd'">
+        </ivo-file-upload>
       </div>
 
-      <div class="form-controller required price">
+      <div class="form-controller required-center  no-top-line">
+        商品名称:&nbsp;&nbsp;&nbsp;&nbsp;
+        <ivo-form-input ivoPlaceholder="请输入商品名称" formControlName="gn" [ivoMaxLength]="20" ivoErroTip
+          ivoErrorTipString="请填写免费商品类型名称!"></ivo-form-input>
+      </div>
+
+      <div class="form-controller required-center price">
+        商品价格:&nbsp;&nbsp;&nbsp;&nbsp;
         <input class="input" formControlName='p' #price ivoErroTip [ivoErrorTipString]="{
           nullPrice: '请设置商品价格!',
           floatPrice: '价格只能为整数!',
           negativePrice: '价格不能为负数!',
           zeroPrice: '价格不能设置为零!'
-        }" 
-          onpaste="return false"
-          (input)="priceValidate($event)" 
-          placeholder="¥&nbsp;设置商品价格" type="number"><span
+        }" onpaste="return false" (input)="priceValidate($event)" placeholder="¥&nbsp;设置商品价格" type="number"><span
           class="price-tip">平台将收取8%的服务费，预计收益{{call(Fixed, price.value * 0.92, 2)}}元</span>
       </div>
 
-      <div class="form-controller sale-count">
-        <label nz-radio formControlName="ss">单次销售</label>
+      <div class=" form-controller no-top-line">
+        <nz-radio-group formControlName="gl_s" [nzDisabled]="isEdit" ivoErroTip ivoErrorTipString="请选择商品销售类型!">
+          <label nz-radio [nzValue]="1"><span class="label-inner">单次销售</span></label>
+          <label nz-radio [nzValue]="-1"><span class="label-inner">多次销售</span></label>
+        </nz-radio-group>
       </div>
     </div>
 
     <div class="form-item explain">
       <div class=" title">版权声明</div>
       <div class="form-controller">
-        <nz-radio-group formControlName="c" [ngModel] ='0' ivoFormNav data-control-index="4" ivoErroTip ivoErrorTipString="请选择版权声明!"
-          (ngModelChange)="changeCopyrightState($event)">
-          <label nz-radio [nzValue]="0" [nzDisabled]="isEdit">此作品为原创作品</label>
-          <!-- <label nz-radio [nzValue]="1" [nzDisabled]="isEdit">此作品为同人作品</label> -->
-        </nz-radio-group>
         <nz-checkbox-wrapper (nzOnChange)="changeCopyright($event)">
           <form [formGroup]="checkedForm">
             <div nz-col>
               <ng-container *ngFor="let item of copyrightCheckes$ | async; let i = index">
                 <div>
                   <label nz-checkbox [nzValue]="item['id']" (click)="(copyright.click)" formControlName="copychecked"
-                    [nzChecked]="copyrightModel.includes(item['id'])"
-                    [nzDisabled]="isEdit">{{ item['name'] }}</label>
+                    [nzChecked]="copyrightModel.includes(item['id'])" [nzDisabled]="isEdit">{{ item['name'] }}</label>
                 </div>
               </ng-container>
               <input type="hidden" formControlName="copyright" #copyright ivoFormNav data-control-index="4" />

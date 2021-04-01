@@ -1,7 +1,7 @@
 import { map,tap,debounce } from 'rxjs/operators';
 import { AfterViewInit,ElementRef,ViewChild } from '@angular/core';
 import { Component,OnInit } from '@angular/core';
-import { FormBuilder,Validators } from '@angular/forms';
+import { FormBuilder,Validators,FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Live2dUploadComponent } from '../../components/live2d-upload/live2d-upload.component';
 import { SuccessTips } from '../../components/success-tips/success-tips';
@@ -27,7 +27,9 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
   @ViewChild('godds_live2d')
   goodsLivewdUpload: Live2dUploadComponent;
   Fixed = Number.prototype.toFixed;
-  param: {
+  payGoodsId: number = undefined;
+  goodsId: number = undefined;
+  param: Partial<{
     n: string;
     d: string;
     a: number[];
@@ -37,11 +39,22 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
     t: string;
     c: number;
     cs: number;
-    ss: number;
     fr: number;
     f: string[];
     gl: [];
-  };
+  }>;
+
+  editParam: Partial<{
+    w: number;
+    n: string;
+    d: string;
+    b: string;
+    g: string;
+    gd: string;
+    t: string;
+    gl: [];
+  }>;
+
   form = this.fb.group({
     n: ['',[Validators.required,emptyStringValidator()]],
     d: ['',[Validators.required,emptyStringValidator()]],
@@ -49,9 +62,10 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
     g: ['',Validators.required],
     a: [[]],
     c: [false,Validators.requiredTrue],
-    s: [-2,Validators.min(-1)],
+    gn: ['',Validators.required],
     p: ['',live2dPriceValidator()],
     gl_token: ['',Validators.required],
+    gl_s: ['',Validators.required],
     t: [[]],
     checked: [false,Validators.requiredTrue],
   });
@@ -178,8 +192,8 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
   }
 
   private setModelChecked(r: Work): void {
-    if (JSON.parse(r.file_data)) {
-      const fileData = JSON.parse(r.file_data);
+    if (JSON.parse(r.fileData)) {
+      const fileData = JSON.parse(r.fileData);
       this.checkedForm.patchValue({
         enableFaceTrackerChecked: fileData.enableFaceTracker || false,
         enableSettingPanelChecked: fileData.enableSettingPanel || false,
@@ -190,6 +204,8 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
 
   private setMainForm(r: Work): void {
     this.token = r.file;
+    this.payGoodsId = r.goodsList[0].id;
+    this.goodsId = r.id;
     this.form.patchValue({
       n: r.name,
       d: r.description,
@@ -199,11 +215,13 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
       g: this.token,
       a: r.authority,
       p: r.goodsList[0].price,
-      s: r.goodsList[0].max_stock,
+      s: r.goodsList[0].maxStock,
       gl_token: r.goodsList[0].file,
+      gl_s: r.goodsList[0].maxStock,
+      gn: r.goodsList[0].name,
     });
     this.copyrightModel = r.authority;
-    this.live2dUpload.loadFileFromOpal(r.file,r.file_data ? JSON.parse(r.file_data) : null);
+    this.live2dUpload.loadFileFromOpal(r.file,r.fileData ? JSON.parse(r.fileData) : null);
   }
 
   private getCopyRight(): void {
@@ -214,20 +232,16 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
   }
 
   private sure_edit(): void {
-    const params = {
-      w: this.route.snapshot.params.id,
-      d: this.param.d,
-      i: [],
-      t: this.param.t,
-      b: this.param.b,
-      n: this.param.n,
-      g: this.param.g,
-      gl: this.param.gl,
-      gd: this.param.gd,
-      fr: this.param.fr,
-      dg: [],
-    };
-    this.api.updateWork(params).subscribe({
+    this.api.updateWork({
+      w: this.editParam.w,
+      n: this.editParam.n,
+      g: this.editParam.g,
+      d: this.editParam.d,
+      gd: this.editParam.gd,
+      t: this.editParam.t,
+      b: this.editParam.b,
+      gl: this.editParam.gl,
+    }).subscribe({
       next: () => {
         this.modal.open(SuccessTips,{
           redirectUrl: 'user',
@@ -246,7 +260,7 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
 
   private public_work(): void {
     this.api.publishWork(this.param).subscribe({
-      next: x => {
+      next: () => {
         this.modal.open(SuccessTips,{
           redirectUrl: '/member/manager/live2D/auditing',
           tip: '已成功提交审核，请等待后台人员审核！',
@@ -310,11 +324,11 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
   private subscribeForm(): void {
     this.form.valueChanges
       .pipe(
-        tap(value => {
+        tap(() => {
           this.setModalCheckedDisabled();
           this.setSaleDisabledState();
         }),
-        map((value: any) => {
+        map((value) => {
           if (!this.isEdit) {
             value.gd = JSON.stringify({
               transformData: { ...this.transformData },
@@ -326,10 +340,9 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
             if (value.gl_token) {
               value.gl = [
                 {
-                  n: '付费下载内容',
+                  n: value.gn,
                   f: [value.gl_token],
-                  p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0,(this.maxPrice + '').length)),10) : value.p,
-                  s: value.s,
+                  s: value.gl_s,
                 },
               ];
             }
@@ -344,11 +357,10 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
               f: [],
               c: value.c,
               cs: 0,
-              ss: value.ss,
               fr: 0,
               gl: value.gl,
             };
-          } else {
+          } else if (this.isEdit) {
             value.b = value.b.token || value.b.url;
             value.gd = JSON.stringify({
               transformData: { ...this.transformData },
@@ -358,13 +370,13 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
             value.c = value.c ? 0 : '';
             value.gl = [
               {
-                n: '付费下载内容',
-                f: [value.gl_token],
-                p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0,(this.maxPrice + '').length)),10) : value.p,
-                s: value.s,
+                n: value.gn,
+                f: value.gl_token,
+                i: this.payGoodsId,
               },
             ];
             return {
+              w: this.goodsId,
               n: value.n,
               d: value.d,
               a: value.a,
@@ -372,18 +384,13 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
               g: value.g,
               gd: value.gd,
               t: value.t.toString(),
-              f: [],
-              c: value.c,
-              cs: 0,
-              ss: 0,
-              fr: 0,
               gl: value.gl,
             };
           }
         })
       )
-      .subscribe((x: any) => {
-        this.param = x;
+      .subscribe((x) => {
+        this.isEdit ? this.editParam = x : this.param = x;
       });
   }
 
@@ -415,6 +422,15 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
     this.subscribeForm();
     this.getEditWorkData();
     this.setChecked();
+    this.initForm();
+  }
+
+  private initForm() {
+    if (this.isEdit) {
+      const oldPrice = this.form.getRawValue().p;
+      this.form.removeControl('p');
+      this.form.addControl('p',new FormControl({ value: oldPrice,disabled: true },{ validators: live2dPriceValidator,}))
+    }
   }
 
   ngAfterViewInit(): void {

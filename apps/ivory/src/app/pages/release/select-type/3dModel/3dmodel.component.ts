@@ -78,7 +78,7 @@ export class ThreeDModelSelectComponent implements OnInit,OnDestroy {
 	 * @description 设置页脚信息
 	 */
 	private setSelectData({
-		header_title = ['请选择Live2D的展示方式','正确选择，让更多人看到你的作品~'],
+		header_title = ['请选择3d的展示方式','正确选择，让更多人看到你的作品~'],
 		next = 'live2d/free',
 		pre = '/release',
 	}) {

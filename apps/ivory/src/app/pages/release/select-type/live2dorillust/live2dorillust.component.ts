@@ -42,7 +42,7 @@ export class Live2dorillustComponent implements OnInit,OnDestroy {
 	}
 
 	private setSelectData({
-		header_title = ['请选择你要发布的作品类型','请上传Live2D或人物立绘相关作品'],
+		header_title = ['请选择你要发布的作品类型','请上传Live2D、人物立绘、3D相关作品'],
 		next = '/live2d',
 		pre = '',
 	}): void {
