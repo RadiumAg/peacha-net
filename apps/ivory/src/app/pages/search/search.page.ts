@@ -1,9 +1,10 @@
-import { switchMap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { FormBuilder } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { of, EMPTY, concat, Subscription, BehaviorSubject, Observable } from 'rxjs';
+import { Works } from '@peacha-core';
 
 enum SearchType {
 	Work,
@@ -22,6 +23,12 @@ export class SearchPage implements OnInit, OnDestroy {
 
 	time = this.fb.control('0');
 	timeSubscription: Subscription;
+
+	money = this.fb.control('0');
+	moneySubscription: Subscription;
+
+	format = this.fb.control('0');
+	formatSubscription: Subscription;
 
 	userOrder = this.fb.control('0');
 	userOrderSubscription: Subscription;
@@ -56,6 +63,7 @@ export class SearchPage implements OnInit, OnDestroy {
 	);
 	params$ = this.route.queryParams;
 
+
 	constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder) { }
 
 	ngOnInit(): void {
@@ -63,6 +71,8 @@ export class SearchPage implements OnInit, OnDestroy {
 		this.timeSubscription = this.time.valueChanges.pipe().subscribe(dd => this.updateParams({ dd }));
 		this.userOrderSubscription = this.userOrder.valueChanges.pipe().subscribe(o => this.updateParams({ o }));
 		this.userTypeSubscription = this.userType.valueChanges.pipe().subscribe(r => this.updateParams({ r }));
+		this.moneySubscription = this.money.valueChanges.pipe().subscribe(m => this.updateParams({ m }));
+		this.formatSubscription = this.format.valueChanges.pipe().subscribe(ft => this.updateParams({ ft }));
 	}
 
 	// eslint-disable-next-line @typescript-eslint/ban-types
@@ -78,6 +88,8 @@ export class SearchPage implements OnInit, OnDestroy {
 		this.timeSubscription.unsubscribe();
 		this.userOrderSubscription.unsubscribe();
 		this.userTypeSubscription.unsubscribe();
+		this.moneySubscription.unsubscribe();
+		this.formatSubscription.unsubscribe();
 	}
 
 	getSearchTypeFromUrl(url: string): Observable<SearchType> {
@@ -89,4 +101,5 @@ export class SearchPage implements OnInit, OnDestroy {
 		}
 		return of(SearchType.Work);
 	}
+
 }

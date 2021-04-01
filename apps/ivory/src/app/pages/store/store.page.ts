@@ -67,16 +67,15 @@ export class StorePage implements AfterViewInit {
 				cover: string,
 				name: string,
 				category: number,
-				publishtime: number,
-				seller_id: number,
-				seller_name: string,
-				file_size: number,
+				sellerId: number,
+				sellerName: string,
+				fileSize: number,
 				goods: {
 					id: number,
 					name: string,
-					createtime: number,
-					maxstock: number,
-					file_size: number,
+					createTime: number,
+					maxStock: number,
+					fileSize: number,
 					price: number
 				}
 			}>(`/work/get_own_work_detail?w=${id == 0 ? w.list[0].id : id}`);
@@ -115,11 +114,10 @@ export class StorePage implements AfterViewInit {
 			queryParamsHandling: 'merge',
 		});
 	}
-	download(id: number, t: number) {
+	download(id: number) {
 		this.http
 			.post('/work/download_goods', {
-				g: id,
-				t: t
+				g: id
 			})
 			.subscribe((s: any) => {
 				window.open(s.url);
@@ -129,8 +127,10 @@ export class StorePage implements AfterViewInit {
 	toWork(id: number, c: number) {
 		if (c == 1) {
 			this.router.navigate(['illust', id]);
-		} else {
+		} else if (c == 0) {
 			this.router.navigate(['live2d', id]);
+		} else {
+			this.router.navigate(['3d', id]);
 		}
 	}
 }

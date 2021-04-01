@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="84.481" height="107" viewBox="0 0 84.481 107">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ffa663;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        font-size: 18px;
+        font-family: MicrosoftYaHei, Microsoft YaHei;
+      }
+    </style>
+  </defs>
+  <g id="分类标签" transform="translate(-0.019 -1)">
+    <g id="Group_3" data-name="Group 3">
+      <path id="Rectangle" class="cls-1" d="M42.5,0h42L.5,107V50Z" transform="translate(0 1)"/>
+      <path id="Path_4" data-name="Path 4" class="cls-1" d="M8.576,0l-1,11h-8Z" transform="translate(75.924 0.999)"/>
+      <g id="Group_2" data-name="Group 2" transform="translate(0 13)">
+        <text id="Live2D" class="cls-2" transform="translate(34.5 35) rotate(-50)"><tspan x="-30.133" y="0">3D模型</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>

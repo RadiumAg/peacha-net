@@ -1,8 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { combineLatest, BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
+import { ModalRef, ModalService, MODAL_DATA_TOKEN } from '@peacha-core';
 import { HttpClient } from '@angular/common/http';
+import { ChangePrice } from '../change-price/change-price';
 
 
 @Component({
@@ -19,9 +20,9 @@ export class GoodsManager implements OnInit {
 				list: {
 					id: number,
 					name: string,
-					max_stock: number,
-					sale_number: number,
-					sellstate: boolean
+					maxStock: number,
+					saleNumber: number,
+					sellState: boolean
 				}[]
 			}>(`/work/get_goods?w=${this.id}`);
 		})
@@ -30,7 +31,8 @@ export class GoodsManager implements OnInit {
 	constructor(
 		private modalRef: ModalRef<GoodsManager>,
 		@Inject(MODAL_DATA_TOKEN) public id: number,
-		private http: HttpClient
+		private http: HttpClient,
+		private modal: ModalService
 	) { }
 
 	ngOnInit(): void {
@@ -49,5 +51,19 @@ export class GoodsManager implements OnInit {
 
 	close() {
 		this.modalRef.close();
+	}
+
+
+	changePrice(price: number, id: number, name: string): void {
+		this.modal.open(ChangePrice, { price: price, name: name }).afterClosed().subscribe(s => {
+			if (s) {
+				this.http.post(`/work/update_price`, {
+					g: id,
+					p: s
+				}).subscribe(_ => {
+					this.update$.next(2);
+				})
+			}
+		})
 	}
 }

@@ -1,5 +1,5 @@
 import { Component, ViewContainerRef, ViewChild, ElementRef, TemplateRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { tap, switchMap, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -49,7 +49,6 @@ export class WorkPage {
 		private modal: ModalService,
 		private zoom: ZoomService,
 		private vc: ViewContainerRef,
-		private router: Router
 	) {
 		this.work$ = this.route.data.pipe(
 			map(d => d.work),
@@ -69,7 +68,7 @@ export class WorkPage {
 						num_followed: number;
 						num_following: number;
 						role: { id: number; expiry: number }[];
-					}>(`/user/get_user?i=${i.author_id}`)
+					}>(`/user/get_user?i=${i.userId}`)
 					.subscribe(s => {
 						s?.role.forEach(l => {
 							this.authorRole.push(l.id);
@@ -83,14 +82,13 @@ export class WorkPage {
 		switchMap(_ => {
 			return this.http
 				.get<{
-					list: {
-						id: number;
-						cover: string;
-						name: string;
-						username: string;
-						publishtime: number;
-						category: number;
-					}[];
+					id: number;
+					cover: string;
+					name: string;
+					nickName: string;
+					userId: number;
+					publishTime: number;
+					category: number;
 				}>(`/work/get_relevant_work?w=${_.id}`)
 				.pipe();
 		})
@@ -116,11 +114,4 @@ export class WorkPage {
 		document.documentElement.scrollTop = 0;
 	}
 
-	toWork(id: number, type: number) {
-		if (type == 1) {
-			this.router.navigate(['illust', id]);
-		} else {
-			this.router.navigate(['live2d', id]);
-		}
-	}
 }

@@ -1,4 +1,4 @@
-<a [href]="category == 1 ? ['/illust/' + id] : ['/live2d/' + id]">
+<a [href]="category == 1 ? ['/illust/' + id] : category == 2 ? ['/3d/' + id] : ['/live2d/' + id]">
 	<div class="cover">
 		<ivo-lazy-img [ngLazyLoad]="cover + '?x-oss-process=image/resize,m_fixed,w_224,h_224'"> </ivo-lazy-img>
 	</div>
@@ -7,6 +7,7 @@
 		<p class="type" [ngSwitch]="category">
 			<ng-container *ngSwitchCase="0"> Live2D </ng-container>
 			<ng-container *ngSwitchCase="1"> 插画 </ng-container>
+			<ng-container *ngSwitchCase="2"> 3D模型 </ng-container>
 		</p>
 		<p class="name">
 			{{ name }}

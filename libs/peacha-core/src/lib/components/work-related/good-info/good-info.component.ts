@@ -30,6 +30,7 @@ export class GoodInfoComponent {
 	@Input() sellState: number;
 	@Input() period: number;
 	@Input() category?: number;
+	@Input() fileType?: number;
 
 	@Select(UserState.id)
 	id$: Observable<number>;
@@ -112,11 +113,11 @@ export class GoodInfoComponent {
 		this.showWorkDetail = [];
 		this.showGoodDetail = [];
 		this.http
-			.get<{ goods_list: string[]; work_list: string[]; size: number }>(`/work/get_goods_detail?g=${this.goodId}`)
+			.get<{ goodsFilesList: string[]; workFilesList: string[]; size: number }>(`/work/get_goods_detail?g=${this.goodId}`)
 			.pipe(
 				take(1),
 				tap(x => {
-					x.work_list?.forEach(l => {
+					x.workFilesList?.forEach(l => {
 						const a: { font: string; type: number } = { font: '', type: -1 };
 						a.font = l;
 						if (l.split('.png').length > 1 || l.split('.jpg').length > 1 || l.split('.psd').length > 1) {
@@ -131,7 +132,7 @@ export class GoodInfoComponent {
 						this.showWorkDetail.push(a);
 					});
 
-					x.goods_list?.forEach(l => {
+					x.goodsFilesList?.forEach(l => {
 						const a: { font: string; type: number } = { font: '', type: -1 };
 						a.font = l;
 						if (l.split('.png').length > 1 || l.split('.jpg').length > 1 || l.split('.psd').length > 1) {

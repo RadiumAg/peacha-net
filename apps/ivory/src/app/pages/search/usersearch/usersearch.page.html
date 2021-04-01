@@ -33,7 +33,7 @@
 			</div>
 			<div class="right">
 				<div class="show" *ngFor="let item of items.work_list">
-					<a [href]="item?.category==1?['/illust/'+item?.id]:['/live2d/'+item?.id]">
+					<a [href]="item?.category==1?['/illust/'+item?.id]:item?.category==2?['/3d/'+item?.id]:['/live2d/'+item?.id]">
 						<ivo-lazy-img [ngLazyLoad]="item.cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'"> </ivo-lazy-img>
 					</a>
 				</div>

@@ -23,11 +23,15 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 			{
 				path: '',
 				component: SearchPage,
+				canActivate: [WorkSearchGuard],
 				children: [
 					{
 						path: '',
+						redirectTo: 'work',
+					},
+					{
+						path: 'work',
 						component: WorkSearchPage,
-						canActivate: [WorkSearchGuard],
 					},
 					{
 						path: 'user',
@@ -36,11 +40,7 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 					{
 						path: 'good',
 						component: GoodsearchPage,
-					},
-					{
-						path: '**',
-						redirectTo: 'all',
-					},
+					}
 				],
 			},
 		]),

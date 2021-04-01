@@ -7,7 +7,7 @@
 					<div class="show" *ngIf="items?.count>0">
 						<div class="des" [class.focus]="item.id==it.id" *ngFor="let item of items.list" (click)="selectOne(item.id)">
 							<img
-								[attr.src]="item?.price==0?'/assets/image/work-card/free-tag.svg':item?.category?'/assets/image/work-card/ikon-tag.svg':'/assets/image/work-card/Live2D-tag.svg'"
+								[attr.src]="item.price==0?'/assets/image/work-card/free-tag.svg':item?.category===1?'/assets/image/work-card/ikon-tag.svg':item?.category===0?'/assets/image/work-card/Live2D-tag.svg':'/assets/image/work-card/3D-tag.svg'"
 								class="good-icon"
 							/>
 							<img [src]="item.cover" [attr.checked]="it.id===item.id?true:null" />
@@ -36,54 +36,27 @@
 									>类型：
 									<ng-container *ngSwitchCase="0"> Live2D </ng-container>
 									<ng-container *ngSwitchCase="1"> 插画 </ng-container>
+									<ng-container *ngSwitchCase="2"> 3D模型 </ng-container>
 								</span>
-								<span class="detail">作者：{{it.seller_name}}</span>
-								<span class="detail">获取时间：{{it?.goods.createtime|date:"yyyy-MM-dd HH:mm"}}</span>
+								<span class="detail">作者：{{it.sellerName}}</span>
+								<!-- <span class="detail">获取时间：{{it?.goods.createtime|date:"yyyy-MM-dd HH:mm"}}</span> -->
 							</div>
 						</div>
-						<!-- <div class="b">
-							<button (click)="downloadwork(it.list[0].id)">下载模型文件</button>
-						</div> -->
-						<div class="good" *ngIf="it?.category!=1 && it?.goods.price>0">
+						<div class="good" *ngFor="let i of it.goods">
 							<div class="aaa">
-								<span class="name">
-								预览文件
-								</span>
+								<span class="name"> {{i.name}} </span>
 							</div>
 							<div class="bbb">
-								<!-- <span>购买时间：{{item.createtime|date:"yyyy-MM-dd HH:mm"}}</span> -->
-								<span *ngIf="it?.file_size!=0">文件大小：{{(it?.file_size/ 1048576).toFixed(2)}}M</span>
+								<span>文件大小：{{(i?.fileSize/ 1048576).toFixed(2)}}M</span>
 							</div>
-							<button (click)="download(it?.goods.id,0)">
-								下载预览文件
-							</button>
-					   </div>
-
-						<div class="good" >
-								<div class="aaa">
-									<span class="name">
-										<ng-container *ngIf="it?.goods.price>0"> 商品文件 </ng-container>
-										<ng-container *ngIf="it?.goods.price===0"> 免费分享文件 </ng-container>
-									</span>
-								</div>
-								<div class="bbb">
-									<ng-container *ngIf="it?.goods.price>0">
-										<span *ngIf="it?.goods.file_size!=0">文件大小：{{(it?.goods.file_size/ 1048576).toFixed(2)}}M</span>
-										<span class="type" [ngSwitch]="it?.goods.maxstock" *ngIf="it?.goods.maxstock>0">
-											<ng-container *ngSwitchCase="1"> 单次出售 </ng-container>
-											<ng-container *ngSwitchDefault> 多次出售 </ng-container>
-										</span>
-									</ng-container>
-									<ng-container *ngIf="it?.goods.price===0">
-										<span *ngIf="it?.file_size!=0">文件大小：{{(it?.file_size/ 1048576).toFixed(2)}}M</span>
-									</ng-container>
-									<!-- <span>购买时间：{{item.createtime|date:"yyyy-MM-dd HH:mm"}}</span> -->
-									
-								</div>
-								<button (click)="download(it?.goods.id,it?.goods.price>0?1:0)">
-									<ng-container *ngIf="it?.goods.price>0;else free"> 下载商品文件 </ng-container>
-									<ng-template #free> 下载免费分享文件 </ng-template>
-								</button>
+							<div class="bbb">
+								<span>购买时间：{{i.createTime|date:"yyyy-MM-dd HH:mm"}}</span>
+								<span [ngSwitch]="i.maxStock">
+									<ng-container *ngSwitchCase="1"> 单次出售 </ng-container>
+									<ng-container *ngSwitchDefault> 多次出售 </ng-container>
+								</span>
+							</div>
+							<button (click)="download(it?.goods.id)">下载文件</button>
 						</div>
 					</div>
 				</ng-container>

@@ -14,12 +14,36 @@ export class GoodsearchPage {
 	constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) { }
 
 	page$ = new BehaviorSubject<number>(1);
-
+	priceRegion = [
+		{ sp: 0, ep: 0 },
+		{ sp: 0, ep: 500 },
+		{ sp: 500, ep: 1000 },
+		{ sp: 1000, ep: 2000 },
+		{ sp: 2000, ep: 3000 },
+		{ sp: 3000, ep: '' },
+	];
 	workdata$ = this.route.queryParams.pipe(
 		switchMap(r => {
 			const key: string = encodeURIComponent(r.keyword ?? '');
 			return this.http
-				.get<Works>(`/work/search_goods?k=${key ?? ''}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ? r.o : key ? 0 : 1}&dd=${r.dd ?? 0}`)
+				.get<{
+					count: number;
+					list: {
+						id: number;
+						name: string;
+						likeCount: number;
+						collectCount: number;
+						publishTime: number;
+						cover: string;
+						category: number;
+						userId: number;
+						nickName: string;
+						price: number;
+						stock: number
+					}[]
+					// eslint-disable-next-line max-len
+				}>(`/work/search_work?k=${key}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ?? 1}&sp=${r.m ? this.priceRegion[r.m].sp : 0}&ep=${r.m ? this.priceRegion[r.m].ep : 0}&dd=${r.dd ?? 0}&c=${r.c === undefined ? '-1' : r.c}&ws=1&ft=${r.ft === undefined ? '-1' : r.ft}
+				`)
 				.pipe(
 					tap(_s => {
 						this.page$.next(r.p ?? 1);
@@ -29,17 +53,6 @@ export class GoodsearchPage {
 		})
 	);
 
-	toWork(id: number, c: number): void {
-		if (c == 1) {
-			this.router.navigate(['illust', id]);
-		} else {
-			this.router.navigate(['live2d', id]);
-		}
-	}
-
-	toUser(id: number): void {
-		this.router.navigate(['user', id]);
-	}
 	page(data: number): void {
 		this.router.navigate([], {
 			queryParams: {
