@@ -4,10 +4,11 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReactiveComponentModule, WorkApiService } from '@peacha-core';
 import { FollowModule } from '@peacha-core/feature';
-import { PeachaComponentsModule } from '@peacha-core/components';
+import { PeachaComponentsModule, WorkRelatedModule } from '@peacha-core/components';
 import { SelectWorkPage } from './select-work/select-work.page';
 import { SelectGoodPage } from './select-good/select-good.page';
 import { SelectPage } from './select.page';
+import { IndexApiService } from '../index/index-api.service';
 
 @NgModule({
 	declarations: [SelectPage, SelectWorkPage, SelectGoodPage],
@@ -17,6 +18,7 @@ import { SelectPage } from './select.page';
 		ReactiveFormsModule,
 		CommonModule,
 		ReactiveComponentModule,
+		WorkRelatedModule,
 		RouterModule.forChild([
 			{
 				path: '',
@@ -34,6 +36,6 @@ import { SelectPage } from './select.page';
 			},
 		]),
 	],
-	providers: [WorkApiService],
+	providers: [WorkApiService, IndexApiService],
 })
 export class SelectModule { }

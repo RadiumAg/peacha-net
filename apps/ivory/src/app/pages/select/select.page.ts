@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Works } from '@peacha-core';
 import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { BehaviorSubject, combineLatest } from 'rxjs';
+import { IndexApiService } from '../index/index-api.service';
 
 
 @Component({
@@ -18,7 +19,8 @@ export class SelectPage {
     constructor(
         private route: ActivatedRoute,
         private http: HttpClient,
-        private router: Router
+        private router: Router,
+        private indexApi: IndexApiService
     ) { }
 
     priceRegion = [
@@ -62,6 +64,9 @@ export class SelectPage {
                 );
         })
     );
+
+    /**热门标签 */
+    hotTags$ = this.indexApi.getHotTag();
 
     page(data: number): void {
         this.router.navigate([], {
