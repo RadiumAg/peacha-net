@@ -26,7 +26,7 @@ export class FormInputComponent implements OnInit,ControlValueAccessor {
   @Input()
   ivoValue = '';
   @Input()
-  ivoMaxLength = 100;
+  ivoMaxLength = 20;
   @Input()
   ivoMinLength = 0;
   @Output()

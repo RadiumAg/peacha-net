@@ -19,7 +19,7 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 	submitButton: ElementRef;
 
 	constructor(private fb: FormBuilder,private modal: ModalService,private route: ActivatedRoute,private api: ReleaseApiService) { }
-	illustGoodsId: number = undefined;
+	illustWorkId: number = undefined;
 	param: {
 		[key: string]: any;
 	};
@@ -43,7 +43,6 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 		t: [[]],
 		b: ['',Validators.required],
 		c: ['',Validators.required],
-		gl_token: [null,Validators.required],
 		gn: ['',],
 		a: [[]],
 		checked: [false,Validators.requiredTrue],
@@ -97,8 +96,8 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
+				this.illustWorkId = parseInt(x.get('id'),10);
 				this.api.getEditWork(Number(x.get('id'))).subscribe((r: Work) => {
-					this.illustGoodsId = r.goodsList[0].id;
 					this.copyrightModel = r.authority;
 					this.form.patchValue({
 						n: r.name,
@@ -174,7 +173,7 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 	private sure_edit() {
 		this.api
 			.updateWork({
-				w: this.illustGoodsId,
+				w: this.editParam.w,
 				d: this.editParam.d,
 				i: this.editParam.i,
 				t: this.editParam.t,
@@ -216,21 +215,20 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 							c: value.c,
 							i: value.f,
 							cs: 1,
-							gl: [{ s: -1,n: value.gn,f: value.gl_token?.token || '',ft: 0,p: 0 }],
+							gl: [],
 						};
 					} else {
+						value.f = value.f.map((s: { remote_token: string; url: string }) => s.remote_token || s.url);
+
 						return {
-							w: this.illustGoodsId,
-							n: value.gl,
+							w: this.illustWorkId,
+							n: value.n,
 							d: value.d,
-							b: value.b,
+							b: value.b.url || value.b.remote_token || '',
 							g: value.g,
-							t: value.t,
-							gl: [{
-								n: value.gn,
-								f: [value.gl_token[0] ? value.gl_token[0]?.token || value.gl_token[0].url : ''],
-								s: value.gl_s,
-							}],
+							i: value.f,
+							t: value.t.toString(),
+							gl: [],
 						};
 					}
 				})

@@ -62,7 +62,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		d: ['',[Validators.required,emptyStringValidator()]],
 		t: [[]],
 		b: ['',Validators.required],
-		c: ['',Validators.required],
+		c: [0,Validators.required],
 		bv: [''],
 		a: [[]],
 		checked: [false,Validators.requiredTrue],

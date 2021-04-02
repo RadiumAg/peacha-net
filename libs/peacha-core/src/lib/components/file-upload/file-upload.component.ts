@@ -5,6 +5,7 @@ import { CommmonApiService,ModalService,Process } from '@peacha-core';
 import { Subject,BehaviorSubject } from 'rxjs';
 import { filter,map,takeUntil } from 'rxjs/operators';
 import { PopTips } from '../pop-tips/pop-tips';
+import { findFullParentPath } from '@ngxs/store/src/internal/internals';
 
 
 export interface IFileItem {
@@ -41,11 +42,10 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
   }
   file$: BehaviorSubject<IFileItem> = new BehaviorSubject(null);
   @Input() fileNumber: number;
-  @Input() buttonWord = '';
-  @Input() canUplaod = true;
-  @Input() canDelete = false;
   @Input() isResertBeforeUpload = false;
-  updata: (o: IFileItem) => void;
+  @Input() ivoDisabled = false;
+  onChange: (o: IFileItem) => void;
+  onTouched: () => void;
   distroy$ = new Subject<void>();
   _fileSzie = 209715200;
 
@@ -62,18 +62,29 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
     },
   };
 
+  getFileNameFriendly(fileName: string): string {
+    if (fileName.length > 10) {
+      return fileName.slice(0,9) + '...  ' + fileName.slice(fileName.lastIndexOf('.'));
+    } else {
+      return fileName;
+    }
+  }
 
   writeValue(files: IFileItem): void {
     files ? this.file$.next({ ...files,Process$: new BehaviorSubject({ progress: 0,success: true }) }) : this.file$.next(null);
   }
 
   registerOnChange(fn: (o: IFileItem) => void): void {
-    this.updata = fn;
+    this.onChange = fn;
   }
 
-  registerOnTouched(/* fn: any */): void { }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
 
-  setDisabledState?(/* isDisabled: boolean */): void { }
+  setDisabledState?(isDisabled: boolean): void {
+    this.ivoDisabled = isDisabled
+  }
 
   /**
    *
@@ -119,9 +130,9 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
   private subscribeData() {
     this.file$.pipe(takeUntil(this.distroy$)).subscribe(x => {
       if (x && x.url) {
-        this.updata?.call(this,{ token: x.token,url: x.url });
+        this.onChange?.call(this,{ token: x.token,url: x.url });
       } else if (!x) {
-        this.updata?.call(this,null);
+        this.onChange?.call(this,null);
       }
     })
   }
