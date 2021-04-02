@@ -36,7 +36,7 @@ export class WorkLive2dComponent {
 	work$ = this.route.data.pipe(
 		map(d => d.work),
 		tap(work => {
-			const previewData = work.file_data ? JSON.parse(work.file_data) : null;
+			const previewData = work.fileData ? JSON.parse(work.fileData) : null;
 			this.transformData = previewData?.transformData as Live2dTransformData;
 			this.enableFaceTracker = previewData?.enableFaceTracker;
 			this.enableSettingPanel = previewData?.enableSettingPanel;
@@ -77,7 +77,7 @@ export class WorkLive2dComponent {
 		private drop: DropDownService,
 		private modal: ModalService,
 		private vc: ViewContainerRef
-	) { }
+	) {}
 
 	relevants$ = this.route.params.pipe(
 		switchMap(_ => {
@@ -112,5 +112,4 @@ export class WorkLive2dComponent {
 			},
 		});
 	}
-
 }

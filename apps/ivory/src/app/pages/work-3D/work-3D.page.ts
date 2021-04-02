@@ -41,16 +41,15 @@ export class Work3DPage {
 	work$ = this.route.data.pipe(
 		map(d => d.work),
 		tap(work => {
-			const previewData = work.file_data ? JSON.parse(work.fileData) : null;
+			const previewData = work.fileData ? JSON.parse(work.fileData) : null;
 			this.transformData = previewData?.transformData as Live2dTransformData;
 			this.enableFaceTracker = previewData?.enableFaceTracker;
 			this.enableSettingPanel = previewData?.enableSettingPanel;
 			this.live2d$ = of(new HttpVirtualFileSystem(work.file));
 			this.publicityPeriod$ = of(work.publishTime + 7 * 24 * 60 * 60 * 1000 - Date.now());
 			this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-				'https://player.bilibili.com/player.html?bvid='
-				+ work.bvNumber
-				+ '&page=1&as_wide=1&high_quality=1&danmaku=0');
+				'https://player.bilibili.com/player.html?bvid=' + work.bvNumber + '&page=1&as_wide=1&high_quality=1&danmaku=0'
+			);
 			this.http
 				.get<{
 					avatar: string;
@@ -78,7 +77,6 @@ export class Work3DPage {
 	enableFaceTracker: boolean;
 	enableSettingPanel: boolean;
 
-
 	safeUrl: any;
 	constructor(
 		private router: Router,
@@ -90,7 +88,7 @@ export class Work3DPage {
 		private vc: ViewContainerRef,
 		private zoom: ZoomService,
 		private sanitizer: DomSanitizer
-	) { }
+	) {}
 
 	relevants$ = this.route.params.pipe(
 		switchMap(_ => {
@@ -137,5 +135,4 @@ export class Work3DPage {
 		this.illIndex$.next(index);
 		document.documentElement.scrollTop = 0;
 	}
-
 }
