@@ -4,7 +4,6 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, Validators } from '@angular/forms';
-import { Works } from '@peacha-core';
 
 @Component({
 	selector: 'ivo-work-search',
@@ -18,7 +17,7 @@ export class WorkSearchPage {
 		})
 	);
 
-	constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) { }
+	constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
 	sp: FormControl = new FormControl();
 	ep: FormControl = new FormControl('', [Validators.maxLength(10)]);
@@ -46,11 +45,13 @@ export class WorkSearchPage {
 						userId: number;
 						nickName: string;
 						price: number;
-						stock: number
-					}[]
+						stock: number;
+					}[];
 				}>(
 					// eslint-disable-next-line max-len
-					`/work/search_work?k=${key}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ?? 1}&dd=${r.dd ?? 0}&c=${r.c === undefined ? '-1' : r.c}&ws=0&ft=${r.ft === undefined ? '-1' : r.ft}
+					`/work/search_work?k=${key}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ?? 1}&dd=${r.dd ?? 0}&c=${
+						r.c === undefined ? '-1' : r.c
+					}&ws=-1&ft=${r.ft === undefined ? '-1' : r.ft}
                     `
 				)
 				.pipe(
