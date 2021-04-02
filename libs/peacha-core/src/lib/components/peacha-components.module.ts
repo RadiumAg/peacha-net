@@ -53,6 +53,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
+    Select,
     TimeFormatPipe,
     ErrorDisplay,
     ErrorDisplayCase,
