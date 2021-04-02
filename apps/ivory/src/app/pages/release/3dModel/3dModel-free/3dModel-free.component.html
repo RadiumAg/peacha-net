@@ -88,24 +88,26 @@
             </ivo-file-upload>
           </div>
 
-          <span class="select-upload-type required-center" *ngIf="item.value.f">
-            <ivo-select [height]="'50px'" [disabled]="isEdit" fontSize="16px" formControlName="ft" ivoErroTip
-              ivoErrorTipString="请选择类型!">
-              <ivo-option [value]='2' text='.vrm'></ivo-option>
-              <ivo-option [value]='4' text='.unitypackage'></ivo-option>
-              <ivo-option [value]='5' text='.fbx'></ivo-option>
-            </ivo-select>
+          <span class="required-center file-type-area" *ngIf="item.value.f">
+            <span>文件格式:</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="select-upload-type">
+              <ivo-select [height]="'50px'" [disabled]="isEdit" fontSize="16px" formControlName="ft" ivoErroTip
+                ivoErrorTipString="请选择类型!">
+                <ivo-option [value]='2' text='.vrm'></ivo-option>
+                <ivo-option [value]='4' text='.unitypackage'></ivo-option>
+                <ivo-option [value]='5' text='.fbx'></ivo-option>
+              </ivo-select>
+            </div>
           </span>
 
-          <span class="free-share-file-tip" *ngIf="item.value.ft === 4">模型内包含的插件或shader请在详情内具体说明</span>
+          <span class="free-share-file-tip" *ngIf="item.value.ft === 4">模型内若含有插件或shader，请在作品简介内具体说明。</span>
         </div>
 
         <div class="form-controller no-top-line required-center share-file-name">
           <div class="input-area">
             <span class="word-count">{{ share_name_input.value.length }}/20</span>
-            免费分享名称:&nbsp;&nbsp;&nbsp;&nbsp;<input placeholder="请输入商品名称请输入商品名称请输入商品名称" ivoErroTip
-              ivoErrorTipString="请填写免费商品名称!" #share_name_input type="text" formControlName="n" maxlength="20"
-              class="input">
+            免费分享名称:&nbsp;&nbsp;&nbsp;&nbsp;<input placeholder="请输入免费分享名称" ivoErroTip ivoErrorTipString="请输入免费分享名称!"
+              #share_name_input type="text" formControlName="n" maxlength="20" class="input">
           </div>
         </div>
       </div>
