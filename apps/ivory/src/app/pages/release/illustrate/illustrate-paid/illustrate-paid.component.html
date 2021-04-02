@@ -86,6 +86,9 @@
     <div class="form-item explain">
       <div class=" title">版权声明</div>
       <div class="form-controller">
+        <nz-radio-group formControlName="c" ivoFormNav data-control-index="4" ivoErroTip ivoErrorTipString="请选择版权声明!">
+          <label nz-radio [nzValue]="0" [nzDisabled]="isEdit">此作品为原创作品</label>
+        </nz-radio-group>
         <nz-checkbox-wrapper (nzOnChange)="changeCopyright($event)">
           <form [formGroup]="checkedForm">
             <div nz-col>

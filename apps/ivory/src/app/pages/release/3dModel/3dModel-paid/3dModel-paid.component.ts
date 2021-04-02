@@ -39,7 +39,6 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		t: string;
 		c: number;
 		cs: number;
-		ss: number;
 		f: [];
 		bv: string;
 		gl: IPublishFileType[];
@@ -212,7 +211,6 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 			t: this.publishParam.t,
 			c: this.publishParam.c,
 			cs: 2,
-			ss: this.publishParam.ss,
 			f: this.publishParam.f,
 			gl: this.publishParam.gl,
 			bv: this.publishParam.bv,
@@ -350,7 +348,6 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 						bv: value.bv,
 						c: value.c,
 						cs: 1,
-						ss: 0,
 						gl,
 					};
 				})

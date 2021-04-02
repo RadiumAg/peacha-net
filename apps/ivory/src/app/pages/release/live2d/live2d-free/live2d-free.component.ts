@@ -41,7 +41,6 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 		t: string;
 		c: number;
 		cs: number;
-		ss: number;
 		f: string[];
 		fr: number;
 		gl: any[];

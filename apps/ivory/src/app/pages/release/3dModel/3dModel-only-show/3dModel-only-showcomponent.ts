@@ -36,7 +36,6 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 		t: string;
 		c: number;
 		cs: number;
-		ss: number;
 		f: [];
 		bv: string;
 	};
@@ -49,7 +48,6 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 		t: string;
 		c: number;
 		cs: number;
-		ss: number;
 		f: [];
 		bv: string;
 	};
@@ -194,7 +192,6 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 			t: this.publishParam.t,
 			c: this.publishParam.c,
 			cs: 2,
-			ss: this.publishParam.ss,
 			f: this.publishParam.f,
 			gl: [],
 		}).subscribe({
@@ -259,7 +256,6 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 				b: this.editParam.b,
 				n: this.editParam.n,
 				gl: [],
-				fr: 1,
 			})
 			.subscribe({
 				next: () => {
@@ -278,12 +274,6 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 			});
 	}
 
-	private setiToken() {
-		const iUrl = this.form.value.f.map((s) => s.remote_token || s.url);
-		const i = iUrl;
-		return i;
-	}
-
 	private subscribeForm() {
 		this.form.valueChanges
 			.pipe(
@@ -300,7 +290,6 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 						bv: value.bv,
 						c: value.c,
 						cs: 1,
-						ss: 0,
 					};
 				})
 			)

@@ -1,7 +1,7 @@
 import { SuccessTips } from './../../components/success-tips/success-tips';
 import { Component,OnInit,ViewChild,ElementRef,AfterViewInit } from '@angular/core';
 import { debounce,map } from 'rxjs/operators';
-import { FormBuilder,Validators } from '@angular/forms';
+import { FormBuilder,FormControl,Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject,fromEvent,interval } from 'rxjs';
 import { emptyStringValidator,live2dPriceValidator,ModalService,validator,Work } from '@peacha-core';
@@ -19,6 +19,7 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 	submitButton: ElementRef;
 
 	constructor(private fb: FormBuilder,private modal: ModalService,private route: ActivatedRoute,private api: ReleaseApiService) { }
+
 	Fixed = Number.prototype.toFixed;
 	illustGoodsId: number = undefined;
 	param: {
@@ -29,8 +30,8 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 		w: number;
 		n: string;
 		d: string;
+		f: string[];
 		b: string;
-		g: string;
 		t: string;
 		gl: any[];
 	}>;
@@ -44,7 +45,7 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 		c: [0,Validators.required],
 		p: [null,[live2dPriceValidator()]],
 		gn: [null,Validators.required],
-		gl_s: ['',Validators.required],
+		gl_s: [1,Validators.required],
 		gl_token: [null,Validators.required],
 		a: [[]],
 		checked: [false,Validators.requiredTrue],
@@ -170,12 +171,12 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 		this.api
 			.updateWork({
 				w: this.route.snapshot.params.id,
-				d: this.param.d,
-				i: this.param.f,
-				t: this.param.t,
-				b: this.param.b,
-				n: this.param.n,
-				gl: this.param.gl,
+				d: this.editParam.d,
+				i: this.editParam.f,
+				t: this.editParam.t,
+				b: this.editParam.b,
+				n: this.editParam.n,
+				gl: this.editParam.gl,
 			})
 			.subscribe({
 				next: () => {
@@ -213,7 +214,7 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 							cs: 1,
 							gl: [{
 								n: value.gn,
-								f: [value.gl_token[0] ? value.gl_token[0]?.token || value.gl_token[0].url : ''],
+								f: value.gl_token?.token || '',
 								p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0,(this.maxPrice + '').length)),10) : value.p,
 								s: value.gl_s,
 							}],
@@ -223,14 +224,14 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 						value.f = value.f.map((s: { remote_token: string; url: string; }) => s.remote_token || s.url);
 						return {
 							w: this.illustGoodsId,
-							n: value.gl,
+							n: value.n,
 							d: value.d,
 							b: value.b,
-							g: value.g,
-							t: value.t,
+							t: value.t.toString(),
+							f: value.f,
 							gl: [{
 								n: value.gn,
-								f: [value.gl_token[0] ? value.gl_token[0]?.token || value.gl_token[0].url : ''],
+								f: value.gl_token?.token || value.gl_token?.url || '',
 								s: value.gl_s,
 							}],
 						};
@@ -255,10 +256,19 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 		});
 	}
 
+	private initForm() {
+		if (this.isEdit) {
+			const oldPrice = this.form.getRawValue().p;
+			this.form.removeControl('p');
+			this.form.addControl('p',new FormControl({ value: oldPrice,disabled: true },{ validators: live2dPriceValidator,}))
+		}
+	}
+
 	ngOnInit() {
 		this.getCopyRight();
 		this.subscribeForm();
 		this.getEditWork();
+		this.initForm();
 	}
 
 	ngAfterViewInit() {

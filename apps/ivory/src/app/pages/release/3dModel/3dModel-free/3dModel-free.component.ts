@@ -222,7 +222,6 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 			t: this.publishParam.t,
 			c: this.publishParam.c,
 			cs: 2,
-			ss: this.publishParam.ss,
 			f: this.publishParam.f,
 			gl: this.publishParam.gl,
 			bv: this.publishParam.bv,
@@ -301,7 +300,6 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 				b: this.editParam.b,
 				n: this.editParam.n,
 				gl: this.editParam.gl,
-				fr: 1,
 			})
 			.subscribe({
 				next: () => {
@@ -318,12 +316,6 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 					}
 				},
 			});
-	}
-
-	private setiToken() {
-		const iUrl = this.form.value.f.map((s) => s.remote_token || s.url);
-		const i = iUrl;
-		return i;
 	}
 
 	private subscribeForm() {

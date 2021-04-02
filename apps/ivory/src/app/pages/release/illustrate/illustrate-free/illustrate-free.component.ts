@@ -43,6 +43,8 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 		t: [[]],
 		b: ['',Validators.required],
 		c: ['',Validators.required],
+		gl_token: [null,Validators.required],
+		gn: ['',],
 		a: [[]],
 		checked: [false,Validators.requiredTrue],
 	});
@@ -214,7 +216,7 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 							c: value.c,
 							i: value.f,
 							cs: 1,
-							gl: [{ s: -1,n: value.gn,f: value.gl_token,ft: 0,p: 0 }],
+							gl: [{ s: -1,n: value.gn,f: value.gl_token?.token || '',ft: 0,p: 0 }],
 						};
 					} else {
 						return {
