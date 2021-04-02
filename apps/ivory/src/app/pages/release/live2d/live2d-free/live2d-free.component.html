@@ -102,8 +102,8 @@
     <div class="form-item copyright-notice">
       <div class="title">版权声明</div>
       <div class="form-controller">
-        <nz-radio-group (ngModelChange)="changeCopyrightState($event)" formControlName="c" data-control-index="4"
-          ivoErroTip ivoErrorTipString="请选择版权声明!">
+        <nz-radio-group (ngModelChange)="changeCopyrightState($event)" formControlName="c" ivoErroTip
+          ivoErrorTipString="请选择版权声明!">
           <label nz-radio [nzValue]="0" [nzDisabled]="isEdit">此作品为原创作品</label>
           <label nz-radio [nzValue]="1" [nzDisabled]="isEdit">此作品为同人作品</label>
         </nz-radio-group>

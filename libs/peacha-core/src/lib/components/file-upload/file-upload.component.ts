@@ -47,7 +47,7 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
   @Input() isResertBeforeUpload = false;
   updata: (o: IFileItem) => void;
   distroy$ = new Subject<void>();
-  _fileSzie: number;
+  _fileSzie = 209715200;
 
   /**
  *  @description 验证策略对象

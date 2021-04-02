@@ -61,7 +61,7 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
     b: ['',Validators.required],
     g: ['',Validators.required],
     a: [[]],
-    c: [false,Validators.requiredTrue],
+    c: [0],
     gn: ['',Validators.required],
     p: ['',live2dPriceValidator()],
     gl_token: ['',Validators.required],
@@ -211,7 +211,7 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
       d: r.description,
       b: { url: r.cover },
       t: r.tag,
-      c: !r.copyright && true,
+      c: r.copyright,
       g: this.token,
       a: r.authority,
       p: r.goodsList[0].price,
@@ -292,9 +292,9 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
     });
   }
 
-  changeCopyrightState($event: boolean): void {
+  changeCopyrightState(): void {
     if (!this.isEdit) {
-      $event ? this.stateMentStrategy.orgin() : this.stateMentStrategy.not_checked();
+      this.stateMentStrategy.orgin();
     }
   }
 
@@ -352,12 +352,11 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
               enableSettingPanel: this.modalSetting.enableSettingPanel,
             });
             value.b = value.b.token || '';
-            value.c = value.c ? 0 : '';
             if (value.gl_token) {
               value.gl = [
                 {
                   n: value.gn,
-                  f: [value.gl_token],
+                  f: value.gl_token,
                   s: value.gl_s,
                   p: value.p
                 },
@@ -384,7 +383,6 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
               enableFaceTracker: this.modalSetting.enableFaceTracker,
               enableSettingPanel: this.modalSetting.enableSettingPanel,
             });
-            value.c = value.c ? 0 : '';
             value.gl = [
               {
                 n: value.gn,

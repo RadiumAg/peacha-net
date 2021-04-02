@@ -103,15 +103,16 @@
     <div class="form-item copyright-notice">
       <div class="title">版权声明</div>
       <div class="form-controller">
-        <label nz-checkbox formControlName="c" ivoErroTip ivoErrorTipString="请勾选版权声明!" [nzDisabled]="isEdit"
-          (ngModelChange)="changeCopyrightState($event)">此作品为原创作品</label>
+        <nz-radio-group formControlName="c" ivoErroTip ivoErrorTipString="请勾选版权声明!">
+          <label nz-radio [nzValue]="0" [nzDisabled]="isEdit">此作品为原创作品</label>
+        </nz-radio-group>
         <form [formGroup]="checkedForm">
           <nz-checkbox-wrapper (nzOnChange)="changeCopyright($event)">
             <div nz-col>
               <ng-container *ngFor="let item of copyrightCheckes$ | async; let i = index">
                 <div>
                   <label nz-checkbox [nzValue]="item['id']" (click)="(copyright.click)" formControlName="copychecked"
-                    [nzChecked]="copyrightModel.includes(item['id'])" [nzDisabled]="isEdit || stateMentStates[i]">{{
+                    [nzChecked]="copyrightModel.includes(item['id'])" [nzDisabled]="isEdit">{{
                     item['name'] }}</label>
                 </div>
               </ng-container>
