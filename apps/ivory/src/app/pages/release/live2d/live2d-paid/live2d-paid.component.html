@@ -4,7 +4,7 @@
       <div class="title">发布作品</div>
     </div>
 
-    <div class="form-item">
+    <div class="form-item works-info">
       <div class="title">作品信息</div>
       <div class="form-controller">
         <div class="title required">
@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <div class="form-item">
+    <div class="form-item live2d">
       <div class="title" [ivoNoticeTitle]="'此模型用于商品详情页预览，可降低画质或添加水印，保护版权'">
         添加预览Live2D模型
         <span class="download" (click)="openPDF('/assets/download_files/ZIP文件准备指南.pdf')">ZIP文件准备指南</span>
@@ -66,7 +66,7 @@
       </div>
     </div>
 
-    <div class="form-item">
+    <div class="form-item goods">
       <div class="title" [ivoNoticeTitle]="'此模型用于商品出售，请上传原始文件'">
         添加商品Live2D模型
         <span class="download" (click)="openPDF('/assets/download_files/ZIP文件准备指南.pdf')">ZIP文件准备指南</span>
@@ -75,11 +75,15 @@
         <ivo-live2d-upload #godds_live2d formControlName="gl_token" ivoErroTip ivoErrorTipString="请添加商品Live2D模型!"
           isGood="true"></ivo-live2d-upload>
       </div>
-      <div class="form-controller">
-        <input nz-button type="number" #price min="0" [max]="maxPrice"
-          onpaste="return false"
-          (input)="priceValidate($event)"
-          maxlength="5" ivoErroTip [ivoErrorTipString]="{
+      <div class="form-controller required-center name no-top-line">
+        商品名称:&nbsp;&nbsp;&nbsp;&nbsp;
+        <ivo-form-input ivoPlaceholder="请输入商品名称" formControlName="gn" [ivoMaxLength]="20" ivoErroTip
+          ivoErrorTipString="请填写免费商品类型名称!"></ivo-form-input>
+      </div>
+      <div class="form-controller required-center price">
+        商品价格:&nbsp;&nbsp;&nbsp;&nbsp;
+        <input nz-button type="number" #price min="0" [max]="maxPrice" onpaste="return false"
+          (input)="priceValidate($event)" maxlength="5" ivoErroTip [ivoErrorTipString]="{
 						nullPrice: '请设置商品价格!',
 						floatPrice: '价格只能为整数!',
 						negativePrice: '价格不能为负数!',
@@ -87,29 +91,29 @@
 					}" formControlName="p" class="input" placeholder="&yen;设置商品价格" />
         <span class="form-item-controller-tip">平台将收取8%的服务费，预计收益{{ call(Fixed, price.value * 0.92, 2) }}元</span>
       </div>
-      <div class="form-controller">
-        <nz-radio-group formControlName="s" ivoErroTip ivoErrorTipString="请选择出售次数!">
-          <form [formGroup]="checkedForm">
-            <label nz-radio [nzValue]="1" [nzDisabled]="saleDisabled" formControlName="sSaleChecked">单次销售</label>
-            <label nz-radio [nzValue]="-1" [nzDisabled]="saleDisabled" formControlName="dSaleChecked">多次销售</label>
-          </form>
+      <div class=" form-controller no-top-line">
+        <nz-radio-group formControlName="gl_s" [nzDisabled]="isEdit" ivoErroTip ivoErrorTipString="请选择商品销售类型!">
+          <label nz-radio [nzValue]="1"><span class="label-inner">单次销售</span></label>
+          <label nz-radio [nzValue]="-1"><span class="label-inner">多次销售</span></label>
         </nz-radio-group>
       </div>
+
     </div>
 
-    <div class="form-item">
+    <div class="form-item copyright-notice">
       <div class="title">版权声明</div>
       <div class="form-controller">
-        <label nz-checkbox formControlName="c" ivoErroTip ivoErrorTipString="请勾选版权声明!" [nzDisabled]="isEdit"
-          (ngModelChange)="changeCopyrightState($event)">此作品为原创作品</label>
+        <nz-radio-group formControlName="c" ivoErroTip ivoErrorTipString="请勾选版权声明!">
+          <label nz-radio [nzValue]="0" [nzDisabled]="isEdit">此作品为原创作品</label>
+        </nz-radio-group>
         <form [formGroup]="checkedForm">
           <nz-checkbox-wrapper (nzOnChange)="changeCopyright($event)">
             <div nz-col>
               <ng-container *ngFor="let item of copyrightCheckes$ | async; let i = index">
                 <div>
                   <label nz-checkbox [nzValue]="item['id']" (click)="(copyright.click)" formControlName="copychecked"
-                    [nzChecked]="copyrightModel.includes(item['id'])"
-                    [nzDisabled]="isEdit || stateMentStates[i]">{{ item['name'] }}</label>
+                    [nzChecked]="copyrightModel.includes(item['id'])" [nzDisabled]="isEdit">{{
+                    item['name'] }}</label>
                 </div>
               </ng-container>
               <input type="hidden" formControlName="copyright" #copyright />
@@ -146,6 +150,4 @@
       </nz-form-control>
     </nz-form-item>
   </form>
-
-  <!-- <ivo-form-nav class="nav" top='23' [titleList]='["作品信息","添加标签","上传封面","添加Live2D模型","版权声明"]'></ivo-form-nav> -->
 </div>

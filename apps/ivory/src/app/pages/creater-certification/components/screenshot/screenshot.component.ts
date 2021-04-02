@@ -1,10 +1,10 @@
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Component, forwardRef, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { ControlValueAccessor,NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component,forwardRef,Input,EventEmitter,Output,ViewChild,ElementRef } from '@angular/core';
 import { HttpEventType } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CommmonApiService, ModalService } from '@peacha-core';
-import { filter, map } from 'rxjs/operators';
+import { CommmonApiService,ModalService } from '@peacha-core';
+import { filter,map } from 'rxjs/operators';
 import { PopTips } from '@peacha-core/components';
 
 @Component({
@@ -20,7 +20,7 @@ import { PopTips } from '@peacha-core/components';
 	],
 })
 export class ScreenshotComponent implements ControlValueAccessor {
-	constructor(private apiService: CommmonApiService, private sanitizer: DomSanitizer, private modal: ModalService) { }
+	constructor(private apiService: CommmonApiService,private sanitizer: DomSanitizer,private modal: ModalService) { }
 	@ViewChild('file')
 	fileInput: ElementRef<HTMLInputElement>;
 	@Input() multiple = false;
@@ -36,7 +36,7 @@ export class ScreenshotComponent implements ControlValueAccessor {
 	verify = {
 		sizeVerify: (e: File) => {
 			if (e.size > this._fileSzie) {
-				this.modal.open(PopTips, ['仅支持10MB以内截图上传，给它减减肥吧～']);
+				this.modal.open(PopTips,['仅支持10MB以内截图上传，给它减减肥吧～']);
 				return false;
 			}
 			return true;
@@ -54,24 +54,21 @@ export class ScreenshotComponent implements ControlValueAccessor {
 				return;
 			}
 			const formData = new FormData();
-			formData.append('f', file);
+			formData.append('f',file);
 			const uploadImg: UploadImage = {
 				symbol: Symbol(),
 				token: '',
-				process$: new BehaviorSubject({ progress: 0, success: false }),
+				process$: new BehaviorSubject({ progress: 0,success: false }),
 				url: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(file)) as string,
 				api: this.apiService,
 				reportProcess() {
 					this.api
-						.uploadFile(formData, {
-							reportProgress: true,
-							observe: 'events',
-						})
+						.uploadFile(formData)
 						.pipe(
-							filter((s: any) => {
+							filter((s) => {
 								return s.type === HttpEventType.UploadProgress || s.type === HttpEventType.Response;
 							}),
-							map((e: any) => {
+							map((e) => {
 								if (e.type === HttpEventType.UploadProgress) {
 									this.process$.next({
 										success: false,
@@ -117,12 +114,12 @@ export class ScreenshotComponent implements ControlValueAccessor {
 		return Array.from(fileList);
 	}
 
-	writeValue(obj: any): void { }
+	writeValue(obj): void { }
 
-	registerOnChange(fn: any): void {
+	registerOnChange(fn): void {
 		this.fnChange = fn;
 	}
-	registerOnTouched(fn: any): void { }
+	registerOnTouched(fn): void { }
 
 	setDisabledState?(isDisabled: boolean): void { }
 }

@@ -1,10 +1,10 @@
 import { SuccessTips } from './../../components/success-tips/success-tips';
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { debounce, map } from 'rxjs/operators';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component,OnInit,ViewChild,ElementRef,AfterViewInit } from '@angular/core';
+import { debounce,map } from 'rxjs/operators';
+import { FormBuilder,Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, fromEvent, interval } from 'rxjs';
-import { emptyStringValidator, ModalService, validator, Work } from '@peacha-core';
+import { BehaviorSubject,fromEvent,interval } from 'rxjs';
+import { emptyStringValidator,ModalService,validator,Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { ReleaseApiService } from '../../release-api.service';
 
@@ -14,33 +14,39 @@ import { ReleaseApiService } from '../../release-api.service';
 	templateUrl: './illustrate-free.component.html',
 	styleUrls: ['./illustrate-free.component.less'],
 })
-export class IllustrateFreeComponent implements OnInit, AfterViewInit {
+export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
 
-	constructor(private fb: FormBuilder, private modal: ModalService, private route: ActivatedRoute, private api: ReleaseApiService) { }
-
+	constructor(private fb: FormBuilder,private modal: ModalService,private route: ActivatedRoute,private api: ReleaseApiService) { }
+	illustGoodsId: number = undefined;
 	param: {
+		[key: string]: any;
+	};
+
+	editParam: Partial<{
+		w: number;
 		n: string;
 		d: string;
-		a: number;
 		b: string;
+		g: string;
+		gd: string;
 		t: string;
-		c: number;
-		cs: number;
-		ss: number;
-		f: [];
-		gl: [];
-	};
+		i: string[];
+		gl: any[];
+	}>;
+
 	form = this.fb.group({
-		f: [[], Validators.required],
-		n: ['', [Validators.required, emptyStringValidator()]],
-		d: ['', [Validators.required, emptyStringValidator()]],
+		f: [[],Validators.required],
+		n: ['',[Validators.required,emptyStringValidator()]],
+		d: ['',[Validators.required,emptyStringValidator()]],
 		t: [[]],
-		b: ['', Validators.required],
-		c: ['', Validators.required],
+		b: ['',Validators.required],
+		c: ['',Validators.required],
+		gl_token: [null,Validators.required],
+		gn: ['',],
 		a: [[]],
-		checked: [false, Validators.requiredTrue],
+		checked: [false,Validators.requiredTrue],
 	});
 	checkedForm = this.fb.group({
 		aCheckedOne: [false],
@@ -91,8 +97,8 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.api.get_edit_work(Number(x.get('id'))).subscribe((r: Work) => {
-					console.log(r);
+				this.api.getEditWork(Number(x.get('id'))).subscribe((r: Work) => {
+					this.illustGoodsId = r.goodsList[0].id;
 					this.copyrightModel = r.authority;
 					this.form.patchValue({
 						n: r.name,
@@ -112,7 +118,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 	}
 
 	private public_work() {
-		this.api.publish_work({	
+		this.api.publishWork({
 			n: this.param.n,
 			d: this.param.d,
 			a: this.param.a,
@@ -120,21 +126,20 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 			t: this.param.t,
 			c: this.param.c,
 			cs: this.param.cs,
-			ss: this.param.ss,
 			f: this.param.f,
-			fr: 1,
-			gl: this.param.gl,}).subscribe({
+			gl: this.param.gl,
+		}).subscribe({
 			next: _x => {
-				this.modal.open(SuccessTips, {
+				this.modal.open(SuccessTips,{
 					redirectUrl: '/member/manager/illust/auditing',
 					tip: '已成功提交审核，请等待后台人员审核！',
 				});
 			},
 			error: (x: { descrption: string }) => {
 				if (x.descrption) {
-					this.modal.open(PopTips, [x.descrption, false, 0]);
+					this.modal.open(PopTips,[x.descrption,false,0]);
 				} else {
-					this.modal.open(PopTips, ['系统繁忙', false, 0]);
+					this.modal.open(PopTips,['系统繁忙',false,0]);
 				}
 			},
 		});
@@ -155,7 +160,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 	}
 
 	submit() {
-		validator(this.form, this.form.controls);
+		validator(this.form,this.form.controls);
 		if (!this.form.valid) {
 			return;
 		}
@@ -167,48 +172,37 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 	}
 
 	private sure_edit() {
-		const i = this.setiToken();
 		this.api
-			.update_work({
-				w: this.route.snapshot.params.id,
-				d: this.form.value.d,
-				i,
-				t: this.form.value.t.join(','),
-				b: this.form.value.b.token ?? this.form.value.b.url,
-				n: this.form.value.n,
-				a: this.copyrightModel,
-				gl: [],
-				fr: 1,
-				gd: '',
+			.updateWork({
+				w: this.illustGoodsId,
+				d: this.editParam.d,
+				i: this.editParam.i,
+				t: this.editParam.t,
+				b: this.editParam.b,
+				n: this.editParam.n,
+				gl: this.editParam.gl,
 			})
 			.subscribe({
 				next: () => {
-					this.modal.open(SuccessTips, {
+					this.modal.open(SuccessTips,{
 						redirectUrl: 'user',
 						tip: '已成功提交审核，请等待后台人员审核!',
 					});
 				},
 				error: (x: { descrption: string }) => {
 					if (x.descrption) {
-						this.modal.open(PopTips, [x.descrption, false, 0]);
+						this.modal.open(PopTips,[x.descrption,false,0]);
 					} else {
-						this.modal.open(PopTips, ['系统繁忙', false, 0]);
+						this.modal.open(PopTips,['系统繁忙',false,0]);
 					}
 				},
 			});
 	}
 
-	private setiToken() {
-		const iUrl = this.form.value.f.map((s: any) => s.remote_token || s.url);
-
-		const i = iUrl;
-		return i;
-	}
-
 	private subscribeForm() {
 		this.form.valueChanges
 			.pipe(
-				map((value: any) => {
+				map((value) => {
 					if (!this.isEdit) {
 						value.b = value.b.token || '';
 						value.f = value.f.map((s: { remote_token: string }) => s.remote_token);
@@ -220,18 +214,29 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 							t: value.t.toString(),
 							f: value.f,
 							c: value.c,
+							i: value.f,
 							cs: 1,
-							ss: 0,
-							gl: [],
+							gl: [{ s: -1,n: value.gn,f: value.gl_token?.token || '',ft: 0,p: 0 }],
 						};
 					} else {
-						return value;
+						return {
+							w: this.illustGoodsId,
+							n: value.gl,
+							d: value.d,
+							b: value.b,
+							g: value.g,
+							t: value.t,
+							gl: [{
+								n: value.gn,
+								f: [value.gl_token[0] ? value.gl_token[0]?.token || value.gl_token[0].url : ''],
+								s: value.gl_s,
+							}],
+						};
 					}
 				})
 			)
-			.subscribe((x: any) => {
-				console.log(this.form.value);
-				this.param = x;
+			.subscribe((x) => {
+				this.isEdit ? this.editParam = x : this.param = x;
 			});
 	}
 
@@ -255,7 +260,7 @@ export class IllustrateFreeComponent implements OnInit, AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		fromEvent(this.submitButton.nativeElement, 'click')
+		fromEvent(this.submitButton.nativeElement,'click')
 			.pipe(debounce(() => interval(500)))
 			.subscribe(() => {
 				this.submit();

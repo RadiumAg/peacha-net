@@ -4,7 +4,7 @@
       <div class="title">发布作品</div>
     </div>
 
-    <div class="form-item">
+    <div class="form-item works-info">
       <div class="title">作品信息</div>
       <div class="form-controller">
         <div class="title required">
@@ -49,6 +49,14 @@
       </div>
     </div>
 
+    <div class="form-item uplaod-Image">
+      <div class="title" [ivoNoticeTitle]="'仅支持PSD格式，不得大于200M。请勿上传无具体分层或无意义文件。'">上传免费分享内容</div>
+      <div class="form-controller required-center">
+        <ivo-file-upload formControlName="gl_token" ivoErroTip ivoErrorTipString="请上传免费商品内容!" [acceptType]="'.psd'">
+        </ivo-file-upload>
+      </div>
+    </div>
+
     <div class="form-item explain">
       <div class="title">版权声明</div>
       <div class="form-controller">
@@ -63,8 +71,8 @@
               <ng-container *ngFor="let item of copyrightCheckes$ | async; let i = index">
                 <div>
                   <label nz-checkbox [nzValue]="item['id']" (click)="(copyright.click)" formControlName="copychecked"
-                    [nzChecked]="copyrightModel.includes(item['id'])"
-                    [nzDisabled]="isEdit || stateMentStates[i]">{{ item['name'] }}</label>
+                    [nzChecked]="copyrightModel.includes(item['id'])" [nzDisabled]="isEdit || stateMentStates[i]">{{
+                    item['name'] }}</label>
                 </div>
               </ng-container>
               <input type="hidden" formControlName="copyright" #copyright ivoFormNav data-control-index="4" />
@@ -101,6 +109,4 @@
       </nz-form-control>
     </nz-form-item>
   </form>
-
-  <!-- <ivo-form-nav class="nav" top='23' [titleList]='["作品信息","添加标签","上传封面","上传图片","版权声明"]'></ivo-form-nav> -->
 </div>

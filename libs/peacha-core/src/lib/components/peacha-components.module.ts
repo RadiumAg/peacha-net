@@ -20,7 +20,7 @@ import { Option } from './option/option';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CropBanner } from './crop-banner/crop-banner';
 import { ReportModalComponent } from './report-modal/report-modal.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
@@ -49,6 +49,7 @@ import { MydatePipe } from './pipes/mydate.pipe';
 import { TimerDatePipe } from './pipes/timer-date.pipe';
 import { IvoNameFriendlyPipe } from './upload/app-name-friendly.pipe';
 import { TimeFormatPipe } from './time-format.pipe';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -89,9 +90,11 @@ import { TimeFormatPipe } from './time-format.pipe';
     DebounceClickDirective,
     WorkSelectorComponent,
     UploadImageDirective,
-    IvoNameFriendlyPipe
+    IvoNameFriendlyPipe,
+    FileUploadComponent,
   ],
   exports: [
+    FileUploadComponent,
     TimeFormatPipe,
     ErrorDisplay,
     ErrorDisplayCase,

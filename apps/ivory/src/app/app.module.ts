@@ -178,13 +178,13 @@ const routes: Routes = [
     PeachaCoreModule.forRoot({
       api_gateway: environment.api_gateway,
     }),
-    NgxsModule.forRoot([], {
+    NgxsModule.forRoot([],{
       developmentMode: !environment.production,
     }),
-    RouterModule.forRoot(routes, {
+    RouterModule.forRoot(routes,{
       scrollPositionRestoration: 'top',
       anchorScrolling: 'enabled',
-      scrollOffset: [0, 0],
+      scrollOffset: [0,0],
     }),
     OverlayModule,
   ],
