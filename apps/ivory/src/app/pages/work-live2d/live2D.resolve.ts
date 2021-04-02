@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { tap, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { EMPTY } from 'rxjs';
-import { IvoryError } from '@peacha-core';
+import { IvoryError, WorkDetail } from '@peacha-core';
 
 
 @Injectable()
@@ -12,7 +12,7 @@ export class Live2DResolve implements Resolve<any> {
 
 	resolve(route: import('@angular/router').ActivatedRouteSnapshot) {
 		const id = route.params.id;
-		return this.http.get<any>(`/work/get_work?w=${id}`).pipe(
+		return this.http.get<WorkDetail>(`/work/get_work?w=${id}`).pipe(
 			tap(a => {
 				if (a.category) {
 					this.router.navigate(['illust', id]);

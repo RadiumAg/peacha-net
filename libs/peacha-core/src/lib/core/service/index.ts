@@ -11,3 +11,4 @@ export * from './work-api.service';
 export * from './zoom.service';
 export * from './message-unread-count.service';
 export * from './shopmall-api.service';
+export * from './log-api.service';

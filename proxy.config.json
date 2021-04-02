@@ -1,4 +1,9 @@
 {
+	"/api/v1/log": {
+		"target": "http://8.136.185.126:18001",
+		"secure": false,
+		"changeOrigin": true
+	},
 	"/api/v1/link/": {
 		"target": "http://47.99.94.159:8400"
 	},

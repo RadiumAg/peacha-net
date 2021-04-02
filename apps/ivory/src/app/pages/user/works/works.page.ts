@@ -126,13 +126,6 @@ export class WorksPage {
 			});
 	}
 
-	toWork(id: number, c: number) {
-		if (c == 1) {
-			this.router.navigate(['illust', id]);
-		} else {
-			this.router.navigate(['live2d', id]);
-		}
-	}
 }
 
 

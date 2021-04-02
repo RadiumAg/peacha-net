@@ -1,0 +1,17 @@
+<div class="all">
+    <router-outlet></router-outlet>
+    <ng-container *ngrxLet="works$;let works">
+        <div class="works">
+            <ivo-work-card *ngFor="let work of works.list" [work]="work"></ivo-work-card>
+        </div>
+        <div class="default" *ngIf="(works.count==0)">
+            <ivo-lack-image></ivo-lack-image>
+            <span>啊咧，什么都没有搜索到的说</span>
+        </div>
+        <div *ngIf="works.count>20" class="page">
+            <ivo-pagination [total]="works?.count" [currentPage]="(page$|async)" [pageSize]="20" (onPageChange)="page($event)">
+            </ivo-pagination>
+        </div>
+    </ng-container>
+   
+</div>

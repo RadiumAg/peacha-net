@@ -5,11 +5,11 @@ import zh from '@angular/common/locales/zh';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule,Routes } from '@angular/router';
-import { TranslateLoader,TranslateModule } from '@ngx-translate/core';
+import { RouterModule, Routes } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxsModule } from '@ngxs/store';
-import { PeachaCoreModule,PhoneGuard } from '@peacha-core';
+import { PeachaCoreModule, PhoneGuard } from '@peacha-core';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { FooterModule } from './fragments/footer/footer.module';
@@ -74,6 +74,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/search/search.module').then(m => m.SearchModule),
   },
   {
+    path: 'select',
+    loadChildren: () => import('./pages/select/select.module').then(m => m.SelectModule),
+  },
+  {
     path: 'user',
     loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule),
   },
@@ -88,6 +92,10 @@ const routes: Routes = [
   {
     path: 'live2d',
     loadChildren: () => import('./pages/work-live2d/work-live2d.module').then(m => m.WorkLive2dModule),
+  },
+  {
+    path: '3d',
+    loadChildren: () => import('./pages/work-3D/work-3D.module').then(m => m.Work3DModule),
   },
   {
     path: 'pay',

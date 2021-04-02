@@ -119,8 +119,10 @@ export class SingleManagerPage implements AfterViewInit {
 		if (this.state == 1) {
 			if (c == 1) {
 				this.router.navigate(['illust', id]);
-			} else {
+			} else if (c == 0) {
 				this.router.navigate(['live2d', id]);
+			} else {
+				this.router.navigate(['3d', id]);
 			}
 		}
 	}

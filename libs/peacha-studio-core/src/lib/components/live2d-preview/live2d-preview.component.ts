@@ -58,6 +58,7 @@ import {
 	PreserveParameterSaveSystem,
 } from '../../core/engine/gl2d-cubism';
 import { ReadableVirtualFileSystem } from '../../core/vfs';
+import { GL2dBackGroundRenderContext, GL2DBackgroundRenderSystem } from '../../core/engine/gl2d/gl2d-background-render';
 
 export function getEasingSine(value: number): number {
 	if (value < 0) {
@@ -255,7 +256,7 @@ export class Live2dPreviewComponent implements AfterViewInit, OnDestroy {
 			this.world = null;
 		}
 		this.world = World.create({
-			singletonComponent: [Keyboard, Mouse, Shortcuts, EventHub, GL2DRenderingContext, HostModel],
+			singletonComponent: [Keyboard, Mouse, Shortcuts, EventHub, GL2DRenderingContext, GL2dBackGroundRenderContext, HostModel],
 			systems: [
 				DomKeyboardSystem,
 				DomMouseSystem,
@@ -267,6 +268,7 @@ export class Live2dPreviewComponent implements AfterViewInit, OnDestroy {
 				CubismPhysicsSystem,
 				CubismModelEmulateSystem,
 				HostModelSystem,
+				GL2DBackgroundRenderSystem,
 				GL2DRenderingSystem,
 				PreserveParameterSaveSystem,
 			],
@@ -465,6 +467,7 @@ export class Live2dPreviewComponent implements AfterViewInit, OnDestroy {
 			this.ok.emit();
 			requestAnimationFrame(this.tick.bind(this));
 		} catch (e) {
+			console.log(e);
 			this.error.emit(e);
 			this.error$.next(true);
 		}

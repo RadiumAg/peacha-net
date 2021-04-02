@@ -48,11 +48,4 @@ export class UserSearchPage {
 		document.documentElement.scrollTop = 0;
 	}
 
-	toWork(id: number, c: number): void {
-		if (c == 1) {
-			this.router.navigate(['illust', id]);
-		} else {
-			this.router.navigate(['live2d', id]);
-		}
-	}
 }

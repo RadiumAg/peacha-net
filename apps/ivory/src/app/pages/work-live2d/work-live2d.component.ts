@@ -55,7 +55,7 @@ export class WorkLive2dComponent {
 					num_followed: number;
 					num_following: number;
 					role: { id: number; expiry: number }[];
-				}>(`/user/get_user?i=${work.author_id}`)
+				}>(`/user/get_user?i=${work.userId}`)
 				.subscribe(s => {
 					s?.role.forEach(l => {
 						this.authorRole.push(l.id);
@@ -87,10 +87,10 @@ export class WorkLive2dComponent {
 						id: number;
 						cover: string;
 						name: string;
-						username: string;
-						publishtime: number;
+						nickName: string;
+						userId: number;
+						publishTime: number;
 						category: number;
-						follow_state: number;
 					}[]
 				>(`/work/get_relevant_work?w=${_.id}`)
 				.pipe();
@@ -113,11 +113,4 @@ export class WorkLive2dComponent {
 		});
 	}
 
-	toWork(id: number, type: number) {
-		if (type == 1) {
-			this.router.navigate(['illust', id]);
-		} else {
-			this.router.navigate(['live2d', id]);
-		}
-	}
 }

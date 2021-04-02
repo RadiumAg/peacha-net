@@ -1,5 +1,5 @@
 import { SystemBase } from '../ecs/system';
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, Injector, Optional } from '@angular/core';
 import { Component } from '../ecs/component';
 import { DOM_ELEMENT } from '../ecs/world';
 import { Entity } from '../ecs/entity';
@@ -7,6 +7,7 @@ import { Vector2, Matrix44, vec2 } from './math';
 import { Transform2DComponent, Transform2D } from './transform';
 import { getWebGLContext } from '../utils';
 import { CubismShaderWebGL } from '../gl2d-cubism/render/webgl-shader';
+import { GL2dBackGroundRenderContext } from './gl2d-background-render';
 
 export interface GL2DRenderable {
 	order: number;
@@ -150,7 +151,11 @@ export class GL2DRenderingContext {
 
 @Injectable()
 export class GL2DRenderingSystem extends SystemBase {
-	constructor(@Inject(DOM_ELEMENT) private canvas: HTMLCanvasElement, private context: GL2DRenderingContext) {
+	constructor(
+		@Inject(DOM_ELEMENT) private canvas: HTMLCanvasElement,
+		private context: GL2DRenderingContext,
+		@Optional() private backgroundContext: GL2dBackGroundRenderContext
+	) {
 		super([GL2DRenderComponent, Transform2DComponent]);
 		context.gl = getWebGLContext(canvas);
 		context.resizeFromCanvas(canvas);
@@ -167,8 +172,10 @@ export class GL2DRenderingSystem extends SystemBase {
 	}
 
 	allBeforeUpdate(): void {
-		this.context.gl.clearColor(0, 0, 0, 0);
-		this.context.gl.clear(this.context.gl.COLOR_BUFFER_BIT);
+		if (!this.backgroundContext) {
+			this.context.gl.clearColor(0, 0, 0, 0);
+			this.context.gl.clear(this.context.gl.COLOR_BUFFER_BIT);
+		}
 	}
 
 	allAfterUpdate(): void {

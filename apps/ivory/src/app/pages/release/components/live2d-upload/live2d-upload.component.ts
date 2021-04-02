@@ -3,8 +3,16 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { filter } from 'rxjs/operators';
-import { ModalService } from '@peacha-core';
-import { CompressService, FileNotFoundError, HttpVirtualFileSystem, Live2dPreviewComponent, Live2dTransformData, ReadableVirtualFileSystem, ZipVFS } from '@peacha-studio-core';
+import { LogApiService, ModalService } from '@peacha-core';
+import {
+	CompressService,
+	FileNotFoundError,
+	HttpVirtualFileSystem,
+	Live2dPreviewComponent,
+	Live2dTransformData,
+	ReadableVirtualFileSystem,
+	ZipVFS,
+} from '@peacha-studio-core';
 
 import { PopTips } from '@peacha-core/components';
 
@@ -35,7 +43,7 @@ export enum UploadStatus {
 	],
 })
 export class Live2dUploadComponent implements ControlValueAccessor {
-	constructor(private compress: CompressService, private http: HttpClient, private modal: ModalService) { }
+	constructor(private compress: CompressService, private http: HttpClient, private modal: ModalService, private log: LogApiService) {}
 
 	token: string;
 	transformData: Live2dTransformData;
@@ -65,7 +73,7 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 
 	@ViewChild(Live2dPreviewComponent)
 	live2d: Live2dPreviewComponent;
-	update: (token: string) => void = () => { };
+	update: (token: string) => void = () => {};
 
 	@HostListener('dragover', ['$event'])
 	onDragOver(event: DragEvent) {
@@ -102,6 +110,15 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 	}
 
 	onLive2dLoadError(e: Error) {
+		this.log.debug(
+			JSON.stringify({
+				platform: 'web',
+				service: 'live2d',
+				name: e.name,
+				message: e.message,
+				stack: e.stack,
+			})
+		);
 		this.live2dLoadStatus$.next(Live2dLoadStatus.Error);
 		if (e instanceof FileNotFoundError) {
 			this.error = e.message;
@@ -189,11 +206,11 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 		this.live2dLoadStatus$.next(Live2dLoadStatus.Not);
 	}
 
-	writeValue(): void { }
+	writeValue(): void {}
 
 	registerOnChange(fn: (token: string) => void): void {
 		this.update = fn;
 	}
 
-	registerOnTouched(): void { }
+	registerOnTouched(): void {}
 }

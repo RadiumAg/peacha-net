@@ -57,9 +57,9 @@ export class WorkActionsComponent {
 
 	@Input() work: {
 		id: number;
-		is_like: number;
-		like_count: number;
-		is_collect: number;
-		collect_count: number;
+		isLike: number;
+		likeCount: number;
+		isCollect: number;
+		collectCount: number;
 	};
 }
