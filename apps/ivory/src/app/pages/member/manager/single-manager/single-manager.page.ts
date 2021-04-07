@@ -16,6 +16,8 @@ export class SingleManagerPage implements AfterViewInit {
 	/**
 	 * type=1 插画
 	 * type=0 live2d
+	 * type=2 3d
+	 * 
 	 *
 	 * state=1 成功
 	 * state=2 等待
@@ -64,14 +66,25 @@ export class SingleManagerPage implements AfterViewInit {
 	edit(id: number) {
 		this.menu.close();
 		if (this.type === 1) {
-			this.router.navigate(['/edit/illust', id]);
-		} else if (this.type === 3) {
-			this.router.navigate(['/edit/illust/paid', id]);
-		}
-		else if (this.type === 0) {
-			this.router.navigate(['/edit/live2d', id]);
+
+			if (this.item.price > 0) {
+				this.router.navigate(['/edit/illust/paid', id]);
+			} else {
+				this.router.navigate(['/edit/illust', id]);
+			}
+		} else if (this.type === 0) {
+			if (this.item.price > 0) {
+				this.router.navigate(['/edit/live2d/paid', id]);
+			} else {
+				this.router.navigate(['/edit/live2d', id]);
+			}
+
 		} else if (this.type === 2) {
-			this.router.navigate(['/edit/live2d/paid', id]);
+			if (this.item.price > 0) {
+				this.router.navigate(['/edit/3d/paid', id]);
+			} else {
+				this.router.navigate(['/edit/3d', id]);
+			}
 		}
 	}
 

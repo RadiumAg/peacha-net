@@ -2,7 +2,7 @@
 	<div class="detail" *ngrxLet="works$;let works">
 		<div class="wo">
 			<ng-container *ngFor="let item of works?.list">
-				<ivo-single-manager [item]="item" [type]="item.price > 0 ? 3: 1" [state]="1" (delete)="ll($event)"></ivo-single-manager>
+				<ivo-single-manager [item]="item" [type]="2" [state]="1" (delete)="ll($event)"></ivo-single-manager>
 			</ng-container>
 			<ng-container *ngIf="works?.count==0">
 				<ivo-lack-image></ivo-lack-image>
