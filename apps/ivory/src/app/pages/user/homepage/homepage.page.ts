@@ -63,7 +63,7 @@ export class HomepagePage {
 		filter(id => {
 			return (
 				typeof id === 'number' ||
-				(window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight &&
+				(window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight * 0.8 &&
 					(this.count === 0 || this.count > this.cache.length))
 			);
 		}),
