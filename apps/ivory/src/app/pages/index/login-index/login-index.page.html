@@ -23,15 +23,21 @@
 				<div class="top">
 					<img
 						class="top-choice"
-						routerLink="/search"
-						[queryParams]="{keyword:'',c:1,o:1,choice:1}"
+						routerLink="/select/work"
+						[queryParams]="{c:1,p:1}"
 						src="/assets/image/index/recommend-left.svg"
 					/>
 
 					<img
 						class="top-choice"
-						routerLink="/search"
-						[queryParams]="{keyword:'',c:0,o:1,choice:2}"
+						routerLink="/select/work"
+						[queryParams]="{c:0,p:1}"
+						src="/assets/image/index/recommend-center.svg"
+					/>
+					<img
+						class="top-choice"
+						routerLink="/select/work"
+						[queryParams]="{c:2,p:1}"
 						src="/assets/image/index/recommend-right.svg"
 					/>
 				</div>
