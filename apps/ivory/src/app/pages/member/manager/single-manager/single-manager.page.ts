@@ -63,6 +63,8 @@ export class SingleManagerPage implements AfterViewInit {
 			});
 	}
 
+
+	/**price===0 为免费商品； price===-1 为仅展示商品； price>0 为付费商品 */
 	edit(id: number) {
 		this.menu.close();
 		if (this.type === 1) {
