@@ -1,5 +1,5 @@
-<ivo-navbar></ivo-navbar>
+<ivo-navbar *ngIf="showNavbar$ | async"></ivo-navbar>
 <div>
 	<router-outlet></router-outlet>
 </div>
-<ivo-footer></ivo-footer>
+<ivo-footer *ngIf="showFooter$ | async"></ivo-footer>

@@ -1,0 +1,33 @@
+<header id="navbar" *ngIf="info$ | async; let info">
+	<div class="right">
+		<ng-container *ngIf="(isLogin$ | async) === false; else logined">
+			<a [routerLink]="['/login']" [queryParams]="{ return: '/n7r' }">登录</a>|
+			<a [routerLink]="['/register']">注册</a>
+		</ng-container>
+		<ng-template #logined>
+			<a>购买记录</a>
+			<img [attr.src]="info?.avatar" class="avatar" #avatar (mouseenter)="hoverAvatar($event)" (click)="toUser(info?.id)" />
+		</ng-template>
+	</div>
+
+	<ng-template #template>
+		<div [@dashboard] class="temp" (mouseleave)="leaveDashboard()" (mousewheel)="leaveDashboard()">
+			<div class="user-info">
+				<div class="background">
+					<img [attr.src]="info?.banner" />
+				</div>
+				<img [@avatar]="(isPortalShowing$ | async) ? 'active' : 'normal'" class="ava" [attr.src]="info?.avatar" />
+				<div class="info">
+					<h3 [routerLink]="['user', info?.id]">{{ info?.nickname }}</h3>
+					<h4>UID:{{ info?.id }}</h4>
+				</div>
+			</div>
+			<ul>
+				<li class="divider"></li>
+				<li [routerLink]="['./setting']">个人中心</li>
+				<li class="divider"></li>
+				<li (click)="logout()">退出登录</li>
+			</ul>
+		</div>
+	</ng-template>
+</header>
