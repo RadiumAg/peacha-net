@@ -4,8 +4,9 @@ import { RouterModule } from '@angular/router';
 import { N7rApiService } from './n7r-api.service';
 import { N7rPage } from './n7r.page';
 import { OverlayscrollbarsModule } from 'overlayscrollbars-ngx';
-import { N7rNavbarComponent } from './components/navbar.component';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ReactiveComponentModule } from '@peacha-core';
+import { N7rNavbarComponent } from './components/n7r-navbar/navbar.component';
 
 @NgModule({
 	declarations: [N7rPage, N7rNavbarComponent],
@@ -14,6 +15,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 		OverlayscrollbarsModule,
 		OverlayModule,
 		RouterModule,
+		ReactiveComponentModule,
 		RouterModule.forChild([
 			{
 				path: '',
@@ -23,4 +25,4 @@ import { OverlayModule } from '@angular/cdk/overlay';
 	],
 	providers: [N7rApiService],
 })
-export class n7rModule {}
+export class n7rModule { }

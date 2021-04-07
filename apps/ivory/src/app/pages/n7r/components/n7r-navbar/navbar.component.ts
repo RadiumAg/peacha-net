@@ -6,7 +6,7 @@ import { Select, Store } from '@ngxs/store';
 import { ChatStartService } from '@peacha-core';
 import { Logout, UserState } from '@peacha-core/state';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { DASHBOARD_ANIMATION, AVATAR_ANIMATION } from '../../../fragments/navbar/animations';
+import { DASHBOARD_ANIMATION, AVATAR_ANIMATION } from '../../../../fragments/navbar/animations';
 
 @Component({
 	selector: 'ivo-n7r-navbar',
@@ -46,7 +46,7 @@ export class N7rNavbarComponent {
 		private overlay: Overlay,
 		private vc: ViewContainerRef,
 		private dialog: ChatStartService
-	) {}
+	) { }
 
 	leaveDashboard(): void {
 		if (this.isPortalShowing$.value) {
