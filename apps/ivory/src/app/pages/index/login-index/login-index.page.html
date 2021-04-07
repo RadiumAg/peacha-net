@@ -1,44 +1,52 @@
 <div class="show-box">
-  <img class="de-left" src="/assets/image/index/decorate-left.svg" />
-  <img class="de-right" src="/assets/image/index/decorate-right.svg" />
-  <div class="banner">
-    <div class="load" *ngIf="loadBanner">loading...</div>
-    <ng-container *ngrxLet="banners$;let banner">
-      <ivo-carousel [imgs]="banner"></ivo-carousel>
-    </ng-container>
-  </div>
-  <div class="modal">
-    <li class="special">
-      <img src="/assets/image/index/title-icon.svg" />
-      <span class="title">首页推荐 </span>
-      <img src="/assets/image/index/line-long.svg" />
-    </li>
-    <div class="recommend">
-      <div class="work-change">
-        <ng-container *ngrxLet="hotlWork$;let hotlWork">
-          <ivo-recommend-work-carousel [workList]="hotlWork?.list"></ivo-recommend-work-carousel>
-        </ng-container>
-      </div>
-      <div class="other">
-        <div class="top">
-          <img class="top-choice" routerLink="/search" [queryParams]="{keyword:'',c:1,o:1,choice:1}"
-            src="/assets/image/index/recommend-left.svg" />
+	<img class="de-left" src="/assets/image/index/decorate-left.svg" />
+	<img class="de-right" src="/assets/image/index/decorate-right.svg" />
+	<div class="banner">
+		<div class="load" *ngIf="loadBanner">loading...</div>
+		<ng-container *ngrxLet="banners$;let banner">
+			<ivo-carousel [imgs]="banner"></ivo-carousel>
+		</ng-container>
+	</div>
+	<div class="modal">
+		<li class="special">
+			<img src="/assets/image/index/title-icon.svg" />
+			<span class="title">首页推荐 </span>
+			<img src="/assets/image/index/line-long.svg" />
+		</li>
+		<div class="recommend">
+			<div class="work-change">
+				<ng-container *ngrxLet="hotlWork$;let hotlWork">
+					<ivo-recommend-work-carousel [workList]="hotlWork?.list"></ivo-recommend-work-carousel>
+				</ng-container>
+			</div>
+			<div class="other">
+				<div class="top">
+					<img
+						class="top-choice"
+						routerLink="/search"
+						[queryParams]="{keyword:'',c:1,o:1,choice:1}"
+						src="/assets/image/index/recommend-left.svg"
+					/>
 
-          <img class="top-choice" routerLink="/search" [queryParams]="{keyword:'',c:0,o:1,choice:2}"
-            src="/assets/image/index/recommend-right.svg" />
-        </div>
-        <div class="center">
-          <ng-container *ngrxLet="hotTags$;let hotTags">
-            <ng-container *ngIf="hotTags?.list.length>0">
-              <div class="tags">
-                <ivo-tags [tags]="hotTags?.list"></ivo-tags>
-              </div>
+					<img
+						class="top-choice"
+						routerLink="/search"
+						[queryParams]="{keyword:'',c:0,o:1,choice:2}"
+						src="/assets/image/index/recommend-right.svg"
+					/>
+				</div>
+				<div class="center">
+					<ng-container *ngrxLet="hotTags$;let hotTags">
+						<ng-container *ngIf="hotTags?.list.length>0">
+							<div class="tags">
+								<ivo-tags [tags]="hotTags?.list"></ivo-tags>
+							</div>
 
-              <div class="load" *ngIf="loadFour">loading...</div>
-            </ng-container>
-          </ng-container>
-        </div>
-        <!-- <div class="buttom">
+							<div class="load" *ngIf="loadFour">loading...</div>
+						</ng-container>
+					</ng-container>
+				</div>
+				<!-- <div class="buttom">
 					<ng-container *ngrxLet="hotGoods$;let hotGoods">
 						<ng-container *ngIf="hotGoods?.count>0">
 							<li class="buttom-title">
@@ -66,96 +74,98 @@
 						</ng-container>
 					</ng-container>
 				</div> -->
-        <div class="banner">
-          <img [routerLink]="['/setting/linkagetime']" src="/assets/image/index/prpr-live-banner.png" />
-        </div>
-      </div>
-    </div>
-  </div>
+				<div class="banner">
+					<img [routerLink]="['/setting/linkagetime']" src="/assets/image/index/prpr-live-banner.png" />
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <div class="modal">
-    <ng-container *ngrxLet="newest$;let newest">
-      <ng-container *ngIf="newest?.list.length!=0">
-        <li>
-          <img src="/assets/image/index/title-icon.svg" />
-          <span class="title">已关注用户的更新</span>
-          <img src="/assets/image/index/line.svg" />
-          <span class="more" (click)="toNewest()">更多&nbsp;&nbsp;&nbsp;&gt;</span>
-        </li>
-        <div class="works">
-          <ng-container *ngFor="let work of newest?.list">
-            <ivo-work-card [work]="work"></ivo-work-card>
-          </ng-container>
-        </div>
-      </ng-container>
-    </ng-container>
-  </div>
-  <div class="modal">
-    <ng-container *ngrxLet="hotOriginalWork$;let hotOriginalWork">
-      <ng-container *ngIf="hotOriginalWork?.count>0">
-        <li>
-          <img src="/assets/image/index/title-icon.svg" />
-          <span class="title">热门插画</span>
-          <img src="/assets/image/index/line.svg" />
+	<div class="modal">
+		<ng-container *ngrxLet="newest$;let newest">
+			<ng-container *ngIf="newest?.list.length!=0">
+				<li>
+					<img src="/assets/image/index/title-icon.svg" />
+					<span class="title">已关注用户的更新</span>
+					<img src="/assets/image/index/line.svg" />
+					<span class="more" (click)="toNewest()">更多&nbsp;&nbsp;&nbsp;&gt;</span>
+				</li>
+				<div class="works">
+					<ng-container *ngFor="let work of newest?.list">
+						<ivo-work-card [work]="work"></ivo-work-card>
+					</ng-container>
+				</div>
+			</ng-container>
+		</ng-container>
+	</div>
+	<div class="modal">
+		<ng-container *ngrxLet="hotOriginalWork$;let hotOriginalWork">
+			<ng-container *ngIf="hotOriginalWork?.count>0">
+				<li>
+					<img src="/assets/image/index/title-icon.svg" />
+					<span class="title">热门插画</span>
+					<img src="/assets/image/index/line.svg" />
 
-          <a (click)="changeOriginalWork$.next(0)">
-            换一换&nbsp;
-            <span class="change-icon"></span>
-          </a>
-          <span class="more" (click)="toOriginalWork()">更多&nbsp;&nbsp;&nbsp;&gt;</span>
-        </li>
-        <div class="works two">
-          <div class="load" *ngIf="loadOne">loading...</div>
+					<a (click)="changeOriginalWork$.next(0)">
+						换一换&nbsp;
+						<span class="change-icon"></span>
+					</a>
+					<span class="more" (click)="toOriginalWork()">更多&nbsp;&nbsp;&nbsp;&gt;</span>
+				</li>
+				<div class="works two">
+					<div class="load" *ngIf="loadOne">loading...</div>
 
-          <ng-container *ngFor="let work of hotOriginalWork?.list">
-            <ivo-work-card [work]="work"></ivo-work-card>
-          </ng-container>
-        </div>
-      </ng-container>
-    </ng-container>
-  </div>
+					<ng-container *ngFor="let work of hotOriginalWork?.list">
+						<ivo-work-card [work]="work"></ivo-work-card>
+					</ng-container>
+				</div>
+			</ng-container>
+		</ng-container>
+	</div>
 
-  <div class="modal">
-    <ng-container *ngrxLet="hotLiveWork$;let hotLiveWork">
-      <ng-container *ngIf="hotLiveWork?.count>0">
-        <li>
-          <img src="/assets/image/index/title-icon.svg" />
-          <span class="title"> 热门Live2D </span>
-          <img src="/assets/image/index/line.svg" />
-          <a (click)="changeLiveWork$.next(0)">
-            换一换&nbsp;
-            <span class="change-icon"></span>
-          </a>
-          <span class="more" (click)="toLive2DWork()">更多&nbsp;&nbsp;&gt;</span>
-        </li>
-        <div class="works two">
-          <ng-container *ngFor="let work of hotLiveWork?.list">
-            <ivo-work-card [work]="work"></ivo-work-card>
-          </ng-container>
-        </div>
-      </ng-container>
-    </ng-container>
+	<div class="modal">
+		<ng-container *ngrxLet="hotLiveWork$;let hotLiveWork">
+			<ng-container *ngIf="hotLiveWork?.count>0">
+				<li>
+					<img src="/assets/image/index/title-icon.svg" />
+					<span class="title"> 热门Live2D </span>
+					<img src="/assets/image/index/line.svg" />
+					<a (click)="changeLiveWork$.next(0)">
+						换一换&nbsp;
+						<span class="change-icon"></span>
+					</a>
+					<span class="more" (click)="toLive2DWork()">更多&nbsp;&nbsp;&gt;</span>
+				</li>
+				<div class="works two">
+					<ng-container *ngFor="let work of hotLiveWork?.list">
+						<ivo-work-card [work]="work"></ivo-work-card>
+					</ng-container>
+				</div>
+			</ng-container>
+		</ng-container>
 
-    <div class="loadtwo" *ngIf="loadTwo">loading...</div>
-  </div>
+		<div class="loadtwo" *ngIf="loadTwo">loading...</div>
+	</div>
 
-  <div class="modal">
-    <ng-container *ngrxLet="publicWork$;let publicWork">
-      <ng-container *ngIf="publicWork?.count>0">
-        <li>
-          <span class="title"> 公示期作品 </span>
-          <span class="more" (click)="toDetailPublic()">查看更多&nbsp;&gt;</span>
-        </li>
-        <div class="works one">
-          <ng-container *ngFor="let work of publicWork?.list">
-            <ivo-work-card [work]="work"></ivo-work-card>
-          </ng-container>
-        </div>
-      </ng-container>
-    </ng-container>
-    <div class="loadone" *ngIf="loadThree">loading...</div>
-  </div>
-  <!-- <ng-container *ngrxLet="hotTags$;let hotTags">
+	<div class="modal">
+		<ng-container *ngrxLet="publicWork$;let publicWork">
+			<ng-container *ngIf="publicWork?.count>0">
+				<li>
+					<img src="/assets/image/index/title-icon.svg" />
+					<span class="title"> 公示期作品 </span>
+					<img src="/assets/image/index/line-m.svg" />
+					<span class="more" (click)="toDetailPublic()">查看更多&nbsp;&gt;</span>
+				</li>
+				<div class="works one">
+					<ng-container *ngFor="let work of publicWork?.list">
+						<ivo-work-card [work]="work"></ivo-work-card>
+					</ng-container>
+				</div>
+			</ng-container>
+		</ng-container>
+		<div class="loadone" *ngIf="loadThree">loading...</div>
+	</div>
+	<!-- <ng-container *ngrxLet="hotTags$;let hotTags">
         <ng-container *ngIf="hotTags?.list.length>0">
             <div class="label">
                 <li>
@@ -174,99 +184,103 @@
         </ng-container>
     </ng-container> -->
 
-  <div class="ad">
-    <a href="https://prprlive.peacha.net" target="_blank">
-      <img src="/assets/image/index/200prpr.png" />
-    </a>
-  </div>
+	<div class="ad">
+		<a href="https://prprlive.peacha.net" target="_blank">
+			<img src="/assets/image/index/200prpr.png" />
+		</a>
+	</div>
 
-  <div class="modal">
-    <ng-container *ngrxLet="hotUser$;let hotUser">
-      <ng-container *ngIf="hotUser?.count>0">
-        <li>
-          <img src="/assets/image/index/title-icon.svg" />
-          <span class="title">推荐用户</span>
-          <img src="/assets/image/index/line-m.svg" />
-          <a (click)="changeHotUser$.next(0)">
-            换一换&nbsp;
-            <span class="change-icon"></span>
-          </a>
-        </li>
-        <div class="users">
-          <li class="user" *ngFor="let user of hotUser?.list">
-            <ivo-lazy-img [ngLazyLoad]="user?.work_list[0]?.cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'"
-              [border]="4"
-              [routerLink]="user?.work_list[0]?.category==1?['/illust',user?.work_list[0]?.id]:['/live2d',user?.work_list[0]?.id]">
-            </ivo-lazy-img>
-            <ivo-lazy-img [ngLazyLoad]="user?.work_list[1]?.cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'"
-              [border]="2"
-              [routerLink]="user?.work_list[1]?.category==1?['/illust',user?.work_list[1]?.id]:['/live2d',user?.work_list[1]?.id]">
-            </ivo-lazy-img>
-            <div class="d">
-              <div class="w" [routerLink]="['/user', user?.uid]">
-                <img [attr.src]="user?.avatar" />
-                <span class="nick">{{user?.nickname}}</span>
-              </div>
-              <span class="hello">
-                <span class="number">
-                  <a>粉丝：</a>
-                  {{user?.num_followed | changeUnit}}
-                </span>
-                <span class="number">
-                  <a>获赞：</a>
-                  {{user?.like_count | changeUnit}}
-                </span>
-              </span>
-              <ng-container ivo-follow [follow-id]="user?.uid" [follow-state]="user?.follow_state" #fffff="follow">
-                <ng-container *ngrxLet="fffff.follow$;let f" [ngSwitch]="f">
-                  <button [class.checked]="f!=0" (click)="fffff.request()">
-                    <ng-container *ngSwitchCase="0">
-                      <img src="/assets/image/svg/i-add.svg" />
-                      关注
-                    </ng-container>
-                    <ng-container *ngSwitchCase="1">
-                      <img src="/assets/image/svg/i-follow-check.svg" />
-                      已关注
-                    </ng-container>
-                    <ng-container *ngSwitchCase="2">
-                      <img src="/assets/image/svg/i-follow-check.svg" />
-                      已关注
-                    </ng-container>
-                    <ng-container *ngSwitchCase="3">
-                      <img src="/assets/image/svg/black.svg" />
-                      已拉黑
-                    </ng-container>
-                  </button>
-                </ng-container>
-              </ng-container>
-            </div>
-          </li>
-        </div>
-      </ng-container>
-    </ng-container>
-    <div class="loadone" *ngIf="loadFive">loading...</div>
-  </div>
+	<div class="modal">
+		<ng-container *ngrxLet="hotUser$;let hotUser">
+			<ng-container *ngIf="hotUser?.count>0">
+				<li>
+					<img src="/assets/image/index/title-icon.svg" />
+					<span class="title">推荐用户</span>
+					<img src="/assets/image/index/line-m.svg" />
+					<a (click)="changeHotUser$.next(0)">
+						换一换&nbsp;
+						<span class="change-icon"></span>
+					</a>
+				</li>
+				<div class="users">
+					<li class="user" *ngFor="let user of hotUser?.list">
+						<ivo-lazy-img
+							[ngLazyLoad]="user?.work_list[0]?.cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'"
+							[border]="4"
+							[routerLink]="user?.work_list[0]?.category==1?['/illust',user?.work_list[0]?.id]:['/live2d',user?.work_list[0]?.id]"
+						>
+						</ivo-lazy-img>
+						<ivo-lazy-img
+							[ngLazyLoad]="user?.work_list[1]?.cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'"
+							[border]="2"
+							[routerLink]="user?.work_list[1]?.category==1?['/illust',user?.work_list[1]?.id]:['/live2d',user?.work_list[1]?.id]"
+						>
+						</ivo-lazy-img>
+						<div class="d">
+							<div class="w" [routerLink]="['/user', user?.uid]">
+								<img [attr.src]="user?.avatar" />
+								<span class="nick">{{user?.nickname}}</span>
+							</div>
+							<span class="hello">
+								<span class="number">
+									<a>粉丝：</a>
+									{{user?.num_followed | changeUnit}}
+								</span>
+								<span class="number">
+									<a>获赞：</a>
+									{{user?.like_count | changeUnit}}
+								</span>
+							</span>
+							<ng-container ivo-follow [follow-id]="user?.uid" [follow-state]="user?.follow_state" #fffff="follow">
+								<ng-container *ngrxLet="fffff.follow$;let f" [ngSwitch]="f">
+									<button [class.checked]="f!=0" (click)="fffff.request()">
+										<ng-container *ngSwitchCase="0">
+											<img src="/assets/image/svg/i-add.svg" />
+											关注
+										</ng-container>
+										<ng-container *ngSwitchCase="1">
+											<img src="/assets/image/svg/i-follow-check.svg" />
+											已关注
+										</ng-container>
+										<ng-container *ngSwitchCase="2">
+											<img src="/assets/image/svg/i-follow-check.svg" />
+											已关注
+										</ng-container>
+										<ng-container *ngSwitchCase="3">
+											<img src="/assets/image/svg/black.svg" />
+											已拉黑
+										</ng-container>
+									</button>
+								</ng-container>
+							</ng-container>
+						</div>
+					</li>
+				</div>
+			</ng-container>
+		</ng-container>
+		<div class="loadone" *ngIf="loadFive">loading...</div>
+	</div>
 
-  <!-- 目前的免费分享走热门商品接口 -->
-  <div class="modal">
-    <ng-container *ngrxLet="hotGoods$;let hotGoods">
-      <ng-container *ngIf="hotGoods?.count>0">
-        <li>
-          <img src="/assets/image/index/title-icon.svg" />
-          <span class="title"> 热门商品 </span>
-          <img src="/assets/image/index/line-m.svg" />
-          <span class="more" (click)="toDetailGood()">更多&nbsp;&nbsp;&gt;</span>
-        </li>
-        <div class="works two">
-          <ng-container *ngFor="let work of hotGoods?.list">
-            <ivo-work-card [work]="work"></ivo-work-card>
-          </ng-container>
-        </div>
-      </ng-container>
-    </ng-container>
-    <div class="loadtwo" *ngIf="loadSix">loading...</div>
-  </div>
-  <div class="back-top" #show>
-    <iframe #go id="gogogo" (load)="iframeInit()" src="/assets/image/back_top/gogogo.svg"></iframe>
-  </div>
+	<!-- 目前的免费分享走热门商品接口 -->
+	<div class="modal">
+		<ng-container *ngrxLet="hotGoods$;let hotGoods">
+			<ng-container *ngIf="hotGoods?.count>0">
+				<li>
+					<img src="/assets/image/index/title-icon.svg" />
+					<span class="title"> 热门商品 </span>
+					<img src="/assets/image/index/line-m.svg" />
+					<span class="more" (click)="toDetailGood()">更多&nbsp;&nbsp;&gt;</span>
+				</li>
+				<div class="works two">
+					<ng-container *ngFor="let work of hotGoods?.list">
+						<ivo-work-card [work]="work"></ivo-work-card>
+					</ng-container>
+				</div>
+			</ng-container>
+		</ng-container>
+		<div class="loadtwo" *ngIf="loadSix">loading...</div>
+	</div>
+	<div class="back-top" #show>
+		<iframe #go id="gogogo" (load)="iframeInit()" src="/assets/image/back_top/gogogo.svg"></iframe>
+	</div>
 </div>
