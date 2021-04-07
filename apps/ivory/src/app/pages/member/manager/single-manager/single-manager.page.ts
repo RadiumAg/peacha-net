@@ -82,8 +82,10 @@ export class SingleManagerPage implements AfterViewInit {
 		} else if (this.type === 2) {
 			if (this.item.price > 0) {
 				this.router.navigate(['/edit/3d/paid', id]);
+			} else if (this.item.price === 0) {
+				this.router.navigate(['/edit/3d/free', id]);
 			} else {
-				this.router.navigate(['/edit/3d', id]);
+				this.router.navigate(['/edit/3d/onlyShow', id]);
 			}
 		}
 	}
