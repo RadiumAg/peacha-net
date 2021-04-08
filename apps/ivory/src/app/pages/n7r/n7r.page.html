@@ -56,19 +56,31 @@
 	<div class="case">
 		<li>
 			<img src="/assets/image/n7r/case/case-1.png" />
-			<span>Outside-In Tracking设计、制作、生产力</span>
+			<span>
+				<img src="/assets/image/n7r/icon/play.svg" (click)="toPlay(1)" />
+				Outside-In Tracking设计、制作、生产力
+			</span>
 		</li>
 		<li>
 			<img src="/assets/image/n7r/case/case-2.png" />
-			<span>Outside-In Tracking-Tracker制作光剑《Beat Saber》</span>
+			<span>
+				<img src="/assets/image/n7r/icon/play.svg" (click)="toPlay(2)" />
+				Outside-In Tracking-Tracker制作光剑《Beat Saber》
+			</span>
 		</li>
 		<li>
 			<img src="/assets/image/n7r/case/case-3.png" />
-			<span>Outside-In Tracking- 《Beat Saber》全身追踪</span>
+			<span>
+				<img src="/assets/image/n7r/icon/play.svg" (click)="toPlay(3)" />
+				Outside-In Tracking- 《Beat Saber》全身追踪
+			</span>
 		</li>
 		<li>
 			<img src="/assets/image/n7r/case/case-4.png" />
-			<span>Outside-In Tracking远程同步操控机器人</span>
+			<span>
+				<img src="/assets/image/n7r/icon/play.svg" (click)="toPlay(4)" />
+				Outside-In Tracking远程同步操控机器人
+			</span>
 		</li>
 	</div>
 	<h1>新闻资讯</h1>
@@ -129,6 +141,18 @@
 			</a>
 		</li>
 	</div>
+	<div class="suit">
+		<div class="detail">
+			<h3>Tundra 动捕套装</h3>
+			<span>世界顶级富豪数据库恢复</span>
+			<span>士大夫士大夫首发式地方</span>
+			<span>大师傅撒发</span>
+			<span>撒旦发射点发生飞洒地方</span>
+			<span>士大夫胜多负少</span>
+			<span class="money">¥2008<s class="less">¥2180</s></span>
+			<button (click)="preOrder()">立即预购</button>
+		</div>
+	</div>
 	<div class="price">
 		<div class="detail">
 			<h3>Tundra Tracker</h3>
@@ -141,7 +165,6 @@
 			<button (click)="preOrder()">立即预购</button>
 		</div>
 	</div>
-	<img class="show-bg" src="/assets/image/n7r/show-bg.png" />
 	<h1>关于N7R</h1>
 	<div class="about">
 		<div class="show">
@@ -162,7 +185,7 @@
 	</div>
 
 	<h1>查看更多</h1>
-	<div class="more">
+	<a class="more" href="https://www.n7r.com.cn/" target="_blank">
 		<img src="/assets//image/n7r/icon/arrow-bottom.svg" />
-	</div>
+	</a>
 </overlay-scrollbars>

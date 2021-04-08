@@ -1,9 +1,22 @@
 .box {
 	width: 1343px;
 	padding: 50px;
+	height: 800px;
 	display: flex;
 	justify-content: space-between;
-	& > .left {
-		width: 722px;
+	background-color: white;
+	border-radius: 8px;
+	& > overlay-scrollbars {
+		.left {
+			display: flex;
+			flex-direction: column;
+			& > img {
+				width: 772px;
+				margin-bottom: 12px;
+			}
+		}
+		.right {
+			width: 437px;
+		}
 	}
 }

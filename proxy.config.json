@@ -28,6 +28,11 @@
 		"secure": false,
 		"changeOrigin": true
 	},
+	"/api/v1/advance/": {
+		"target": "http://8.136.185.126:8800",
+		"secure": false,
+		"changeOrigin": true
+	},
 	"/api/": {
 		"target": "http://47.99.94.159:8200",
 		"secure": false,

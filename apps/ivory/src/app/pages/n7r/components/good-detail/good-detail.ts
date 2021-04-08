@@ -1,7 +1,6 @@
-import { Overlay } from '@angular/cdk/overlay';
-import { Component, ViewContainerRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { Select, Store } from '@ngxs/store';
+import { Component, Inject } from '@angular/core';
+import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
+
 
 
 @Component({
@@ -9,13 +8,16 @@ import { Select, Store } from '@ngxs/store';
     templateUrl: './good-detail.html',
     styleUrls: ['./good-detail.less']
 })
-export class N7rNavbarComponent {
+export class N7rGoodDetail {
 
     constructor(
-        private store: Store,
-        private router: Router,
-        private overlay: Overlay,
-        private vc: ViewContainerRef,
+        private modalRef: ModalRef<N7rGoodDetail>,
+        // @Inject(MODAL_DATA_TOKEN) public type: number
     ) { }
+
+
+    close(): void {
+        this.modalRef.close();
+    }
 
 }
