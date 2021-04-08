@@ -1,3 +1,4 @@
+import { ThreeModelOnlyShowComponent } from './3dModel/3dModel-only-show/3dModel-only-showcomponent';
 import { IllustrateFreeComponent } from './illustrate/illustrate-free/illustrate-free.component';
 import { Live2dPaidComponent } from './live2d/live2d-paid/live2d-paid.component';
 import { ReleaseModule } from './release.module';
@@ -37,7 +38,7 @@ import { ThreeModelPaidComponent } from './3dModel/3dModel-paid/3dModel-paid.com
 			},
 			{
 				path: '3d/onlyShow/:id',
-				component: ThreeModelFreeComponent,
+				component: ThreeModelOnlyShowComponent,
 				canActivate: [PhoneGuard,UserBanStatusGuard]
 			},
 			{

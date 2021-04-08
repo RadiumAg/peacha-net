@@ -8,7 +8,7 @@ import { Component,Inject,OnInit } from '@angular/core';
 })
 export class ConfirmComponent implements OnInit {
 
-  constructor(@Inject(MODAL_DATA_TOKEN) private modalRef: ModalRef<boolean>) { }
+  constructor(@Inject(MODAL_DATA_TOKEN) private data: [string,string,string,string,string],private modalRef: ModalRef<ConfirmComponent>) { }
 
   headerTitle = '';
   tipText = '';
@@ -16,20 +16,21 @@ export class ConfirmComponent implements OnInit {
   cancelButtonText = '确认发布';
   icon = 'warn';
 
-  ngOnInit(): void {
-    this.modalRef[0] && (this.tipText = this.modalRef[0]);
-    this.modalRef[1] && (this.headerTitle = this.modalRef[1]);
-    this.modalRef[2] && (this.sureButtonText = this.modalRef[2]);
-    this.modalRef[3] && (this.cancelButtonText = this.modalRef[3]);
-    this.modalRef[4] && (this.icon = this.modalRef[4]);
-  }
-
   sure() {
     this.modalRef.close(true);
   }
 
   cancel() {
     this.modalRef.close(false);
+  }
+
+
+  ngOnInit(): void {
+    this.data[0] && (this.tipText = this.data[0]);
+    this.data[1] && (this.headerTitle = this.data[1]);
+    this.data[2] && (this.sureButtonText = this.data[2]);
+    this.data[3] && (this.cancelButtonText = this.data[3]);
+    this.data[4] && (this.icon = this.data[4]);
   }
 
 }

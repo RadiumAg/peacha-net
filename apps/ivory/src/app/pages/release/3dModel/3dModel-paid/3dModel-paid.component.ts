@@ -194,7 +194,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 				selectPreViewImage: true
 			});
 		}
-		if (r.bv) {
+		if (r.bvNumber) {
 			this.ESelectPreviewType.push('bv');
 			this.checkedForm.patchValue({
 				selectPreViewTv: true

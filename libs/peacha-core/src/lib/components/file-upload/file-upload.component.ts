@@ -33,6 +33,8 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
   ) { }
 
   @Input()
+  nameMaxLength = 20;
+  @Input()
   acceptType = '*';
   @Input() set fileSize(value: number) {
     this._fileSzie = Number(value);
@@ -63,8 +65,8 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
   };
 
   getFileNameFriendly(fileName: string): string {
-    if (fileName.length > 10) {
-      return fileName.slice(0,9) + '...  ' + fileName.slice(fileName.lastIndexOf('.'));
+    if (fileName.length > this.nameMaxLength) {
+      return fileName.slice(0,this.nameMaxLength - 1) + '...  ' + fileName.slice(fileName.lastIndexOf('.'));
     } else {
       return fileName;
     }

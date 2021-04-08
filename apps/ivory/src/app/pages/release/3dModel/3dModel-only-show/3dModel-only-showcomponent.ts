@@ -143,16 +143,20 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 
 
 	private getEditWork() {
+		debugger
+
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
 				this.api.getEditWork(parseInt(x.get('id'),10)).subscribe((r: Work) => {
 					this.setPreviewType(r);
 					this.copyrightModel = r.authority;
+					console.log(r.bvNumber);
 
 					this.form.patchValue({
 						n: r.name,
 						d: r.description,
+						bv: r.bvNumber,
 						b: { url: r.cover },
 						t: r.tag,
 						f: r.assets.map(_ => {
@@ -175,7 +179,7 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 				selectPreViewImage: true
 			});
 		}
-		if (r.bv) {
+		if (r.bvNumber) {
 			this.ESelectPreviewType.push('bv');
 			this.checkedForm.patchValue({
 				selectPreViewTv: true
@@ -191,6 +195,7 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 			b: this.publishParam.b,
 			t: this.publishParam.t,
 			c: this.publishParam.c,
+			bv: this.publishParam.bv,
 			cs: 2,
 			f: this.publishParam.f,
 			gl: [],

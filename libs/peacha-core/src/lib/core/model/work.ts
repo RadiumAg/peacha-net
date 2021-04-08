@@ -13,7 +13,7 @@ export interface Work {
 	file?: string;
 	fileData?: string;
 	fileSize?: number;
-	bv?: string;
+	bvNumber?: string;
 	followState?: number;
 	goodsList?: {
 		file: '';
