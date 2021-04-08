@@ -260,6 +260,7 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 				t: this.editParam.t,
 				b: this.editParam.b,
 				n: this.editParam.n,
+				bv: this.editParam.bv,
 				gl: [],
 			})
 			.subscribe({
