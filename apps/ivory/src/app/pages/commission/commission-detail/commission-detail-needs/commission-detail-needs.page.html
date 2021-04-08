@@ -9,7 +9,7 @@
 				<div class="items special">
 					<img class="title-icon" src="/assets/image/commission/title-icon.svg" />
 					整体构思：
-					<ng-container [ngSwitch]="detail?.commission.secrecy">
+					<ng-container [ngSwitch]="detail?.property.design">
 						<ng-container *ngSwitchCase="0"> 已有完整构思 </ng-container>
 						<ng-container *ngSwitchCase="1">
 							<ng-container *ngIf="detail.commission.category===0"> 有大概构思，需与模型师讨论后确定 </ng-container>
