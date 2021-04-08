@@ -52,6 +52,14 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 	isGood: boolean;
 
 	@Input()
+	placeHolderWorld = `为了让您避免不必要的损失，请您在上传之前进行必要的防侵权措施
+	例如：添加水印、添加签名、降低清晰度、上传不可编辑版本等，您可以参考<a
+		target="_blank"
+		href="/assets/download_files/模型水印添加指南.pdf"
+		>《水印添加指南》</a
+	>`
+
+	@Input()
 	defaultPath: string;
 	live2dLoadStatus$ = new BehaviorSubject(Live2dLoadStatus.Not);
 	error = '';

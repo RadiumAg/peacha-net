@@ -11,24 +11,19 @@
 			<button type="button" (click)="saveTransformData()" *ngIf="!isGood">
 				<span>保存预设位置参数</span>
 			</button>
-			<button
-				type="button"
-				[attr.disabled]="live2dLoadStatus === 2 && uploadStatus === 0 ? null : true"
-				[attr.error]="live2dLoadStatus === 3 ? true : null"
-				[attr.loading]="uploadStatus === 1 ? true : null"
-				[attr.success]="uploadStatus === 2 ? true : null"
-				[attr.fail]="uploadStatus === 3 ? true : null"
-				(click)="upload()"
-			>
+			<button type="button" [attr.disabled]="live2dLoadStatus === 2 && uploadStatus === 0 ? null : true"
+				[attr.error]="live2dLoadStatus === 3 ? true : null" [attr.loading]="uploadStatus === 1 ? true : null"
+				[attr.success]="uploadStatus === 2 ? true : null" [attr.fail]="uploadStatus === 3 ? true : null"
+				(click)="upload()">
 				<span>{{
 					uploadStatus === 1
-						? '正在上传 ' + (uploadProgress$ | async).toFixed(1) + ' %'
-						: uploadStatus === 2
-						? '上传成功'
-						: uploadStatus === 3
-						? '上传失败'
-						: '确认上传'
-				}}</span>
+					? '正在上传 ' + (uploadProgress$ | async).toFixed(1) + ' %'
+					: uploadStatus === 2
+					? '上传成功'
+					: uploadStatus === 3
+					? '上传失败'
+					: '确认上传'
+					}}</span>
 			</button>
 		</div>
 	</ng-container>
@@ -41,13 +36,7 @@
 				<span>点击加载模型文件</span>
 			</button>
 
-			<span class="tips-center" *ngIf="!isGood"
-				>为了让您避免不必要的损失，请您在上传之前进行必要的防侵权措施
-				例如：添加水印、添加签名、降低清晰度、上传不可编辑版本等，您可以参考<a
-					target="_blank"
-					href="/assets/download_files/模型水印添加指南.pdf"
-					>《水印添加指南》</a
-				>
+			<span class="tips-center" *ngIf="!isGood" [innerHtml]="placeHolderWorld">
 			</span>
 		</div>
 		<!-- <span class="tips-bottom">上传作品视为您已同意
@@ -57,17 +46,9 @@
         </span> -->
 	</div>
 	<div class="live2d-loaded" *ngIf="live2dLoadStatus === 1 || live2dLoadStatus === 2">
-		<peacha-live2d-preview
-			[enableFaceTracker]="true"
-			[enableSettingPanel]="true"
-			[fileType]="fileType"
-			[vfs]="vfs"
-			[transformData]="transformData"
-			(error)="onLive2dLoadError($event)"
-			(ok)="onLive2dLoadOk()"
-			[width]="width"
-			[height]="height"
-		></peacha-live2d-preview>
+		<peacha-live2d-preview [enableFaceTracker]="true" [enableSettingPanel]="true" [fileType]="fileType" [vfs]="vfs"
+			[transformData]="transformData" (error)="onLive2dLoadError($event)" (ok)="onLive2dLoadOk()" [width]="width"
+			[height]="height"></peacha-live2d-preview>
 	</div>
 	<div class="live2d-load-error" *ngIf="live2dLoadStatus === 3">
 		<div class="upload-error-box">

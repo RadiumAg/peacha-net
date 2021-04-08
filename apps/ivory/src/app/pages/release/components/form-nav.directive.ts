@@ -21,7 +21,6 @@ export class FormNavDirective {
 				oldval[controlIndex] = true;
 			}
 			this.form_nav_token.next(oldval);
-			console.log(this.form_nav_token.getValue());
 		};
 		(this.el.nativeElement as HTMLElement).addEventListener('click', click, true);
 	}

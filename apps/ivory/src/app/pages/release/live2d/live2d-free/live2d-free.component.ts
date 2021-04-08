@@ -86,10 +86,10 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 		enableFaceTracker: boolean;
 		enableSettingPanel: boolean;
 	} = {
-		transformData: {},
-		enableFaceTracker: false,
-		enableSettingPanel: false,
-	};
+			transformData: {},
+			enableFaceTracker: false,
+			enableSettingPanel: false,
+		};
 	freeModal = [];
 	isEdit = false;
 	stateMentStrategy = {
@@ -177,15 +177,15 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 			fg: r.goodsList[0].file,
 			fgn: r.goodsList[0].name,
 		} : {
-				n: r.name,
-				d: r.description,
-				b: { url: r.cover },
-				t: r.tag,
-				c: r.copyright,
-				g: this.token,
-				a: r.authority,
-				fr: r.goodsList[0].fileType,
-			});
+			n: r.name,
+			d: r.description,
+			b: { url: r.cover },
+			t: r.tag,
+			c: r.copyright,
+			g: this.token,
+			a: r.authority,
+			fr: r.goodsList[0].fileType,
+		});
 		this.copyrightModel = r.authority;
 		this.live2dUpload.first.loadFileFromOpal(r.file,r.fileData ? JSON.parse(r.fileData) : null);
 		this.cdr.markForCheck();
@@ -245,12 +245,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 			c: this.param.c,
 			cs: this.param.cs,
 			f: this.param.f,
-			gl: [{
-				n: this.param.gl[0].n,
-				s: this.param.gl[0].s,
-				p: this.param.gl[0].p,
-				f: this.param.gl[0].f,
-			}],
+			gl: [],
 		}).subscribe({
 			next: _x => {
 				this.modal.open(SuccessTips,{
@@ -442,7 +437,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 	}
 
 	ngAfterViewInit(): void {
-		fromEvent(this.submitButton.nativeElement,'click')
+		fromEvent(this.submitButton.nativeElement,'click',{ passive: true })
 			.pipe(debounce(() => interval(500)))
 			.subscribe(() => {
 				this.submit();

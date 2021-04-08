@@ -15,7 +15,7 @@ export interface IUpdateWork {
 	n: string;
 	f: string;
 }
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ReleaseApiService {
 	constructor(private http: HttpClient) { }
 
