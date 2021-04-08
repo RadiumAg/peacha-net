@@ -11,7 +11,7 @@ import { IPublishFileType,IUpdateWork,ReleaseApiService } from '../../release-ap
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { IFileItem } from 'libs/peacha-core/src/lib/components/file-upload/file-upload.component';
 import { ConfirmComponent } from '../../components/confirm/confirm.component';
-
+import { EStoke } from '../../common/EStoke';
 
 @Component({
 	selector: 'ivo-3dmodel',
@@ -31,6 +31,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 	ESelectPreviewType: [('bv' | 'image')?,('bv' | 'image')?] = [];
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
+	firstGoodsSymbol: symbol;
 	publishParam: {
 		n: string;
 		d: string;
@@ -100,13 +101,14 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 			n: [n || '',Validators.required],
 			f: [f || null,Validators.required],
 			ft: [ft || 0,Validators.min(1)],
-			s: [s || -1],
+			s: [{ value: s || EStoke.single,disabled: this.isEdit }],
 			i: [i || -1],
 			p: [p || '',live2dPriceValidator()],
-			fr: [fr || false]
+			fr: [{ value: fr || false,disabled: this.isEdit }]
 		});
 		Reflect.set(createGlGroup,'symbol',Symbol());
 		this.glArray.push(createGlGroup);
+		this.setStokeToMultiple();
 	}
 
 	changeCopyright($event: number[]) {
@@ -174,6 +176,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 						d: r.description,
 						b: { url: r.cover },
 						t: r.tag,
+						bv: r.bvNumber,
 						f: r.assets.map(_ => {
 							return {
 								url: _,
@@ -232,8 +235,15 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 	}
 
 	deleteGl(symbol: symbol) {
-		console.log(this.glArray.controls.findIndex(_ => Reflect.get(_,'symbol') === symbol));
 		this.glArray.controls.splice(this.glArray.controls.findIndex(_ => Reflect.get(_,'symbol') === symbol),1);
+		this.setStokeToMultiple();
+	}
+
+	private setStokeToMultiple() {
+		if (this.glArray.length > 1) {
+			const firstControl = this.glArray.controls.find(_ => Reflect.get(_,'symbol') === Reflect.get(this.glArray.controls[0],'symbol'));
+			firstControl.patchValue({ s: EStoke.multiple });
+		}
 	}
 
 	trackBy(index: number,model: { symbol: symbol }): symbol {
@@ -335,7 +345,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		this.form.valueChanges
 			.pipe(
 				map((value) => {
-					const gl = value.gl.length && value.gl.map(_ => ({ ..._,f: _.f?.token || _?.f?.url || '',p: _.fr ? 0 : _.p }));
+					const gl = value.gl.length && value.gl.map(_ => ({ ..._,f: _.f?.token || _?.f?.url || '',p: _.fr ? 0 : _.p,s: _.fr ? -1 : _.s }));
 					value.b = value.b.token || value.b.url || '';
 					value.f = value.f.map((s: { remote_token: string; url: string }) => s.remote_token || s.url);
 					return {

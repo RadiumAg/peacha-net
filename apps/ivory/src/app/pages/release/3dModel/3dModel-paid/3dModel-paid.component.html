@@ -80,7 +80,9 @@
       <div *ngFor="let item of glArray.controls; index as i;trackBy:trackBy" class="form-item  free-share-file-upload"
         [formGroupName]="i">
         <div class="title" [ivoNoticeTitle]="'文件大小不得大于210M。'"><span>上传商品内容-{{i+1}}</span><span
-            class="ivo-icon-delete-circle" *ngIf="!isEdit" (click)="deleteGl(item.symbol)"></span></div>
+            class="ivo-icon-delete-circle" *ngIf="!isEdit" (click)="deleteGl(item.symbol)"></span>
+          <span class="form-item-tip-after" *ngIf="isEdit">更改价格或上下架商品，请在“商品管理”页面操作</span>
+        </div>
         <div class="form-controller required-center">
           <div class="good-file">
             <span>商品文件:</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -116,7 +118,7 @@
           <div class="sale-type required-center">
             出售类型：
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <nz-radio-group formControlName="s" ivoErroTip ivoErrorTipString="请选择销售类型">
+            <nz-radio-group *ngIf="!item.value.fr" formControlName="s" ivoErroTip ivoErrorTipString="请选择销售类型">
               <label nz-radio [nzValue]="1" [nzDisabled]="glArray.length > 1"><span
                   class="label-inner">单次销售</span></label>
               <label nz-radio [nzValue]="-1"><span class="label-inner">多次销售</span></label>

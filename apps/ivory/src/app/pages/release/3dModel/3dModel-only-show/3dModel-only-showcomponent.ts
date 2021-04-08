@@ -143,8 +143,6 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 
 
 	private getEditWork() {
-		debugger
-
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
