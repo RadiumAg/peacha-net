@@ -26,7 +26,7 @@ export class FormPriceInputComponent implements OnInit {
   @Input()
   ivoValue = 0;
   @Input()
-  ivoMaxValue = 99999;
+  ivoMaxValue = 999999;
   @Input()
   ivoMinValue = 0;
   @Output()
@@ -44,6 +44,7 @@ export class FormPriceInputComponent implements OnInit {
         inputValue = this.ivoMinValue;
       }
       this.ivoValue = inputValue;
+      this.input.nativeElement.value = inputValue.toString();
       this.onChange.call(this,inputValue);
       this.ivoValueChange.emit(inputValue);
     }

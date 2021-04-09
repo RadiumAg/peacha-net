@@ -82,8 +82,7 @@
       </div>
       <div class="form-controller required-center price">
         商品价格:&nbsp;&nbsp;&nbsp;&nbsp;
-        <ivo-form-price-input type="number" #price [ivoMaxValue]="maxPrice" onpaste="return false"
-          (input)="priceValidate($event)" ivoErroTip [ivoErrorTipString]="{
+        <ivo-form-price-input type="number" #price ivoErroTip [ivoErrorTipString]="{
           nullPrice: '请设置商品价格!',
           floatPrice: '价格只能为整数!',
           negativePrice: '价格不能为负数!',
