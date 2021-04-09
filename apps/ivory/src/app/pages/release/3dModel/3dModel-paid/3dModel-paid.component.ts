@@ -31,7 +31,6 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 	ESelectPreviewType: [('bv' | 'image')?,('bv' | 'image')?] = [];
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
-	firstGoodsSymbol: symbol;
 	publishParam: {
 		n: string;
 		d: string;
@@ -241,8 +240,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 
 	private setStokeToMultiple() {
 		if (this.glArray.length > 1) {
-			const firstControl = this.glArray.controls.find(_ => Reflect.get(_,'symbol') === Reflect.get(this.glArray.controls[0],'symbol'));
-			firstControl.patchValue({ s: EStoke.multiple });
+			this.glArray.controls.forEach(_ => _.patchValue({ s: EStoke.multiple }));
 		}
 	}
 
