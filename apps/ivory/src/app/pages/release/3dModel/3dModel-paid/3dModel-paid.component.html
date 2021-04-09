@@ -130,8 +130,8 @@
           <div class="input-area">
             商品价格:&nbsp;&nbsp;&nbsp;&nbsp;
             <span *ngIf="!item.value.fr">
-              <ivo-form-price-input #goods_price_input class="price-input" formControlName="p"
-                ivoPlaceholder="&yen;设置商品价格" ivoErroTip [ivoErrorTipString]="{
+              <ivo-form-price-input #goods_price_input [ivod] class="price-input" formControlName="p"
+                [ivoDisabled]="isEdit" ivoPlaceholder="&yen;设置商品价格" ivoErroTip [ivoErrorTipString]="{
                 nullPrice: '请设置商品价格!',
                 floatPrice: '价格只能为整数!',
                 negativePrice: '价格不能为负数!',

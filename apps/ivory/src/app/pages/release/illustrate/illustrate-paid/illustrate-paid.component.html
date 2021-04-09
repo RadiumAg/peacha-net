@@ -66,8 +66,8 @@
 
       <div class="form-controller required-center price">
         商品价格:&nbsp;&nbsp;&nbsp;&nbsp;
-        <ivo-form-price-input class="price-input " formControlName='p' ivoPlaceholder="&yen;设置商品价格" #price ivoErroTip
-          [ivoErrorTipString]="{
+        <ivo-form-price-input class="price-input" [ivoDisabled]="isEdit" formControlName='p'
+          ivoPlaceholder="&yen;设置商品价格" #price ivoErroTip [ivoErrorTipString]="{
           nullPrice: '请设置商品价格!',
           floatPrice: '价格只能为整数!',
           negativePrice: '价格不能为负数!',
