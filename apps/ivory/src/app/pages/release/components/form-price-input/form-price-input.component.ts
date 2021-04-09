@@ -1,47 +1,47 @@
-import { NG_VALUE_ACCESSOR,ControlValueAccessor } from '@angular/forms';
-import { Component,Input,OnInit,forwardRef,ChangeDetectorRef,Output,EventEmitter,ElementRef } from '@angular/core';
 import { FocusMonitor } from '@angular/cdk/a11y';
+import { ChangeDetectorRef,Component,ElementRef,EventEmitter,forwardRef,Input,OnInit,Output,ViewChild } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'ivo-form-input',
-  templateUrl: './form-input.component.html',
-  styleUrls: ['./form-input.component.less'],
+  selector: 'ivo-form-price-input',
+  templateUrl: './form-price-input.component.html',
+  styleUrls: ['./form-price-input.component.less'],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => FormInputComponent),
+    useExisting: forwardRef(() => FormPriceInputComponent),
     multi: true,
   }]
 })
-export class FormInputComponent implements OnInit,ControlValueAccessor {
-
+export class FormPriceInputComponent implements OnInit {
   constructor(
     private cdr: ChangeDetectorRef,
     private elementRef: ElementRef,
     private focusMonitor: FocusMonitor) { }
-
+  @ViewChild('price_input')
+  input: ElementRef<HTMLInputElement>
   @Input()
   ivoDisabled = false;
   @Input()
   ivoPlaceholder = '';
   @Input()
-  ivoValue = '';
+  ivoValue = 0;
   @Input()
-  ivoMaxLength = 20;
+  ivoMaxValue = 99999;
   @Input()
-  ivoMinLength = 0;
+  ivoMinValue = 0;
   @Output()
-  ivoValueChange = new EventEmitter<string>();
+  ivoValueChange = new EventEmitter<number>();
 
-  onChange: (value: string) => void = () => { };
+  onChange: (value: number) => void = () => { };
   onTouched: () => void = () => { };
 
-  innerInputChange(inputValue: string) {
+  innerInputChange(inputValue: number) {
     if (!this.ivoDisabled) {
-      if (inputValue.length > this.ivoMaxLength) {
-        inputValue = inputValue.slice(0,this.ivoMaxLength);
+      if (inputValue > this.ivoMaxValue) {
+        inputValue = this.ivoMaxValue;
       }
-      if (inputValue.length < this.ivoMinLength) {
-        inputValue = inputValue.slice(0,this.ivoMinLength);
+      if (inputValue < this.ivoMinValue) {
+        inputValue = this.ivoMinValue;
       }
       this.ivoValue = inputValue;
       this.onChange.call(this,inputValue);
@@ -49,12 +49,12 @@ export class FormInputComponent implements OnInit,ControlValueAccessor {
     }
   }
 
-  writeValue(value: string): void {
+  writeValue(value: number): void {
     this.ivoValue = value;
     this.cdr.markForCheck();
   }
 
-  registerOnChange(value: (string) => void): void {
+  registerOnChange(value: (value: number) => void): void {
     this.onChange = value;
   }
 
@@ -66,16 +66,14 @@ export class FormInputComponent implements OnInit,ControlValueAccessor {
     this.ivoDisabled = isDisabled;
   }
 
-  private validator() {
-
-  }
-
   ngOnInit(): void {
+    this.ivoValue = 1000;
     this.focusMonitor.monitor(this.elementRef,true).subscribe(focusOrgin => {
       if (!focusOrgin) {
         Promise.resolve().then(() => this.onTouched());
       }
     });
   }
+
 
 }

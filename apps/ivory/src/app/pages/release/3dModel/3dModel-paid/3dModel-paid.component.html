@@ -109,10 +109,10 @@
 
         <div class="form-controller no-top-line required-center good-file-name">
           <div class="input-area">
-            <span class="word-count">{{ share_name_input.value.length }}/20</span>
-            商品名称:&nbsp;&nbsp;&nbsp;&nbsp;<input placeholder="请输入商品名称请输入商品名称请输入商品名称" ivoErroTip
-              ivoErrorTipString="请填写免费商品名称!" #share_name_input type="text" formControlName="n" maxlength="20"
-              class="input">
+            商品名称:&nbsp;&nbsp;&nbsp;&nbsp;
+            <ivo-form-input ivoPlaceholder="请输入商品名称" ivoErroTip ivoErrorTipString="请填写免费商品名称!" #share_name_input
+              type="text" formControlName="n" [ivoMaxlength]="20">
+            </ivo-form-input>
           </div>
 
           <div class="sale-type required-center" *ngIf="!item.value.fr">
@@ -130,14 +130,16 @@
           <div class="input-area">
             商品价格:&nbsp;&nbsp;&nbsp;&nbsp;
             <span *ngIf="!item.value.fr">
-              <input placeholder="设置商品价格" (input)="priceValidate($event)" ivoErroTip [ivoErrorTipString]="{
-              nullPrice: '请设置商品价格!',
-              floatPrice: '价格只能为整数!',
-              negativePrice: '价格不能为负数!',
-              zeroPrice: '价格不能设置为零!'
-            }" #good_price_input type="number" formControlName="p" class="input price">
-              &nbsp;&nbsp;&nbsp;&nbsp;平台将收取8%的服务费，预计收益{{ call(toFixed,good_price_input.value * 0.92,2)}}
-              &nbsp;&nbsp;&nbsp;&nbsp;
+              <ivo-form-price-input #goods_price_input [ivoMaxValue]="99999" class="price-input" formControlName="p"
+                ivoPlaceholder="&yen;设置商品价格" ivoErroTip [ivoErrorTipString]="{
+                nullPrice: '请设置商品价格!',
+                floatPrice: '价格只能为整数!',
+                negativePrice: '价格不能为负数!',
+                zeroPrice: '价格不能设置为零!'
+              }">
+              </ivo-form-price-input>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="price-tip">平台将收取8%的服务费，预计收益{{ call(toFixed,goods_price_input.ivoValue
+                * 0.92,2)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
             </span><label nz-checkbox formControlName="fr">
               <span class="label-inner">免费分享</span></label>
           </div>

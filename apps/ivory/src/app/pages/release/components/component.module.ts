@@ -21,6 +21,7 @@ import { ReactiveComponentModule } from '@peacha-core';
 import { PeachaStudioCoreModule } from '@peacha-studio-core';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { PeachaComponentsModule } from '@peacha-core/components';
+import { FormPriceInputComponent } from './form-price-input/form-price-input.component';
 
 @NgModule({
 	declarations: [
@@ -31,6 +32,7 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 		CompanyModalComponent,
 		SuccessTips,
 		NoticeTitleDirective,
+		FormPriceInputComponent,
 		FormNavComponent,
 		FormNavDirective,
 		ConfirmComponent,
@@ -61,6 +63,7 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 		FormNavComponent,
 		FormNavDirective,
 		FormInputComponent,
+		FormPriceInputComponent,
 	],
 })
 export class ReleaseComponentsModule { }

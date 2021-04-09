@@ -250,12 +250,6 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		return model.symbol;
 	}
 
-	priceValidate(e: Event) {
-		const price = e.target as HTMLInputElement;
-		price.value.length > 5 ? (price.value = price.value.slice(0,price.value.length - 1)) :
-			(price.value.includes('.') ? price.value = price.value.slice(0,price.value.lastIndexOf('.')) : '')
-	}
-
 	submit() {
 		if (!this.ESelectPreviewType.length) {
 			this.modal.open(PopTips,['请选择预览方式','0']);
