@@ -220,7 +220,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		}).subscribe({
 			next: _x => {
 				this.modal.open(SuccessTips,{
-					redirectUrl: '/member/manager/illust/auditing',
+					redirectUrl: '/member/manager/3d/auditing',
 					tip: '已成功提交审核，请等待后台人员审核！',
 				});
 			},
