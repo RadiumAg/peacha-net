@@ -102,7 +102,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		const createGlGroup = this.fb.group({
 			n: [n || '',Validators.required],
 			f: [f || null,Validators.required],
-			ft: [ft || 0,Validators.required]
+			ft: [ft || 0,Validators.required],
 		});
 		Reflect.set(createGlGroup,'symbol',Symbol());
 		this.glArray.push(createGlGroup);
@@ -178,12 +178,13 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 					this.setPreviewType(r);
 					this.copyrightModel = r.authority;
 					r.goodsList.forEach(x => {
-						this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType);
+						this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType,);
 					})
 					this.form.patchValue({
 						n: r.name,
 						d: r.description,
 						b: { url: r.cover },
+						bv: r.bvNumber,
 						t: r.tag,
 						f: r.assets.map(_ => {
 							return {
