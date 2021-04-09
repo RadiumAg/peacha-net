@@ -309,21 +309,10 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 			})
 			.subscribe({
 				next: () => {
-					this.api.updatePrice({ g: this.editParam.gl[0].i,p: this.editParam.gl[0].p }).subscribe({
-						next: () => {
-							this.modal.open(SuccessTips,{
-								redirectUrl: 'user',
-								tip: '已成功提交审核，请等待后台人员审核!',
-							});
-						},
-						error: (x: { descrption: string }) => {
-							if (x.descrption) {
-								this.modal.open(PopTips,[x.descrption,false,0]);
-							} else {
-								this.modal.open(PopTips,['系统繁忙',false,0]);
-							}
-						},
-					})
+					this.modal.open(SuccessTips,{
+						redirectUrl: 'user',
+						tip: '已成功提交审核，请等待后台人员审核!',
+					});
 				},
 				error: (x: { descrption: string }) => {
 					if (x.descrption) {
