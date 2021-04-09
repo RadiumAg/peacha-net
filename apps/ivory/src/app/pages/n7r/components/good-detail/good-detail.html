@@ -1,25 +1,192 @@
 <div class="box">
 	<img class="close" src="/assets/image/n7r/icon/close.svg" (click)="close()" />
-	<overlay-scrollbars>
-		<div class="left">
-			<img src="/assets/image/n7r/suit/1.png" />
-			<img src="/assets/image/n7r/suit/2.png" />
-			<img src="/assets/image/n7r/suit/3.png" />
-			<img src="/assets/image/n7r/suit/4.png" />
-			<img src="/assets/image/n7r/suit/5.png" />
-			<img src="/assets/image/n7r/suit/6.png" />
-			<img src="/assets/image/n7r/suit/7.png" />
-			<img src="/assets/image/n7r/suit/8.png" />
-			<img src="/assets/image/n7r/suit/9.png" />
+	<div class="step" ivoStepper #step="steps">
+		<div class="show box-content" *ivoStep="'detail'">
+			<overlay-scrollbars>
+				<div class="left">
+					<img *ngFor="let url of suitPic" [attr.src]="url" />
+				</div>
+			</overlay-scrollbars>
+			<overlay-scrollbars>
+				<div class="right">
+					<h6>Tundra 动捕套装</h6>
+
+					<li>
+						<span class="title"> 选配项 </span>
+						<div class="choice">
+							<span
+								class="option"
+								*ngFor="let item of date.good.list;let i=index"
+								[class.option-active]="i===indexChoice"
+								(click)="select(item,i)"
+								>{{item.name}}</span
+							>
+						</div>
+					</li>
+					<li>
+						<span class="title"> 数量 </span>
+						<div class="choice">
+							<button (click)="count$.value>0 && count$.next(count$.value-1)">—</button>
+							<input
+								type="number"
+								(keydown)="$event.keyCode>47&&$event.keyCode<54&&changeValue($event.key)"
+								#input
+								[value]="count$.value"
+							/>
+							<button (click)="count$.value<5 && count$.next(count$.value+1)">—</button>
+							<span>(限购5件)</span>
+						</div>
+					</li>
+
+					<li *ngIf="date.type===1">
+						<span class="title"> 包装规格 </span>
+						<div class="choice">
+							<span class="des">{{indexGood.description}}</span>
+						</div>
+					</li>
+					<li>
+						<span class="title"> 单价 </span>
+						<div class="choice ext">
+							<span class="money">¥{{indexGood.price-indexGood.discountAmount}}<span class="tip">（预购价）</span></span>
+							<s>原价：￥{{indexGood.price}}</s>
+						</div>
+					</li>
+					<li>
+						<span class="title"> 预计发货时间 </span>
+						<div class="choice">
+							<span class="time">2021年9月</span>
+						</div>
+					</li>
+				</div>
+			</overlay-scrollbars>
 		</div>
-	</overlay-scrollbars>
-	<overlay-scrollbars>
-		<div class="right">
-			<h6>Tundra 动捕套装</h6>
-			<li>
-				<span> 选配项 </span>
-				<div></div>
-			</li>
+		<div class="box-content" *ivoStep="'order'">
+			<h2>提交订单</h2>
+			<li class="content-title">收货信息</li>
+			<form [formGroup]="infoForm">
+				<li class="item-list">
+					<span class="item">
+						收货人
+						<input formControlName="name" />
+						<div class="error-inset" [errorDisplay]="name">
+							<ng-container *errorCase="'required'"> 请填写收货人姓名 </ng-container>
+						</div>
+					</span>
+					<span class="item">
+						手机号码
+						<input formControlName="phone" />
+						<div class="error-inset" [errorDisplay]="phone">
+							<ng-container *errorCase="'required'"> 请填写手机号码 </ng-container>
+							<ng-container *errorCase="'pattern'"> 请填写正确格式的手机号码 </ng-container>
+						</div>
+					</span>
+				</li>
+				<li class="item-list">
+					<span class="item">
+						电子邮箱
+						<input formControlName="email" />
+						<div class="error-inset" [errorDisplay]="email">
+							<ng-container *errorCase="'required'"> 请填写电子邮箱 </ng-container>
+							<ng-container *errorCase="'email'"> 请填写正确格式的电子邮箱 </ng-container>
+						</div>
+					</span>
+				</li>
+				<li class="item-list">
+					<span class="item">
+						所在省份
+						<input
+							formControlName="city"
+							placeholder="选择省份"
+							class="select-input"
+							(click)="selectAddress(selectInput)"
+							[value]="indexCity?indexCity.one.name+indexCity.two.name+indexCity.three.name+indexCity.four.name:'选择省份'"
+							#selectInput
+							readonly
+						/>
+						<div class="error-inset" [errorDisplay]="city">
+							<ng-container *errorCase="'required'"> 请选择省份 </ng-container>
+						</div>
+					</span>
+				</li>
+				<li class="item-list">
+					<span class="item">
+						详细地址
+						<input formControlName="address" />
+						<div class="error-inset" [errorDisplay]="address">
+							<ng-container *errorCase="'required'"> 请填写详细地址 </ng-container>
+						</div>
+					</span>
+				</li>
+			</form>
+
+			<li class="content-title">订单信息</li>
+			<div class="order-detail">
+				<li class="row">
+					<span class="special"></span>
+					<span class="normal">单价</span>
+					<span class="normal">数量</span>
+					<span class="normal">价格</span>
+				</li>
+				<li class="row bottom">
+					<img src="/assets/image/n7r/single/2.png" />
+					<span class="goods-detail">
+						<span>{{indexGood.name}}</span>
+					</span>
+					<span class="normal">¥{{indexGood.price-indexGood.discountAmount}}</span>
+					<span class="normal">{{count$.value}}</span>
+					<span class="normal">¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}</span>
+				</li>
+			</div>
 		</div>
-	</overlay-scrollbars>
+		<div class="box-content" *ivoStep="'pay'">
+			<h2>订单支付</h2>
+			<li class="content-title">订单信息</li>
+			<ng-container *ngIf="btnType$.value!=-1">
+				<div class="order-detail">
+					<li class="row">
+						<span class="special"></span>
+						<span class="normal">单价</span>
+						<span class="normal">数量</span>
+						<span class="normal">价格</span>
+					</li>
+					<li class="row bottom">
+						<img src="/assets/image/n7r/single/2.png" />
+						<span class="goods-detail">
+							<span>{{indexGood.name}}</span>
+						</span>
+						<span class="normal">¥{{indexGood.price-indexGood.discountAmount}}</span>
+						<span class="normal">{{count$.value}}</span>
+						<span class="normal">¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}</span>
+					</li>
+				</div>
+				<li class="content-title">收货信息</li>
+				<div class="info">
+					<li class="info-item">
+						<span class="before">收货人</span>
+						<span>{{infoForm.value.name}}</span>
+					</li>
+					<li class="info-item">
+						<span class="before">手机号码</span>
+						<span>{{infoForm.value.phone}}</span>
+					</li>
+					<li class="info-item">
+						<span class="before">收货地址</span>
+						<span
+							>{{indexCity.one.name+indexCity.two.name+indexCity.three.name+indexCity.four.name+infoForm.value.address}}</span
+						>
+					</li>
+				</div>
+				<li class="content-title">支付方式</li>
+				<button class="pay-btn" (click)="pay()"><img src="/assets/image/n7r/icon/alipay.svg" />支付宝</button>
+			</ng-container>
+			<ng-container *ngIf="btnType$.value===-1">
+				<div class="fine"><img src="/assets/image/n7r/icon/success.svg" />支付成功</div>
+			</ng-container>
+		</div>
+		<button class="go" (click)="goto()" *ngIf="btnType$.value<2">
+			<ng-container *ngIf="btnType$.value===0"> 立即预购 ¥{{(indexGood.price-indexGood.discountAmount)*count$.value}} </ng-container>
+			<ng-container *ngIf="btnType$.value===1"> 提交订单 </ng-container>
+			<ng-container *ngIf="btnType$.value===-1"> 确定 </ng-container>
+		</button>
+	</div>
 </div>

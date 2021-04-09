@@ -1,0 +1,42 @@
+<div class="box" *ngrxLet="getAddress$">
+	<overlay-scrollbars *ngIf="first.length>0">
+		<div class="content">
+			<span
+				*ngFor="let i of first"
+				[class.active]="i.id===firstRank.id || (firstRank.id===-1 && i.id===first[0].id) "
+				(click)="select(i,1)"
+				>{{i.name}}</span
+			>
+		</div>
+	</overlay-scrollbars>
+	<overlay-scrollbars *ngIf="second.length>0">
+		<div class="content">
+			<span
+				*ngFor="let t of second"
+				(click)="select(t,2)"
+				[class.active]="t.id===secondRank.id || (secondRank.id===-1 && t.id===second[0].id) "
+				>{{t.name}}</span
+			>
+		</div>
+	</overlay-scrollbars>
+	<overlay-scrollbars *ngIf="third.length>0">
+		<div class="content">
+			<span
+				*ngFor="let e of third"
+				(click)="select(e,3)"
+				[class.active]="e.id===thirdRank.id || (thirdRank.id===-1 && e.id===third[0].id)"
+				>{{e.name}}</span
+			>
+		</div>
+	</overlay-scrollbars>
+	<overlay-scrollbars *ngIf="fourth.length>0">
+		<div class="content">
+			<span
+				*ngFor="let m of fourth"
+				(click)="select(m,-1)"
+				[class.active]="m.id===fourthRank.id|| (fourthRank.id===-1 && m.id===fourth[0].id)"
+				>{{m.name}}</span
+			>
+		</div>
+	</overlay-scrollbars>
+</div>

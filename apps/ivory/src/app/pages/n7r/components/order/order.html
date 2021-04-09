@@ -1,0 +1,77 @@
+<div class="box">
+	<img class="close" src="/assets/image/n7r/icon/close.svg" (click)="close()" />
+	<ng-container *ngIf="type$.value===0">
+		<div class="list" *ngrxLet="orderList$">
+			<h2>购买记录</h2>
+			<div class="item-list" cdkScrollable>
+				<li class="title">
+					<span class="pic"></span>
+					<span class="name">商品</span>
+					<span class="normal">价格</span>
+					<span class="normal">购买日期</span>
+					<span class="normal"></span>
+				</li>
+				<li class="good" *ngFor="let a of list">
+					<div *ngFor="let w of a.list">
+						<img class="pic" src="/assets/image/n7r/single/2.png" />
+						<span class="name">{{w.name}}</span>
+						<span class="normal">¥{{w.price*w.count}}</span>
+						<span class="normal">{{a.completeTime|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+						<span class="normal special" (click)="select()">查看详情</span>
+					</div>
+				</li>
+			</div>
+		</div>
+	</ng-container>
+	<ng-container *ngIf="type$.value!=0">
+		<div class="list" *ngrxLet="detail$;let detail">
+			<h2><img src="/assets/image/n7r/icon/back.svg" (click)="type$.next(0)" />订单详情</h2>
+			<li class="hello">订单信息</li>
+			<div class="item-list">
+				<li class="title">
+					<span class="pic"></span>
+					<span class="name">商品</span>
+					<span class="normal">单价</span>
+					<span class="normal">数量</span>
+					<span class="normal">价格</span>
+				</li>
+				<li class="good" *ngFor="let g of detail.list">
+					<img class="pic" src="/assets/image/n7r/single/2.png" />
+					<span class="name">{{g.name}}</span>
+					<span class="normal">¥{{g.price}}</span>
+					<span class="normal">{{g.count}}</span>
+					<span class="normal special">¥{{g.price*g.count}}</span>
+				</li>
+			</div>
+
+			<li class="hello">收货信息</li>
+
+			<div class="info">
+				<li class="info-item">
+					<span class="before">收货人</span>
+					<span>{{detail.shippingAddress.nickName}}</span>
+				</li>
+				<li class="info-item">
+					<span class="before">手机号码</span>
+					<span>{{detail.shippingAddress.phone}}</span>
+				</li>
+				<li class="info-item">
+					<span class="before">收货地址</span>
+					<span
+						>{{detail.shippingAddress.province+detail.shippingAddress.city+detail.shippingAddress.county+detail.shippingAddress.street+detail.shippingAddress.addressDetail}}</span
+					>
+				</li>
+			</div>
+			<li class="hello">配送信息</li>
+			<div class="info">
+				<li class="info-item">
+					<span class="before">预计发货时间</span>
+					<span>{{detail.remarks}}</span>
+				</li>
+				<li class="info-item">
+					<span class="before">请注意查收短信/电子邮件</span>
+				</li>
+			</div>
+		</div>
+	</ng-container>
+</div>

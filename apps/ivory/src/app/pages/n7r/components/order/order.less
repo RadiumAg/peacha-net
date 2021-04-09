@@ -1,0 +1,83 @@
+.box {
+	width: 1343px;
+	padding: 50px 50px 70px;
+	height: 800px;
+	background-color: white;
+	border-radius: 8px;
+	position: relative;
+	& > .close {
+		position: absolute;
+		right: -45px;
+		cursor: pointer;
+		top: 0;
+	}
+	& > .list {
+		h2 {
+			font-size: 26px;
+			font-weight: bold;
+			border-bottom: 1px dashed #dbdbdb;
+			padding-bottom: 15px;
+			& > img {
+				margin-right: 20px;
+				cursor: pointer;
+			}
+		}
+
+		& > .item-list {
+			& > li {
+				display: flex;
+				justify-content: space-between;
+				font-size: 20px;
+				color: #999999;
+				span {
+					display: block;
+					text-align: center;
+				}
+				.pic {
+					width: 190px;
+				}
+				.name {
+					width: 480px;
+				}
+				.normal {
+					width: 120px;
+				}
+				img {
+					height: 107px;
+				}
+				.special {
+					color: #02a9f1;
+					cursor: pointer;
+				}
+			}
+			& > .title {
+				margin: 15px 0 10px;
+			}
+			& > .good {
+				height: 107px;
+				line-height: 107px;
+			}
+		}
+
+		& > .hello {
+			width: 100%;
+			font-size: 26px;
+			color: #000425;
+			font-weight: bold;
+			margin-top: 35px;
+		}
+
+		& > .info {
+			color: #999999;
+			font-size: 20px;
+
+			& > .info-item {
+				margin-top: 12px;
+				& > .before {
+					display: inline-block;
+					width: 160px;
+				}
+			}
+		}
+	}
+}

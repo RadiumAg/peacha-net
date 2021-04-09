@@ -40,15 +40,14 @@ export class ModalService {
 				.flexibleConnectedTo(elementRef)
 				.withPositions([
 					{
-						originX: 'start',
+						originX: 'end',
 						originY: 'bottom',
-						overlayX: 'end',
-						overlayY: 'bottom',
-						offsetX: -16,
+						overlayX: 'center',
+						overlayY: 'top',
+						offsetX: 104,
 					},
 				]),
 		});
-
 		const dialogRef = new ModalRef<T, R>(overlayRef, closeOnClickBackDrop);
 		const its = new WeakMap();
 		its.set(ModalRef, dialogRef);

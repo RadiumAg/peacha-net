@@ -3,10 +3,11 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { ChangeDetectionStrategy, Component, ElementRef, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
-import { ChatStartService } from '@peacha-core';
+import { ChatStartService, ModalService } from '@peacha-core';
 import { Logout, UserState } from '@peacha-core/state';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DASHBOARD_ANIMATION, AVATAR_ANIMATION } from '../../../../fragments/navbar/animations';
+import { N7rOrder } from '../order/order';
 
 @Component({
 	selector: 'ivo-n7r-navbar',
@@ -45,7 +46,8 @@ export class N7rNavbarComponent {
 		private router: Router,
 		private overlay: Overlay,
 		private vc: ViewContainerRef,
-		private dialog: ChatStartService
+		private dialog: ChatStartService,
+		private modal: ModalService
 	) { }
 
 	leaveDashboard(): void {
@@ -98,5 +100,9 @@ export class N7rNavbarComponent {
 
 	toUser(i: number): void {
 		this.router.navigate(['user', i]);
+	}
+
+	toOrderList(): void {
+		this.modal.open(N7rOrder)
 	}
 }

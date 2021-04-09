@@ -16,10 +16,16 @@ export class N7rApiService {
 	* @version 2021/4/7
    */
 	public goodsList = () => this.http.get<{
-		servers: {
+		list: {
 			id: number;
 			price: number;
+			discountAmount: number;
 			name: string;
+			description: string;
+			stock: number;
+			salesVolumes: number;
+			cover: string;
+			month: number;
 		}[]
 	}>(`/advance/goods_list`);
 
@@ -72,4 +78,17 @@ export class N7rApiService {
 			name: string;
 		}[]
 	}>(`/advance/address/select?pi=${detail.pi}&k=${detail.k}&p=${detail.p}&s=${detail.s}`);
+
+
+	/**
+	*
+	* @name 检验是否购买前置商品
+	*
+	* @author ding
+	*
+	* @description
+	*
+	* @version 2021/4/9
+   */
+	public checkOrder = () => this.http.get(`/advance/check_order`);
 }

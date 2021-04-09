@@ -5,7 +5,7 @@
 			<a [routerLink]="['/register']">注册</a>
 		</ng-container>
 		<ng-template #logined>
-			<a>购买记录</a>
+			<a (click)="toOrderList()">购买记录</a>
 			<img [attr.src]="info?.avatar" class="avatar" #avatar (mouseenter)="hoverAvatar($event)" (click)="toUser(info?.id)" />
 		</ng-template>
 	</div>
