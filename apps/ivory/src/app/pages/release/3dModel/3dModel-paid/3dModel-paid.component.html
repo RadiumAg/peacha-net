@@ -115,10 +115,10 @@
               class="input">
           </div>
 
-          <div class="sale-type required-center">
+          <div class="sale-type required-center" *ngIf="!item.value.fr">
             出售类型：
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <nz-radio-group *ngIf="!item.value.fr" formControlName="s" ivoErroTip ivoErrorTipString="请选择销售类型">
+            <nz-radio-group formControlName="s" ivoErroTip ivoErrorTipString="请选择销售类型">
               <label nz-radio [nzValue]="1" [nzDisabled]="glArray.length > 1"><span
                   class="label-inner">单次销售</span></label>
               <label nz-radio [nzValue]="-1"><span class="label-inner">多次销售</span></label>
