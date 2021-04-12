@@ -123,7 +123,6 @@ export class N7rGoodDetail implements OnDestroy {
             }
 
         } else if (this.btnType$.value === 1) {
-            console.log(this.infoForm.valid)
             if (this.infoForm.valid) {
 
                 this.http.post<{ orderId: number }>(`/advance/create_order`, {
@@ -148,7 +147,7 @@ export class N7rGoodDetail implements OnDestroy {
             }
 
         } else {
-            this.close();
+            this.modalRef.close();
         }
 
     }

@@ -51,33 +51,13 @@ export class AddressSelect {
             }>(`/advance/address/select?pi=${id}&p=0&s=50`).subscribe(s => {
                 if (this.rank$.value === 0) {
                     this.first = this.first.concat(s.list);
-                    if (this.firstRank.id === -1) {
-                        this.firstRank = this.first[0];
-                        this.cityId$.next(this.firstRank.id);
-                        this.rank$.next(1);
-                    }
                 } else if (this.rank$.value === 1) {
                     this.second = this.second.concat(s.list);
-                    if (this.secondRank.id === -1) {
-                        this.secondRank = this.second[0];
-                        this.cityId$.next(this.secondRank.id);
-                        this.rank$.next(2);
-                    }
                 } else if (this.rank$.value === 2) {
                     this.third = this.third.concat(s.list);
-                    if (this.thirdRank.id === -1) {
-                        this.thirdRank = this.third[0];
-                        this.cityId$.next(this.thirdRank.id);
-                        this.rank$.next(3);
-                    }
                 } else if (this.rank$.value === 3) {
                     this.fourth = this.fourth.concat(s.list);
-                    if (this.fourthRank.id === -1) {
-                        this.fourthRank = this.fourth[0];
-                    }
                 }
-                console.log(this.cityId$.value
-                )
             })
         })
     )

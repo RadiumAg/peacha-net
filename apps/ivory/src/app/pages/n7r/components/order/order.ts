@@ -1,6 +1,6 @@
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { ModalRef } from '@peacha-core';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { switchMap, tap } from 'rxjs/operators';
     styleUrls: ['./order.less']
 })
 export class N7rOrder implements OnDestroy {
+
     page$ = new BehaviorSubject(0);
 
     list = [];
@@ -20,11 +21,13 @@ export class N7rOrder implements OnDestroy {
 
     type$ = new BehaviorSubject(0);
     indexId$ = new BehaviorSubject(0);
+    scheduledTime: number;
 
     constructor(
         private modalRef: ModalRef<N7rOrder>,
         private http: HttpClient,
         private scrollDispatcher: ScrollDispatcher,
+        private cdr: ChangeDetectorRef
     ) {
 
     }
@@ -40,8 +43,16 @@ export class N7rOrder implements OnDestroy {
                     s.list.forEach(l => {
                         this.list.push(l);
                     });
+                    this.cdr.detectChanges();
                 })
             )
+        })
+    );
+
+
+    addressDetail$ = this.indexId$.pipe(
+        switchMap(id => {
+            return this.http.get<any>(`/shopmall/express/address/detail?o=${id}`)
         })
     )
 
@@ -59,7 +70,7 @@ export class N7rOrder implements OnDestroy {
                     const scroll = scrollable as CdkScrollable;
                     if (scroll.measureScrollOffset('bottom') <= 0) {
                         if (this.count > this.list.length) {
-                            this.page$.next(this.page$.value - 1);
+                            this.page$.next(this.page$.value + 1);
                         }
                     }
                 }
@@ -68,12 +79,17 @@ export class N7rOrder implements OnDestroy {
         .subscribe();
 
 
+
+
+
     close(): void {
         this.modalRef.close();
     }
 
-    select(): void {
+    select(id: number, time: number): void {
         this.type$.next(1);
+        this.indexId$.next(id);
+        this.scheduledTime = time;
     }
 
 
