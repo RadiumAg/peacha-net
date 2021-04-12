@@ -189,7 +189,12 @@
 				<div class="fine"><img src="/assets/image/n7r/icon/success.svg" />支付成功</div>
 			</ng-container>
 		</div>
-		<button class="go" (click)="goto()" *ngIf="btnType$.value<2">
+		<button
+			class="go"
+			(click)="(indexGood.stock-indexGood.salesVolumes>0)&&goto()"
+			*ngIf="btnType$.value<2"
+			[class.unable]="indexGood.stock===indexGood.salesVolumes"
+		>
 			<ng-container *ngIf="btnType$.value===0"> 立即预购 ¥{{(indexGood.price-indexGood.discountAmount)*count$.value}} </ng-container>
 			<ng-container *ngIf="btnType$.value===1"> 提交订单 </ng-container>
 			<ng-container *ngIf="btnType$.value===-1"> 确定 </ng-container>
