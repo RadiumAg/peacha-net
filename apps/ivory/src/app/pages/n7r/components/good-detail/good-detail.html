@@ -47,7 +47,7 @@
 					<li>
 						<span class="title"> 库存 </span>
 						<div class="choice">
-							<span class="des">¥{{indexGood.stock-indexGood.salesVolumes}}</span>
+							<span class="des">{{indexGood.stock-indexGood.salesVolumes}}</span>
 						</div>
 					</li>
 					<li>
@@ -105,7 +105,7 @@
 							placeholder="选择省份"
 							class="select-input"
 							(click)="selectAddress(selectInput)"
-							[value]="indexCity?indexCity.one.name+indexCity.two.name+indexCity.three.name+indexCity.four.name:'选择省份'"
+							[value]="indexCity?indexCity?.one?.name+indexCity?.two?.name+indexCity?.three?.name+indexCity?.four?.name:'选择省份'"
 							#selectInput
 							readonly
 						/>
@@ -178,7 +178,7 @@
 					<li class="info-item">
 						<span class="before">收货地址</span>
 						<span
-							>{{indexCity.one.name+indexCity.two.name+indexCity.three.name+indexCity.four.name+infoForm.value.address}}</span
+							>{{indexCity?.one?.name+indexCity?.two?.name+indexCity?.three?.name+indexCity?.four?.name+infoForm.value.address}}</span
 						>
 					</li>
 				</div>

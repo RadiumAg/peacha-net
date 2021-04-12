@@ -25,26 +25,26 @@
 	</ng-container>
 	<ng-container *ngIf="type$.value!=0">
 		<div class="list" *ngrxLet="detail$;let detail">
-			<h2><img src="/assets/image/n7r/icon/back.svg" (click)="type$.next(0)" />订单详情</h2>
-
-			<li class="hello">订单信息</li>
-			<div class="item-list">
-				<li class="title">
-					<span class="pic"></span>
-					<span class="name">商品</span>
-					<span class="normal">单价</span>
-					<span class="normal">数量</span>
-					<span class="normal">价格</span>
-				</li>
-				<li class="good" *ngFor="let g of detail.goods">
-					<img class="pic" src="/assets/image/n7r/single/2.png" />
-					<span class="name">{{g.name}}</span>
-					<span class="normal">¥{{g.price}}</span>
-					<span class="normal">{{g.count}}</span>
-					<span class="normal">¥{{g.price*g.count}}</span>
-				</li>
-			</div>
 			<ng-container *ngrxLet="addressDetail$;let addressDetail">
+				<h2><img src="/assets/image/n7r/icon/back.svg" (click)="type$.next(0)" />订单详情</h2>
+
+				<li class="hello">订单信息</li>
+				<div class="item-list">
+					<li class="title">
+						<span class="pic"></span>
+						<span class="name">商品</span>
+						<span class="normal">单价</span>
+						<span class="normal">数量</span>
+						<span class="normal">价格</span>
+					</li>
+					<li class="good" *ngFor="let g of detail.goods">
+						<img class="pic" src="/assets/image/n7r/single/2.png" />
+						<span class="name">{{g.name}}</span>
+						<span class="normal">¥{{g.price}}</span>
+						<span class="normal">{{g.count}}</span>
+						<span class="normal">¥{{g.price*g.count}}</span>
+					</li>
+				</div>
 				<li class="hello">收货信息</li>
 				<div class="info">
 					<li class="info-item">

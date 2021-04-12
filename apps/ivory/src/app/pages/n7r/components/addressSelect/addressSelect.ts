@@ -54,8 +54,14 @@ export class AddressSelect {
                 } else if (this.rank$.value === 1) {
                     this.second = this.second.concat(s.list);
                 } else if (this.rank$.value === 2) {
+                    // if (s.list.length === 0) {
+                    //     this.modalRef.close({ one: this.firstRank, two: this.secondRank });
+                    // }
                     this.third = this.third.concat(s.list);
                 } else if (this.rank$.value === 3) {
+                    // if (s.list.length === 0) {
+                    //     this.modalRef.close({ one: this.firstRank, two: this.secondRank, three: this.thirdRank })
+                    // }
                     this.fourth = this.fourth.concat(s.list);
                 }
             })
