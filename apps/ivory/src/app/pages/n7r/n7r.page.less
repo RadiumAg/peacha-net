@@ -6,6 +6,7 @@
 
 		.top {
 			display: flex;
+			height: 1000px;
 
 			& > .left {
 				width: 420px;
@@ -37,16 +38,46 @@
 
 			& > .right {
 				width: 1500px;
-				display: flex;
-				align-self: start;
-				border-bottom-left-radius: 200px;
+				position: relative;
+				overflow: hidden;
 
 				img {
-					width: auto;
+					position: absolute;
+					width: 100%;
 					height: auto;
 					max-width: 100%;
-					max-height: 100%;
+					// max-height: 100%;
 					clip-path: polygon(0px 0px, 100% 0px, 100% 2408px, 0px 759px);
+				}
+
+				& > .small {
+					width: 1500px;
+					position: absolute;
+					z-index: 10;
+					bottom: 20px;
+					text-align: right;
+					& > .out {
+						display: inline-block;
+						height: 40px;
+						line-height: 40px;
+						cursor: pointer;
+						margin-top: 20px;
+						width: 100px;
+						text-align: center;
+						margin-right: 20px;
+						& > span {
+							text-align: center;
+							width: 100px;
+							height: 6px;
+							display: inline-block;
+							background: #333333;
+							border-radius: 3px;
+						}
+
+						& > .borderRed {
+							background-color: #ffffff;
+						}
+					}
 				}
 			}
 		}

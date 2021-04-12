@@ -10,7 +10,12 @@
 			<p class="desc">我们的产品和定制服务将赋能SteamVR产品更快捷研发、更低成本推向市场</p>
 		</div>
 		<div class="right">
-			<img src="/assets/image/n7r/banner/01.png" />
+			<img *ngFor="let url of imgs;let i=index" [src]="url" [@imgMove]="ImgState(i)" />
+			<div class="small">
+				<span class="out" *ngFor="let url of imgs;let i=index" (click)="changeSmall(i)">
+					<span [class.borderRed]="is_active(i)"></span>
+				</span>
+			</div>
 		</div>
 	</div>
 	<h1>应用场景</h1>
@@ -144,11 +149,9 @@
 	<div class="suit">
 		<div class="detail">
 			<h3>Tundra 动捕套装</h3>
-			<span>世界顶级富豪数据库恢复</span>
-			<span>士大夫士大夫首发式地方</span>
-			<span>大师傅撒发</span>
-			<span>撒旦发射点发生飞洒地方</span>
-			<span>士大夫胜多负少</span>
+			<span>更轻巧、线条更流畅</span>
+			<span>性能更强、续航更长</span>
+			<span>一个接收器，完成所有连接</span>
 			<span class="money">¥2008<s class="less">¥2180</s></span>
 			<button (click)="preOrder(1)">立即预购</button>
 		</div>
@@ -156,11 +159,10 @@
 	<div class="price">
 		<div class="detail">
 			<h3>Tundra Tracker</h3>
-			<span>世界顶级富豪数据库恢复</span>
-			<span>士大夫士大夫首发式地方</span>
-			<span>大师傅撒发</span>
-			<span>撒旦发射点发生飞洒地方</span>
-			<span>士大夫胜多负少</span>
+			<span>Born to run!!!</span>
+			<span>为跑马拉松而生！！</span>
+			<span>连续畅玩续航长达7小时！</span>
+			<span>*注：该产品仅用于动捕套装升级，请勿单拍</span>
 			<span class="money">¥688</span>
 			<button (click)="preOrder(2)">立即预购</button>
 		</div>
