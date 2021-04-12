@@ -97,22 +97,26 @@ export class N7rGoodDetail implements OnDestroy {
         this.modalRef.close();
     }
 
-    goto(): void {
+    goto(stock: number): void {
         if (this.btnType$.value === 0 && this.count$.value > 0) {
-            if (this.indexChoice === this.date.good.list.length - 1) {
-                this.http.get(`/advance/check_order`).subscribe(s => {
+            if (stock > 0 && stock >= this.count$.value) {
+                if (this.indexChoice === this.date.good.list.length - 1) {
+                    this.http.get(`/advance/check_order`).subscribe(_ => {
+                        this.steps.next();
+                        this.btnType$.next(this.btnType$.value + 1);
+                    }, e => {
+                        if (e.code === 403) {
+                            this.modal.open(PopTips, ['需购买动捕套餐后才可购买单个追踪器', false]);
+                        }
+                    })
+                } else {
                     this.steps.next();
                     this.btnType$.next(this.btnType$.value + 1);
-                }, e => {
-                    if (e.code === 403) {
-                        alert('无法购买')
-                    }
-
-                })
+                }
             } else {
-                this.steps.next();
-                this.btnType$.next(this.btnType$.value + 1);
+                this.modal.open(PopTips, ['库存不足无法购买', false]);
             }
+
 
         } else if (this.btnType$.value === 1) {
             if (this.infoForm.valid) {
@@ -148,7 +152,6 @@ export class N7rGoodDetail implements OnDestroy {
         this.modal.openFloat(AddressSelect, el, null, true).afterClosed().subscribe((s: any) => {
             this.indexCity = s;
             this.city.setValue(s);
-            console.log(s.one)
         })
     }
 

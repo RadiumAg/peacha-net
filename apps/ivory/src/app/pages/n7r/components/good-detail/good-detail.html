@@ -34,7 +34,7 @@
 								[value]="count$.value"
 							/>
 							<button (click)="count$.value<5 && count$.next(count$.value+1)">—</button>
-							<span>(限购5件)</span>
+							<span class="less">(限购5件)</span>
 						</div>
 					</li>
 
@@ -191,9 +191,9 @@
 		</div>
 		<button
 			class="go"
-			(click)="(indexGood.stock-indexGood.salesVolumes>0)&&goto()"
+			(click)="goto(indexGood.stock-indexGood.salesVolumes)"
 			*ngIf="btnType$.value<2"
-			[class.unable]="indexGood.stock===indexGood.salesVolumes"
+			[class.unable]="indexGood.stock===indexGood.salesVolumes || (indexGood.stock-indexGood.salesVolumes<this.count$.value)"
 		>
 			<ng-container *ngIf="btnType$.value===0"> 立即预购 ¥{{(indexGood.price-indexGood.discountAmount)*count$.value}} </ng-container>
 			<ng-container *ngIf="btnType$.value===1"> 提交订单 </ng-container>
