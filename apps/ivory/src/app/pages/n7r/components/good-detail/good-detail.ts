@@ -34,22 +34,14 @@ export class N7rGoodDetail implements OnDestroy {
     infoForm: FormGroup;
 
     suitPic = [
-        '/assets/image/n7r/suit/1.png',
         '/assets/image/n7r/suit/2.png',
         '/assets/image/n7r/suit/3.png',
-        '/assets/image/n7r/suit/4.png',
-        '/assets/image/n7r/suit/5.png',
-        '/assets/image/n7r/suit/6.png',
         '/assets/image/n7r/suit/7.png',
         '/assets/image/n7r/suit/8.png',
         '/assets/image/n7r/suit/9.png',
         '/assets/image/n7r/single/1.png',
-        '/assets/image/n7r/single/2.png',
-        '/assets/image/n7r/single/3.png',
-        '/assets/image/n7r/single/4.png',
         '/assets/image/n7r/single/5.png',
         '/assets/image/n7r/single/6.png',
-        '/assets/image/n7r/single/7.png',
         '/assets/image/n7r/single/8.png',
         '/assets/image/n7r/single/9.png',
     ];
