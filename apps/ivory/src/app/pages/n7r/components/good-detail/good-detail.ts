@@ -98,7 +98,7 @@ export class N7rGoodDetail implements OnDestroy {
     }
 
     goto(stock: number): void {
-        if (1618459200000 <= new Date().getTime()) {
+        if (1618297200000 <= new Date().getTime()) {
             if (this.btnType$.value === 0 && this.count$.value > 0) {
                 if (stock > 0 && stock >= this.count$.value) {
                     if (this.indexChoice === this.date.good.list.length - 1) {
