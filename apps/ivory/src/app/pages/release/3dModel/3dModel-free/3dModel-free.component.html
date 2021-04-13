@@ -80,7 +80,9 @@
       <div *ngFor="let item of glArray.controls; index as i;trackBy:trackBy" class="form-item  free-share-file-upload"
         [formGroupName]="i">
         <div class="title" [ivoNoticeTitle]="'文件大小不得大于210M。'"><span>上传免费分享内容-{{i+1}}</span><span
-            class="ivo-icon-delete-circle" *ngIf="!isEdit" (click)="deleteGl(item.symbol)"></span></div>
+            class="ivo-icon-delete-circle" *ngIf="!isEdit" (click)="deleteGl(item.symbol)"></span>
+          <span class="form-item-tip-after" *ngIf="isEdit">更改价格或上下架商品，请在“商品管理”页面操作</span>
+        </div>
         <div class="form-controller required-center">
           <div class="share-file">
             <span class="">分享文件:</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -113,7 +115,7 @@
       </div>
 
     </div>
-    <div class="form-item add-free-goodList" *ngIf="glArray.length !== 5">
+    <div class="form-item add-free-goodList" *ngIf="isEdit ? !isEdit : glArray.length !== 5">
       <div class="title" (click)="addGoodsList()" [ivoNoticeTitle]="'最多添加5个免费分享内容'"><span
           class="ivo-icon-add-circle add-free-goodList-operate">新增免费分享内容</span></div>
     </div>

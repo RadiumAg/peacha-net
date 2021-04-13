@@ -41,7 +41,6 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 		c: number;
 		cs: number;
 		f: string[];
-		fr: number;
 		gl: any[];
 	}>;
 
@@ -162,10 +161,11 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 	}
 
 	private setMainForm(r: Work): void {
-		this.freeModelFile = r.goodsList[0].file;
-		this.freeGoodsId = r.goodsList[0].id;
+		const freeModel = r.goodsList[0];
+		this.freeModelFile = freeModel?.file;
+		this.freeGoodsId = freeModel?.id;
 		this.goodsId = r.id;
-		this.form.patchValue(r.goodsList[0].fileType === 1 ? {
+		this.form.patchValue(freeModel?.fileType === 1 ? {
 			n: r.name,
 			d: r.description,
 			b: { url: r.cover },
@@ -184,7 +184,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 			c: r.copyright,
 			g: this.token,
 			a: r.authority,
-			fr: r.goodsList[0].fileType,
+			fr: 0,
 		});
 		this.copyrightModel = r.authority;
 		this.live2dUpload.first.loadFileFromOpal(r.file,r.fileData ? JSON.parse(r.fileData) : null);
@@ -245,7 +245,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 			c: this.param.c,
 			cs: this.param.cs,
 			f: this.param.f,
-			gl: [],
+			gl: this.param.gl,
 		}).subscribe({
 			next: _x => {
 				this.modal.open(SuccessTips,{

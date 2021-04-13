@@ -147,7 +147,7 @@
       </div>
     </div>
 
-    <div class="form-item add-free-goodList" *ngIf="glArray.length !== 5">
+    <div class="form-item add-free-goodList" *ngIf="isEdit ? !isEdit : glArray.length !== 5">
       <div class="title" (click)="addGoodsList()" [ivoNoticeTitle]="'最多添加5个商品。若作品内包含多个商品，则全部商品无法选择“单次销售”的出售类型'"><span
           class="ivo-icon-add-circle add-free-goodList-operate">新增商品</span></div>
     </div>
