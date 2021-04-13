@@ -98,53 +98,58 @@ export class N7rGoodDetail implements OnDestroy {
     }
 
     goto(stock: number): void {
-        if (this.btnType$.value === 0 && this.count$.value > 0) {
-            if (stock > 0 && stock >= this.count$.value) {
-                if (this.indexChoice === this.date.good.list.length - 1) {
-                    this.http.get(`/advance/check_order`).subscribe(_ => {
+        if (1618459200000 <= new Date().getTime()) {
+            if (this.btnType$.value === 0 && this.count$.value > 0) {
+                if (stock > 0 && stock >= this.count$.value) {
+                    if (this.indexChoice === this.date.good.list.length - 1) {
+                        this.http.get(`/advance/check_order`).subscribe(_ => {
+                            this.steps.next();
+                            this.btnType$.next(this.btnType$.value + 1);
+                        }, e => {
+                            if (e.code === 403) {
+                                this.modal.open(PopTips, ['需购买动捕套餐后才可购买单个追踪器', false]);
+                            }
+                        })
+                    } else {
                         this.steps.next();
                         this.btnType$.next(this.btnType$.value + 1);
-                    }, e => {
-                        if (e.code === 403) {
-                            this.modal.open(PopTips, ['需购买动捕套餐后才可购买单个追踪器', false]);
-                        }
-                    })
+                    }
                 } else {
-                    this.steps.next();
-                    this.btnType$.next(this.btnType$.value + 1);
+                    this.modal.open(PopTips, ['库存不足无法购买', false]);
                 }
+
+
+            } else if (this.btnType$.value === 1) {
+                if (this.infoForm.valid) {
+
+                    this.http.post<{ orderId: number }>(`/advance/create_order`, {
+                        g: this.indexGood.id,
+                        nu: this.count$.value,
+                        pi: this.indexCity?.one?.id,
+                        ci: this.indexCity?.two?.id,
+                        coi: this.indexCity?.three?.id,
+                        si: this.indexCity.four.id ?? '',
+                        ad: this.infoForm.value.address,
+                        ph: this.infoForm.value.phone,
+                        e: this.infoForm.value.email,
+                        n: this.infoForm.value.name
+                    }).subscribe(s => {
+                        this.orderId = s.orderId;
+                        this.steps.next();
+                        this.btnType$.next(this.btnType$.value + 1);
+                    })
+
+
+
+                }
+
             } else {
-                this.modal.open(PopTips, ['库存不足无法购买', false]);
+                this.modalRef.close();
             }
-
-
-        } else if (this.btnType$.value === 1) {
-            if (this.infoForm.valid) {
-
-                this.http.post<{ orderId: number }>(`/advance/create_order`, {
-                    g: this.indexGood.id,
-                    nu: this.count$.value,
-                    pi: this.indexCity?.one?.id,
-                    ci: this.indexCity?.two?.id,
-                    coi: this.indexCity?.three?.id,
-                    si: this.indexCity.four.id ?? '',
-                    ad: this.infoForm.value.address,
-                    ph: this.infoForm.value.phone,
-                    e: this.infoForm.value.email,
-                    n: this.infoForm.value.name
-                }).subscribe(s => {
-                    this.orderId = s.orderId;
-                    this.steps.next();
-                    this.btnType$.next(this.btnType$.value + 1);
-                })
-
-
-
-            }
-
         } else {
-            this.modalRef.close();
+            this.modal.open(PopTips, ['2021年4月15日 12:00 开始预售', false]);
         }
+
 
     }
 
