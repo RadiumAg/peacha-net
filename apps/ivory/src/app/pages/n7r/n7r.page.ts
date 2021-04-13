@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ModalService } from '@peacha-core';
 import { N7rGoodDetail } from './components/good-detail/good-detail';
 import { N7rPlay } from './components/play/play';
@@ -33,6 +33,7 @@ import { N7rApiService } from './n7r-api.service';
 	],
 })
 export class N7rPage {
+	@ViewChild('detail') content: ElementRef;
 	constructor(
 		private modal: ModalService,
 		private n7rApi: N7rApiService,
@@ -41,6 +42,8 @@ export class N7rPage {
 		this.current = 0;
 		this.autoPlay();
 	}
+
+	now = new Date().getTime();
 	current: number;
 	clear: any;
 	imgs = ['/assets/image/n7r/banner/01.png', '/assets/image/n7r/banner/02.png'];
@@ -119,5 +122,13 @@ export class N7rPage {
 	//下标切换
 	changeSmall(index: number) {
 		this.current = index;
+	}
+
+
+	goto(): void {
+		this.content.nativeElement.scrollIntoView({
+			behavior: 'smooth',
+			block: 'center',
+		});
 	}
 }

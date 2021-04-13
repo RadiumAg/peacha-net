@@ -12,29 +12,52 @@
 
 			& > .left {
 				width: 420px;
-				align-self: start;
-				background: linear-gradient(157deg, #44464a 10%, #2e3032 89%);
-				padding: 64px;
-				padding-bottom: 135px;
 
-				img {
-					display: block;
-					width: 180px;
-					height: 124px;
+				& > .left-top {
+					width: 420px;
+					align-self: start;
+					background: linear-gradient(157deg, #44464a 10%, #2e3032 89%);
+					padding: 64px;
+					padding-bottom: 135px;
+					img {
+						display: block;
+						width: 180px;
+						height: 124px;
+					}
+
+					.info {
+						color: #fff;
+						font-size: 36px;
+						font-weight: 500;
+						text-align: left;
+					}
+
+					.desc {
+						color: #fff;
+						font-size: 18px;
+						text-align: left;
+						margin-top: 50px;
+					}
 				}
 
-				.info {
-					color: #fff;
+				& > button {
+					width: 232px;
+					height: 79px;
+					border-radius: 40px;
+					border: 2px solid #000425;
+					color: #000425;
+					background-color: #ffffff;
 					font-size: 36px;
-					font-weight: 500;
-					text-align: left;
+					margin: 80px 0 0 100px;
+					cursor: pointer;
+					padding: 0 20px;
+					text-align: center;
 				}
-
-				.desc {
-					color: #fff;
-					font-size: 18px;
-					text-align: left;
-					margin-top: 50px;
+				& > .no {
+					background-color: #c1c1c1;
+					color: #787878;
+					border: none;
+					font-size: 22px;
 				}
 			}
 
@@ -142,6 +165,7 @@
 				border-radius: 17px;
 				box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.16);
 				padding: 30px;
+				position: relative;
 				& > img {
 					width: 100%;
 					max-height: 121.5px;
@@ -158,10 +182,11 @@
 					color: #333333;
 				}
 				& > a {
+					position: absolute;
+					bottom: 20px;
 					& > .go {
 						width: 39px;
 						height: 26px;
-						margin-top: 100px;
 						margin-left: 191px;
 						cursor: pointer;
 					}
@@ -254,21 +279,55 @@
 			}
 		}
 		.about {
-			width: 800px;
+			width: 1920px;
 			margin: 0 auto;
+			display: flex;
+			flex-direction: row;
+			& > .show-two {
+				width: 1060px;
+				display: flex;
+				flex-direction: column;
+				& > li {
+					width: 100%;
+					color: #333333;
+					font-size: 16px;
+					font-weight: bold;
+					display: flex;
+					flex-direction: row;
+					padding: 0 100px;
+					& > img {
+						width: 60px;
+						height: 60px;
+						margin-right: 60px;
+					}
+					& > span {
+						margin-bottom: 10px;
+						display: block;
+						width: 368px;
+					}
+				}
+				& > li:first-child {
+					margin-bottom: 160px;
+					margin-top: 80px;
+				}
+				& > .more {
+					display: block;
+					width: 100%;
+					text-align: right;
+					margin-top: 126px;
+					padding-right: 30px;
+					color: #333333;
+					font-size: 24px;
+				}
+			}
+			& > img {
+				width: 860px;
+				height: 573px;
+				object-fit: cover;
+			}
 		}
 		.show-bg {
 			width: 1920px;
-		}
-		.more {
-			display: block;
-			width: 1920px;
-			margin: 0 auto;
-			text-align: center;
-			padding-bottom: 36px;
-			& > img {
-				cursor: pointer;
-			}
 		}
 	}
 }
@@ -296,6 +355,73 @@
 		& > .name {
 			font-size: 20px;
 			margin: 30px 0 40px;
+		}
+	}
+}
+
+footer {
+	width: 100%;
+	min-width: 1920px;
+	height: 380px;
+	background-color: #f3f3f3;
+	margin-top: 100px;
+	& > .foot-content {
+		width: 1920px;
+		padding: 90px 180px;
+		display: flex;
+		justify-content: space-between;
+		flex-direction: row;
+		& > .foot-left {
+			width: 650px;
+			display: flex;
+			flex-direction: row;
+			& > .blue {
+				width: 121px;
+				height: 187px;
+			}
+			& > .font {
+				height: 187px;
+				display: flex;
+				flex-direction: column;
+				justify-items: flex-end;
+				font-size: 14px;
+				color: #acacac;
+				margin-left: 20px;
+
+				& > img {
+					margin-bottom: 35px;
+					margin-top: 70px;
+				}
+			}
+		}
+		& > .foot-center {
+			width: 640px;
+			display: flex;
+			flex-direction: column;
+			padding-top: 125px;
+			& > span {
+				display: block;
+				font-size: 16px;
+				color: #acacac;
+				margin-top: 8px;
+			}
+		}
+		& > .foot-right {
+			width: 240px;
+			text-align: right;
+			& > .title {
+				display: block;
+				color: #acacac;
+				font-size: 28px;
+				margin-bottom: 34px;
+				width: 100%;
+				text-align: right;
+			}
+			& > .pic {
+				width: 100%;
+				display: grid;
+				grid-template-columns: repeat(4, 60px);
+			}
 		}
 	}
 }
