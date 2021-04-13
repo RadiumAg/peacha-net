@@ -54,8 +54,12 @@
 					<li>
 						<span class="title"> 单价 </span>
 						<div class="choice ext">
-							<span class="money">¥{{indexGood.price-indexGood.discountAmount}}<span class="tip">（限时优惠）</span></span>
-							<s>原价：￥{{indexGood.price}}</s>
+							<span class="money"
+								>¥{{indexGood.price-indexGood.discountAmount}}<span class="tip" *ngIf="indexGood.discountAmount>1"
+									>（限时优惠）</span
+								></span
+							>
+							<s *ngIf="indexGood.discountAmount>1">原价：￥{{indexGood.price}}</s>
 						</div>
 					</li>
 					<li>
