@@ -93,7 +93,7 @@
 						<input formControlName="email" />
 						<div class="error-inset" [errorDisplay]="email">
 							<ng-container *errorCase="'required'"> 请填写电子邮箱 </ng-container>
-							<ng-container *errorCase="'email'"> 请填写正确格式的电子邮箱 </ng-container>
+							<ng-container *errorCase="'pattern'"> 请填写正确格式的电子邮箱 </ng-container>
 						</div>
 					</span>
 				</li>

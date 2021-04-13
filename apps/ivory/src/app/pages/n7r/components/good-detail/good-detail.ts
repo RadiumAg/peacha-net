@@ -72,7 +72,7 @@ export class N7rGoodDetail implements OnDestroy {
                 name: new FormControl('', [Validators.required]),
                 phone: new FormControl('', [Validators.required, Validators.pattern('^1[345789]\\d{9}$')]),
                 city: new FormControl('', [Validators.required]),
-                email: new FormControl('', [Validators.required, Validators.email]),
+                email: new FormControl('', [Validators.required, Validators.pattern('^\\w+((-\\w+)|(\\.\\w+))*@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$')]),
                 address: new FormControl('', [Validators.required]),
             }
         );
