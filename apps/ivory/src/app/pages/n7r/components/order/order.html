@@ -14,7 +14,7 @@
 				</li>
 
 				<li class="good" *ngFor="let a of list">
-					<img class="pic" src="/assets/image/n7r/single/2.png" />
+					<img class="pic" [src]="a.goods.cover" />
 					<span class="name">{{a.goods.name}}</span>
 					<span class="normal">¥{{a.goods.price*a.goods.count}}</span>
 					<span class="time">{{a.payTime|date:'yyyy-MM-dd HH:mm:ss'}}</span>
@@ -38,7 +38,7 @@
 						<span class="normal">价格</span>
 					</li>
 					<li class="good" *ngFor="let g of detail.goods">
-						<img class="pic" src="/assets/image/n7r/single/2.png" />
+						<img class="pic" [src]="g.cover" />
 						<span class="name">{{g.name}}</span>
 						<span class="normal">¥{{g.price}}</span>
 						<span class="normal">{{g.count}}</span>
