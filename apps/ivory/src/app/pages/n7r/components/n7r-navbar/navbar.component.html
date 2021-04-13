@@ -1,4 +1,8 @@
 <header id="navbar" *ngIf="info$ | async; let info">
+	<div class="left">
+		<img src="/assets/image/n7r/peacha.png" />
+		<a target="_blank" href="/">返回主站</a>
+	</div>
 	<div class="right">
 		<ng-container *ngIf="(isLogin$ | async) === false; else logined">
 			<a [routerLink]="['/login']" [queryParams]="{ return: '/n7r' }">登录</a>|
