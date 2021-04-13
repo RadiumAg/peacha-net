@@ -1,7 +1,7 @@
 .box {
-	width: 1373px;
-	padding: 50px 50px 70px;
-	height: 800px;
+	width: 1100px;
+	padding: 30px 30px 50px;
+	height: 600px;
 	background-color: white;
 	border-radius: 8px;
 	position: relative;
@@ -13,9 +13,133 @@
 		cursor: pointer;
 	}
 	.step {
-		height: 700px;
+		height: 500px;
 		.box-content {
-			height: 650px;
+			height: 450px;
+			& > overlay-scrollbars {
+				height: 440px;
+				.content-title {
+					font-size: 20px;
+					font-weight: bold;
+					margin-top: 15px;
+				}
+				form {
+					width: 100%;
+					& > .item-list {
+						width: 100%;
+						display: flex;
+						justify-content: space-between;
+						margin-top: 30px;
+						& > .item {
+							font-size: 18px;
+							font-weight: bold;
+							& > .error-inset {
+								color: red;
+							}
+							& > input {
+								margin-left: 35px;
+								width: 390px;
+								border: none;
+								border-bottom: 1px solid #e3e3e3;
+								outline: none;
+							}
+							& > .select-input {
+								width: 300px;
+								height: 45px;
+								border: none;
+								border-radius: 22px;
+								padding: 0 15px;
+								background-color: #d8d8d8;
+								border: 1px solid #d8d8d8;
+								cursor: pointer;
+								font-size: 16px;
+								overflow: hidden;
+								white-space: nowrap;
+								text-overflow: ellipsis;
+							}
+						}
+					}
+				}
+				.order-detail {
+					& > .row {
+						display: flex;
+						flex-direction: row;
+						color: #000425;
+						font-size: 20px;
+						font-weight: bold;
+						& > span {
+							display: inline-block;
+							width: 160px;
+							font-size: 18px;
+							text-align: center;
+						}
+						& > .special {
+							width: 983px;
+						}
+						& > img {
+							width: 190px;
+							height: 107px;
+						}
+						& > .goods-detail {
+							width: 775px;
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+						}
+					}
+					& > .bottom {
+						line-height: 107px;
+						color: #999999;
+						font-size: 20px;
+						font-weight: normal;
+					}
+				}
+				.zhu {
+					width: 100%;
+					color: #999999;
+					font-size: 18px;
+					margin-top: 30px;
+					& > span {
+						display: block;
+						height: 30px;
+						line-height: 30px;
+					}
+					& > .number {
+						text-indent: 40px;
+					}
+				}
+				.info {
+					color: #999999;
+					font-size: 18px;
+
+					& > .info-item {
+						margin-top: 12px;
+						& > .before {
+							display: inline-block;
+							width: 160px;
+						}
+					}
+				}
+				.pay-btn {
+					width: 280px;
+					height: 67px;
+					padding: 16px 10px;
+					border: none;
+					background-color: #02a9f1;
+					border-radius: 8px;
+					color: #ffffff;
+					font-size: 26px;
+					text-align: left;
+					margin-top: 16px;
+					margin-left: 10px;
+					line-height: 33px;
+					cursor: pointer;
+					& > img {
+						margin-right: 55px;
+						margin-top: -5px;
+					}
+				}
+			}
 			h2 {
 				width: 100%;
 				display: flex;
@@ -25,53 +149,12 @@
 				border-bottom: 1px dashed #dbdbdb;
 				padding-bottom: 15px;
 				& > span {
-					font-size: 20px;
+					font-size: 18px;
 					color: #999999;
 					font-weight: normal;
 				}
 			}
-			& > .content-title {
-				font-size: 26px;
-				font-weight: bold;
-				margin-top: 15px;
-			}
-			& > form {
-				width: 100%;
-				& > .item-list {
-					width: 100%;
-					display: flex;
-					justify-content: space-between;
-					margin-top: 30px;
-					& > .item {
-						font-size: 20px;
-						font-weight: bold;
-						& > .error-inset {
-							color: red;
-						}
-						& > input {
-							margin-left: 35px;
-							width: 480px;
-							border: none;
-							border-bottom: 1px solid #e3e3e3;
-							outline: none;
-						}
-						& > .select-input {
-							width: 300px;
-							height: 45px;
-							border: none;
-							border-radius: 22px;
-							padding: 0 15px;
-							background-color: #d8d8d8;
-							border: 1px solid #d8d8d8;
-							cursor: pointer;
-							font-size: 16px;
-							overflow: hidden;
-							white-space: nowrap;
-							text-overflow: ellipsis;
-						}
-					}
-				}
-			}
+
 			& > .fine {
 				width: 100%;
 				display: flex;
@@ -89,10 +172,10 @@
 				display: block;
 				width: 100%;
 				text-align: center;
-				font-size: 36px;
+				font-size: 30px;
 				font-weight: bold;
 				color: #000425;
-				margin-top: 30px;
+				margin-top: 25px;
 			}
 
 			& > .tip {
@@ -104,81 +187,6 @@
 				font-weight: bold;
 				margin-top: 15px;
 			}
-
-			& > .order-detail {
-				& > .row {
-					display: flex;
-					flex-direction: row;
-					& > span {
-						display: inline-block;
-						width: 160px;
-						color: #999999;
-						font-size: 20px;
-						text-align: center;
-					}
-					& > .special {
-						width: 983px;
-					}
-					& > img {
-						width: 190px;
-						height: 107px;
-					}
-					& > .goods-detail {
-						width: 775px;
-						display: flex;
-						flex-direction: column;
-						align-items: center;
-					}
-				}
-				& > .bottom {
-					line-height: 107px;
-				}
-			}
-			& > .zhu {
-				width: 100%;
-				color: #999999;
-				font-size: 20px;
-				margin-top: 30px;
-				& > span {
-					display: block;
-					height: 35px;
-					line-height: 35px;
-				}
-				& > .number {
-					text-indent: 40px;
-				}
-			}
-			& > .info {
-				color: #999999;
-				font-size: 20px;
-
-				& > .info-item {
-					margin-top: 12px;
-					& > .before {
-						display: inline-block;
-						width: 160px;
-					}
-				}
-			}
-			& > .pay-btn {
-				width: 280px;
-				height: 67px;
-				padding: 16px 10px;
-				border: none;
-				background-color: #02a9f1;
-				border-radius: 8px;
-				color: #ffffff;
-				font-size: 26px;
-				text-align: left;
-				margin-top: 16px;
-				margin-left: 10px;
-				line-height: 33px;
-				cursor: pointer;
-				& > img {
-					margin-right: 55px;
-					margin-top: -5px;
-				}
-			}
 		}
 		.show {
 			display: flex;
@@ -188,7 +196,7 @@
 					display: flex;
 					flex-direction: column;
 					& > img {
-						width: 772px;
+						width: 545px;
 						margin-bottom: 12px;
 					}
 				}
@@ -275,7 +283,7 @@
 		& > .btn {
 			width: 100%;
 			text-align: right;
-			margin-top: 20px;
+			margin-top: 50px;
 			& > .go {
 				text-align: center;
 				min-width: 188px;
@@ -292,7 +300,7 @@
 
 		& > .center-btn {
 			text-align: center !important;
-			margin-top: -200px !important;
+			margin-top: -30px !important;
 		}
 
 		& > .unable {

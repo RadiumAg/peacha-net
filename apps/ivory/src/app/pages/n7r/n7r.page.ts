@@ -5,6 +5,21 @@ import { N7rGoodDetail } from './components/good-detail/good-detail';
 import { N7rPlay } from './components/play/play';
 import { N7rApiService } from './n7r-api.service';
 
+
+type Goods = {
+	list: {
+		id: number;
+		price: number;
+		discountAmount: number;
+		name: string;
+		description: string;
+		stock: number;
+		salesVolumes: number;
+		cover: string;
+		month: number;
+	}[]
+}
+
 @Component({
 	selector: 'ivo-n7r',
 	templateUrl: './n7r.page.html',
@@ -41,17 +56,23 @@ export class N7rPage {
 	) {
 		this.current = 0;
 		this.autoPlay();
+		this.n7rApi.goodsList().subscribe(good => {
+			this.allGoods = good;
+			this.singleInfo = good.list.filter(l => Number(l.id) === 1145141007);
+			this.suitInfo = good.list.filter(l => Number(l.id) === 1145141006);
+		})
 	}
 
 	now = new Date().getTime();
 	current: number;
 	clear: any;
 	imgs = ['/assets/image/n7r/banner/01.png', '/assets/image/n7r/banner/02.png'];
-	preOrder(type: number): void {
-		this.n7rApi.goodsList().subscribe(good => {
-			this.modal.open(N7rGoodDetail, { type, good })
-		})
+	allGoods: Goods;
+	suitInfo: any;
+	singleInfo: any;
 
+	preOrder(type: number): void {
+		this.modal.open(N7rGoodDetail, { type, good: this.allGoods })
 	}
 
 	@HostListener('mouseenter', ['$event.target']) onMouseEnter() {
