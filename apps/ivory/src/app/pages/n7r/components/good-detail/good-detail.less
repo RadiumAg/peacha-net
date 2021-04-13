@@ -17,10 +17,18 @@
 		.box-content {
 			height: 650px;
 			h2 {
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
 				font-size: 26px;
 				font-weight: bold;
 				border-bottom: 1px dashed #dbdbdb;
 				padding-bottom: 15px;
+				& > span {
+					font-size: 20px;
+					color: #999999;
+					font-weight: normal;
+				}
 			}
 			& > .content-title {
 				font-size: 26px;
@@ -65,17 +73,36 @@
 				}
 			}
 			& > .fine {
-				height: 400px;
 				width: 100%;
 				display: flex;
 				align-items: center;
 				flex-direction: column;
 				justify-content: center;
-				font-size: 20px;
+				font-size: 26px;
 				font-weight: bold;
+				margin-top: 100px;
 				& > img {
-					margin-bottom: 25px;
+					margin-bottom: 15px;
 				}
+			}
+			& > .final-money {
+				display: block;
+				width: 100%;
+				text-align: center;
+				font-size: 36px;
+				font-weight: bold;
+				color: #000425;
+				margin-top: 30px;
+			}
+
+			& > .tip {
+				display: block;
+				width: 100%;
+				text-align: center;
+				font-size: 16px;
+				color: #000425;
+				font-weight: bold;
+				margin-top: 15px;
 			}
 
 			& > .order-detail {
@@ -105,6 +132,20 @@
 				}
 				& > .bottom {
 					line-height: 107px;
+				}
+			}
+			& > .zhu {
+				width: 100%;
+				color: #999999;
+				font-size: 20px;
+				margin-top: 30px;
+				& > span {
+					display: block;
+					height: 35px;
+					line-height: 35px;
+				}
+				& > .number {
+					text-indent: 40px;
 				}
 			}
 			& > .info {
@@ -231,16 +272,25 @@
 				}
 			}
 		}
-		& > .go {
-			padding: 10px 15px;
-			background-color: #000425;
-			color: #ffffff;
-			font-size: 22px;
-			font-weight: bold;
-			border: none;
-			border-radius: 26px;
-			cursor: pointer;
-			float: right;
+		& > .btn {
+			width: 100%;
+			text-align: right;
+			& > .go {
+				text-align: center;
+				width: 188px;
+				padding: 10px 15px;
+				background-color: #000425;
+				color: #ffffff;
+				font-size: 22px;
+				font-weight: bold;
+				border: none;
+				border-radius: 26px;
+				cursor: pointer;
+			}
+		}
+
+		& > .center-btn {
+			text-align: center !important;
 		}
 
 		& > .unable {

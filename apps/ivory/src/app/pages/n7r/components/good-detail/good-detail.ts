@@ -205,17 +205,19 @@ export class N7rGoodDetail implements OnDestroy {
                                 })),
                                 tap(heartbeat => {
                                     if ([2, 4, 5].includes(heartbeat.status)) {
-
                                         this.btnType$.next(-1);
+                                        this.steps.goto('success');
 
                                     } else if ([3, 31, 32].includes(heartbeat.status)) {
-                                        this.modal
-                                            .open(PopTips, [heartbeat.error, false])
-                                            .afterClosed()
-                                            .subscribe(_ => {
+                                        // this.modal
+                                        //     .open(PopTips, [heartbeat.error, false])
+                                        //     .afterClosed()
+                                        //     .subscribe(_ => {
 
 
-                                            });
+                                        //     });
+                                        this.btnType$.next(-1);
+                                        this.steps.goto('fail');
                                     }
                                 }),
                                 takeUntil(this.destroy$),
