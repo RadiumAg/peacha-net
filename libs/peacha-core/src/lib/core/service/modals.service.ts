@@ -44,7 +44,7 @@ export class ModalService {
 						originY: 'bottom',
 						overlayX: 'center',
 						overlayY: 'top',
-						offsetX: 104,
+						offsetX: 20,
 					},
 				]),
 		});

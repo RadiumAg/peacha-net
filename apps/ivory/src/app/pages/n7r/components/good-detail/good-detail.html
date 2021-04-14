@@ -159,9 +159,12 @@
 			</overlay-scrollbars>
 		</div>
 		<div class="box-content" *ivoStep="'pay'">
-			<h2>
-				订单支付
-				<span>订单{{orderId}}</span>
+			<h2 class="res">
+				<div class="box-left">
+					订单支付
+					<span>订单{{orderId}}</span>
+				</div>
+				<div class="box-right" (click)="steps.goto('cancel')">取消订单</div>
 			</h2>
 			<overlay-scrollbars class="second-scrollbars">
 				<li class="content-title">订单信息</li>
@@ -202,6 +205,9 @@
 				</div>
 				<li class="content-title">支付方式</li>
 				<button class="pay-btn" (click)="pay()"><img src="/assets/image/n7r/icon/alipay.svg" />支付宝</button>
+				<li class="show-time">
+					<span> 请在<ivo-cd [createtime]="createOrderTime" (cdTimeout)="orderTimeout()"></ivo-cd>内支付 </span>
+				</li>
 			</overlay-scrollbars>
 		</div>
 		<div class="box-content" *ivoStep="'success'">
@@ -237,24 +243,16 @@
 			</div>
 		</div>
 		<div class="btn" [class.center-btn]="btnType$.value===-1">
-			<li (click)="btnType$.value===2&& cancel()">
-				<ng-container *ngIf="btnType$.value===2">
-					<span> 请在<ivo-cd [createtime]="createOrderTime" (cdTimeout)="orderTimeout()"></ivo-cd>内支付 </span>
-
-					<a> 取消订单 </a>
-				</ng-container>
-			</li>
 			<button
 				class="go"
 				(click)="goto(indexGood.stock-indexGood.salesVolumes)"
-				*ngIf="btnType$.value<3"
+				*ngIf="btnType$.value<2"
 				[class.unable]="indexGood.stock===indexGood.salesVolumes || (indexGood.stock-indexGood.salesVolumes<this.count$.value)"
 			>
 				<ng-container *ngIf="btnType$.value===0">
 					立即预购 ¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}
 				</ng-container>
 				<ng-container *ngIf="btnType$.value===1"> 提交订单 </ng-container>
-				<ng-container *ngIf="btnType$.value===2"> 立即支付 </ng-container>
 				<ng-container *ngIf="btnType$.value===-1"> 确定 </ng-container>
 			</button>
 		</div>
