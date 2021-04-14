@@ -74,8 +74,8 @@ export class ReleaseApiService {
 		c: number;
 		cs: number;
 		f: string[];
-		gd: string;
 		gl: IPublishFileType[];
+		gd?: string;
 		g?: string;
 		bv?: string;
 	}) => this.http.post(`/work/publish_work`,p);
