@@ -162,6 +162,7 @@ export class N7rGoodDetail implements OnDestroy {
                 //     this.modal.open(PopTips, ['2021年4月15日 12:00 开始预售', false]);
                 // }
             } else {
+                this.modalRef.close();
                 this.router.navigate(['login'], {
                     queryParams: {
                         return: 'n7r',
