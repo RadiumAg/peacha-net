@@ -27,14 +27,7 @@
 						<span class="title"> 数量 </span>
 						<div class="choice">
 							<button (click)="count$.value>1 && count$.next(count$.value-1)">-</button>
-							<input
-								type="number"
-								(keydown)="$event.keyCode>47&&$event.keyCode<54&&changeValue($event.key)"
-								#input
-								[value]="count$.value"
-								readonly
-								unselectable="on"
-							/>
+							<input type="number" #input [value]="count$.value" readonly unselectable="on" />
 							<button (click)="count$.value<(indexGood.stock-indexGood.salesVolumes) && count$.next(count$.value+1)">
 								+
 							</button>
