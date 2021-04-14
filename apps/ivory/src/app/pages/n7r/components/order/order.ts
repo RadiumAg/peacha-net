@@ -47,7 +47,7 @@ export class N7rOrder implements OnDestroy {
             return this.http.get<{
                 count: number,
                 list: any
-            }>(`/shopmall/orders/goods/list?c=25&t=1&p=${p}&s=10`).pipe(
+            }>(`/shopmall/orders/goods/list?c=25&t=-1&p=${p}&s=10`).pipe(
                 tap(s => {
                     this.count = s.count;
                     s.list.forEach(l => {
