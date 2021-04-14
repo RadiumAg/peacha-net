@@ -154,6 +154,8 @@ export class N7rGoodDetail implements OnDestroy {
 
 
 
+                    } else {
+                        this.modal.open(PopTips, ['请填写完整有效的收获信息', false]);
                     }
 
                 } else {
