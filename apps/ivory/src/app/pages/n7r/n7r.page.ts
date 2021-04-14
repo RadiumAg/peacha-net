@@ -68,8 +68,8 @@ export class N7rPage {
 	clear: any;
 	imgs = ['/assets/image/n7r/banner/01.png', '/assets/image/n7r/banner/02.png'];
 	allGoods: Goods;
-	suitInfo: any;
-	singleInfo: any;
+	suitInfo: any = [];
+	singleInfo: any = [];
 
 	preOrder(type: number): void {
 		this.modal.open(N7rGoodDetail, { type, good: this.allGoods })
