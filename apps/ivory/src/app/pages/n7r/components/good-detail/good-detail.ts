@@ -119,7 +119,6 @@ export class N7rGoodDetail implements OnDestroy {
                                 if (e.code === 403) {
                                     this.modal.open(PopTips, ['需购买动捕套餐后才可购买单个追踪器', false]);
                                 } else if (e.code === 20000) {
-                                    console.log(e.code);
                                     this.modal.open(PopTips, ['库存不足无法购买', false]);
                                 }
                             })
@@ -153,8 +152,9 @@ export class N7rGoodDetail implements OnDestroy {
                             this.createOrderTime = new Date().getTime();
                         }, e => {
                             if (e.code === 20000) {
-                                console.log(e.code);
-                                this.modal.open(PopTips, ['库存不足无法购买', false]);
+                                this.modal.open(PopTips, ['库存不足无法购买', false]).afterClosed().subscribe(_ => {
+                                    this.modalRef.close();
+                                });
                             }
                         })
 

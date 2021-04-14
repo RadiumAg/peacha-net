@@ -159,7 +159,7 @@
 			<span>更轻巧、线条更流畅</span>
 			<span>性能更强、续航更长</span>
 			<span>一个接收器，完成所有连接</span>
-			<span class="money">¥{{suitInfo[0].price-suitInfo[0].discountAmount}}<s class="less">¥{{suitInfo[0].price}}</s></span>
+			<span class="money">¥{{suitInfo[0]?.price-suitInfo[0]?.discountAmount}}<s class="less">¥{{suitInfo[0]?.price}}</s></span>
 			<button (click)="preOrder(1)">立即预购</button>
 		</div>
 	</div>
@@ -170,7 +170,7 @@
 			<span>为跑马拉松而生！！</span>
 			<span>连续畅玩续航长达7小时！</span>
 			<span>*注：该产品仅用于动捕套装升级，请勿单拍</span>
-			<span class="money">¥{{singleInfo[0].price-singleInfo[0].discountAmount}}<s class="less">¥{{singleInfo[0].price}}</s></span>
+			<span class="money">¥{{singleInfo[0]?.price-singleInfo[0]?.discountAmount}}<s class="less">¥{{singleInfo[0]?.price}}</s></span>
 			<button (click)="preOrder(2)">立即预购</button>
 		</div>
 	</div>
