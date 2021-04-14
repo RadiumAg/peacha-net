@@ -78,11 +78,14 @@ export class N7rGoodDetail implements OnDestroy {
 
         this.infoForm = this.fb.group(
             {
-                name: new FormControl('', [Validators.required]),
+                name: new FormControl('', [Validators.required, Validators.maxLength(20)]),
                 phone: new FormControl('', [Validators.required, Validators.pattern('^1[345789]\\d{9}$')]),
                 city: new FormControl('', [Validators.required]),
-                email: new FormControl('', [Validators.required, Validators.pattern('^\\w+((-\\w+)|(\\.\\w+))*@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$')]),
-                address: new FormControl('', [Validators.required]),
+                email: new FormControl('', [
+                    Validators.required,
+                    Validators.pattern('^\\w+((-\\w+)|(\\.\\w+))*@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$'),
+                    Validators.maxLength(50)]),
+                address: new FormControl('', [Validators.required, Validators.maxLength(200)]),
             }
         );
 

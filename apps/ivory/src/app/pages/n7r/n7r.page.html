@@ -1,197 +1,217 @@
 <overlay-scrollbars>
 	<ivo-n7r-navbar></ivo-n7r-navbar>
-	<div class="top">
-		<div class="left">
-			<div class="left-top">
-				<img src="/assets/image/n7r/n7r-logo.png" />
-				<p class="info">实时追踪</p>
-				<p class="info">精准定位</p>
-				<p class="info">为您全面赋能</p>
-				<p class="desc">n7r致力于推广全球领先的高精度位置追踪、计算机视觉等前沿技术为企业提供软硬件支持和技术指导</p>
-				<p class="desc">我们的产品和定制服务将赋能SteamVR产品更快捷研发、更低成本推向市场</p>
+	<div class="css-box">
+		<div class="top">
+			<div class="left">
+				<div class="left-top">
+					<img src="/assets/image/n7r/n7r-logo.png" />
+					<p class="info">实时追踪</p>
+					<p class="info">精准定位</p>
+					<p class="info">为您全面赋能</p>
+					<p class="desc">n7r致力于推广全球领先的高精度位置追踪、计算机视觉等前沿技术为企业提供软硬件支持和技术指导</p>
+					<p class="desc">我们的产品和定制服务将赋能SteamVR产品更快捷研发、更低成本推向市场</p>
+					<button class="goto-btn" [class.no]="1618459200000>now" (click)="goto()">
+						<ng-container *ngIf="1618459200000>now">2021年4月15日 12:00开启预售</ng-container>
+						<ng-container *ngIf="1618459200000<=now"> 立即购买 </ng-container>
+					</button>
+				</div>
 			</div>
-
-			<button [class.no]="1618459200000>now" (click)="goto()">
-				<ng-container *ngIf="1618459200000>now">2021年4月15日 12:00开启预售</ng-container>
-				<ng-container *ngIf="1618459200000<=now"> 立即购买 </ng-container>
-			</button>
+			<div class="right">
+				<img *ngFor="let url of imgs;let i=index" [src]="url" [@imgMove]="ImgState(i)" />
+				<div class="small">
+					<span class="out" *ngFor="let url of imgs;let i=index" (click)="changeSmall(i)">
+						<span [class.borderRed]="is_active(i)"></span>
+					</span>
+				</div>
+			</div>
 		</div>
-		<div class="right">
-			<img *ngFor="let url of imgs;let i=index" [src]="url" [@imgMove]="ImgState(i)" />
-			<div class="small">
-				<span class="out" *ngFor="let url of imgs;let i=index" (click)="changeSmall(i)">
-					<span [class.borderRed]="is_active(i)"></span>
+		<h1>应用场景</h1>
+		<div class="play">
+			<div class="show">
+				<li>
+					<img src="/assets/image/n7r/icon/icon-1.svg" />
+					<span class="name">目标物定位</span>
+					<span>无人飞行器 </span>
+					<span>无人车</span>
+					<span>工业机器人</span>
+					<span>康复机器人</span>
+					<span>车间制造</span>
+				</li>
+				<li>
+					<img src="/assets/image/n7r/icon/icon-2.svg" />
+					<span class="name">虚拟现实交互</span>
+					<span>大空间多人定位系统</span>
+					<span>军事仿真训练</span>
+					<span>文旅沉浸体验</span>
+					<span>高校XR实验室</span>
+				</li>
+				<li>
+					<img src="/assets/image/n7r/icon/icon-3.svg" />
+					<span class="name">影音娱乐</span>
+					<span>影视、动画、游戏</span>
+					<span>实时全身动作捕捉</span>
+					<span>影视特效</span>
+					<span>游戏CG制作</span>
+					<span> ....</span>
+				</li>
+				<li>
+					<img src="/assets/image/n7r/icon/icon-4.svg" />
+					<span class="name">医疗</span>
+					<span>AR增强现实+远程会诊</span>
+					<span> 实时音视频通讯</span>
+					<span> 步态康复与评估</span>
+					<span> ....</span>
+				</li>
+			</div>
+		</div>
+		<h1>应用实例</h1>
+		<div class="case">
+			<li (click)="toPlay(1)">
+				<img src="/assets/image/n7r/case/case-1.png" />
+				<span>
+					<img src="/assets/image/n7r/icon/play.svg" />
+					Outside-In Tracking设计、制作、生产力
 				</span>
+			</li>
+			<li (click)="toPlay(2)">
+				<img src="/assets/image/n7r/case/case-2.png" />
+				<span>
+					<img src="/assets/image/n7r/icon/play.svg" />
+					Outside-In Tracking-Tracker制作光剑《Beat Saber》
+				</span>
+			</li>
+			<li (click)="toPlay(3)">
+				<img src="/assets/image/n7r/case/case-3.png" />
+				<span>
+					<img src="/assets/image/n7r/icon/play.svg" />
+					Outside-In Tracking- 《Beat Saber》全身追踪
+				</span>
+			</li>
+			<li (click)="toPlay(4)">
+				<img src="/assets/image/n7r/case/case-4.png" />
+				<span>
+					<img src="/assets/image/n7r/icon/play.svg" />
+					Outside-In Tracking远程同步操控机器人
+				</span>
+			</li>
+		</div>
+		<h1>新闻资讯</h1>
+		<div class="news">
+			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=7">
+				<li>
+					<img src="/assets/image/n7r/news/one.png" />
+					<span class="news-name">Tundra Tracker：比VIVE Tracker更轻更小更强大 </span>
+					<span>Tundra Labs近期披露，其新产品Tundra Tracker（新一代追踪器）将在近期登陆kickstarter开启众筹。</span>
+
+					<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
+				</li>
+			</a>
+			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=5">
+				<li>
+					<img src="/assets/image/n7r/news/two.jpg" />
+					<span class="news-name">
+						Exclusive: Tundra Tracker Aims for Smaller, Cheaper Alternative to Vive Tracker for SteamVR Tracking
+					</span>
+					<span
+						>Tundra Labs, which makes chips and development kits for devices which use SteamVR Tracking, is building its own
+						tracking...</span
+					>
+
+					<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
+				</li>
+			</a>
+			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=2">
+				<li>
+					<img src="/assets/image/n7r/news/three.jpg" />
+					<span class="news-name"> Valve 预告今年推出 SteamVR 2.0 </span>
+					<span>Valve Plans to Release “SteamVR 2.0” This Year</span>
+
+					<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
+				</li>
+			</a>
+			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=3">
+				<li>
+					<img src="/assets/image/n7r/news/four.jpg" />
+					<span class="news-name"> Lighthouse + Vive Tracker 的追踪有多牛？牛到可以在 VR 里玩杂耍 </span>
+					<span>其他产品可以洗洗睡了</span>
+
+					<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
+				</li>
+			</a>
+			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=1">
+				<li>
+					<img src="/assets/image/n7r/news/five.jpg" />
+					<span class="news-name"> 最大支持16个2.0基站串联，Steam最新更新让大空间成本降低数十倍！ </span>
+					<span
+						>Steam更新，目前最大可以支持16个2.0基站串联。如果按照4个100平米来计算，是否意味着其目前可以支持400平米的大空间？</span
+					>
+
+					<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
+				</li>
+			</a>
+			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=4">
+				<li>
+					<img src="/assets/image/n7r/news/six.jpg" />
+					<span class="news-name"> CES2020：概念产品走进生活 </span>
+					<span
+						>耐德佳研发与生产的数款AR光学模组与AR整机也在CES亮相……和往年相比，CES2020发布的VR/AR新终端并不多，但展出的上游解决方案和下游应用在数量和质量上都有了显著提升。</span
+					>
+
+					<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
+				</li>
+			</a>
+		</div>
+		<div class="suit" #detail>
+			<div class="detail">
+				<h3>Tundra 动捕套装</h3>
+				<span>更轻巧、线条更流畅</span>
+				<span>性能更强、续航更长</span>
+				<span>一个接收器，完成所有连接</span>
+				<span class="money"
+					>¥{{suitInfo[0]?.price-suitInfo[0]?.discountAmount}}<s *ngIf="suitInfo[0]?.discountAmount!=0" class="less"
+						>¥{{suitInfo[0]?.price}}</s
+					></span
+				>
+				<button (click)="preOrder(1)">立即预购</button>
 			</div>
 		</div>
-	</div>
-	<h1>应用场景</h1>
-	<div class="play">
-		<div class="show">
-			<li>
-				<img src="/assets/image/n7r/icon/icon-1.svg" />
-				<span class="name">目标物定位</span>
-				<span>无人飞行器 </span>
-				<span>无人车</span>
-				<span>工业机器人</span>
-				<span>康复机器人</span>
-				<span>车间制造</span>
-			</li>
-			<li>
-				<img src="/assets/image/n7r/icon/icon-2.svg" />
-				<span class="name">虚拟现实交互</span>
-				<span>大空间多人定位系统</span>
-				<span>军事仿真训练</span>
-				<span>文旅沉浸体验</span>
-				<span>高校XR实验室</span>
-			</li>
-			<li>
-				<img src="/assets/image/n7r/icon/icon-3.svg" />
-				<span class="name">影音娱乐</span>
-				<span>影视、动画、游戏</span>
-				<span>实时全身动作捕捉</span>
-				<span>影视特效</span>
-				<span>游戏CG制作</span>
-				<span> ....</span>
-			</li>
-			<li>
-				<img src="/assets/image/n7r/icon/icon-4.svg" />
-				<span class="name">医疗</span>
-				<span>AR增强现实+远程会诊</span>
-				<span> 实时音视频通讯</span>
-				<span> 步态康复与评估</span>
-				<span> ....</span>
-			</li>
-		</div>
-	</div>
-	<h1>应用实例</h1>
-	<div class="case">
-		<li>
-			<img src="/assets/image/n7r/case/case-1.png" />
-			<span>
-				<img src="/assets/image/n7r/icon/play.svg" (click)="toPlay(1)" />
-				Outside-In Tracking设计、制作、生产力
-			</span>
-		</li>
-		<li>
-			<img src="/assets/image/n7r/case/case-2.png" />
-			<span>
-				<img src="/assets/image/n7r/icon/play.svg" (click)="toPlay(2)" />
-				Outside-In Tracking-Tracker制作光剑《Beat Saber》
-			</span>
-		</li>
-		<li>
-			<img src="/assets/image/n7r/case/case-3.png" />
-			<span>
-				<img src="/assets/image/n7r/icon/play.svg" (click)="toPlay(3)" />
-				Outside-In Tracking- 《Beat Saber》全身追踪
-			</span>
-		</li>
-		<li>
-			<img src="/assets/image/n7r/case/case-4.png" />
-			<span>
-				<img src="/assets/image/n7r/icon/play.svg" (click)="toPlay(4)" />
-				Outside-In Tracking远程同步操控机器人
-			</span>
-		</li>
-	</div>
-	<h1>新闻资讯</h1>
-	<div class="news">
-		<li>
-			<img src="/assets/image/n7r/news/one.png" />
-			<span class="news-name">Tundra Tracker：比VIVE Tracker更轻更小更强大 </span>
-			<span>Tundra Labs近期披露，其新产品Tundra Tracker（新一代追踪器）将在近期登陆kickstarter开启众筹。</span>
-			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=7">
-				<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
-			</a>
-		</li>
-		<li>
-			<img src="/assets/image/n7r/news/two.jpg" />
-			<span class="news-name">
-				Exclusive: Tundra Tracker Aims for Smaller, Cheaper Alternative to Vive Tracker for SteamVR Tracking
-			</span>
-			<span
-				>Tundra Labs, which makes chips and development kits for devices which use SteamVR Tracking, is building its own
-				tracking...</span
-			>
-			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=5">
-				<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
-			</a>
-		</li>
-		<li>
-			<img src="/assets/image/n7r/news/three.jpg" />
-			<span class="news-name"> Valve 预告今年推出 SteamVR 2.0 </span>
-			<span>Valve Plans to Release “SteamVR 2.0” This Year</span>
-			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=2">
-				<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
-			</a>
-		</li>
-		<li>
-			<img src="/assets/image/n7r/news/four.jpg" />
-			<span class="news-name"> Lighthouse + Vive Tracker 的追踪有多牛？牛到可以在 VR 里玩杂耍 </span>
-			<span>其他产品可以洗洗睡了</span>
-			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=3">
-				<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
-			</a>
-		</li>
-		<li>
-			<img src="/assets/image/n7r/news/five.jpg" />
-			<span class="news-name"> 最大支持16个2.0基站串联，Steam最新更新让大空间成本降低数十倍！ </span>
-			<span>Steam更新，目前最大可以支持16个2.0基站串联。如果按照4个100平米来计算，是否意味着其目前可以支持400平米的大空间？</span>
-			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=1">
-				<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
-			</a>
-		</li>
-		<li>
-			<img src="/assets/image/n7r/news/six.jpg" />
-			<span class="news-name"> CES2020：概念产品走进生活 </span>
-			<span
-				>耐德佳研发与生产的数款AR光学模组与AR整机也在CES亮相……和往年相比，CES2020发布的VR/AR新终端并不多，但展出的上游解决方案和下游应用在数量和质量上都有了显著提升。</span
-			>
-			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=4">
-				<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
-			</a>
-		</li>
-	</div>
-	<div class="suit" #detail>
-		<div class="detail">
-			<h3>Tundra 动捕套装</h3>
-			<span>更轻巧、线条更流畅</span>
-			<span>性能更强、续航更长</span>
-			<span>一个接收器，完成所有连接</span>
-			<span class="money">¥{{suitInfo[0]?.price-suitInfo[0]?.discountAmount}}<s class="less">¥{{suitInfo[0]?.price}}</s></span>
-			<button (click)="preOrder(1)">立即预购</button>
-		</div>
-	</div>
-	<div class="price">
-		<div class="detail">
-			<h3>Tundra Tracker</h3>
-			<span>Born to run!!!</span>
-			<span>为跑马拉松而生！！</span>
-			<span>连续畅玩续航长达7小时！</span>
-			<span>*注：该产品仅用于动捕套装升级，请勿单拍</span>
-			<span class="money">¥{{singleInfo[0]?.price-singleInfo[0]?.discountAmount}}<s class="less">¥{{singleInfo[0]?.price}}</s></span>
-			<button (click)="preOrder(2)">立即预购</button>
-		</div>
-	</div>
-	<h1>关于N7R</h1>
-	<div class="about">
-		<div class="show-two">
-			<li>
-				<img src="/assets/image/n7r/icon/icon-5.svg" />
-				<span class="content"
-					>我们的目标是通过持续为开发者和制 造商提供卓越的技术和服务，成为全 球室内跟踪技术的引领者。将不断创
-					新，创造新的专利、技术和产品，来 定义室内跟踪的最佳状态</span
+		<div class="price">
+			<div class="detail">
+				<h3>Tundra Tracker</h3>
+				<span>Born to run!!!</span>
+				<span>为跑马拉松而生！！</span>
+				<span>连续畅玩续航长达7小时！</span>
+				<span>*注：该产品仅用于动捕套装升级，请勿单拍</span>
+				<span class="money"
+					>¥{{singleInfo[0]?.price-singleInfo[0]?.discountAmount}}<s *ngIf="singleInfo[0]?.discountAmount!=0" class="less"
+						>¥{{singleInfo[0]?.price}}</s
+					></span
 				>
-			</li>
-			<li>
-				<img src="/assets/image/n7r/icon/icon-6.svg" />
-				<span class="content">赋能每一次追踪更快、更精准、 更稳定</span>
-			</li>
-			<a class="more" href="https://www.n7r.com.cn/" target="_blank"> 查看更多N7R相关信息>> </a>
+				<button (click)="preOrder(2)">立即预购</button>
+			</div>
 		</div>
-		<img src="/assets/image/n7r/single/8.png" />
+		<h1>关于N7R</h1>
+		<div class="about">
+			<div class="show-two">
+				<li>
+					<img src="/assets/image/n7r/icon/icon-5.svg" />
+					<span class="content"
+						>我们的目标是通过持续为开发者和制 造商提供卓越的技术和服务，成为全 球室内跟踪技术的引领者。将不断创
+						新，创造新的专利、技术和产品，来 定义室内跟踪的最佳状态</span
+					>
+				</li>
+				<li>
+					<img src="/assets/image/n7r/icon/icon-6.svg" />
+					<span class="content">赋能每一次追踪更快、更精准、 更稳定</span>
+				</li>
+				<li>
+					<a class="more" href="https://www.n7r.com.cn/" target="_blank"> 查看更多N7R相关信息>> </a>
+				</li>
+			</div>
+			<img src="/assets/image/n7r/single/8.png" />
+		</div>
 	</div>
+
 	<footer>
 		<div class="container">
 			<div>
