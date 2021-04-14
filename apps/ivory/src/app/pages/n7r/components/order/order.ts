@@ -180,7 +180,7 @@ export class N7rOrder implements OnDestroy {
 
     sureCancel(): void {
         this.http.post('/shopmall/orders/close', {
-            o: [this.indexId$]
+            o: [this.indexId$.value]
         }).subscribe(s => {
             this.modal.open(PopTips, ['取消订单成功', false, 1]).afterClosed().subscribe(_ => {
                 this.modalRef.close();
