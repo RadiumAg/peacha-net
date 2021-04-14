@@ -32,6 +32,8 @@
 								(keydown)="$event.keyCode>47&&$event.keyCode<54&&changeValue($event.key)"
 								#input
 								[value]="count$.value"
+								readonly
+								unselectable="on"
 							/>
 							<button (click)="count$.value<(indexGood.stock-indexGood.salesVolumes) && count$.next(count$.value+1)">
 								+
