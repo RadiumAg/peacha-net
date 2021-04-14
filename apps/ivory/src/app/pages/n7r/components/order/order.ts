@@ -1,9 +1,10 @@
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { ModalRef } from '@peacha-core';
-import { BehaviorSubject } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { ChangeDetectorRef, Component, OnDestroy, ViewChild } from '@angular/core';
+import { ModalRef, ModalService } from '@peacha-core';
+import { PopTips, Steps } from '@peacha-core/components';
+import { BehaviorSubject, Subject, Subscription, timer } from 'rxjs';
+import { switchMap, takeUntil, takeWhile, tap } from 'rxjs/operators';
 
 
 
@@ -13,6 +14,7 @@ import { switchMap, tap } from 'rxjs/operators';
     styleUrls: ['./order.less']
 })
 export class N7rOrder implements OnDestroy {
+    @ViewChild(Steps) steps: Steps;
 
     page$ = new BehaviorSubject(0);
 
@@ -23,11 +25,19 @@ export class N7rOrder implements OnDestroy {
     indexId$ = new BehaviorSubject(0);
     scheduledTime: number;
 
+    update$ = new BehaviorSubject(true);
+    destroy$ = new Subject<void>();
+    createOrderTime: number;
+
+    money: number;
+    status: number;
+
     constructor(
         private modalRef: ModalRef<N7rOrder>,
         private http: HttpClient,
         private scrollDispatcher: ScrollDispatcher,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private modal: ModalService
     ) {
 
     }
@@ -86,16 +96,113 @@ export class N7rOrder implements OnDestroy {
         this.modalRef.close();
     }
 
-    select(id: number, time: number): void {
+    select(id: number, time: number, money: number, status: number, createTime: number): void {
         this.type$.next(1);
         this.indexId$.next(id);
         this.scheduledTime = time;
+        this.money = money;
+        this.status = status;
+        this.createOrderTime = createTime;
+    }
+
+    pay(): void {
+        this.update$.subscribe(is => {
+            if (is) {
+                this.http
+                    .post<{ payId: number }>('/shopmall/orders/pay', {
+                        o: [this.indexId$.value],
+                        c: []
+                    }).subscribe(s => {
+                        this.http.get<{
+                            channelId: number;
+                            page: string;
+                        }>(`/trade/pay/cashier/launch?channelId=1&payId=${s.payId}`).subscribe(
+                            payResult => {
+                                const div = document.createElement('divform');
+                                div.innerHTML = payResult.page;
+                                document.body.appendChild(div);
+                                document.forms[0].setAttribute('target', '_blank');
+                                document.forms[0].submit();
+                                div.innerHTML = '';
+
+
+                                //支付心跳
+                                let heartbeatSub: Subscription;
+                                if (heartbeatSub) {
+                                    heartbeatSub.unsubscribe();
+                                    heartbeatSub = undefined;
+                                }
+                                heartbeatSub = timer(1000, 3000)
+                                    .pipe(
+                                        switchMap(() => this.http.get<{
+                                            status: number;
+                                            cashiers: {
+                                                status: number;
+                                                error: string;
+                                                channelId: number;
+                                            }[];
+                                            error: string;
+                                        }>('/trade/pay/heartbeat', {
+                                            params: {
+                                                id: s.payId.toString(),
+                                            },
+                                        })),
+                                        tap(heartbeat => {
+                                            if ([2, 4, 5].includes(heartbeat.status)) {
+                                                this.steps.goto('success');
+
+                                            } else if ([3, 31, 32].includes(heartbeat.status)) {
+                                                // this.modal
+                                                //     .open(PopTips, [heartbeat.error, false])
+                                                //     .afterClosed()
+                                                //     .subscribe(_ => {
+
+
+                                                //     });
+                                                this.steps.goto('fail');
+                                            }
+                                        }),
+                                        takeUntil(this.destroy$),
+                                        takeWhile(heartbeat => heartbeat.status === 0 || heartbeat.status === 1)
+                                    )
+                                    .subscribe();
+                            }
+                        );
+                    })
+            } else {
+                this.modal.open(PopTips, ['支付已超时，请重新发起支付', false]);
+            }
+        })
+
+
     }
 
 
+    sureCancel(): void {
+        this.http.post('/shopmall/orders/close', {
+            o: [this.indexId$]
+        }).subscribe(s => {
+            this.modal.open(PopTips, ['取消订单成功', false, 1]).afterClosed().subscribe(_ => {
+                this.modalRef.close();
+            });
+        }, e => {
+            this.modal.open(PopTips, ['取消订单失败', false]);
+        })
+    }
 
+    notCancel(): void {
+        this.steps.goto('order');
+        this.type$.next(1);
+
+    }
     ngOnDestroy(): void {
         this.scroll$.unsubscribe();
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
+    orderTimeout() {
+        this.update$.next(false);
     }
 
 }
