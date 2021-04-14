@@ -57,6 +57,7 @@ export class N7rGoodDetail implements OnDestroy {
     indexChoice: number;
     count$ = new BehaviorSubject(1);
     destroy$ = new Subject<void>();
+    update$ = new BehaviorSubject(true);
 
     indexCity: any;
 
@@ -183,75 +184,81 @@ export class N7rGoodDetail implements OnDestroy {
     }
 
     pay(): void {
-
-        this.http
-            .post<{ payId: number }>('/shopmall/orders/pay', {
-                o: [this.orderId],
-                c: []
-            }).subscribe(s => {
-                this.http.get<{
-                    channelId: number;
-                    page: string;
-                }>(`/trade/pay/cashier/launch?channelId=1&payId=${s.payId}`).subscribe(
-                    payResult => {
-                        const div = document.createElement('divform');
-                        div.innerHTML = payResult.page;
-                        document.body.appendChild(div);
-                        document.forms[0].setAttribute('target', '_blank');
-                        document.forms[0].submit();
-                        div.innerHTML = '';
-
-
-                        //支付心跳
-                        let heartbeatSub: Subscription;
-                        if (heartbeatSub) {
-                            heartbeatSub.unsubscribe();
-                            heartbeatSub = undefined;
-                        }
-                        heartbeatSub = timer(1000, 3000)
-                            .pipe(
-                                switchMap(() => this.http.get<{
-                                    status: number;
-                                    cashiers: {
-                                        status: number;
-                                        error: string;
-                                        channelId: number;
-                                    }[];
-                                    error: string;
-                                }>('/trade/pay/heartbeat', {
-                                    params: {
-                                        id: s.payId.toString(),
-                                    },
-                                })),
-                                tap(heartbeat => {
-                                    if ([2, 4, 5].includes(heartbeat.status)) {
-                                        this.btnType$.next(-1);
-                                        this.steps.goto('success');
-
-                                    } else if ([3, 31, 32].includes(heartbeat.status)) {
-                                        // this.modal
-                                        //     .open(PopTips, [heartbeat.error, false])
-                                        //     .afterClosed()
-                                        //     .subscribe(_ => {
+        this.update$.subscribe(is => {
+            if (is) {
+                this.http
+                    .post<{ payId: number }>('/shopmall/orders/pay', {
+                        o: [this.orderId],
+                        c: []
+                    }).subscribe(s => {
+                        this.http.get<{
+                            channelId: number;
+                            page: string;
+                        }>(`/trade/pay/cashier/launch?channelId=1&payId=${s.payId}`).subscribe(
+                            payResult => {
+                                const div = document.createElement('divform');
+                                div.innerHTML = payResult.page;
+                                document.body.appendChild(div);
+                                document.forms[0].setAttribute('target', '_blank');
+                                document.forms[0].submit();
+                                div.innerHTML = '';
 
 
-                                        //     });
-                                        this.btnType$.next(-1);
-                                        this.steps.goto('fail');
-                                    }
-                                }),
-                                takeUntil(this.destroy$),
-                                takeWhile(heartbeat => heartbeat.status === 0 || heartbeat.status === 1)
-                            )
-                            .subscribe();
-                    }
-                );
-            })
+                                //支付心跳
+                                let heartbeatSub: Subscription;
+                                if (heartbeatSub) {
+                                    heartbeatSub.unsubscribe();
+                                    heartbeatSub = undefined;
+                                }
+                                heartbeatSub = timer(1000, 3000)
+                                    .pipe(
+                                        switchMap(() => this.http.get<{
+                                            status: number;
+                                            cashiers: {
+                                                status: number;
+                                                error: string;
+                                                channelId: number;
+                                            }[];
+                                            error: string;
+                                        }>('/trade/pay/heartbeat', {
+                                            params: {
+                                                id: s.payId.toString(),
+                                            },
+                                        })),
+                                        tap(heartbeat => {
+                                            if ([2, 4, 5].includes(heartbeat.status)) {
+                                                this.btnType$.next(-1);
+                                                this.steps.goto('success');
+
+                                            } else if ([3, 31, 32].includes(heartbeat.status)) {
+                                                // this.modal
+                                                //     .open(PopTips, [heartbeat.error, false])
+                                                //     .afterClosed()
+                                                //     .subscribe(_ => {
+
+
+                                                //     });
+                                                this.btnType$.next(-1);
+                                                this.steps.goto('fail');
+                                            }
+                                        }),
+                                        takeUntil(this.destroy$),
+                                        takeWhile(heartbeat => heartbeat.status === 0 || heartbeat.status === 1)
+                                    )
+                                    .subscribe();
+                            }
+                        );
+                    })
+            } else {
+                this.modal.open(PopTips, ['支付已超时，请重新发起支付', false]);
+            }
+        })
+
 
     }
 
     orderTimeout() {
-        // this.update$.next(false);
+        this.update$.next(false);
     }
 
     cancel(): void {

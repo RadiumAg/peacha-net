@@ -114,6 +114,7 @@
 								[value]="indexCity?indexCity?.one?.name+indexCity?.two?.name+indexCity?.three?.name+indexCity?.four?.name:'选择省份'"
 								#selectInput
 								readonly
+								unselectable="on"
 							/>
 							<div class="error-inset" [errorDisplay]="city">
 								<ng-container *errorCase="'required'"> 请选择省份 </ng-container>
