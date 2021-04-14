@@ -1,0 +1,384 @@
+.box {
+	width: 1100px;
+	padding: 30px 30px 50px;
+	height: 600px;
+	background-color: white;
+	border-radius: 8px;
+	position: relative;
+	color: #000425;
+	.close {
+		position: absolute;
+		right: -50px;
+		top: 0;
+		cursor: pointer;
+	}
+	.step {
+		height: 500px;
+		.box-content {
+			height: 450px;
+			& > .first-scrollbars {
+				height: 480px;
+			}
+			& > .second-scrollbars {
+				height: 420px;
+			}
+			& > overlay-scrollbars {
+				.content-title {
+					font-size: 20px;
+					font-weight: bold;
+					margin-top: 15px;
+				}
+				form {
+					width: 100%;
+					& > .item-list {
+						width: 100%;
+						display: flex;
+						justify-content: space-between;
+						margin-top: 30px;
+						& > .item {
+							font-size: 18px;
+							font-weight: bold;
+							& > .error-inset {
+								color: red;
+								font-weight: normal;
+								font-size: 16px;
+							}
+							& > input {
+								margin-left: 35px;
+								border: none;
+								border-bottom: 1px solid #e3e3e3;
+								outline: none;
+							}
+							& > .king {
+								width: 390px;
+							}
+							& > .select-input {
+								width: 650px;
+								height: 45px;
+								border: none;
+								border-radius: 22px;
+								padding: 0 15px;
+								background-color: #d8d8d8;
+								border: 1px solid #d8d8d8;
+								cursor: pointer;
+								font-size: 16px;
+								// overflow: hidden;
+								// white-space: nowrap;
+								// text-overflow: ellipsis;
+							}
+						}
+					}
+				}
+				.order-detail {
+					& > .row {
+						display: flex;
+						flex-direction: row;
+						color: #000425;
+						font-size: 20px;
+						font-weight: bold;
+						& > span {
+							display: inline-block;
+							width: 160px;
+							font-size: 18px;
+							text-align: center;
+						}
+						& > .special {
+							width: 983px;
+						}
+						& > img {
+							width: 190px;
+							height: 107px;
+						}
+						& > .goods-detail {
+							width: 775px;
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+						}
+					}
+					& > .bottom {
+						line-height: 107px;
+						color: #999999;
+						font-size: 20px;
+						font-weight: normal;
+					}
+				}
+				.zhu {
+					width: 100%;
+					color: #999999;
+					font-size: 18px;
+					margin-top: 30px;
+					& > span {
+						display: block;
+						height: 30px;
+						line-height: 30px;
+					}
+					& > .number {
+						text-indent: 40px;
+					}
+				}
+				.info {
+					color: #999999;
+					font-size: 18px;
+
+					& > .info-item {
+						margin-top: 12px;
+						& > .before {
+							display: inline-block;
+							width: 160px;
+						}
+					}
+				}
+				.pay-btn {
+					width: 280px;
+					height: 67px;
+					padding: 16px 10px;
+					border: none;
+					background-color: #02a9f1;
+					border-radius: 8px;
+					color: #ffffff;
+					font-size: 26px;
+					text-align: left;
+					margin-top: 16px;
+					margin-left: 10px;
+					line-height: 33px;
+					cursor: pointer;
+					& > img {
+						margin-right: 55px;
+						margin-top: -5px;
+					}
+				}
+				.show-time {
+					width: 100%;
+					color: #aaaaaa;
+					font-size: 16px;
+					height: 25px;
+					padding: 0 9px;
+				}
+			}
+			h2 {
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+				font-size: 26px;
+				font-weight: bold;
+				border-bottom: 1px dashed #dbdbdb;
+				padding-bottom: 15px;
+				span {
+					font-size: 18px;
+					color: #999999;
+					font-weight: normal;
+				}
+				.box-right {
+					cursor: pointer;
+					font-size: 18px;
+				}
+			}
+
+			& > .cancel-choice {
+				width: 100%;
+				display: flex;
+				align-items: center;
+				flex-direction: column;
+				justify-content: center;
+				color: #000425;
+				& > img {
+					margin-top: 50px;
+				}
+				& > .cancel-title {
+					font-size: 26px;
+					font-weight: bold;
+					margin: 15px 0 10px;
+				}
+				& > .cancel-tip {
+					font-size: 18px;
+					margin-bottom: 80px;
+				}
+				& > .cancel-btn {
+					width: 420px;
+					display: flex;
+					justify-content: space-between;
+					& > button {
+						width: 180px;
+						background-color: #000425;
+						border: none;
+						border-radius: 26px;
+						height: 52px;
+						line-height: 52px;
+						outline: none;
+						cursor: pointer;
+						font-size: 22px;
+						color: #ffffff;
+					}
+				}
+			}
+
+			& > .fine {
+				width: 100%;
+				display: flex;
+				align-items: center;
+				flex-direction: column;
+				justify-content: center;
+				font-size: 26px;
+				font-weight: bold;
+				margin-top: 100px;
+				& > img {
+					margin-bottom: 15px;
+				}
+			}
+			& > .final-money {
+				display: block;
+				width: 100%;
+				text-align: center;
+				font-size: 30px;
+				font-weight: bold;
+				color: #000425;
+				margin-top: 25px;
+			}
+
+			& > .tip {
+				display: block;
+				width: 100%;
+				text-align: center;
+				font-size: 16px;
+				color: #000425;
+				font-weight: bold;
+				margin-top: 15px;
+			}
+		}
+		.show {
+			display: flex;
+			justify-content: space-between;
+			& > overlay-scrollbars {
+				.left {
+					display: flex;
+					flex-direction: column;
+					& > img {
+						width: 545px;
+						margin-bottom: 12px;
+					}
+				}
+				.right {
+					width: 467px;
+					color: #000425;
+					font-weight: bold;
+					height: 650px;
+					& > h6 {
+						font-size: 20px;
+					}
+					& > li {
+						margin-top: 30px;
+						display: flex;
+						flex-direction: row;
+						& > .title {
+							font-size: 16px;
+							display: block;
+							width: 99px;
+						}
+						& > .choice {
+							font-weight: normal;
+
+							& > span {
+								display: block;
+							}
+							& > .des {
+								white-space: pre-line;
+							}
+							& > .option {
+								padding: 8px 20px;
+								border: 1px solid #000425;
+								font-size: 16px;
+								margin-bottom: 15px;
+								cursor: pointer;
+							}
+							& > .option-active {
+								background-color: #000425;
+								color: white;
+							}
+							& > button {
+								width: 42px;
+								height: 37px;
+								border: 1px solid #000425;
+								outline: none;
+								background: none;
+								cursor: pointer;
+							}
+							& > input {
+								width: 80px;
+								height: 37px;
+								border-top: 1px solid #000425;
+								border-bottom: 1px solid #000425;
+								border-left: none;
+								border-right: none;
+								text-align: center;
+								outline: none;
+							}
+							& > .money {
+								font-size: 30px;
+								font-weight: bold;
+								& > .tip {
+									font-size: 16px;
+									font-weight: normal;
+								}
+							}
+							& > .time {
+								margin-left: 30px;
+							}
+							& > .less {
+								display: inline-block;
+								margin-left: 20px;
+							}
+						}
+						& > .ext {
+							width: 320px;
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							line-height: 30px;
+						}
+					}
+				}
+			}
+		}
+		& > .btn {
+			width: 100%;
+			text-align: right;
+			margin-top: 24px;
+			& > li {
+				width: 100%;
+				color: #aaaaaa;
+				font-size: 16px;
+				display: flex;
+				justify-content: space-between;
+				height: 25px;
+				padding: 0 9px;
+				& > a {
+					color: #aaaaaa;
+					font-size: 16px;
+				}
+			}
+			& > .go {
+				text-align: center;
+				min-width: 188px;
+				padding: 10px 15px;
+				background-color: #000425;
+				color: #ffffff;
+				font-size: 22px;
+				font-weight: bold;
+				border: none;
+				border-radius: 26px;
+				cursor: pointer;
+			}
+		}
+
+		& > .center-btn {
+			text-align: center !important;
+			margin-top: -30px !important;
+		}
+
+		& > .unable {
+			background-color: #c1c1c1;
+			color: #a7a7a7;
+		}
+	}
+}
