@@ -113,7 +113,7 @@ export class N7rGoodDetail implements OnDestroy {
                     if (stock > 0 && stock >= this.count$.value) {
                         if (this.indexChoice === this.date.good.list.length - 1) {
                             this.http.get(`/advance/check_order`).subscribe(_ => {
-                                this.steps.next();
+                                this.steps.goto('order');
                                 this.btnType$.next(this.btnType$.value + 1);
                             }, e => {
                                 if (e.code === 403) {
@@ -123,7 +123,7 @@ export class N7rGoodDetail implements OnDestroy {
                                 }
                             })
                         } else {
-                            this.steps.next();
+                            this.steps.goto('order');
                             this.btnType$.next(this.btnType$.value + 1);
                         }
                     } else {
@@ -147,7 +147,7 @@ export class N7rGoodDetail implements OnDestroy {
                             n: this.infoForm.value.name
                         }).subscribe(s => {
                             this.orderId = s.orderId;
-                            this.steps.next();
+                            this.steps.goto('pay');
                             this.btnType$.next(this.btnType$.value + 1);
                             this.createOrderTime = new Date().getTime();
                         })
