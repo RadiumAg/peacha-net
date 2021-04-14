@@ -16,7 +16,7 @@
 						<div class="choice">
 							<span
 								class="option"
-								*ngFor="let item of date.good.list;let i=index"
+								*ngFor="let item of goodlist.list;let i=index"
 								[class.option-active]="i===indexChoice"
 								(click)="select(item,i)"
 								>{{item.name}}</span

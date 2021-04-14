@@ -64,6 +64,8 @@ export class N7rGoodDetail implements OnDestroy {
     orderId: number;
     createOrderTime: number;
 
+    goodlist: any;
+
     constructor(
         private modalRef: ModalRef<N7rGoodDetail>,
         @Inject(MODAL_DATA_TOKEN) public date: { type: number, good: { list: Array<Good> } },
@@ -72,8 +74,7 @@ export class N7rGoodDetail implements OnDestroy {
         private modal: ModalService,
         private router: Router
     ) {
-        this.indexChoice = this.date.type === 2 ? this.date.good.list.length - 1 : 0;
-        this.indexGood = this.date.good.list[this.indexChoice];
+
 
         this.infoForm = this.fb.group(
             {
@@ -84,6 +85,24 @@ export class N7rGoodDetail implements OnDestroy {
                 address: new FormControl('', [Validators.required]),
             }
         );
+
+        this.http.get<{
+            list: {
+                id: number;
+                price: number;
+                discountAmount: number;
+                name: string;
+                description: string;
+                stock: number;
+                salesVolumes: number;
+                cover: string;
+                month: number;
+            }[]
+        }>(`/advance/goods_list`).subscribe(good => {
+            this.goodlist = good;
+            this.indexChoice = this.date.type === 2 ? good.list.length - 1 : 0;
+            this.indexGood = good.list[this.indexChoice];
+        })
     }
 
     get name(): AbstractControl {
