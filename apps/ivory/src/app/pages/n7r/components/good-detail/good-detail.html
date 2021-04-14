@@ -1,0 +1,253 @@
+<div class="box">
+	<img class="close" src="/assets/image/n7r/icon/close.svg" (click)="close()" />
+	<div class="step" ivoStepper #step="steps">
+		<div class="show box-content" *ivoStep="'detail'">
+			<overlay-scrollbars class="first-scrollbars">
+				<div class="left">
+					<img *ngFor="let url of suitPic" [attr.src]="url" />
+				</div>
+			</overlay-scrollbars>
+			<overlay-scrollbars class="first-scrollbars">
+				<div class="right">
+					<h6>Tundra 动捕套装</h6>
+
+					<li>
+						<span class="title"> 选配项 </span>
+						<div class="choice">
+							<span
+								class="option"
+								*ngFor="let item of goodlist.list;let i=index"
+								[class.option-active]="i===indexChoice"
+								(click)="select(item,i)"
+								>{{item.name}}</span
+							>
+						</div>
+					</li>
+					<li>
+						<span class="title"> 数量 </span>
+						<div class="choice">
+							<button (click)="count$.value>1 && count$.next(count$.value-1)">-</button>
+							<input type="number" #input [value]="count$.value" readonly unselectable="on" />
+							<button (click)="count$.value<(indexGood.stock-indexGood.salesVolumes) && count$.next(count$.value+1)">
+								+
+							</button>
+						</div>
+					</li>
+
+					<li>
+						<span class="title"> 包装规格 </span>
+						<div class="choice">
+							<span class="des">{{indexGood.description}}</span>
+						</div>
+					</li>
+					<li>
+						<span class="title"> 库存 </span>
+						<div class="choice">
+							<span class="des">{{indexGood.stock-indexGood.salesVolumes}}</span>
+						</div>
+					</li>
+					<li>
+						<span class="title"> 单价 </span>
+						<div class="choice ext">
+							<span class="money"
+								>¥{{indexGood.price-indexGood.discountAmount}}<span class="tip" *ngIf="indexGood.discountAmount>1"
+									>（限时优惠）</span
+								></span
+							>
+							<s *ngIf="indexGood.discountAmount>1">原价：￥{{indexGood.price}}</s>
+						</div>
+					</li>
+					<li>
+						<span class="title"> 预计发货时间 </span>
+						<div class="choice">
+							<span class="time">2021年{{indexGood.month}}月开始发货</span>
+						</div>
+					</li>
+				</div>
+			</overlay-scrollbars>
+		</div>
+		<div class="box-content" *ivoStep="'order'">
+			<h2>提交订单</h2>
+			<overlay-scrollbars class="second-scrollbars">
+				<li class="content-title">收货信息</li>
+				<form [formGroup]="infoForm">
+					<li class="item-list">
+						<span class="item">
+							收货人
+							<input class="king" formControlName="name" />
+							<div class="error-inset" [errorDisplay]="name">
+								<ng-container *errorCase="'required'"> 请填写收货人姓名 </ng-container>
+							</div>
+						</span>
+						<span class="item">
+							手机号码
+							<input class="king" formControlName="phone" />
+							<div class="error-inset" [errorDisplay]="phone">
+								<ng-container *errorCase="'required'"> 请填写手机号码 </ng-container>
+								<ng-container *errorCase="'pattern'"> 请填写正确格式的手机号码 </ng-container>
+							</div>
+						</span>
+					</li>
+					<li class="item-list">
+						<span class="item">
+							电子邮箱
+							<input class="king" formControlName="email" />
+							<div class="error-inset" [errorDisplay]="email">
+								<ng-container *errorCase="'required'"> 请填写电子邮箱 </ng-container>
+								<ng-container *errorCase="'pattern'"> 请填写正确格式的电子邮箱 </ng-container>
+							</div>
+						</span>
+					</li>
+					<li class="item-list">
+						<span class="item add">
+							所在省份
+							<input
+								formControlName="city"
+								placeholder="选择省份"
+								class="select-input"
+								(click)="selectAddress(selectInput)"
+								[value]="indexCity?indexCity?.one?.name+indexCity?.two?.name+indexCity?.three?.name+indexCity?.four?.name:'选择省份'"
+								#selectInput
+								readonly
+								unselectable="on"
+							/>
+							<div class="error-inset" [errorDisplay]="city">
+								<ng-container *errorCase="'required'"> 请选择省份 </ng-container>
+							</div>
+						</span>
+					</li>
+					<li class="item-list">
+						<span class="item">
+							详细地址
+							<input class="king" formControlName="address" />
+							<div class="error-inset" [errorDisplay]="address">
+								<ng-container *errorCase="'required'"> 请填写详细地址 </ng-container>
+							</div>
+						</span>
+					</li>
+				</form>
+
+				<li class="content-title">订单信息</li>
+				<div class="order-detail">
+					<li class="row">
+						<span class="special"></span>
+						<span class="normal">单价</span>
+						<span class="normal">数量</span>
+						<span class="normal">价格</span>
+					</li>
+					<li class="row bottom">
+						<img src="/assets/image/n7r/single/1.png" />
+						<span class="goods-detail">
+							<span>{{indexGood.name}}</span>
+						</span>
+						<span class="normal">¥{{indexGood.price-indexGood.discountAmount}}</span>
+						<span class="normal">{{count$.value}}</span>
+						<span class="normal">¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}</span>
+					</li>
+				</div>
+				<div class="zhu">
+					<span>注：1、商品不支持主动退款，若因不可抗力无法发货，货款将从原渠道退回；</span>
+					<span class="number">2、价格不包含运费，快递为到付</span>
+				</div>
+			</overlay-scrollbars>
+		</div>
+		<div class="box-content" *ivoStep="'pay'">
+			<h2 class="res">
+				<div class="box-left">
+					订单支付
+					<span>订单{{orderId}}</span>
+				</div>
+				<div class="box-right" (click)="steps.goto('cancel')">取消订单</div>
+			</h2>
+			<overlay-scrollbars class="second-scrollbars">
+				<li class="content-title">订单信息</li>
+
+				<div class="order-detail">
+					<li class="row">
+						<span class="special"></span>
+						<span class="normal">单价</span>
+						<span class="normal">数量</span>
+						<span class="normal">价格</span>
+					</li>
+					<li class="row bottom">
+						<img src="/assets/image/n7r/single/1.png" />
+						<span class="goods-detail">
+							<span>{{indexGood.name}}</span>
+						</span>
+						<span class="normal">¥{{indexGood.price-indexGood.discountAmount}}</span>
+						<span class="normal">{{count$.value}}</span>
+						<span class="normal">¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}</span>
+					</li>
+				</div>
+				<li class="content-title">收货信息</li>
+				<div class="info">
+					<li class="info-item">
+						<span class="before">收货人</span>
+						<span>{{infoForm.value.name}}</span>
+					</li>
+					<li class="info-item">
+						<span class="before">手机号码</span>
+						<span>{{infoForm.value.phone}}</span>
+					</li>
+					<li class="info-item">
+						<span class="before">收货地址</span>
+						<span
+							>{{indexCity?.one?.name+indexCity?.two?.name+indexCity?.three?.name+indexCity?.four?.name+infoForm.value.address}}</span
+						>
+					</li>
+				</div>
+				<li class="content-title">支付方式</li>
+				<button class="pay-btn" (click)="pay()"><img src="/assets/image/n7r/icon/alipay.svg" />支付宝</button>
+				<li class="show-time">
+					<span> 请在<ivo-cd [createtime]="createOrderTime" (cdTimeout)="orderTimeout()"></ivo-cd>内支付 </span>
+				</li>
+			</overlay-scrollbars>
+		</div>
+		<div class="box-content" *ivoStep="'success'">
+			<h2>
+				支付结果
+				<span>订单{{orderId}}</span>
+			</h2>
+			<div class="fine"><img src="/assets/image/n7r/icon/success.svg" />支付成功</div>
+			<span class="final-money">¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}</span>
+		</div>
+		<div class="box-content" *ivoStep="'fail'">
+			<h2>
+				支付结果
+				<span>订单{{orderId}}</span>
+			</h2>
+			<div class="fine"><img src="/assets/image/n7r/icon/fail.svg" />支付失败</div>
+			<span class="tip">支付款项将从原渠道退回</span>
+			<span class="final-money">¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}</span>
+		</div>
+		<div class="box-content" *ivoStep="'cancel'">
+			<h2>
+				取消订单
+				<span>订单{{orderId}}</span>
+			</h2>
+			<div class="cancel-choice">
+				<img src="/assets/image/n7r/icon/cancel.svg" />
+				<span class="cancel-title">是否确定取消订单？</span>
+				<span class="cancel-tip">取消订单后将不保存任何购买信息</span>
+				<div class="cancel-btn">
+					<button (click)="notCancel()">取消</button>
+					<button (click)="sureCancel()">确定</button>
+				</div>
+			</div>
+		</div>
+		<div class="btn" [class.center-btn]="btnType$.value===-1">
+			<button
+				class="go"
+				(click)="goto(indexGood.stock-indexGood.salesVolumes)"
+				*ngIf="btnType$.value<2"
+				[class.unable]="indexGood.stock===indexGood.salesVolumes || (indexGood.stock-indexGood.salesVolumes<this.count$.value)"
+			>
+				<ng-container *ngIf="btnType$.value===0">
+					立即预购 ¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}
+				</ng-container>
+				<ng-container *ngIf="btnType$.value===1"> 提交订单 </ng-container>
+				<ng-container *ngIf="btnType$.value===-1"> 确定 </ng-container>
+			</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,147 @@
+#navbar {
+	height: 64px;
+	line-height: 64px;
+	background: #333333;
+	padding: 0 64px;
+	display: flex;
+	& > .left {
+		& > img {
+			width: 176px;
+		}
+		& > a {
+			line-height: 64px;
+			font-size: 20px;
+			color: #fff;
+			margin-left: 60px;
+		}
+	}
+
+	& > .right {
+		margin-left: auto;
+		display: flex;
+		align-items: center;
+
+		& > a {
+			line-height: 64px;
+			font-size: 20px;
+			color: #fff;
+		}
+
+		& > .avatar {
+			margin-left: 48px;
+			width: 48px;
+			height: 48px;
+			border-radius: 50%;
+			z-index: 500;
+			position: relative;
+		}
+	}
+}
+
+.temp {
+	width: 200px;
+	background-color: white;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2) !important;
+	border-radius: 4px;
+	position: absolute;
+	margin-left: -180px;
+
+	& > .user-info {
+		& > .background {
+			height: 80px;
+			background: #ccc;
+
+			& > img {
+				width: 200px;
+				height: 80px;
+				border-top-left-radius: 4px;
+				border-top-right-radius: 4px;
+				object-fit: cover;
+			}
+		}
+
+		& > .ava {
+			width: 36px;
+			height: 36px;
+			border-radius: 50%;
+			position: absolute;
+			margin-left: 140px;
+			margin-top: -70px;
+		}
+
+		& > .info {
+			padding: 9px 16px;
+
+			& > h3 {
+				color: #333;
+				margin: 0;
+				font-size: 16px;
+				outline: none;
+				cursor: pointer;
+			}
+
+			& > h4 {
+				color: #999;
+				font-size: 12px;
+			}
+
+			& > p {
+				color: #666;
+				margin: 0;
+
+				& > b {
+					outline: none;
+					cursor: pointer;
+					position: relative;
+				}
+
+				& > a {
+					position: absolute;
+					color: red;
+					margin-top: -10px;
+				}
+			}
+		}
+	}
+
+	& > ul {
+		padding: 0;
+		margin: 0;
+		margin-bottom: 4px;
+
+		& > li {
+			color: #888;
+			touch-action: manipulation;
+			user-select: none;
+			font-size: 14px;
+			line-height: 22px;
+			text-decoration: none;
+			background: transparent;
+			outline: none;
+			transition: all 0.2s ease 0s;
+			padding: 9px 16px;
+			border-radius: 0px;
+
+			&.divider {
+				padding: 0;
+				transition: none;
+				height: 2px;
+				background-color: #eee;
+			}
+
+			&:hover {
+				background: #eee;
+				cursor: pointer;
+			}
+
+			& > a {
+				display: inline-block;
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				background-color: red;
+				margin-left: 10px;
+			}
+		}
+	}
+}

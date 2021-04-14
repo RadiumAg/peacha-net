@@ -49,6 +49,7 @@ import { MydatePipe } from './pipes/mydate.pipe';
 import { TimerDatePipe } from './pipes/timer-date.pipe';
 import { IvoNameFriendlyPipe } from './upload/app-name-friendly.pipe';
 import { TimeFormatPipe } from './time-format.pipe';
+import { CdComponent } from './cd/cd.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { TimeFormatPipe } from './time-format.pipe';
     DebounceClickDirective,
     WorkSelectorComponent,
     UploadImageDirective,
-    IvoNameFriendlyPipe
+    IvoNameFriendlyPipe,
+    CdComponent
   ],
   exports: [
     TimeFormatPipe,
@@ -126,7 +128,8 @@ import { TimeFormatPipe } from './time-format.pipe';
     DebounceClickDirective,
     WorkSelectorComponent,
     UploadImageDirective,
-    IvoNameFriendlyPipe
+    IvoNameFriendlyPipe,
+    CdComponent
   ],
   imports: [
     CommonModule,
