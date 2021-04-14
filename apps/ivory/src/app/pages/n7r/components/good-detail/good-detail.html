@@ -2,12 +2,12 @@
 	<img class="close" src="/assets/image/n7r/icon/close.svg" (click)="close()" />
 	<div class="step" ivoStepper #step="steps">
 		<div class="show box-content" *ivoStep="'detail'">
-			<overlay-scrollbars>
+			<overlay-scrollbars class="first-scrollbars">
 				<div class="left">
 					<img *ngFor="let url of suitPic" [attr.src]="url" />
 				</div>
 			</overlay-scrollbars>
-			<overlay-scrollbars>
+			<overlay-scrollbars class="first-scrollbars">
 				<div class="right">
 					<h6>Tundra 动捕套装</h6>
 
@@ -73,7 +73,7 @@
 		</div>
 		<div class="box-content" *ivoStep="'order'">
 			<h2>提交订单</h2>
-			<overlay-scrollbars>
+			<overlay-scrollbars class="second-scrollbars">
 				<li class="content-title">收货信息</li>
 				<form [formGroup]="infoForm">
 					<li class="item-list">
@@ -160,7 +160,7 @@
 				订单支付
 				<span>订单{{orderId}}</span>
 			</h2>
-			<overlay-scrollbars>
+			<overlay-scrollbars class="second-scrollbars">
 				<li class="content-title">订单信息</li>
 
 				<div class="order-detail">
@@ -218,17 +218,40 @@
 			<span class="tip">支付款项将从原渠道退回</span>
 			<span class="final-money">¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}</span>
 		</div>
+		<div class="box-content" *ivoStep="'cancel'">
+			<h2>
+				取消订单
+				<span>订单{{orderId}}</span>
+			</h2>
+			<div class="cancel-choice">
+				<img src="/assets/image/n7r/icon/cancel.svg" />
+				<span class="cancel-title">是否确定取消订单？</span>
+				<span class="cancel-tip">取消订单后将不保存任何购买信息</span>
+				<div class="cancel-btn">
+					<button (click)="notCancel()">取消</button>
+					<button (click)="sureCancel()">确定</button>
+				</div>
+			</div>
+		</div>
 		<div class="btn" [class.center-btn]="btnType$.value===-1">
+			<li (click)="btnType$.value===2&& cancel()">
+				<ng-container *ngIf="btnType$.value===2">
+					<span> 请在<ivo-cd [createtime]="createOrderTime" (cdTimeout)="orderTimeout()"></ivo-cd>内支付 </span>
+
+					<a> 取消订单 </a>
+				</ng-container>
+			</li>
 			<button
 				class="go"
 				(click)="goto(indexGood.stock-indexGood.salesVolumes)"
-				*ngIf="btnType$.value<2"
+				*ngIf="btnType$.value<3"
 				[class.unable]="indexGood.stock===indexGood.salesVolumes || (indexGood.stock-indexGood.salesVolumes<this.count$.value)"
 			>
 				<ng-container *ngIf="btnType$.value===0">
 					立即预购 ¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}
 				</ng-container>
 				<ng-container *ngIf="btnType$.value===1"> 提交订单 </ng-container>
+				<ng-container *ngIf="btnType$.value===2"> 立即支付 </ng-container>
 				<ng-container *ngIf="btnType$.value===-1"> 确定 </ng-container>
 			</button>
 		</div>

@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalRef, ModalService, MODAL_DATA_TOKEN } from '@peacha-core';
+import { Router } from '@angular/router';
+import { Select } from '@ngxs/store';
+import { ModalRef, ModalService, MODAL_DATA_TOKEN, UserState } from '@peacha-core';
 import { PopTips, Steps } from '@peacha-core/components';
 import { BehaviorSubject, Subject, Subscription, timer } from 'rxjs';
 import { switchMap, takeUntil, takeWhile, tap } from 'rxjs/operators';
@@ -27,6 +29,9 @@ type Good = {
     styleUrls: ['./good-detail.less']
 })
 export class N7rGoodDetail implements OnDestroy {
+    @Select(UserState.isLogin)
+    isLogin$: BehaviorSubject<boolean>;
+
     @ViewChild(Steps) steps: Steps;
 
     @ViewChild('selectInput') inputValue: HTMLInputElement;
@@ -56,13 +61,15 @@ export class N7rGoodDetail implements OnDestroy {
     indexCity: any;
 
     orderId: number;
+    createOrderTime: number;
 
     constructor(
         private modalRef: ModalRef<N7rGoodDetail>,
         @Inject(MODAL_DATA_TOKEN) public date: { type: number, good: { list: Array<Good> } },
         private http: HttpClient,
         private fb: FormBuilder,
-        private modal: ModalService
+        private modal: ModalService,
+        private router: Router
     ) {
         this.indexChoice = this.date.type === 2 ? this.date.good.list.length - 1 : 0;
         this.indexGood = this.date.good.list[this.indexChoice];
@@ -98,59 +105,71 @@ export class N7rGoodDetail implements OnDestroy {
     }
 
     goto(stock: number): void {
-        // if (1618459200000 <= new Date().getTime()) {
-        if (this.btnType$.value === 0 && this.count$.value > 0) {
-            if (stock > 0 && stock >= this.count$.value) {
-                if (this.indexChoice === this.date.good.list.length - 1) {
-                    this.http.get(`/advance/check_order`).subscribe(_ => {
-                        this.steps.next();
-                        this.btnType$.next(this.btnType$.value + 1);
-                    }, e => {
-                        if (e.code === 403) {
-                            this.modal.open(PopTips, ['需购买动捕套餐后才可购买单个追踪器', false]);
-                        } else if (e.code === 20000) {
-                            this.modal.open(PopTips, ['库存不足无法购买', false]);
+        this.isLogin$.subscribe(is => {
+            if (is) {
+                // if (1618459200000 <= new Date().getTime()) {
+                if (this.btnType$.value === 0 && this.count$.value > 0) {
+                    if (stock > 0 && stock >= this.count$.value) {
+                        if (this.indexChoice === this.date.good.list.length - 1) {
+                            this.http.get(`/advance/check_order`).subscribe(_ => {
+                                this.steps.next();
+                                this.btnType$.next(this.btnType$.value + 1);
+                            }, e => {
+                                if (e.code === 403) {
+                                    this.modal.open(PopTips, ['需购买动捕套餐后才可购买单个追踪器', false]);
+                                } else if (e.code === 20000) {
+                                    this.modal.open(PopTips, ['库存不足无法购买', false]);
+                                }
+                            })
+                        } else {
+                            this.steps.next();
+                            this.btnType$.next(this.btnType$.value + 1);
                         }
-                    })
+                    } else {
+                        this.modal.open(PopTips, ['库存不足无法购买', false]);
+                    }
+
+
+                } else if (this.btnType$.value === 1) {
+                    if (this.infoForm.valid) {
+
+                        this.http.post<{ orderId: number }>(`/advance/create_order`, {
+                            g: this.indexGood.id,
+                            nu: this.count$.value,
+                            pi: this.indexCity?.one?.id,
+                            ci: this.indexCity?.two?.id,
+                            coi: this.indexCity?.three?.id,
+                            si: this.indexCity.four.id ?? '',
+                            ad: this.infoForm.value.address,
+                            ph: this.infoForm.value.phone,
+                            e: this.infoForm.value.email,
+                            n: this.infoForm.value.name
+                        }).subscribe(s => {
+                            this.orderId = s.orderId;
+                            this.steps.next();
+                            this.btnType$.next(this.btnType$.value + 1);
+                            this.createOrderTime = new Date().getTime();
+                        })
+
+
+
+                    }
+
                 } else {
-                    this.steps.next();
-                    this.btnType$.next(this.btnType$.value + 1);
+                    this.modalRef.close();
                 }
+                // } else {
+                //     this.modal.open(PopTips, ['2021年4月15日 12:00 开始预售', false]);
+                // }
             } else {
-                this.modal.open(PopTips, ['库存不足无法购买', false]);
+                this.router.navigate(['login'], {
+                    queryParams: {
+                        return: 'n7r',
+                    },
+                });
             }
+        })
 
-
-        } else if (this.btnType$.value === 1) {
-            if (this.infoForm.valid) {
-
-                this.http.post<{ orderId: number }>(`/advance/create_order`, {
-                    g: this.indexGood.id,
-                    nu: this.count$.value,
-                    pi: this.indexCity?.one?.id,
-                    ci: this.indexCity?.two?.id,
-                    coi: this.indexCity?.three?.id,
-                    si: this.indexCity.four.id ?? '',
-                    ad: this.infoForm.value.address,
-                    ph: this.infoForm.value.phone,
-                    e: this.infoForm.value.email,
-                    n: this.infoForm.value.name
-                }).subscribe(s => {
-                    this.orderId = s.orderId;
-                    this.steps.next();
-                    this.btnType$.next(this.btnType$.value + 1);
-                })
-
-
-
-            }
-
-        } else {
-            this.modalRef.close();
-        }
-        // } else {
-        //     this.modal.open(PopTips, ['2021年4月15日 12:00 开始预售', false]);
-        // }
 
 
     }
@@ -229,6 +248,33 @@ export class N7rGoodDetail implements OnDestroy {
             })
 
     }
+
+    orderTimeout() {
+        // this.update$.next(false);
+    }
+
+    cancel(): void {
+        this.steps.goto('cancel');
+        this.btnType$.next(3);
+    }
+
+    sureCancel(): void {
+        this.http.post('/shopmall/orders/close', {
+            o: [this.orderId]
+        }).subscribe(s => {
+            this.modal.open(PopTips, ['取消订单成功', false, 1]).afterClosed().subscribe(_ => {
+                this.modalRef.close();
+            });
+        }, e => {
+            this.modal.open(PopTips, ['取消订单失败', false]);
+        })
+    }
+
+    notCancel(): void {
+        this.btnType$.next(2);
+        this.steps.goto('pay');
+    }
+
 
 
     ngOnDestroy() {

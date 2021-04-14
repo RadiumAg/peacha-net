@@ -16,8 +16,13 @@
 		height: 500px;
 		.box-content {
 			height: 450px;
+			& > .first-scrollbars {
+				height: 480px;
+			}
+			& > .second-scrollbars {
+				height: 420px;
+			}
 			& > overlay-scrollbars {
-				height: 440px;
 				.content-title {
 					font-size: 20px;
 					font-weight: bold;
@@ -35,6 +40,8 @@
 							font-weight: bold;
 							& > .error-inset {
 								color: red;
+								font-weight: normal;
+								font-size: 16px;
 							}
 							& > input {
 								margin-left: 35px;
@@ -152,6 +159,43 @@
 					font-size: 18px;
 					color: #999999;
 					font-weight: normal;
+				}
+			}
+			& > .cancel-choice {
+				width: 100%;
+				display: flex;
+				align-items: center;
+				flex-direction: column;
+				justify-content: center;
+				color: #000425;
+				& > img {
+					margin-top: 50px;
+				}
+				& > .cancel-title {
+					font-size: 26px;
+					font-weight: bold;
+					margin: 15px 0 10px;
+				}
+				& > .cancel-tip {
+					font-size: 18px;
+					margin-bottom: 80px;
+				}
+				& > .cancel-btn {
+					width: 420px;
+					display: flex;
+					justify-content: space-between;
+					& > button {
+						width: 180px;
+						background-color: #000425;
+						border: none;
+						border-radius: 26px;
+						height: 52px;
+						line-height: 52px;
+						outline: none;
+						cursor: pointer;
+						font-size: 22px;
+						color: #ffffff;
+					}
 				}
 			}
 
@@ -283,7 +327,20 @@
 		& > .btn {
 			width: 100%;
 			text-align: right;
-			margin-top: 50px;
+			margin-top: 24px;
+			& > li {
+				width: 100%;
+				color: #aaaaaa;
+				font-size: 16px;
+				display: flex;
+				justify-content: space-between;
+				height: 25px;
+				padding: 0 9px;
+				& > a {
+					color: #aaaaaa;
+					font-size: 16px;
+				}
+			}
 			& > .go {
 				text-align: center;
 				min-width: 188px;

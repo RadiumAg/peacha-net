@@ -13,7 +13,6 @@ import { UserCenterPage } from './user-center.page';
 import { UserProfilePage } from './user-profile/user-profile.page';
 import { UserSecurityPage } from './user-security/user-security.page';
 import { WalletPage } from './wallet/wallet.page';
-import { CdComponent } from './cd/cd.component';
 import { MydatepickerPage } from './wallet/mydatepicker/mydatepicker.page';
 import { WalletDrawPage } from './wallet/wallet-withdraw/walletdraw.page';
 import { ComponentsModule } from '../commission/components/components.module';
@@ -31,7 +30,6 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 		WalletDrawPage,
 		OrderListPage,
 		BuyOrderDetailPage,
-		CdComponent,
 		MydatepickerPage,
 		PayrecordPage,
 		PayRecordDetailPage,
