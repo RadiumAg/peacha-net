@@ -269,6 +269,7 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
       c: this.param.c,
       cs: this.param.cs,
       f: this.param.f,
+      gd: this.param.gd,
       gl: [{
         n: this.param.gl[0].n,
         s: this.param.gl[0].s,

@@ -245,6 +245,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 			c: this.param.c,
 			cs: this.param.cs,
 			f: this.param.f,
+			gd: this.param.gd,
 			gl: this.param.gl,
 		}).subscribe({
 			next: _x => {

@@ -74,6 +74,7 @@ export class ReleaseApiService {
 		c: number;
 		cs: number;
 		f: string[];
+		gd: string;
 		gl: IPublishFileType[];
 		g?: string;
 		bv?: string;
