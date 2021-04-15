@@ -86,7 +86,8 @@
         <div class="form-controller required-center">
           <div class="share-file">
             <span class="">分享文件:</span>&nbsp;&nbsp;&nbsp;&nbsp;
-            <ivo-file-upload formControlName="f" ivoErroTip ivoErrorTipString="请上传分享文件!" [acceptType]="'.zip'">
+            <ivo-file-upload #upload_file formControlName="f" ivoErroTip ivoErrorTipString="请上传分享文件!"
+              [acceptType]="'.zip'">
             </ivo-file-upload>
           </div>
 
@@ -101,7 +102,9 @@
               </ivo-select>
             </div>
           </span>
-
+          <span class="file-upload-tip"
+            *ngIf="!upload_file.isHasFile">请上传文件格式为fbx、vrm、vup、unitypackage的模型文件，并打包为ZIP格式的压缩包。请勿上传其他格式文件。
+          </span>
           <span class="free-share-file-tip" *ngIf="item.value.ft === 4">模型内若含有插件或shader，请在作品简介内具体说明。</span>
         </div>
 

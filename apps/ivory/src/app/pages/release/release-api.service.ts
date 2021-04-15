@@ -57,7 +57,7 @@ export class ReleaseApiService {
 	 *
 	 * @name 发布作品
 	 *
-	 * @param  p  作品详情
+	 * @param  p n 作品名称，d 作品介绍 ，a 授权选项, g 模型预览文件，gd 预览模型参数， f 预览图， c 作品状态 原创，同人 ，t 标签，bv BV号，b  封面token， cs作品类型，gl 商品 作品详情 
 	 *
 	 * @author ding
 	 *

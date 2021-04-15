@@ -75,7 +75,6 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		selectPreViewImage: [false],
 		selectPreViewTv: [false],
 	});
-
 	copyrightCheckes$ = new BehaviorSubject<{ id: number; name: string }[]>([]);
 	stateMentStates = [];
 	copyrightModel = [];

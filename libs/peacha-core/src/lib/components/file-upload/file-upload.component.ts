@@ -1,9 +1,9 @@
 import { ControlValueAccessor,NG_VALUE_ACCESSOR } from '@angular/forms';
 import { HttpEventType } from '@angular/common/http';
-import { Component,forwardRef,Input,OnDestroy,OnInit } from '@angular/core';
+import { Component,forwardRef,Input,OnDestroy,OnInit,Output,EventEmitter } from '@angular/core';
 import { CommmonApiService,ModalService,Process } from '@peacha-core';
 import { Subject,BehaviorSubject } from 'rxjs';
-import { filter,map,takeUntil } from 'rxjs/operators';
+import { filter,map,takeUntil,tap } from 'rxjs/operators';
 import { PopTips } from '../pop-tips/pop-tips';
 import { findFullParentPath } from '@ngxs/store/src/internal/internals';
 
@@ -46,8 +46,10 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
   @Input() fileNumber: number;
   @Input() isResertBeforeUpload = false;
   @Input() ivoDisabled = false;
+  @Output() uploadingStateChange = new EventEmitter<boolean>();
   onChange: (o: IFileItem) => void;
   onTouched: () => void;
+  isHasFile = false;
   distroy$ = new Subject<void>();
   _fileSzie = 209715200;
 
@@ -95,6 +97,7 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
    */
   delteFile() {
     this.file$.next(null);
+    this.isHasFile = false;
   }
 
   /**
@@ -114,15 +117,6 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
 
   downloadFile(url: string) {
     window.open(url,'_blank')
-  }
-
-  ngOnDestroy(): void {
-    this.distroy$.next();
-    this.distroy$.unsubscribe();
-  }
-
-  ngOnInit(): void {
-    this.subscribeData();
   }
 
   private resertUpload() {
@@ -158,6 +152,10 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
 
       this.commmonApiService.uploadFile(form)
         .pipe(
+          tap(() => {
+            this.uploadingStateChange.emit(true);
+            this.isHasFile = true;
+          }),
           filter(s => {
             return s.type === HttpEventType.UploadProgress || s.type === HttpEventType.Response;
           }),
@@ -180,7 +178,7 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
                   success: true,
                   progress: 1,
                 });
-
+                this.uploadingStateChange.emit(false);
                 this.file$.next({
                   ... this.file$.getValue(),
                   token,url
@@ -192,6 +190,15 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
           })
         ).subscribe();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.distroy$.next();
+    this.distroy$.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this.subscribeData();
   }
 
 }
