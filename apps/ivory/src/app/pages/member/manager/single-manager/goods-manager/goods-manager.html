@@ -7,10 +7,10 @@
 	<div class="kuang">
 		<div class="index">
 			<span class="name">商品名称</span>
+			<span>商品状态</span>
 			<span>出售数量</span>
 			<span>出售类型</span>
 			<span>价格</span>
-			<span>商品状态</span>
 			<span class="do">操作</span>
 		</div>
 		<div class="list">
@@ -31,7 +31,10 @@
 				</span>
 
 				<span class="price">
-					<span [class.line]="item.sellState==0">¥{{item.price|number}}</span>
+					<span [class.line]="item.sellState==0">
+						<ng-container *ngIf="item.price>0"> ¥{{item.price|number}} </ng-container>
+						<ng-container *ngIf="item.price===0"> 免费分享</ng-container>
+					</span>
 				</span>
 
 				<span
