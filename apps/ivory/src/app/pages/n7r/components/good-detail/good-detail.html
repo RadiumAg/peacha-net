@@ -16,7 +16,7 @@
 						<div class="choice">
 							<span
 								class="option"
-								*ngFor="let item of goodlist.list;let i=index"
+								*ngFor="let item of goodlist?.list;let i=index"
 								[class.option-active]="i===indexChoice"
 								(click)="select(item,i)"
 								>{{item.name}}</span
@@ -28,7 +28,7 @@
 						<div class="choice">
 							<button (click)="count$.value>1 && count$.next(count$.value-1)">-</button>
 							<input type="number" #input [value]="count$.value" readonly unselectable="on" />
-							<button (click)="count$.value<(indexGood.stock-indexGood.salesVolumes) && count$.next(count$.value+1)">
+							<button (click)="count$.value<(indexGood?.stock-indexGood?.salesVolumes) && count$.next(count$.value+1)">
 								+
 							</button>
 						</div>
@@ -37,30 +37,30 @@
 					<li>
 						<span class="title"> 包装规格 </span>
 						<div class="choice">
-							<span class="des">{{indexGood.description}}</span>
+							<span class="des">{{indexGood?.description}}</span>
 						</div>
 					</li>
 					<li>
 						<span class="title"> 库存 </span>
 						<div class="choice">
-							<span class="des">{{indexGood.stock-indexGood.salesVolumes}}</span>
+							<span class="des">{{indexGood?.stock-indexGood?.salesVolumes}}</span>
 						</div>
 					</li>
 					<li>
 						<span class="title"> 单价 </span>
 						<div class="choice ext">
 							<span class="money"
-								>¥{{indexGood.price-indexGood.discountAmount}}<span class="tip" *ngIf="indexGood.discountAmount>1"
+								>¥{{indexGood?.price-indexGood?.discountAmount}}<span class="tip" *ngIf="indexGood?.discountAmount>1"
 									>（限时优惠）</span
 								></span
 							>
-							<s *ngIf="indexGood.discountAmount>1">原价：￥{{indexGood.price}}</s>
+							<s *ngIf="indexGood?.discountAmount>1">原价：￥{{indexGood?.price}}</s>
 						</div>
 					</li>
 					<li>
 						<span class="title"> 预计发货时间 </span>
 						<div class="choice">
-							<span class="time">2021年{{indexGood.month}}月开始发货</span>
+							<span class="time">2021年{{indexGood?.month}}月开始发货</span>
 						</div>
 					</li>
 				</div>
@@ -141,11 +141,11 @@
 					<li class="row bottom">
 						<img src="/assets/image/n7r/single/1.png" />
 						<span class="goods-detail">
-							<span>{{indexGood.name}}</span>
+							<span>{{indexGood?.name}}</span>
 						</span>
-						<span class="normal">¥{{indexGood.price-indexGood.discountAmount}}</span>
+						<span class="normal">¥{{indexGood?.price-indexGood?.discountAmount}}</span>
 						<span class="normal">{{count$.value}}</span>
-						<span class="normal">¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}</span>
+						<span class="normal">¥{{(indexGood?.price-indexGood?.discountAmount)*count$.value}}</span>
 					</li>
 				</div>
 				<div class="zhu">
@@ -175,11 +175,11 @@
 					<li class="row bottom">
 						<img src="/assets/image/n7r/single/1.png" />
 						<span class="goods-detail">
-							<span>{{indexGood.name}}</span>
+							<span>{{indexGood?.name}}</span>
 						</span>
-						<span class="normal">¥{{indexGood.price-indexGood.discountAmount}}</span>
+						<span class="normal">¥{{indexGood?.price-indexGood?.discountAmount}}</span>
 						<span class="normal">{{count$.value}}</span>
-						<span class="normal">¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}</span>
+						<span class="normal">¥{{(indexGood?.price-indexGood?.discountAmount)*count$.value}}</span>
 					</li>
 				</div>
 				<li class="content-title">收货信息</li>
@@ -212,7 +212,7 @@
 				<span>订单{{orderId}}</span>
 			</h2>
 			<div class="fine"><img src="/assets/image/n7r/icon/success.svg" />支付成功</div>
-			<span class="final-money">¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}</span>
+			<span class="final-money">¥{{(indexGood?.price-indexGood?.discountAmount)*count$.value}}</span>
 		</div>
 		<div class="box-content" *ivoStep="'fail'">
 			<h2>
@@ -221,7 +221,7 @@
 			</h2>
 			<div class="fine"><img src="/assets/image/n7r/icon/fail.svg" />支付失败</div>
 			<span class="tip">支付款项将从原渠道退回</span>
-			<span class="final-money">¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}</span>
+			<span class="final-money">¥{{(indexGood?.price-indexGood?.discountAmount)*count$.value}}</span>
 		</div>
 		<div class="box-content" *ivoStep="'cancel'">
 			<h2>
@@ -241,12 +241,12 @@
 		<div class="btn" [class.center-btn]="btnType$.value===-1">
 			<button
 				class="go"
-				(click)="goto(indexGood.stock-indexGood.salesVolumes)"
+				(click)="goto(indexGood?.stock-indexGood?.salesVolumes)"
 				*ngIf="btnType$.value<2"
-				[class.unable]="indexGood.stock===indexGood.salesVolumes || (indexGood.stock-indexGood.salesVolumes<this.count$.value)"
+				[class.unable]="indexGood?.stock===indexGood?.salesVolumes || (indexGood?.stock-indexGood?.salesVolumes<this.count$.value)"
 			>
 				<ng-container *ngIf="btnType$.value===0">
-					立即预购 ¥{{(indexGood.price-indexGood.discountAmount)*count$.value}}
+					立即预购 ¥{{(indexGood?.price-indexGood?.discountAmount)*count$.value}}
 				</ng-container>
 				<ng-container *ngIf="btnType$.value===1"> 提交订单 </ng-container>
 				<ng-container *ngIf="btnType$.value===-1"> 确定 </ng-container>
