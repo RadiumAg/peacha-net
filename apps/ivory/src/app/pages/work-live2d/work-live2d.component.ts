@@ -41,7 +41,7 @@ export class WorkLive2dComponent {
 			this.enableFaceTracker = previewData?.enableFaceTracker;
 			this.enableSettingPanel = previewData?.enableSettingPanel;
 			this.live2d$ = of(new HttpVirtualFileSystem(work.file));
-			this.publicityPeriod$ = of(work.publishtime + 7 * 24 * 60 * 60 * 1000 - Date.now());
+			this.publicityPeriod$ = of(work.publishTime + 7 * 24 * 60 * 60 * 1000 - Date.now());
 			this.http
 				.get<{
 					avatar: string;
@@ -77,7 +77,7 @@ export class WorkLive2dComponent {
 		private drop: DropDownService,
 		private modal: ModalService,
 		private vc: ViewContainerRef
-	) {}
+	) { }
 
 	relevants$ = this.route.params.pipe(
 		switchMap(_ => {

@@ -54,7 +54,7 @@ export class WorkPage {
 			map(d => d.work),
 			tap(i => {
 				this.requesting$.next(false);
-				this.publicityPeriod$ = of(i.publishtime + 7 * 24 * 60 * 60 * 1000 - Date.now());
+				this.publicityPeriod$ = of(i.publishTime + 7 * 24 * 60 * 60 * 1000 - Date.now());
 				this.http
 					.get<{
 						avatar: string;
