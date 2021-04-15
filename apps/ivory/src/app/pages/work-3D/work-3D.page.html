@@ -4,7 +4,7 @@
 			<span [class.active]="selectedMenu$.value===0" (click)="selectedMenu$.next(0)">图片/GIF预览</span>
 			<span [class.active]="selectedMenu$.value===1" (click)="selectedMenu$.next(1)">视频预览</span>
 		</div>
-		<div class="tips" *ngIf="period > 0 ">
+		<div class="tips" *ngIf="period > 0 && work.goodsList?.length > 0 ">
 			<span>
 				该作品处于公示期（剩余
 				<p>{{ period | timerdate }}</p>

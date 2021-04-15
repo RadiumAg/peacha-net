@@ -1,7 +1,7 @@
 <ng-container *ngrxLet="requesting$;let requesting">
 	<ng-container *ngrxLet="work$;let work">
 		<ng-container *ngrxLet="publicityPeriod$; let period">
-			<div class="tips" *ngIf="period > 0">
+			<div class="tips" *ngIf="period > 0 &&  work.goodsList?.length>0">
 				<span>
 					该作品处于公示期（剩余
 					<p>{{ period | timerdate }}</p>
