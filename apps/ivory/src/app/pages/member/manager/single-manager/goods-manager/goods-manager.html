@@ -20,7 +20,10 @@
 				</span>
 				<span class="not" *ngIf="item.sellState==0;else on" [class.line]="item.sellState==0">已下架</span>
 				<ng-template #on>
-					<span class="can"> 出售中</span>
+					<span class="can">
+						<ng-container *ngIf="item.maxStock===item.saleNumber"> 已售罄 </ng-container>
+						<ng-container *ngIf="item.maxStock!=item.saleNumber"> 出售中 </ng-container>
+					</span>
 				</ng-template>
 				<span [class.line]="item.sellState==0">{{item.saleNumber}}</span>
 				<span>
