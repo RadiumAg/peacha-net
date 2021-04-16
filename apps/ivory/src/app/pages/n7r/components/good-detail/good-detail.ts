@@ -177,13 +177,15 @@ export class N7rGoodDetail implements OnDestroy {
                                     this.modal.open(PopTips, ['库存不足无法购买', false]).afterClosed().subscribe(_ => {
                                         this.modalRef.close();
                                     });
+                                } else if (e.code === 408) {
+                                    this.modal.open(PopTips, ['系统繁忙，请稍后重试', false])
                                 }
                             })
 
 
 
                         } else {
-                            this.modal.open(PopTips, ['请填写完整有效的收获信息', false]);
+                            this.modal.open(PopTips, ['请填写完整有效的收货信息', false]);
                         }
 
                     } else {

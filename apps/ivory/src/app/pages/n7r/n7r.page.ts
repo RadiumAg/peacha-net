@@ -38,12 +38,28 @@ type Goods = {
 			),
 			/** 下一张图片 */
 			state('next', style({ 'z-index': '2', transform: 'translateX(100%)' })),
+			/** 差距-2*/
+			state('ltwo', style({ 'z-index': '3', transform: 'translateX(-100%)' })),
+			/** 差距+2*/
+			state('rthree', style({ 'z-index': '4', transform: 'translateX(100%)' })),
+			/** 差距-3*/
+			state('lthree', style({ 'z-index': '5', transform: 'translateX(-100%)' })),
+			/** 差距+3*/
+			state('rtwo', style({ 'z-index': '6', transform: 'translateX(100%)' })),
 			/** 当前图片 */
 			state('on', style({ 'z-index': '7', transform: 'translateX(0)' })),
 			transition('prev=>on', [animate('0.3s ease-in')]),
 			transition('next=>on', [animate('0.3s ease-in')]),
 			transition('on=>prev', [animate('0.3s ease-in')]),
 			transition('on=>next', [animate('0.3s ease-in')]),
+			transition('on=>ltwo', [animate('0.3s ease-in')]),
+			transition('on=>rtwo', [animate('0.3s ease-in')]),
+			transition('on=>lthree', [animate('0.3s ease-in')]),
+			transition('on=>rthree', [animate('0.3s ease-in')]),
+			transition('ltwo=>on', [animate('0.3s ease-in')]),
+			transition('rtwo=>on', [animate('0.3s ease-in')]),
+			transition('lthree=>on', [animate('0.3s ease-in')]),
+			transition('rthree=>on', [animate('0.3s ease-in')]),
 		]),
 	],
 })
@@ -97,17 +113,25 @@ export class N7rPage {
 					? 'on'
 					: index === 1
 						? 'next'
-						: index === this.imgs.length - 1
-							? 'prev'
-							: 'off';
+						: index === 2
+							? 'rtwo'
+							: index === 3
+								? 'rthree'
+								: index === this.imgs.length - 1
+									? 'prev'
+									: 'off';
 			} else if (this.current === this.imgs.length - 1) {
 				return index === this.imgs.length - 1
 					? 'on'
 					: index === this.imgs.length - 2
 						? 'prev'
-						: index === 0
-							? 'next'
-							: 'off';
+						: index === this.imgs.length - 3
+							? 'ltwo'
+							: index === this.imgs.length - 4
+								? 'lthree'
+								: index === 0
+									? 'next'
+									: 'off';
 			}
 			switch (index - this.current) {
 				case 0:
@@ -116,6 +140,14 @@ export class N7rPage {
 					return 'next';
 				case -1:
 					return 'prev';
+				case -2:
+					return 'ltwo';
+				case 2:
+					return 'rtwo';
+				case -3:
+					return 'lthree';
+				case 3:
+					return 'rthree';
 				default:
 					return 'off';
 			}
@@ -123,7 +155,6 @@ export class N7rPage {
 			return 'off';
 		}
 	}
-
 
 	autoPlay() {
 		clearInterval(this.clear);

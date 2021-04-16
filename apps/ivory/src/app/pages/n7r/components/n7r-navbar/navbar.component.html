@@ -10,7 +10,7 @@
 		</ng-container>
 		<ng-template #logined>
 			<a (click)="toOrderList()">购买记录</a>
-			<img [attr.src]="info?.avatar" class="avatar" #avatar (mouseenter)="hoverAvatar($event)" (click)="toUser(info?.id)" />
+			<img [attr.src]="info?.avatar" class="avatar" #avatar (mouseenter)="hoverAvatar($event)" />
 		</ng-template>
 	</div>
 
@@ -22,7 +22,7 @@
 				</div>
 				<img [@avatar]="(isPortalShowing$ | async) ? 'active' : 'normal'" class="ava" [attr.src]="info?.avatar" />
 				<div class="info">
-					<h3 [routerLink]="['user', info?.id]">{{ info?.nickname }}</h3>
+					<h3>{{ info?.nickname }}</h3>
 					<h4>UID:{{ info?.id }}</h4>
 				</div>
 			</div>
