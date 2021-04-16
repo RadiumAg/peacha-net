@@ -42,6 +42,17 @@
 				color: @release-font-color2;
 				cursor: pointer;
 			}
+
+			span.title-after {
+				user-select: none;
+				font-weight: 400;
+				position: absolute;
+				right: 40px;
+				top: 50%;
+				transform: translateY(-50%);
+				font-size: 14px;
+				color: @release-font-color2;
+			}
 		}
 
 		.label-inner {
@@ -147,8 +158,6 @@
 		.required,
 		.required-center {
 			position: relative;
-			display: flex;
-			align-items: center;
 
 			&::before {
 				position: absolute;

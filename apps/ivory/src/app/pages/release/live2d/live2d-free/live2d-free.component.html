@@ -82,11 +82,9 @@
     </div>
 
     <div class="form-item live2d" *ngIf="form.getRawValue().fr === 1">
-      <div class="title" [ivoNoticeTitle]="
-					'请将所有的模型文件压缩成zip格式文件上传，请不要将文件放在文件夹中，以免出现加载错误，或使用指南内方式直接导出ZIP文件'
-				">
+      <div class="title">
         添加免费分享Live2D模型
-        <span class="download" (click)="openPDF('/assets/download_files/ZIP文件准备指南.pdf')">ZIP文件准备指南</span>
+        <span *ngIf="isEdit" class="title-after">修改价格或上下架商品，请在“商品管理”页面操作</span>
       </div>
       <div class="form-controller">
         <ivo-live2d-upload placeHolderWorld="" formControlName="fg" ivoErroTip ivoErrorTipString="请添加免费分享Live2D模型!"

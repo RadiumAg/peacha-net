@@ -69,7 +69,7 @@
     <div class="form-item goods">
       <div class="title" [ivoNoticeTitle]="'此模型用于商品出售，请上传原始文件'">
         添加商品Live2D模型
-        <span class="download">修改价格或上下架商品，请在“商品管理”页面操作</span>
+        <span class="title-after" *ngIf="isEdit">修改价格或上下架商品，请在“商品管理”页面操作</span>
       </div>
       <div class="form-controller">
         <ivo-live2d-upload #godds_live2d formControlName="gl_token" ivoErroTip ivoErrorTipString="请添加商品Live2D模型!"
