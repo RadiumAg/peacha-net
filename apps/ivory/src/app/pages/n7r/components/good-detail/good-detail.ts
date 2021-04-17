@@ -178,7 +178,9 @@ export class N7rGoodDetail implements OnDestroy {
                                         this.modalRef.close();
                                     });
                                 } else if (e.code === 408) {
-                                    this.modal.open(PopTips, ['系统繁忙，请稍后重试', false])
+                                    this.modal.open(PopTips, ['系统繁忙，请稍后重试', false]);
+                                } else {
+                                    this.modal.open(PopTips, ['商品暂不可售', false]);
                                 }
                             })
 
