@@ -22,11 +22,15 @@ export class Work3DPage {
 		2: ['/assets/image/copyright/Creat_allowed.svg', '/assets/image/copyright/Creat_not_allowed.svg'],
 		3: ['/assets/image/copyright/Com_allowed.svg', '/assets/image/copyright/Com_not_allowed.svg'],
 		4: ['/assets/image/copyright/Creat_allowed.svg', '/assets/image/copyright/Creat_not_allowed.svg'],
-		5: ['/assets/image/copyright/Live_allowed.svg', '/assets/image/copyright/Live_not_allowed.svg'],
-		6: ['/assets/image/copyright/Mod_allowed.svg', '/assets/image/copyright/Mod_not_allowed.svg'],
+		5: ['/assets/image/copyright/Mod_allowed.svg', '/assets/image/copyright/Mod_not_allowed.svg'],
+		6: ['/assets/image/copyright/Live_allowed.svg', '/assets/image/copyright/Live_not_allowed.svg'],
+		7: ['/assets/image/copyright/Com_allowed.svg', '/assets/image/copyright/Com_not_allowed.svg'],
+		8: ['/assets/image/copyright/Creat_allowed.svg', '/assets/image/copyright/Creat_not_allowed.svg'],
+		9: ['/assets/image/copyright/Mod_allowed.svg', '/assets/image/copyright/Mod_not_allowed.svg'],
+		10: ['/assets/image/copyright/Live_allowed.svg', '/assets/image/copyright/Live_not_allowed.svg'],
 	};
 
-	copyrights$ = this.http.get<CopyrightList>('/work/copyright?c=0');
+	copyrights$ = this.http.get<CopyrightList>('/work/copyright?c=2');
 
 	@Select(UserState.id)
 	id$: Observable<number>;
@@ -88,7 +92,7 @@ export class Work3DPage {
 		private vc: ViewContainerRef,
 		private zoom: ZoomService,
 		private sanitizer: DomSanitizer
-	) {}
+	) { }
 
 	relevants$ = this.route.params.pipe(
 		switchMap(_ => {
