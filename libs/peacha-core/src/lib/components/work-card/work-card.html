@@ -20,19 +20,17 @@
 	<a [href]="work?.category==1?['/illust/'+work?.id]:work?.category==2?['/3d/'+work?.id]:['/live2d/'+work?.id]">
 		<span class="sad">
 			<span class="publishtime"> {{showtime}} </span>
-			<ng-container *ngIf="work?.category==0">
-				<span class="price" [ngSwitch]="work?.price">
-					<ng-container *ngSwitchCase="0">
-						<span class="free"> 免费下载 </span>
-					</ng-container>
-					<ng-container *ngSwitchCase="-1">
-						<!-- <span class="no">
+			<span class="price" [ngSwitch]="work?.price">
+				<ng-container *ngSwitchCase="0">
+					<span class="free"> 免费下载 </span>
+				</ng-container>
+				<ng-container *ngSwitchCase="-1">
+					<!-- <span class="no">
                             暂无商品
                         </span> -->
-					</ng-container>
-					<ng-container *ngSwitchDefault> <a>¥</a>{{work?.price}} </ng-container>
-				</span>
-			</ng-container>
+				</ng-container>
+				<ng-container *ngSwitchDefault> <a>¥</a>{{work?.price}} </ng-container>
+			</span>
 		</span>
 	</a>
 
