@@ -215,7 +215,7 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 							gl: [{
 								n: value.gn,
 								f: value.gl_token?.token || '',
-								p: value.p > this.maxPrice ? parseInt(((value.p + '').slice(0,(this.maxPrice + '').length)),10) : value.p,
+								p: value.p,
 								s: value.gl_s,
 							}],
 						};
