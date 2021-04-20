@@ -21,15 +21,15 @@
 							<div>
 								<ivo-lazy-img
 									[ngLazyLoad]="good.cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'"
-									(click)="toWork(good.workid)"
+									(click)="toWork(good.workid,good.category)"
 								>
 								</ivo-lazy-img>
 
 								<div class="main-info">
 									<div>
 										<li class="left">
-											<span class="name" (click)="toWork(good.workid)">{{good.work_name}}</span>
-											<span class="goodname" (click)="toWork(good.workid)"
+											<span class="name" (click)="toWork(good.workid,good.category)">{{good.work_name}}</span>
+											<span class="goodname" (click)="toWork(good.workid,good.category)"
 												>商品名称:&nbsp;&nbsp;{{good.goods_name}}</span
 											>
 											<span class="author" [routerLink]="['/user',good.seller_id]"
@@ -42,8 +42,9 @@
 										</li>
 									</div>
 									<li class="right">
-										<span class="cat" (click)="deleteOne(good.goodid)">
-											删除
+										<span class="cat">
+											<span (click)="deleteOne(good.goodid)">删除</span>
+
 											<!--<img (click)="deleteOne(good.goodid)"
                                             src="/assets/image/cart/delete.svg">-->
 										</span>
