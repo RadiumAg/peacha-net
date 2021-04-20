@@ -48,7 +48,7 @@ export class StorePage implements AfterViewInit {
 						price: number;
 						category: number;
 					}[];
-				}>(`/work/get_own_works?p=${r ? r - 1 : 0}&s=6`).pipe(
+				}>(`/work/get_own_works?p=${r ? r - 1 : 0}&s=6&c=-1`).pipe(
 					tap(s => {
 						this.workCount$.next(s.count);
 					})

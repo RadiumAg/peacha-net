@@ -8,7 +8,6 @@ import { UserState, ModalService } from '@peacha-core';
 import { CartState, RemoveFromCart } from '@peacha-core/state';
 import { PopTips } from '@peacha-core/components';
 
-
 type GoodsInfo = {
 	count: number;
 	list: {
@@ -233,7 +232,13 @@ export class CartPage {
 			});
 	}
 
-	toWork(id: number) {
-		this.router.navigate(['live2d', id]);
+	toWork(id: number, c: number) {
+		if (c == 1) {
+			this.router.navigate(['illust', id]);
+		} else if (c == 0) {
+			this.router.navigate(['live2d', id]);
+		} else {
+			this.router.navigate(['3d', id]);
+		}
 	}
 }

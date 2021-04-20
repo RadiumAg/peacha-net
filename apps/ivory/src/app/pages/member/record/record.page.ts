@@ -11,11 +11,7 @@ import { MemberApiService } from '../member-api.service';
 	styleUrls: ['./record.page.less'],
 })
 export class RecordPage {
-	constructor(
-		private memberApi: MemberApiService,
-		private route: ActivatedRoute,
-		private router: Router
-	) { }
+	constructor(private memberApi: MemberApiService, private route: ActivatedRoute, private router: Router) {}
 
 	key: FormControl = new FormControl('');
 	keyword$ = new BehaviorSubject<string>('');
@@ -23,7 +19,7 @@ export class RecordPage {
 
 	record$ = this.route.queryParams.pipe(
 		switchMap(r => {
-			return this.memberApi.getSellOrder(r.key, r.p, 5, 0).pipe(
+			return this.memberApi.getSellOrder(r.key, r.p, 5, -1).pipe(
 				tap(_ => {
 					this.page$.next(r.p ?? 1);
 				})
