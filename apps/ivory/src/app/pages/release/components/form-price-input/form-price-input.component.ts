@@ -38,10 +38,10 @@ export class FormPriceInputComponent implements OnInit {
   innerInputChange(inputValue: number) {
     if (!this.ivoDisabled) {
       if (inputValue > this.ivoMaxValue) {
-        inputValue = parseInt(inputValue.toString().slice(0,this.ivoMaxValue.toString().length),10);
+        inputValue = parseInt(inputValue.toString().slice(0,this.ivoMaxValue.toString().length + 1),10);
       }
       if (inputValue < this.ivoMinValue) {
-        inputValue = parseInt(inputValue.toString().slice(0,this.ivoMinValue.toString().length),10);
+        inputValue = parseInt(inputValue.toString().slice(0,this.ivoMinValue.toString().length + 1),10);
       }
       this.ivoValue = inputValue;
       this.input.nativeElement.value = inputValue.toString();
