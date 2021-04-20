@@ -19,7 +19,7 @@
 				>
 				<span class="type">商品名称：{{order.goods_name}}</span>
 				<div class="type" *ngIf="order.maxstock==1;else duo">单次出售</div>
-				<ng-template #duo>多次出售</ng-template>
+				<ng-template #duo> <div class="type">多次出售</div></ng-template>
 				<span class="type">买家：{{order.buyer_name}}</span>
 			</div>
 		</div>
