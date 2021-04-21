@@ -69,21 +69,10 @@
 				<div class="commission-form-item-controller">
 					<div class="commission-form-item-controller-title">起一个比较有吸引力的标题，能让更多人关注到你的企划</div>
 					<div class="controller">
-						<input
-							[attr.disabled]="isEdit ? true : null"
-							ivoErroTipTwo
-							ivoErroTipTwo
-							[ivoErrorTipString]="{
+						<input [attr.disabled]="isEdit ? true : null" ivoErroTipTwo ivoErroTipTwo [ivoErrorTipString]="{
 								required: '请填写约稿标题!',
 								empty: '不能含空字符'
-							}"
-							formControlName="n"
-							type="text"
-							#title1
-							class="commission-input"
-							maxlength="20"
-							placeholder="请输入"
-						/>
+							}" formControlName="n" type="text" #title1 class="commission-input" maxlength="20" placeholder="请输入" />
 						<span class="word-count">{{ title1.value.length }}/20</span>
 					</div>
 				</div>
@@ -96,14 +85,8 @@
 
 				<div class="commission-form-item-controller">
 					<div class="controller">
-						<ivo-select
-							[disabled]="isEdit"
-							height="36px"
-							fontSize="12px"
-							formControlName="de"
-							ivoErroTipTwo
-							[ivoErrorTipString]="'选择整体构思!'"
-						>
+						<ivo-select [disabled]="isEdit" height="36px" fontSize="12px" formControlName="de" ivoErroTipTwo
+							[ivoErrorTipString]="'选择整体构思!'">
 							<ivo-option value="0" text="已有整体构思" borderStyle="1"></ivo-option>
 							<ivo-option value="1" text="已有大概构思,需要与画师讨论后确定" borderStyle="1"></ivo-option>
 							<ivo-option value="2" text="没有构思，需画师帮助构思" borderStyle="1"></ivo-option>
@@ -119,13 +102,8 @@
 
 				<div class="commission-form-item-controller">
 					<div class="controller">
-						<ivo-select
-							fontSize="12px"
-							height="36px"
-							formControlName="s"
-							ivoErroTipTwo
-							[ivoErrorTipString]="'请选择稿件保密类型!'"
-						>
+						<ivo-select fontSize="12px" height="36px" formControlName="s" ivoErroTipTwo
+							[ivoErrorTipString]="'请选择稿件保密类型!'">
 							<ivo-option value="0" text="可公开"></ivo-option>
 							<ivo-option value="1" text="约定公开"></ivo-option>
 							<ivo-option value="2" text="不可公开"></ivo-option>
@@ -142,20 +120,11 @@
 				<div class="commission-form-item-controller">
 					<div class="commission-form-item-controller-title">画师需要根据你的要求公开企划（例：企划结束后可公开）</div>
 					<div class="controller">
-						<input
-							type="text"
-							ivoErroTipTwo
-							[ivoErrorTipString]="{
+						<input type="text" ivoErroTipTwo [ivoErrorTipString]="{
 								empty: '公开要求不能有空字符',
 								required: '公开要求必填'
-							}"
-							formControlName="sd"
-							#title2
-							class="commission-input"
-							maxlength="10"
-							placeholder="请输入"
-							[value]="isScrict ? '' : title2.value"
-						/>
+							}" formControlName="sd" #title2 class="commission-input" maxlength="10" placeholder="请输入"
+							[value]="isScrict ? '' : title2.value" />
 						<span class="word-count">{{ title2.value.length }}/10</span>
 					</div>
 				</div>
@@ -168,19 +137,12 @@
 
 				<div class="commission-form-item-controller">
 					<div class="controller">
-						<input
-							type="number"
-							ivoErroTipTwo
-							[ivoErrorTipString]="{
+						<input type="number" ivoErroTipTwo [ivoErrorTipString]="{
 								nullTime: '请填写所需时长',
 								negativeTime: '所需时长不能为负数',
 								floatTime: '时间不能为小数',
 								max: '不能超过999'
-							}"
-							formControlName="d"
-							class="commission-input"
-							placeholder="请输入"
-						/>
+							}" formControlName="d" class="commission-input" placeholder="请输入" />
 						<span class="word-unit">天</span>
 					</div>
 				</div>
@@ -193,44 +155,28 @@
 
 				<div class="commission-form-item-controller">
 					<div class="controller">
-						<input
-							type="number"
-							#minPrice
-							ivoErroTipTwo
-							[ivoErrorTipString]="[
+						<input type="number" #minPrice ivoErroTipTwo [ivoErrorTipString]="[
 								{ endWidthZero: { error: '请以0结尾', order: 6 } },
 								{ zeroPrice: { error: '不能小于0', order: 4 } },
 								{ nullPrice: { error: '请填写', order: 3 } },
 								{ moreThan: { error: '不能等于或超过最高价格', order: 2 } },
 								{ floatPrice: { error: '价格不能为小数', order: 1 } },
 								{ min: { error: '不能小于10', order: 5 } }
-							]"
-							formControlName="sp"
-							class="commission-input"
-							placeholder="请输入"
-						/>
+							]" formControlName="sp" class="commission-input" placeholder="请输入" />
 						<span class="word-unit">元</span>
 					</div>
 
 					<span class="no-use">至</span>
 
 					<div class="controller">
-						<input
-							type="number"
-							#maxPrice
-							ivoErroTipTwo
-							[ivoErrorTipString]="[
+						<input type="number" #maxPrice ivoErroTipTwo [ivoErrorTipString]="[
 								{ endWidthZero: { error: '请以0结尾', order: 6 } },
 								{ zeroPrice: { error: '不能小于0', order: 4 } },
 								{ nullPrice: { error: '请填写', order: 3 } },
 								{ moreThan: { error: '不能等于或超过最高价格', order: 2 } },
 								{ floatPrice: { error: '价格不能为小数', order: 1 } },
 								{ max: { error: '不能大于99990', order: 5 } }
-							]"
-							formControlName="mp"
-							class="commission-input"
-							placeholder="请输入"
-						/>
+							]" formControlName="mp" class="commission-input" placeholder="请输入" />
 						<span class="word-unit">元</span>
 					</div>
 				</div>
@@ -256,15 +202,8 @@
 						也可以写下具体的人设（人设举例：姓名/性别/年龄/身高/爱好/兴趣/职业/性格）
 					</div>
 					<div class="controller">
-						<textarea
-							ivoErroTipTwo
-							[ivoErrorTipString]="'请填写具体需求!'"
-							class="commission-textarea"
-							#detail
-							maxlength="1000"
-							formControlName="det"
-							placeholder="请输入您对企划的具体需求…"
-						></textarea>
+						<textarea ivoErroTipTwo [ivoErrorTipString]="'请填写具体需求!'" class="commission-textarea" #detail
+							maxlength="1000" formControlName="det" placeholder="请输入您对企划的具体需求…"></textarea>
 						<span class="word-count">{{ detail.value.length }}/1000</span>
 					</div>
 				</div>
@@ -277,23 +216,12 @@
 
 				<div class="commission-form-item-controller">
 					<div class="controller">
-						<input
-							type="number"
-							ivoErroTipTwo
-							[attr.disabled]="isEdit ? true : null"
-							[ivoErrorTipString]="{
+						<input type="number" ivoErroTipTwo [attr.disabled]="isEdit ? true : null" [ivoErrorTipString]="{
 								negativeEnAndAn: '不能小于0',
 								nullEnAndAn: '请填写表情需求！',
 								floatEnAndAn: '表情需求不能为小数',
 								max: '最大99'
-							}"
-							formControlName="en"
-							max="99"
-							min="0"
-							#title2
-							class="commission-input"
-							placeholder=""
-						/>
+							}" formControlName="en" max="99" min="0" #title2 class="commission-input" placeholder="" />
 						<span class="word-unit">个</span>
 					</div>
 				</div>
@@ -306,23 +234,12 @@
 
 				<div class="commission-form-item-controller">
 					<div class="controller">
-						<input
-							type="number"
-							ivoErroTipTwo
-							[attr.disabled]="isEdit ? true : null"
-							[ivoErrorTipString]="{
+						<input type="number" ivoErroTipTwo [attr.disabled]="isEdit ? true : null" [ivoErrorTipString]="{
 								negativeEnAndAn: '不能小于0',
 								nullEnAndAn: '请填写动作需求！',
 								floatEnAndAn: '动作需求不能为小数',
 								max: '最大99'
-							}"
-							formControlName="an"
-							max="99"
-							min="0"
-							#title2
-							class="commission-input"
-							placeholder=""
-						/>
+							}" formControlName="an" max="99" min="0" #title2 class="commission-input" placeholder="" />
 						<span class="word-unit">个</span>
 					</div>
 
@@ -340,39 +257,21 @@
 
 				<div class="commission-form-item-controller">
 					<div class="controller">
-						<input
-							type="number"
-							ivoErroTipTwo
-							[ivoErrorTipString]="{
+						<input type="number" ivoErroTipTwo [ivoErrorTipString]="{
 								zeroPrice: '稿件宽不能小于0！',
 								nullPrice: '请填写',
 								floatPrice: '不能为小数',
 								max: '最大为9999'
-							}"
-							formControlName="wi"
-							max="99"
-							min="0"
-							class="commission-input"
-							placeholder=""
-						/>
+							}" formControlName="wi" max="99" min="0" class="commission-input" placeholder="" />
 					</div>
 					<span class="multiply">×</span>
 					<div class="controller">
-						<input
-							type="number"
-							ivoErroTipTwo
-							[ivoErrorTipString]="{
+						<input type="number" ivoErroTipTwo [ivoErrorTipString]="{
 								zeroPrice: '稿件高不能小于0！',
 								nullPrice: '请填写',
 								floatPrice: '不能为小数',
 								max: '最大为9999'
-							}"
-							formControlName="hi"
-							max="99"
-							min="0"
-							class="commission-input"
-							placeholder=""
-						/>
+							}" formControlName="hi" max="99" min="0" class="commission-input" placeholder="" />
 
 						<span class="word-unit">像素</span>
 					</div>
@@ -386,14 +285,8 @@
 
 				<div class="commission-form-item-controller">
 					<div class="controller">
-						<ivo-select
-							fontSize="12px"
-							height="36px"
-							[disabled]="isEdit"
-							formControlName="spi"
-							ivoErroTipTwo
-							[ivoErrorTipString]="'请选择拆分需求'"
-						>
+						<ivo-select fontSize="12px" height="36px" [disabled]="isEdit" formControlName="spi"
+							ivoErroTipTwo [ivoErrorTipString]="'请选择拆分需求'">
 							<ivo-option value="0" text="需要画师拆分"></ivo-option>
 							<ivo-option value="1" text="无需画师拆分"></ivo-option>
 						</ivo-select>
@@ -412,15 +305,9 @@
 					</div>
 					<div class="commission-form-item-controller-title warning">(企划发布后所有用户都可下载此附件，请谨慎上传)</div>
 					<div class="controller">
-						<ivo-upload
-							[fileSize]="15728640"
-							formControlName="f"
-							buttonWord="上传文件"
-							[canDelete]="true"
-							[isResertBeforeUpload]="true"
-						>
-						</ivo-upload
-						><span class="upload-fileName">{{ uploadFile['name'] }}</span>
+						<ivo-upload [fileSize]="15728640" formControlName="f" buttonWord="上传文件" [canDelete]="true"
+							[isResertBeforeUpload]="true">
+						</ivo-upload><span class="upload-fileName">{{ uploadFile['name'] }}</span>
 					</div>
 				</div>
 			</div>
@@ -435,12 +322,8 @@
 					<div class="commission-form-item-controller-title warning">(企划发布后所有用户都可查看此图片，请谨慎上传。)</div>
 					<div class="controller">
 						<div>
-							<ivo-illustrate-upload
-								maxCount="4"
-								[maxSize]="4194304"
-								[allowType]="['jpg', 'gif', 'png']"
-								formControlName="ft"
-							>
+							<ivo-illustrate-upload maxCount="4" [maxSize]="4194304" [allowType]="['jpg', 'gif', 'png']"
+								formControlName="ft">
 							</ivo-illustrate-upload>
 						</div>
 					</div>
@@ -466,7 +349,8 @@
 					</div>
 
 					<div class="controller">
-						<ivo-commission-node [isEdit]="isEdit" [IsCute]="param.spi == 0 ? true : false" formControlName="fl">
+						<ivo-commission-node [isEdit]="isEdit" [IsCute]="param.spi == 0 ? true : false"
+							formControlName="fl">
 						</ivo-commission-node>
 					</div>
 					<div class="commission-form-item-controller-title no-use">
@@ -482,21 +366,13 @@
 				<div class="commission-form-item-controller">
 					<div class="commission-form-item-controller-title">（最终验收阶段前可提出修改的次数，请谨慎填写）</div>
 					<div class="controller">
-						<input
-							ivoErroTipTwo
-							[attr.disabled]="isEdit ? true : null"
-							[ivoErrorTipString]="{
+						<input ivoErroTipTwo [attr.disabled]="isEdit ? true : null" [ivoErrorTipString]="{
 								nullPrice: '请填写修改次数！',
 								negativePrice: '修改次数不能为负数',
 								zeroPrice: '修改次数不能为0！',
 								floatPrice: '修改次数不能为小数',
 								max: '最大99'
-							}"
-							formControlName="mc"
-							type="number"
-							class="commission-input"
-							placeholder="请输入"
-						/>
+							}" formControlName="mc" type="number" class="commission-input" placeholder="请输入" />
 						<span class="word-unit">次</span>
 					</div>
 				</div>
@@ -521,13 +397,13 @@
 				</div>
 				<div class="controller">
 					{{
-						param.de == 0
-							? '已有整体构思'
-							: param.de == 1
-							? '有大概构思，需与画师讨论后确定'
-							: param.de == 2
-							? '没有构思，需画师帮助构思'
-							: ''
+					param.de == 0
+					? '已有整体构思'
+					: param.de == 1
+					? '有大概构思，需与画师讨论后确定'
+					: param.de == 2
+					? '没有构思，需画师帮助构思'
+					: ''
 					}}
 				</div>
 			</div>
@@ -561,7 +437,7 @@
 				<div class="commission-form-item-title">
 					<span>支付稿酬:</span>
 				</div>
-				<div class="controller">¥ {{ param.sp * 100 }} ~ ¥ {{ param.mp * 100 }}</div>
+				<div class="controller">¥ {{ param.sp *10 }} ~ ¥ {{ param.mp *10 }}</div>
 			</div>
 
 			<div class="commission-form-item">
@@ -644,7 +520,8 @@
 						</div>
 						<div class="commission-form-item-controller-title">若约稿中途结束，则按照设置的费用比例支付至画师。</div>
 						<div class="controller">
-							<ivo-commission-node [isEdit]="true" [IsCute]="param.spi == 0 ? true : false" formControlName="fl">
+							<ivo-commission-node [isEdit]="true" [IsCute]="param.spi == 0 ? true : false"
+								formControlName="fl">
 							</ivo-commission-node>
 						</div>
 					</div>
@@ -688,15 +565,10 @@
 
 		<footer class="commission-form-footer" (click)="changeForm($event)">
 			<input type="button" class="pre-button" data-flag="1" [value]="CurrentActive === 0 ? '取消' : '上一步'" />
-			<input type="button" ivo-button [ngClass]="{ hidden: !activeList[4] }" class="next-button" data-flag="2" value="下一步" />
-			<input
-				type="button"
-				ivo-button
-				[ngClass]="{ hidden: activeList[4] }"
-				class="next-button"
-				data-flag="3"
-				[value]="isEdit ? '确认编辑' : '发布企划'"
-			/>
+			<input type="button" ivo-button [ngClass]="{ hidden: !activeList[4] }" class="next-button" data-flag="2"
+				value="下一步" />
+			<input type="button" ivo-button [ngClass]="{ hidden: activeList[4] }" class="next-button" data-flag="3"
+				[value]="isEdit ? '确认编辑' : '发布企划'" />
 		</footer>
 	</div>
 	<!-- forms -->
