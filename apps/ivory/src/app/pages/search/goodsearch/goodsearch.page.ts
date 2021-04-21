@@ -11,10 +11,11 @@ import { Works } from '@peacha-core';
 	styleUrls: ['./goodsearch.page.less'],
 })
 export class GoodsearchPage {
-	constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) { }
+	constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
 	page$ = new BehaviorSubject<number>(1);
 	priceRegion = [
+		{ sp: -1, ep: -1 },
 		{ sp: 0, ep: 0 },
 		{ sp: 0, ep: 500 },
 		{ sp: 500, ep: 1000 },
@@ -39,11 +40,15 @@ export class GoodsearchPage {
 						userId: number;
 						nickName: string;
 						price: number;
-						stock: number
-					}[]
+						stock: number;
+					}[];
 					// eslint-disable-next-line max-len
-				}>(`/work/search_work?k=${key}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ?? 1}&sp=${r.m ? this.priceRegion[r.m].sp : 0}&ep=${r.m ? this.priceRegion[r.m].ep : 0}&dd=${r.dd ?? 0}&c=${r.c === undefined ? '-1' : r.c}&ws=1&ft=${r.ft === undefined ? '-1' : r.ft}
-				`)
+				}>(
+					`/work/search_work?k=${key}&p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ?? 1}&sp=${r.m ? this.priceRegion[r.m].sp : 0}&ep=${
+						r.m ? this.priceRegion[r.m].ep : 0
+					}&dd=${r.dd ?? 0}&c=${r.c === undefined ? '-1' : r.c}&ws=1&ft=${r.ft === undefined ? '-1' : r.ft}
+				`
+				)
 				.pipe(
 					tap(_s => {
 						this.page$.next(r.p ?? 1);
