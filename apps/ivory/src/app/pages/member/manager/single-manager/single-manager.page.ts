@@ -5,6 +5,11 @@ import { PopTips } from '@peacha-core/components';
 import { MemberApiService } from '../../member-api.service';
 import { GoodsManager } from './goods-manager/goods-manager';
 
+export enum EWorkAuditState{
+	success = 0x01,
+	wait,
+	fail
+}
 
 @Component({
 	selector: 'ivo-single-manager',
@@ -26,7 +31,7 @@ export class SingleManagerPage implements AfterViewInit {
 
 	@Input() item: any;
 	@Input() type: number;
-	@Input() state: number;
+	@Input() state: EWorkAuditState;
 	@Output()
 	delete: EventEmitter<true> = new EventEmitter();
 
@@ -69,24 +74,24 @@ export class SingleManagerPage implements AfterViewInit {
 		this.menu.close();
 		if (this.type === 1) {
 			if (this.item.price > 0) {
-				this.router.navigate(['/edit/illust/paid', id]);
+				this.router.navigate(['/edit/illust/paid', id],{queryParams:{c:this.state}});
 			} else {
-				this.router.navigate(['/edit/illust', id]);
+				this.router.navigate(['/edit/illust', id],{queryParams:{c:this.state}});
 			}
 		} else if (this.type === 0) {
 			if (this.item.price > 0) {
-				this.router.navigate(['/edit/live2d/paid', id]);
+				this.router.navigate(['/edit/live2d/paid', id],{queryParams:{c:this.state}});
 			} else {
-				this.router.navigate(['/edit/live2d', id]);
+				this.router.navigate(['/edit/live2d', id],{queryParams:{c:this.state}});
 			}
 
 		} else if (this.type === 2) {
 			if (this.item.price > 0) {
-				this.router.navigate(['/edit/3d/paid', id]);
+				this.router.navigate(['/edit/3d/paid', id],{queryParams:{c:this.state}});
 			} else if (this.item.price === 0) {
-				this.router.navigate(['/edit/3d/free', id]);
+				this.router.navigate(['/edit/3d/free', id],{queryParams:{c:this.state}});
 			} else {
-				this.router.navigate(['/edit/3d/onlyShow', id]);
+				this.router.navigate(['/edit/3d/onlyShow', id],{queryParams:{c:this.state}});
 			}
 		}
 	}

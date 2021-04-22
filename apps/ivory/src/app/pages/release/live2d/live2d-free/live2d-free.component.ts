@@ -10,6 +10,7 @@ import { ReleaseApiService } from '../../release-api.service';
 import { emptyStringValidator,ModalService,validator,Work } from '@peacha-core';
 import { Live2dTransformData } from '@peacha-studio-core';
 import { PopTips } from '@peacha-core/components';
+import { EWorkAuditState } from '../../../member/manager/single-manager/single-manager.page';
 
 @Component({
 	selector: 'ivo-live2d-free',
@@ -42,7 +43,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 		cs: number;
 		f: string[];
 		gl: any[];
-	}>;
+	}> = {};
 
 	editParam: Partial<{
 		w: number;
@@ -53,7 +54,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 		gd: string;
 		t: string;
 		gl: any[];
-	}>;
+	}> ={};
 	form = this.fb.group({
 		n: ['',[emptyStringValidator(),Validators.required]],
 		d: ['',[emptyStringValidator(),Validators.required]],
@@ -147,15 +148,22 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 		});
 	}
 
+	private getEditWorkHandler = (r: Work) => {
+		this.token = r.file;
+		this.setMainForm(r);
+		this.setModelChecked(r);
+	}
+
 	private getEditWorkData(): void {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.api.getEditWork(Number(x.get('id'))).subscribe((r: Work) => {
-					this.token = r.file;
-					this.setMainForm(r);
-					this.setModelChecked(r);
-				});
+				this.editParam.w = parseInt(x.get('id'),10);
+				if(+this.route.snapshot.queryParams.c === EWorkAuditState.success ){
+					this.api.getWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				}else if(+this.route.snapshot.queryParams.c === EWorkAuditState.fail){
+					this.api.getEditWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				}
 			}
 		});
 	}
@@ -169,7 +177,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 			n: r.name,
 			d: r.description,
 			b: { url: r.cover },
-			t: r.tag,
+			t:  r.tag.map(x=>x.name || x),
 			c: r.copyright,
 			g: this.token,
 			a: r.authority,
@@ -180,7 +188,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 			n: r.name,
 			d: r.description,
 			b: { url: r.cover },
-			t: r.tag,
+			t:  r.tag.map(x=>x.name || x),
 			c: r.copyright,
 			g: this.token,
 			a: r.authority,

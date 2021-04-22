@@ -7,6 +7,7 @@ import { BehaviorSubject,fromEvent,interval } from 'rxjs';
 import { emptyStringValidator,ModalService,validator,Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { ReleaseApiService } from '../../release-api.service';
+import { EWorkAuditState } from '../../../member/manager/single-manager/single-manager.page';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 	illustWorkId: number = undefined;
 	param: {
 		[key: string]: any;
-	};
+	} = {};
 
 	editParam: Partial<{
 		w: number;
@@ -34,7 +35,7 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 		t: string;
 		i: string[];
 		gl: any[];
-	}>;
+	}> = {};
 
 	form = this.fb.group({
 		f: [[],Validators.required],
@@ -92,26 +93,32 @@ export class IllustrateFreeComponent implements OnInit,AfterViewInit {
 		});
 	}
 
+	private getEditWorkHandler=(r: Work) => {
+		this.copyrightModel = r.authority;
+		this.form.patchValue({
+			n: r.name,
+			d: r.description,
+			b: { url: r.cover },
+			t: r.tag.map(x=>x.name || x),
+			f: r.assets.map(_ => {
+				return {
+					url: _,
+				};
+			}),
+			c: r.copyright,
+		});
+	}
+
 	private getEditWork() {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.illustWorkId = parseInt(x.get('id'),10);
-				this.api.getEditWork(Number(x.get('id'))).subscribe((r: Work) => {
-					this.copyrightModel = r.authority;
-					this.form.patchValue({
-						n: r.name,
-						d: r.description,
-						b: { url: r.cover },
-						t: r.tag,
-						f: r.assets.map(_ => {
-							return {
-								url: _,
-							};
-						}),
-						c: r.copyright,
-					});
-				});
+				this.editParam.w = parseInt(x.get('id'),10)
+				if(+this.route.snapshot.queryParams.c === EWorkAuditState.success ){
+					this.api.getWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				}else if(+this.route.snapshot.queryParams.c === EWorkAuditState.fail){
+					this.api.getEditWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				}
 			}
 		});
 	}

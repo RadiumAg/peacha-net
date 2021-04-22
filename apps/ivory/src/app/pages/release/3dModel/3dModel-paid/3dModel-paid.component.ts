@@ -12,6 +12,7 @@ import { IPublishFileType,IUpdateWork,ReleaseApiService } from '../../release-ap
 import { IFileItem } from 'libs/peacha-core/src/lib/components/file-upload/file-upload.component';
 import { ConfirmComponent } from '../../components/confirm/confirm.component';
 import { EStoke } from '../../common/EStoke';
+import { EWorkAuditState } from '../../../member/manager/single-manager/single-manager.page';
 
 @Component({
 	selector: 'ivo-3dmodel',
@@ -31,7 +32,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 	ESelectPreviewType: [('bv' | 'image')?,('bv' | 'image')?] = [];
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
-	publishParam: {
+	publishParam: Partial<{
 		n: string;
 		d: string;
 		a: number[];
@@ -42,7 +43,7 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		f: [];
 		bv: string;
 		gl: IPublishFileType[];
-	};
+	}> = {};
 
 	editParam: Partial<{
 		w: number;
@@ -151,6 +152,27 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 	getSafeUrl(url: string) {
 		return this.sanitizer.bypassSecurityTrustResourceUrl(url);
 	}
+    
+	private getEditWorkHandler = (r: Work) => {
+		this.setPreviewType(r);
+		this.copyrightModel = r.authority;
+		r.goodsList.forEach(x => {
+			this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType,x.maxStock,x.price,x.price > 0 ? false : true,x.id);
+		})
+		this.form.patchValue({
+			n: r.name,
+			d: r.description,
+			b: { url: r.cover },
+			t:  r.tag.map(x=>x.name || x),
+			bv: r.bvNumber,
+			f: r.assets.map(_ => {
+				return {
+					url: _,
+				};
+			}),
+			c: r.copyright,
+		});
+	}
 
 	private resetAChecked() {
 		this.checkedForm.patchValue({
@@ -162,27 +184,12 @@ export class ThreeModelPaidComponent implements OnInit,AfterViewInit {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.api.getEditWork(parseInt(x.get('id'),10)).subscribe((r: Work) => {
-					this.setPreviewType(r);
-					this.editParam.w = parseInt(x.get('id'),10);
-					this.copyrightModel = r.authority;
-					r.goodsList.forEach(x => {
-						this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType,x.maxStock,x.price,x.price > 0 ? false : true,x.id);
-					})
-					this.form.patchValue({
-						n: r.name,
-						d: r.description,
-						b: { url: r.cover },
-						t: r.tag,
-						bv: r.bvNumber,
-						f: r.assets.map(_ => {
-							return {
-								url: _,
-							};
-						}),
-						c: r.copyright,
-					});
-				});
+				this.editParam.w = parseInt(x.get('id'),10)
+				if(+this.route.snapshot.queryParams.c === EWorkAuditState.success ){
+					this.api.getWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				}else if(+this.route.snapshot.queryParams.c === EWorkAuditState.fail){
+					this.api.getEditWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				}
 				this.cdr.markForCheck();
 			}
 		});

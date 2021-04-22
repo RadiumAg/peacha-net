@@ -1,3 +1,5 @@
+export type TGetWorktag = {id:number; name:string};
+
 export interface Work {
 	assets?: [];
 	authorAvatar?: string;
@@ -15,6 +17,17 @@ export interface Work {
 	fileSize?: number;
 	bvNumber?: string;
 	followState?: number;
+	id?: number;
+	isCollect?: number;
+	isLike?: number;
+	likeCount?: number;
+	name?: string;
+	publishtime?: string;
+	shareCount?: number;
+	tag?: string[] | TGetWorktag[];
+	updatetime?: string;
+	cooperateid?: number;
+	authority?: number[];
 	goodsList?: {
 		file: '';
 		fileNameList: [];
@@ -26,15 +39,4 @@ export interface Work {
 		sellState: number;
 		fileType: number;
 	}[];
-	id?: number;
-	isCollect?: number;
-	isLike?: number;
-	likeCount?: number;
-	name?: string;
-	publishtime?: string;
-	shareCount?: number;
-	tag?: [];
-	updatetime?: string;
-	cooperateid?: number;
-	authority?: number[];
 }

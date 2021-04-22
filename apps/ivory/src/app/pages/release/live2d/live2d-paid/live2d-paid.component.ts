@@ -11,6 +11,7 @@ import { ModalService,Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { emptyStringValidator,live2dPriceValidator,validator } from '@peacha-core';
 import { Live2dTransformData } from '@peacha-studio-core';
+import { EWorkAuditState } from '../../../member/manager/single-manager/single-manager.page';
 
 @Component({
   selector: 'ivo-live2d-paid',
@@ -42,7 +43,7 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
     fr: number;
     f: string[];
     gl: any[];
-  }>;
+  }> = {};
 
   editParam: Partial<{
     w: number;
@@ -53,7 +54,7 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
     gd: string;
     t: string;
     gl: any[];
-  }>;
+  }> = {};
 
   form = this.fb.group({
     n: ['',[Validators.required,emptyStringValidator()]],
@@ -178,15 +179,22 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
     });
   }
 
+  private getEditWorkDataHandler = (r: Work) => {
+    this.setMainForm(r);
+    this.setModelChecked(r);
+    this.goodsLivewdUpload.loadFileFromOpal(r.goodsList[0].file,null);
+  }
+
   private getEditWorkData(): void {
     this.route.paramMap.subscribe(x => {
       if (x.get('id')) {
         this.isEdit = true;
-        this.api.getEditWork(Number(x.get('id'))).subscribe((r: Work) => {
-          this.setMainForm(r);
-          this.setModelChecked(r);
-          this.goodsLivewdUpload.loadFileFromOpal(r.goodsList[0].file,null);
-        });
+				this.editParam.w = parseInt(x.get('id'),10)
+				if(+this.route.snapshot.queryParams.c === EWorkAuditState.success ){
+					this.api.getWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkDataHandler);
+				}else if(+this.route.snapshot.queryParams.c === EWorkAuditState.fail){
+					this.api.getEditWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkDataHandler);
+				}
       }
     });
   }
@@ -210,7 +218,7 @@ export class Live2dPaidComponent implements OnInit,AfterViewInit {
       n: r.name,
       d: r.description,
       b: { url: r.cover },
-      t: r.tag,
+      t: r.tag.map(x=>x.name || x),
       c: r.copyright,
       g: this.token,
       a: r.authority,
