@@ -126,6 +126,7 @@ export class GL2DBackgroundRenderSystem extends SystemBase {
 	allBeforeUpdate(): void {
 		this.context.gl.clearColor(0, 0, 0, 0);
 		this.context.gl.clear(this.context.gl.COLOR_BUFFER_BIT);
+		this.context.gl.blendFunc(this.context.gl.SRC_ALPHA, this.context.gl.ONE_MINUS_SRC_ALPHA);
 	}
 
 	allAfterUpdate(): void {
