@@ -8,7 +8,6 @@ import { take, tap } from 'rxjs/operators';
 import { app_config } from '../../../../../global.config';
 import { SelectData, ModalService, UserState, SELECT_TOKEN, SELECT_DATA_TOKEN } from '@peacha-core';
 
-
 @Component({
 	selector: 'ivo-live2d',
 	templateUrl: './illustratePaidOrFreeComponent.component.html',
@@ -21,7 +20,7 @@ export class illustratePaidOrFreeComponent implements OnInit, OnDestroy {
 		public select_data_token: BehaviorSubject<SelectData>,
 		private router: Router,
 		private modal: ModalService
-	) { }
+	) {}
 
 	@Select(UserState.isLogin)
 	isLogin$: Observable<boolean>;
@@ -42,7 +41,7 @@ export class illustratePaidOrFreeComponent implements OnInit, OnDestroy {
 	}
 
 	select(index: number, url: string) {
-		if (url === 'live2d/paid') {
+		if (url === 'illust/paid') {
 			combineLatest([this.isLogin$, this.identity_state$])
 				.pipe(
 					take(1),
