@@ -24,7 +24,7 @@
 	</li>
 	<div class="works">
 		<ng-container *ngFor="let work of works?.list">
-			<ivo-work-card [work]="work" [isHaveNickname]="false"></ivo-work-card>
+			<ivo-work-card [work]="work" [noNickname]="true"></ivo-work-card>
 		</ng-container>
 	</div>
 	<ng-container *ngIf="works.count >20">

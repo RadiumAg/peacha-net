@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class WorkCard implements OnInit {
 	@Input() work: any;
-	@Input() isHaveNickname = true;
+	@Input() noNickname?: boolean;
 
 	timeDif: number;
 	timetype: number;
