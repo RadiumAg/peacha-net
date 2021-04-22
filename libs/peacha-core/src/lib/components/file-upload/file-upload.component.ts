@@ -74,7 +74,10 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
   }
 
   writeValue(files: IFileItem): void {
-    files ? this.file$.next({ ...files,Process$: new BehaviorSubject({ progress: 0,success: true }) }) 
+    files ? (
+    ()=>{this.file$.next({ ...files,Process$: new BehaviorSubject({ progress: 0,success: true }) }); 
+    this.isHasFile = true; })
+    ()
     :(()=>{
       this.file$.next(null);
       this.isHasFile = false;

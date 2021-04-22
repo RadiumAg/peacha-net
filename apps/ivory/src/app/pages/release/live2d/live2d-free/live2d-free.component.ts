@@ -193,10 +193,12 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 
 	private setModelChecked(r: Work): void {
 		if (JSON.parse(r.fileData)) {
+			const fileData = JSON.parse(r.fileData);
 			this.checkedForm.patchValue({
 				enableFaceTrackerChecked: JSON.parse(r.fileData).enableFaceTracker ? true : false,
 				enableSettingPanelChecked: JSON.parse(r.fileData).enableSettingPanel ? true : false,
 			});
+		this.modalSet([fileData.enableFaceTracker ? '0' : '',fileData.enableSettingPanel ? '1' : '']);
 		}
 	}
 
