@@ -30,7 +30,7 @@ export class CubismEmptyIdleClip extends CubismAnimationClip {
 
 	evaluate(usertime: number, model: CubismModel, weight: number): void {
 		// breath
-		model.setParameterByIndex(model.PARAM_BREATH, Math.sin(usertime), weight);
+		model.setParameterByIndex(model.PARAM_BREATH, Math.abs(Math.sin(usertime)), weight);
 
 		// auto eyeblink ??!
 
