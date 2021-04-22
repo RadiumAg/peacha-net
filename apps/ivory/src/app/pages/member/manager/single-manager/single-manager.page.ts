@@ -1,10 +1,26 @@
-import { Component, Input, ViewContainerRef, ElementRef, TemplateRef, Output, EventEmitter, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	ViewContainerRef,
+	ElementRef,
+	TemplateRef,
+	Output,
+	EventEmitter,
+	Renderer2,
+	ViewChild,
+	AfterViewInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalService, DropDownService } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { MemberApiService } from '../../member-api.service';
 import { GoodsManager } from './goods-manager/goods-manager';
 
+export enum EWorkAuditState {
+	success = 0x01,
+	wait,
+	fail,
+}
 
 @Component({
 	selector: 'ivo-single-manager',
@@ -17,7 +33,7 @@ export class SingleManagerPage implements AfterViewInit {
 	 * type=1 插画
 	 * type=0 live2d
 	 * type=2 3d
-	 * 
+	 *
 	 *
 	 * state=1 成功
 	 * state=2 等待
@@ -26,7 +42,7 @@ export class SingleManagerPage implements AfterViewInit {
 
 	@Input() item: any;
 	@Input() type: number;
-	@Input() state: number;
+	@Input() state: EWorkAuditState;
 	@Output()
 	delete: EventEmitter<true> = new EventEmitter();
 
@@ -37,7 +53,7 @@ export class SingleManagerPage implements AfterViewInit {
 		private menu: DropDownService,
 		private vc: ViewContainerRef,
 		private render: Renderer2
-	) { }
+	) {}
 
 	ngAfterViewInit() {
 		if (this.state == 1) {
@@ -55,38 +71,35 @@ export class SingleManagerPage implements AfterViewInit {
 			.afterClosed()
 			.subscribe(s => {
 				if (s) {
-					this.memberApi.cancelApply(id)
-						.subscribe(_s => {
-							this.delete.emit(true);
-						});
+					this.memberApi.cancelApply(id).subscribe(_s => {
+						this.delete.emit(true);
+					});
 				}
 			});
 	}
-
 
 	/**price===0 为免费商品； price===-1 为仅展示商品； price>0 为付费商品 */
 	edit(id: number) {
 		this.menu.close();
 		if (this.type === 1) {
 			if (this.item.price > 0) {
-				this.router.navigate(['/edit/illust/paid', id]);
+				this.router.navigate(['/edit/illust/paid', id], { queryParams: { c: this.state } });
 			} else {
-				this.router.navigate(['/edit/illust', id]);
+				this.router.navigate(['/edit/illust', id], { queryParams: { c: this.state } });
 			}
 		} else if (this.type === 0) {
 			if (this.item.price > 0) {
-				this.router.navigate(['/edit/live2d/paid', id]);
+				this.router.navigate(['/edit/live2d/paid', id], { queryParams: { c: this.state } });
 			} else {
-				this.router.navigate(['/edit/live2d', id]);
+				this.router.navigate(['/edit/live2d', id], { queryParams: { c: this.state } });
 			}
-
 		} else if (this.type === 2) {
 			if (this.item.price > 0) {
-				this.router.navigate(['/edit/3d/paid', id]);
+				this.router.navigate(['/edit/3d/paid', id], { queryParams: { c: this.state } });
 			} else if (this.item.price === 0) {
-				this.router.navigate(['/edit/3d/free', id]);
+				this.router.navigate(['/edit/3d/free', id], { queryParams: { c: this.state } });
 			} else {
-				this.router.navigate(['/edit/3d/onlyShow', id]);
+				this.router.navigate(['/edit/3d/onlyShow', id], { queryParams: { c: this.state } });
 			}
 		}
 	}
@@ -98,10 +111,9 @@ export class SingleManagerPage implements AfterViewInit {
 			.afterClosed()
 			.subscribe(s => {
 				if (s) {
-					this.memberApi.deleteWork(id)
-						.subscribe(_s => {
-							this.delete.emit(true);
-						});
+					this.memberApi.deleteWork(id).subscribe(_s => {
+						this.delete.emit(true);
+					});
 				}
 			});
 	}
@@ -113,10 +125,9 @@ export class SingleManagerPage implements AfterViewInit {
 			.afterClosed()
 			.subscribe(s => {
 				if (s) {
-					this.memberApi.deleteApply(id)
-						.subscribe(_s => {
-							this.delete.emit(true);
-						});
+					this.memberApi.deleteApply(id).subscribe(_s => {
+						this.delete.emit(true);
+					});
 				}
 			});
 	}

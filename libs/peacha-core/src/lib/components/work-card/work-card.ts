@@ -8,21 +8,22 @@ import { Router } from '@angular/router';
 })
 export class WorkCard implements OnInit {
 	@Input() work: any;
+	@Input() noNickname?: boolean;
 
 	timeDif: number;
 	timetype: number;
 	showtime: string;
-	constructor(private router: Router) { }
+	constructor(private router: Router) {}
 
 	ngOnInit() {
 		this.timeDif = Math.ceil((new Date().getTime() - this.work?.publishTime) / (60 * 60 * 1000));
 
 		if (this.timeDif == 1) {
 			this.timetype = 1;
-			this.showtime = (Math.floor((new Date().getTime() - this.work?.publishTime) / (60 * 1000)) === 0
-				? 1 :
-				Math.floor((new Date().getTime() - this.work?.publishTime) / (60 * 1000)))
-				+ '分钟前';
+			this.showtime =
+				(Math.floor((new Date().getTime() - this.work?.publishTime) / (60 * 1000)) === 0
+					? 1
+					: Math.floor((new Date().getTime() - this.work?.publishTime) / (60 * 1000))) + '分钟前';
 		} else if (this.timeDif > 1 && this.timeDif < 25) {
 			this.timetype = 2;
 			this.showtime = Math.floor((new Date().getTime() - this.work?.publishTime) / (60 * 60 * 1000)) + '小时前';
@@ -37,5 +38,4 @@ export class WorkCard implements OnInit {
 			this.showtime = Math.floor((new Date().getTime() - this.work?.publishTime) / (12 * 30 * 24 * 60 * 60 * 1000)) + '年前';
 		}
 	}
-
 }

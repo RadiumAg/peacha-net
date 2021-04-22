@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Work } from '@peacha-core';
+import { Observable } from 'rxjs';
 
 export interface IPublishFileType {
 	n: string;
@@ -52,6 +53,17 @@ export class ReleaseApiService {
 	 * @version 2021/1/4
 	 */
 	public getEditWork = (w: number) => this.http.get<Work>(`/work/get_edit_work?w=${w}`);
+
+	
+	/**
+	 * @author zly
+	 * @version 2021/4/22
+	 * @param id 作品id
+	 * @returns 在线作品详情
+	 */
+	getWork(id: number): Observable<Work> {
+		return this.http.get<Work>(`/work/get_work?w=${id}`);
+	}
 
 	/**
 	 *

@@ -1,3 +1,4 @@
+import { TGetWorktag } from './../../../../../../../../libs/peacha-core/src/lib/core/model/work';
 import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 import { SuccessTips } from './../../components/success-tips/success-tips';
 import { Component,OnInit,ViewChild,ElementRef,AfterViewInit,ChangeDetectorRef } from '@angular/core';
@@ -10,6 +11,7 @@ import { PopTips } from '@peacha-core/components';
 import { IPublishFileType,IUpdateWork,ReleaseApiService } from '../../release-api.service';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { IFileItem } from 'libs/peacha-core/src/lib/components/file-upload/file-upload.component';
+import { EWorkAuditState } from '../../../member/manager/single-manager/single-manager.page';
 
 
 @Component({
@@ -157,43 +159,37 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		});
 	}
 
-	/**
-	 * @description 验证
-	 */
-	private validator(): boolean {
-		let flag = true;
+    private getEditWorkHandler = (r: Work) => {
+		this.setPreviewType(r);
+		this.copyrightModel = r.authority;
+		r.goodsList.forEach(x => {
+			this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType,);
+		});
 
-		if (!this.form.valid) {
-			flag = false;
-		}
-		return flag;
+		this.form.patchValue({
+			n: r.name,
+			d: r.description,
+			b: { url: r.cover },
+			bv: r.bvNumber,
+			t: r.tag.map(x=>x.name || x),
+			f: r.assets.map(_ => {
+				return {
+					url: _,
+				};
+			}),
+			c: r.copyright,
+		});
 	}
-
 
 	private getEditWork() {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.api.getEditWork(parseInt(x.get('id'),10)).subscribe((r: Work) => {
-					this.setPreviewType(r);
-					this.copyrightModel = r.authority;
-					r.goodsList.forEach(x => {
-						this.addGlItem(x.name,{ name: x.file.slice(-10),url: x.file },x.fileType,);
-					})
-					this.form.patchValue({
-						n: r.name,
-						d: r.description,
-						b: { url: r.cover },
-						bv: r.bvNumber,
-						t: r.tag,
-						f: r.assets.map(_ => {
-							return {
-								url: _,
-							};
-						}),
-						c: r.copyright,
-					});
-				});
+				if(+this.route.snapshot.queryParams.c === EWorkAuditState.success ){
+					this.api.getWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				}else if(+this.route.snapshot.queryParams.c === EWorkAuditState.fail){
+					this.api.getEditWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				}
 				this.cdr.markForCheck();
 			}
 		});
@@ -295,6 +291,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		this.api
 			.updateWork({
 				w: this.route.snapshot.params.id,
+				bv: this.editParam.bv,
 				d: this.editParam.d,
 				i: this.editParam.f,
 				t: this.editParam.t,

@@ -90,7 +90,7 @@
 		<ng-container *ngIf="count>0;else emptyTwo">
 			<div class="mywork">
 				<ng-container *ngFor="let work of workList">
-					<ivo-work-card [work]="work"></ivo-work-card>
+					<ivo-work-card [work]="work" [noNickname]="true"></ivo-work-card>
 				</ng-container>
 			</div>
 			<li *ngIf="count > workList.length">

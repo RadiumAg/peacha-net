@@ -5,9 +5,10 @@ import { debounce,map } from 'rxjs/operators';
 import { FormBuilder,Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject,fromEvent,interval } from 'rxjs';
-import { emptyStringValidator,ModalService,validator,Work } from '@peacha-core';
+import { emptyStringValidator,ModalService,TGetWorktag,validator,Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { ReleaseApiService } from '../../release-api.service';
+import { EWorkAuditState } from '../../../member/manager/single-manager/single-manager.page';
 
 
 @Component({
@@ -141,30 +142,33 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 		return flag;
 	}
 
+    private getEditWorkHandler =(r: Work) => {
+		this.setPreviewType(r);
+		this.copyrightModel = r.authority;
+		this.form.patchValue({
+			n: r.name,
+			d: r.description,
+			bv: r.bvNumber,
+			b: { url: r.cover },
+			t:   r.tag.map(x=>x.name || x),
+			f: r.assets.map(_ => {
+				return {
+					url: _,
+				};
+			}),
+			c: r.copyright,
+		});
+	}
 
 	private getEditWork() {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.api.getEditWork(parseInt(x.get('id'),10)).subscribe((r: Work) => {
-					this.setPreviewType(r);
-					this.copyrightModel = r.authority;
-					console.log(r.bvNumber);
-
-					this.form.patchValue({
-						n: r.name,
-						d: r.description,
-						bv: r.bvNumber,
-						b: { url: r.cover },
-						t: r.tag,
-						f: r.assets.map(_ => {
-							return {
-								url: _,
-							};
-						}),
-						c: r.copyright,
-					});
-				});
+				if(+this.route.snapshot.queryParams.c === EWorkAuditState.success ){
+					this.api.getWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				}else if(+this.route.snapshot.queryParams.c === EWorkAuditState.fail){
+					this.api.getEditWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				}
 				this.cdr.markForCheck();
 			}
 		});

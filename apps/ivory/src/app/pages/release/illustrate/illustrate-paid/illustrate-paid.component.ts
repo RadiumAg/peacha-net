@@ -7,6 +7,7 @@ import { BehaviorSubject,fromEvent,interval } from 'rxjs';
 import { emptyStringValidator,live2dPriceValidator,ModalService,validator,Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { ReleaseApiService } from '../../release-api.service';
+import { EWorkAuditState } from '../../../member/manager/single-manager/single-manager.page';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 	illustGoodsId: number = undefined;
 	param: {
 		[keys: string]: any;
-	};
+	} = {};
 
 	editParam: Partial<{
 		w: number;
@@ -34,7 +35,7 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 		b: string;
 		t: string;
 		gl: any[];
-	}>;
+	}> = {};
 
 	form = this.fb.group({
 		f: [[],Validators.required],
@@ -77,21 +78,28 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 		});
 	}
 
-	/**
-	 * @description 验证
-	 */
-	private validator(): boolean {
-		let flag = true;
-
-		if (!this.form.valid) {
-			flag = false;
-		}
-		return flag;
-	}
-
 	changeCopyright($event: number[]) {
 		this.form.patchValue({
 			a: $event,
+		});
+	}
+
+	private getEditWorkHandler = (r: Work) => {
+		this.illustGoodsId = r.goodsList[0].id;
+		this.copyrightModel = r.authority;
+		this.form.patchValue({
+			n: r.name,
+			d: r.description,
+			b: { url: r.cover },
+			t: r.tag.map(x=>x.name || x),
+			f: r.assets.map(_ => ({
+				url: _,
+			})),
+			p: r.goodsList[0].price,
+			gn: r.goodsList[0].name,
+			gl_token: { url: r.goodsList[0].file,name: r.goodsList[0].file.slice(-39) },
+			gl_s: r.goodsList[0].maxStock,
+			c: r.copyright,
 		});
 	}
 
@@ -99,24 +107,12 @@ export class IllustratePaidComponent implements OnInit,AfterViewInit {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.api.getEditWork(Number(x.get('id'))).subscribe((r: Work) => {
-					this.illustGoodsId = r.goodsList[0].id;
-					this.copyrightModel = r.authority;
-					this.form.patchValue({
-						n: r.name,
-						d: r.description,
-						b: { url: r.cover },
-						t: r.tag,
-						f: r.assets.map(_ => ({
-							url: _,
-						})),
-						p: r.goodsList[0].price,
-						gn: r.goodsList[0].name,
-						gl_token: { url: r.goodsList[0].file,name: r.goodsList[0].file.slice(-39) },
-						gl_s: r.goodsList[0].maxStock,
-						c: r.copyright,
-					});
-				});
+				this.editParam.w = parseInt(x.get('id'),10)
+				if(+this.route.snapshot.queryParams.c === EWorkAuditState.success ){
+					this.api.getWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				}else if(+this.route.snapshot.queryParams.c === EWorkAuditState.fail){
+					this.api.getEditWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				}
 			}
 		});
 	}
