@@ -1,4 +1,4 @@
-export type TGetWorktag = {id:number; name:string};
+export type TGetWorktag = { id: number; name: string };
 
 export interface Work {
 	assets?: [];

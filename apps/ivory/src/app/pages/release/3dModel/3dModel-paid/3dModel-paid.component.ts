@@ -296,8 +296,8 @@ export class ThreeModelPaidComponent implements OnInit, AfterViewInit {
 					`<section style='width:390px;font-size:16px;color:#333;'>
 			您发布的作品中，未含有付费商品内容，因此作品将作为“免费分享”类型发布。<br/>若想添加付费商品内容，请点击“再次编辑“<section>`,
 					'发布提示',
-					,
-					,
+					'',
+					'',
 					'ivo-icon-piece',
 				])
 				.afterClosed()

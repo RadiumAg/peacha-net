@@ -18,7 +18,7 @@ export interface IUpdateWork {
 }
 @Injectable({ providedIn: 'root' })
 export class ReleaseApiService {
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient) {}
 
 	/**
 	 *
@@ -54,7 +54,6 @@ export class ReleaseApiService {
 	 */
 	public getEditWork = (w: number) => this.http.get<Work>(`/work/get_edit_work?w=${w}`);
 
-	
 	/**
 	 * @author zly
 	 * @version 2021/4/22
@@ -69,7 +68,7 @@ export class ReleaseApiService {
 	 *
 	 * @name 发布作品
 	 *
-	 * @param  p n 作品名称，d 作品介绍 ，a 授权选项, g 模型预览文件，gd 预览模型参数， f 预览图， c 作品状态 原创，同人 ，t 标签，bv BV号，b  封面token， cs作品类型，gl 商品 作品详情 
+	 * @param  p n 作品名称，d 作品介绍 ，a 授权选项, g 模型预览文件，gd 预览模型参数， f 预览图， c 作品状态 原创，同人 ，t 标签，bv BV号，b  封面token， cs作品类型，gl 商品 作品详情
 	 *
 	 * @author ding
 	 *
@@ -90,7 +89,7 @@ export class ReleaseApiService {
 		gd?: string;
 		g?: string;
 		bv?: string;
-	}) => this.http.post(`/work/publish_work`,p);
+	}) => this.http.post(`/work/publish_work`, p);
 
 	/**
 	 *
@@ -115,13 +114,12 @@ export class ReleaseApiService {
 		g?: string;
 		bv?: string;
 		gd?: string;
-	}) => this.http.post(`/work/update_work`,p);
-
+	}) => this.http.post(`/work/update_work`, p);
 
 	/**
 	 * @description 更新价格
-	 *  
+	 *
 	 * @param param g 商品, p 价格
 	 */
-	public updatePrice = (param: { g: number; p: number; }) => this.http.post(`/work/update_price`,param);
+	public updatePrice = (param: { g: number; p: number }) => this.http.post(`/work/update_price`, param);
 }
