@@ -34,13 +34,19 @@
 		</span>
 	</a>
 
-	<div class="work-buttom" *ngIf="!noNickname">
-		<a [href]="['/user/'+work?.userId]">
-			<span *ngIf="work?.userId" class="user">
-				<img [attr.src]="work?.avatar+'?x-oss-process=image/resize,m_fixed,w_22,h_22'" />
-				<span class="nickname">{{work?.nickName}}</span>
-			</span>
-		</a>
+	<div class="work-buttom">
+		<ng-container *ngIf="!noNickname;else empty">
+			<a [href]="['/user/'+work?.userId]">
+				<span *ngIf="work?.userId" class="user">
+					<img [attr.src]="work?.avatar+'?x-oss-process=image/resize,m_fixed,w_22,h_22'" />
+					<span class="nickname">{{work?.nickName}}</span>
+				</span>
+			</a>
+		</ng-container>
+		<ng-template #empty>
+			<a></a>
+		</ng-template>
+
 		<span class="like-count">
 			<img src="/assets/image/svg/i-thumbs-up.svg" />
 			<ng-container *ngIf="work?.likeCount;else add"> {{work?.likeCount | changeUnit}} </ng-container>
