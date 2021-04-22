@@ -291,6 +291,7 @@ export class ThreeModelFreeComponent implements OnInit,AfterViewInit {
 		this.api
 			.updateWork({
 				w: this.route.snapshot.params.id,
+				bv: this.editParam.bv,
 				d: this.editParam.d,
 				i: this.editParam.f,
 				t: this.editParam.t,
