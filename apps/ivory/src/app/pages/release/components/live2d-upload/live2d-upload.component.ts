@@ -1,9 +1,9 @@
-import { Component, forwardRef, ViewChild, ElementRef, HostListener, Input, EventEmitter, Output } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Component,forwardRef,ViewChild,ElementRef,HostListener,Input,EventEmitter,Output } from '@angular/core';
+import { NG_VALUE_ACCESSOR,ControlValueAccessor } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import { HttpClient,HttpEventType } from '@angular/common/http';
 import { filter } from 'rxjs/operators';
-import { LogApiService, ModalService } from '@peacha-core';
+import { LogApiService,ModalService } from '@peacha-core';
 import {
 	CompressService,
 	FileNotFoundError,
@@ -43,13 +43,21 @@ export enum UploadStatus {
 	],
 })
 export class Live2dUploadComponent implements ControlValueAccessor {
-	constructor(private compress: CompressService, private http: HttpClient, private modal: ModalService, private log: LogApiService) {}
+	constructor(private compress: CompressService,private http: HttpClient,private modal: ModalService,private log: LogApiService) { }
 
 	token: string;
 	transformData: Live2dTransformData;
 
 	@Input()
 	isGood: boolean;
+
+	@Input()
+	ivoplaceholder = `为了让您避免不必要的损失，请您在上传之前进行必要的防侵权措施
+	例如：添加水印、添加签名、降低清晰度、上传不可编辑版本等，您可以参考<a
+		target="_blank"
+		href="/assets/download_files/模型水印添加指南.pdf"
+		>《水印添加指南》</a
+	>`
 
 	@Input()
 	defaultPath: string;
@@ -73,21 +81,21 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 
 	@ViewChild(Live2dPreviewComponent)
 	live2d: Live2dPreviewComponent;
-	update: (token: string) => void = () => {};
+	update: (token: string) => void = () => { };
 
-	@HostListener('dragover', ['$event'])
+	@HostListener('dragover',['$event'])
 	onDragOver(event: DragEvent) {
 		event.preventDefault();
 		event.stopPropagation();
 	}
 
-	@HostListener('dragleave', ['$event'])
+	@HostListener('dragleave',['$event'])
 	onDragLeave(event: DragEvent) {
 		event.preventDefault();
 		event.stopPropagation();
 	}
 
-	@HostListener('drop', ['$event'])
+	@HostListener('drop',['$event'])
 	onDrop(event: DragEvent) {
 		event.preventDefault();
 		event.stopPropagation();
@@ -98,7 +106,7 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 
 	saveTransformData() {
 		this.transformDataUpdate.emit(this.live2d.getTransformData());
-		this.modal.open(PopTips, ['位置参数保存成功!', false, 1]);
+		this.modal.open(PopTips,['位置参数保存成功!',false,1]);
 	}
 
 	onFile() {
@@ -141,7 +149,7 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 		}
 	}
 
-	async loadFileFromOpal(file: string, transformData: Live2dTransformData) {
+	async loadFileFromOpal(file: string,transformData: Live2dTransformData) {
 		try {
 			this.uploadStatus$.next(UploadStatus.Ok);
 			this.fileType = 'opal';
@@ -156,9 +164,9 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 	async upload() {
 		this.uploadStatus$.next(UploadStatus.Loading);
 		const formData = new FormData();
-		formData.append('f', this.file, this.file.name);
+		formData.append('f',this.file,this.file.name);
 		this.http
-			.post('/common/upload_file', formData, {
+			.post('/common/upload_file',formData,{
 				reportProgress: true,
 				observe: 'events',
 			})
@@ -206,11 +214,11 @@ export class Live2dUploadComponent implements ControlValueAccessor {
 		this.live2dLoadStatus$.next(Live2dLoadStatus.Not);
 	}
 
-	writeValue(): void {}
+	writeValue(): void { }
 
 	registerOnChange(fn: (token: string) => void): void {
 		this.update = fn;
 	}
 
-	registerOnTouched(): void {}
+	registerOnTouched(): void { }
 }

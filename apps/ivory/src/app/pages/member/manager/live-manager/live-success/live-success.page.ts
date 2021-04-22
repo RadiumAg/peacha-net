@@ -28,7 +28,7 @@ export class LiveSuccessPage {
 						this.showList = s.list;
 						this.currentPage$.next(params.p ?? 1);
 						s.list.map(l => {
-							l.time = l.publishtime + 7 * 24 * 60 * 60 * 1000 - Date.now();
+							l.time = l.publishTime + 7 * 24 * 60 * 60 * 1000 - Date.now();
 						});
 					})
 				);

@@ -1,8 +1,8 @@
-import { Component, forwardRef, ViewChild, ElementRef, Input, ViewContainerRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, filter, tap } from 'rxjs/operators';
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import { Component,forwardRef,ViewChild,ElementRef,Input,ViewContainerRef } from '@angular/core';
+import { ControlValueAccessor,NG_VALUE_ACCESSOR } from '@angular/forms';
+import { BehaviorSubject,Observable,of } from 'rxjs';
+import { map,filter,tap } from 'rxjs/operators';
+import { HttpClient,HttpEventType } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ModalService } from '../../core/service/modals.service';
@@ -22,7 +22,7 @@ import { getFileType } from '../../core/commom/common';
 	],
 })
 export class IllustrateUploadComponent implements ControlValueAccessor {
-	constructor(private http: HttpClient, private sanitizer: DomSanitizer, private message: NzMessageService, private modal: ModalService) {
+	constructor(private http: HttpClient,private sanitizer: DomSanitizer,private message: NzMessageService,private modal: ModalService) {
 		this.init();
 	}
 
@@ -30,10 +30,10 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 	private images$ = new BehaviorSubject<UploadImage[]>([]);
 	// 限制大小 B
 	@Input() maxSize = 20971520;
-  @Input() withAndHeightSize = 16384;
+	@Input() withAndHeightSize = 16384;
 	@Input() maxCount = 5;
-	@Input() allowType = ['png', 'jpg', 'gif'];
-	@ViewChild('mask', { read: ElementRef })
+	@Input() allowType = ['png','jpg','gif'];
+	@ViewChild('mask',{ read: ElementRef })
 	mask: ElementRef;
 	get accept(): string {
 		const result = [];
@@ -43,7 +43,7 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 		});
 		return result.toString();
 	}
-	@ViewChild('uploadList', { read: ViewContainerRef })
+	@ViewChild('uploadList',{ read: ViewContainerRef })
 	uploadList: ViewContainerRef;
 	disabled = false;
 	imageShow$ = this.images$;
@@ -59,27 +59,27 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 		},
 		sizeVerify: (e: File) => {
 			if (e.size > this.maxSize) {
-				this.modal.open(PopTips, ['容量超过限制大小，请重新上传']);
+				this.modal.open(PopTips,['容量超过限制大小，请重新上传']);
 				return false;
 			}
 			return true;
 		},
-    withAndHeightSizeVerify: async (e: File) => {
-       const img = new Image();
-       img.src =  window.URL.createObjectURL(e);
-       return await new Promise((res)=>{
-            img.onload = () => {
-              if(img.width > this.withAndHeightSize || img.height > this.withAndHeightSize) {
-                this.modal.open(PopTips, ['长宽超过限制']);
-                res(false);
-               }
-                res(true);
-            }
-            img.onerror = () => {
-                throw new Error('图片加载失败');
-            }
-       })
-    }
+		withAndHeightSizeVerify: async (e: File) => {
+			const img = new Image();
+			img.src = window.URL.createObjectURL(e);
+			return await new Promise((res) => {
+				img.onload = () => {
+					if (img.width > this.withAndHeightSize || img.height > this.withAndHeightSize) {
+						this.modal.open(PopTips,['长宽超过限制']);
+						res(false);
+					}
+					res(true);
+				}
+				img.onerror = () => {
+					throw new Error('图片加载失败');
+				}
+			})
+		}
 	};
 
 	private init() {
@@ -101,7 +101,7 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 			this.message.error(`请上传${this.allowType.toString()}图片格式`);
 			return;
 		}
-	 	this.startUploadImage(file);
+		this.startUploadImage(file);
 		this.clearFileInput(event);
 	}
 
@@ -109,17 +109,17 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 		(event.target as HTMLInputElement).value = '';
 	}
 
-  async	startUploadImage(img: File) {
-		if (!this.verify.sizeVerify(img) || ! (await this.verify.withAndHeightSizeVerify(img))) {
+	async startUploadImage(img: File) {
+		if (!this.verify.sizeVerify(img) || !(await this.verify.withAndHeightSizeVerify(img))) {
 			return;
 		}
 		const form = new FormData();
-		form.append('f', img, img.name);
+		form.append('f',img,img.name);
 		const symbol = Symbol();
 		const upload: UploadImage = {
 			symbol,
 			process$: this.http
-				.post('/common/upload_file', form, {
+				.post('/common/upload_file',form,{
 					reportProgress: true,
 					observe: 'events',
 				})
@@ -139,7 +139,7 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 									token: string;
 									url: string;
 								};
-								this.uploadSuccess(symbol, ret.token, ret.url);
+								this.uploadSuccess(symbol,ret.token,ret.url);
 								return {
 									success: true,
 									progress: 1,
@@ -156,11 +156,11 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 				),
 			url: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(img)) as string,
 		};
-		this.images$.next([...this.images$.value, upload]);
+		this.images$.next([...this.images$.value,upload]);
 	}
 
 	drag(e: DragEvent) {
-		e.dataTransfer.setData('Text', (e.target as HTMLElement).parentElement.id);
+		e.dataTransfer.setData('Text',(e.target as HTMLElement).parentElement.id);
 	}
 
 	drop(e: DragEvent) {
@@ -170,11 +170,11 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 		const moveObject = imageArray.find(x => x.url === data);
 		const moveIndex = imageArray.findIndex(x => x.url === data);
 		const targetIndex = imageArray.findIndex(x => x.url === (e.target as HTMLElement).parentElement.id);
-		imageArray.splice(moveIndex, 1);
-		imageArray.splice(targetIndex, 0, moveObject);
+		imageArray.splice(moveIndex,1);
+		imageArray.splice(targetIndex,0,moveObject);
 	}
 
-	uploadSuccess(symbol: symbol, token: string, url: string) {
+	uploadSuccess(symbol: symbol,token: string,url: string) {
 		const k = this.images$.value.find(s => s.symbol === symbol);
 		k.remote_token = token;
 		k.url = url;
@@ -229,7 +229,7 @@ export class IllustrateUploadComponent implements ControlValueAccessor {
 
 	registerOnTouched(fn: any) { }
 
-	trackBy(index: number, f: UploadImage) {
+	trackBy(index: number,f: UploadImage) {
 		return f.symbol;
 	}
 }

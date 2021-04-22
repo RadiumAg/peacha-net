@@ -29,7 +29,7 @@
                 </div>
             </li> -->
 			<ng-container *ngFor="let item of works.list">
-				<ivo-single-manager [item]="item" [type]="item?.price>0?2:0" [state]="3" (delete)="ll($event)"></ivo-single-manager>
+				<ivo-single-manager [item]="item" [type]="0" [state]="3" (delete)="ll($event)"></ivo-single-manager>
 			</ng-container>
 
 			<ng-container *ngIf="works?.count==0">

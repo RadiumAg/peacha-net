@@ -27,17 +27,18 @@
 					/>
 					<a [href]="represent?.category==1?['/illust/'+represent?.id]:['/live2d/'+represent?.id]">
 						<img
-							[attr.src]="represent?.category?'/assets/image/work-card/ikon-tag.svg':represent?.price==0?'/assets/image/work-card/free-tag.svg':'/assets/image/work-card/Live2D-tag.svg'"
+							[attr.src]="represent.price==0?'/assets/image/work-card/free-tag.svg':represent?.category===1?'/assets/image/work-card/ikon-tag.svg':represent?.category===0?'/assets/image/work-card/Live2D-tag.svg':'/assets/image/work-card/3D-tag.svg'"
 							class="good-icon"
 						/>
 
 						<!-- <img [attr.src]="represent.cover" (click)="toWork(represent.id,represent.category)"> -->
 						<ivo-lazy-img [ngLazyLoad]="represent?.cover+'?x-oss-process=image/resize,m_fixed,w_384,h_384'"> </ivo-lazy-img>
 						<span class="first">
-							<span class="type" *ngIf="represent.category==0;else other">Live2D</span>
-							<ng-template #other>
-								<span class="type">插画</span>
-							</ng-template>
+							<span class="type" [ngSwitch]="represent.category">
+								<ng-container *ngSwitchCase="1"> 插画 </ng-container>
+								<ng-container *ngSwitchCase="2"> 3D模型 </ng-container>
+								<ng-container *ngSwitchDefault> Live2D </ng-container>
+							</span>
 						</span>
 						<span class="name">{{represent.name}}</span>
 						<span class="sad">

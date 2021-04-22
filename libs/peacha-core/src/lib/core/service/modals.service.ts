@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 
 @Injectable()
 export class ModalService {
-	constructor(private overlay: Overlay, private injector: Injector) { }
+	constructor(private overlay: Overlay, private injector: Injector) {}
 
 	open<T, R = any>(t: ComponentType<T>, data?: any, closeOnClickBackDrop?: boolean) {
 		const overlayRef = this.overlay.create({

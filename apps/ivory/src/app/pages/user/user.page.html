@@ -75,10 +75,8 @@
 			</div>
 			<div class="wrapper">
 				<div class="left">
-					<a [routerLink]="['.']" data-tag="ivoCursor" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">主页</a>
-					<a [routerLink]="['works']" data-tag="ivoCursor" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
-						>作品</a
-					>
+					<a [routerLink]="['.']" data-tag="ivoCursor" [class.active]="!(params$|async).page">主页</a>
+					<a [routerLink]="['works']" [queryParams]="{page:1}" data-tag="ivoCursor" [class.active]="(params$|async).page">作品</a>
 				</div>
 				<!-- <a [routerLink]="['collection']" routerLinkActive="active">合辑</a> -->
 				<ivo-cursor></ivo-cursor>

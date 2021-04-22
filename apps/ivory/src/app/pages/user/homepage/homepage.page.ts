@@ -63,7 +63,7 @@ export class HomepagePage {
 		filter(id => {
 			return (
 				typeof id === 'number' ||
-				(window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight &&
+				(window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight * 0.8 &&
 					(this.count === 0 || this.count > this.cache.length))
 			);
 		}),
@@ -109,14 +109,6 @@ export class HomepagePage {
 					this.save();
 				}
 			});
-	}
-
-	toWork(id: number, c: number): void {
-		if (c == 1) {
-			this.router.navigate(['illust', id]);
-		} else {
-			this.router.navigate(['live2d', id]);
-		}
 	}
 
 	cancel(): void {

@@ -10,35 +10,22 @@ export class TagsComponent {
 	constructor(private router: Router) { }
 
 	colors = [
-		'#BDAD79',
-		'#BD7979',
-		'#79BD8E',
-		'#8279BD',
-		'#BD9279',
-		'#79B4BD',
-		'#BD7997',
-		'#7997BD',
-		'#79B4BD',
-		'#BD79A2',
-		'#AF79BD',
-		'#8779BD',
-		'#7994BD',
-		'#79BDBD',
-		'#79BD94',
-		'#87BD79',
-		'#AFBD79',
-		'#BDA279',
-		'#D96C6C',
-		'#D96CAD',
-		'#C36CD9',
-		'#797293',
-		'#6C98D9',
-		'#58B1B1',
-		'#4F9D6E',
-		'#6A8364',
-		'#7F8D47',
-		'#D9AD6C',
-	]; //28
+		'#01A3A4',
+		'#FF9494',
+		'#FF778F',
+		'#E694FF',
+		'#9480FF',
+		'#8AD14C',
+		'#FFC231',
+		'#FF8E37',
+		'#A58467',
+		'#8CAAEE',
+		'#F19066',
+		'#0ABDE3',
+		'#C24E6F',
+		'#546DE5',
+		'#E66767'
+	]; //15
 
 	@Input() tags: {
 		id: number;
@@ -56,8 +43,8 @@ export class TagsComponent {
 			hash = (hash << 5) - hash + chr;
 			hash |= 0; // Convert to 32bit integer
 		}
-		this.curColor = this.colors[Math.abs(hash) % 28];
-		return this.colors[Math.abs(hash) % 28];
+		this.curColor = this.colors[Math.abs(hash) % 15];
+		return this.colors[Math.abs(hash) % 15];
 	}
 
 	computeHashBoxShaow() {

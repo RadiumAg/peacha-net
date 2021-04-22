@@ -1,0 +1,167 @@
+<ng-container *ngrxLet="work$; let work">
+	<ng-container *ngrxLet="publicityPeriod$; let period">
+		<div class="menu" *ngIf="work.assets.length>0 && work.bvNumber">
+			<span [class.active]="selectedMenu$.value===0" (click)="selectedMenu$.next(0)">图片/GIF预览</span>
+			<span [class.active]="selectedMenu$.value===1" (click)="selectedMenu$.next(1)">视频预览</span>
+		</div>
+		<div class="tips" *ngIf="period > 0 && work.goodsList?.length > 0 ">
+			<span>
+				该作品处于公示期（剩余
+				<p>{{ period | timerdate }}</p>
+				），公示期后可购买/下载
+			</span>
+		</div>
+		<ng-container *ngIf="selectedMenu$.value===0 && work.assets.length>0">
+			<ng-container *ngrxLet="illIndex$;let illIndex">
+				<div class="illustrations">
+					<img
+						class="work-img"
+						[src]="work.assets[illIndex]+'?x-oss-process=image/interlace,1/resize,m_lfit,w_800'"
+						(click)="zoomIn(work.assets,illIndex)"
+					/>
+					<img class="gif-tip" *ngIf="work.assets[illIndex]?.includes('.gif')" src="/assets/image/svg/gif-tip.svg" />
+				</div>
+
+				<div class="ill-checker">
+					<img
+						*ngFor="let asset of work.assets;index as i"
+						[attr.checked]="illIndex===i?true:null"
+						[src]="asset+'?x-oss-process=image/interlace,1/resize,m_lfit,w_800'"
+						(click)="chooseIll(i)"
+					/>
+				</div>
+			</ng-container>
+		</ng-container>
+		<ng-container *ngIf="selectedMenu$.value===1 || work.assets.length===0">
+			<ng-container *ngrxLet="id$; let id">
+				<div class="live2d-preview">
+					<iframe
+						height="100%"
+						width="100%"
+						[src]="safeUrl"
+						scrolling="no"
+						frameborder="no"
+						framespacing="0"
+						allowfullscreen="true"
+					>
+					</iframe>
+					<ng-template #elseTemplate>
+						<div class="mask">
+							<img src="/assets/image/live2d-mask.png" />
+							<button (click)="toLogin()">立即登录</button>
+						</div>
+					</ng-template>
+				</div>
+			</ng-container>
+		</ng-container>
+
+		<div class="container">
+			<div class="left">
+				<div class="work-info">
+					<h5>3D模型</h5>
+					<div class="title">
+						<h3>{{ work.name }}</h3>
+						<div class="right">
+							<ivo-work-actions [work]="work"></ivo-work-actions>
+						</div>
+					</div>
+					<div class="publish-info">
+						<div>
+							<p>发布时间: {{ work.publishTime | date: 'yyyy-MM-dd HH:mm' }}</p>
+							<p class="decorator">
+								<span class="yuan" *ngIf="!work.copyright">原</span>{{ work.copyright ? '同人作品' : '原创作品' }}
+								<span class="jubao" (click)="report(work.id)"
+									><img src="/assets/image/live-2d/svg/wenhao.svg" />举报作品</span
+								>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="block" style="display: flex">
+					<ivo-creator-block
+						[userAvatar]="work.avatar"
+						[userId]="work.userId"
+						[userName]="work.nickName"
+						[followState]="work.followState"
+						[role]="authorRole"
+						style="margin-top: 20px"
+					>
+					</ivo-creator-block>
+				</div>
+				<div class="block">
+					<h5>作品介绍</h5>
+					<p>{{ work.description }}</p>
+				</div>
+				<!-- tags -->
+				<div class="block play" *ngIf="work.tag.length > 0">
+					<h5>作品标签</h5>
+					<ivo-tags [tags]="work.tag"></ivo-tags>
+				</div>
+				<!-- comment -->
+				<div class="block">
+					<h5>作品评论</h5>
+				</div>
+				<ivo-comment-area [aid]="work.commentAreaId"></ivo-comment-area>
+			</div>
+			<div class="right">
+				<div class="copyright-card">
+					<p class="title">使用规则</p>
+					<div class="item" *ngFor="let item of (copyrights$ | async)?.list">
+						<ng-container *ngIf="work.authority.includes(item.id); else elseTemplate">
+							<img [src]="copyrightIconMap[item.id][0]" />
+							<span>{{ item.name }}</span>
+						</ng-container>
+						<ng-template #elseTemplate>
+							<img [src]="copyrightIconMap[item.id][1]" />
+							<span>不{{ item.name }}</span>
+						</ng-template>
+					</div>
+				</div>
+				<!-- goods -->
+				<ng-container *ngIf="work.goodsList.length != 0">
+					<div class="block">
+						<ng-container *ngFor="let good of work.goodsList">
+							<ivo-good-info
+								ivo-image-shadow
+								*ngIf="good.sellState === 1"
+								[authorId]="work.authorId"
+								[workId]="work.id"
+								[goodId]="good.id"
+								[own]="good.ownState"
+								[name]="good.name"
+								[price]="good.price"
+								[size]="good.fileSize"
+								[maxStock]="good.maxStock"
+								[saleNumber]="good.saleNumber"
+								[sellState]="good.sellState"
+								[period]="period"
+								[fileType]="good.fileType"
+								[category]="2"
+							>
+							</ivo-good-info>
+						</ng-container>
+					</div>
+				</ng-container>
+
+				<!-- relavants -->
+				<ng-container *ngrxLet="relevants$; let relevants">
+					<div class="block" *ngIf="relevants.length > 0">
+						<h5>相关推荐</h5>
+						<ng-container *ngFor="let rw of relevants">
+							<ivo-related-work
+								ivo-image-shadow
+								[authorName]="rw.nickName"
+								[cover]="rw.cover"
+								[name]="rw.name"
+								[time]="rw.publishTime"
+								[id]="rw.id"
+								[category]="rw.category"
+							>
+							</ivo-related-work>
+						</ng-container>
+					</div>
+				</ng-container>
+			</div>
+		</div>
+	</ng-container>
+</ng-container>

@@ -1,0 +1,79 @@
+.box{
+    width: 470px;
+    border-radius: 6px;
+    background-color: white;
+    padding: 20px 30px;
+
+    &>h1{
+        font-size: 18px;
+        font-weight: bold;
+        color: #333333;
+        margin-bottom: 30px;
+        &>img{
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            margin-top: -3px;
+        }
+    }
+    &>.line{
+         font-size: 14px;
+         color: #333333;
+         margin-top: 20px;
+         &>span{
+             color: #676767;
+         }
+         &>input{
+             width: 250px;
+             height: 36px;
+             border: 1px solid #E2E2E2;
+             border-radius: 6px;
+             outline: none;
+             text-indent: 10px;
+         }
+         &>.move{
+             margin-left: 15px;
+         }
+         &>.money{
+             position: absolute;
+             margin-left: -22px;
+             margin-top: 7px;
+         }
+    }
+    &>.tip{
+        font-size: 12px;
+        color: #989898;
+        display: block;
+        margin-left: 85px;
+        margin-top: 4px;
+    }
+
+    &>.btn{
+        text-align: right;
+        margin-top: 30px;
+        &>button{
+            width: 70px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 4px;
+            background-color: #FF6398;
+            color: #ffffff;
+            font-size: 14px;
+            border: none;
+            outline: none;
+            text-align: center;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        &>.cancel{
+            background: #F2F2F2;
+            color: #808080;
+        }
+    }
+
+    &>.error-inset{
+        width: 100%;
+        text-align: center;
+        color: red;
+    }
+}

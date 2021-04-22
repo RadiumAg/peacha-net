@@ -1,6 +1,6 @@
 <ng-container *ngrxLet="work$; let work">
 	<ng-container *ngrxLet="publicityPeriod$; let period">
-		<div class="tips" *ngIf="period > 0 && work.goods?.length > 0">
+		<div class="tips" *ngIf="period > 0 && work.goodsList?.length > 0">
 			<span>
 				该作品处于公示期（剩余
 				<p>
@@ -44,7 +44,7 @@
 					</div>
 					<div class="publish-info">
 						<div>
-							<p>发布时间: {{ work.publishtime | date: 'yyyy-MM-dd HH:mm' }}</p>
+							<p>发布时间: {{ work.publishTime | date: 'yyyy-MM-dd HH:mm' }}</p>
 							<p class="decorator">
 								<span class="yuan" *ngIf="!work.copyright">原</span>{{ work.copyright ? '同人作品' : '原创作品' }}
 								<span class="jubao" (click)="report(work.id)"
@@ -56,10 +56,10 @@
 				</div>
 				<div class="block" style="display: flex">
 					<ivo-creator-block
-						[userAvatar]="work.author_avatar"
-						[userId]="work.author_id"
-						[userName]="work.author_name"
-						[followState]="work.follow_state"
+						[userAvatar]="work.avatar"
+						[userId]="work.userId"
+						[userName]="work.nickName"
+						[followState]="work.followState"
 						[role]="authorRole"
 						style="margin-top: 20px"
 					>
@@ -84,7 +84,7 @@
 				<div class="block">
 					<h5>作品评论</h5>
 				</div>
-				<ivo-comment-area [aid]="work.comment_areaid"></ivo-comment-area>
+				<ivo-comment-area [aid]="work.commentAreaId"></ivo-comment-area>
 			</div>
 			<div class="right">
 				<div class="copyright-card">
@@ -101,22 +101,22 @@
 					</div>
 				</div>
 				<!-- goods -->
-				<ng-container *ngIf="work.goods.length != 0">
+				<ng-container *ngIf="work.goodsList.length != 0">
 					<div class="block">
-						<ng-container *ngFor="let good of work.goods">
+						<ng-container *ngFor="let good of work.goodsList">
 							<ivo-good-info
 								ivo-image-shadow
-								*ngIf="good.sell_state === 1"
-								[authorId]="work.author_id"
+								*ngIf="good.sellState === 1"
+								[authorId]="work.userId"
 								[workId]="work.id"
 								[goodId]="good.id"
-								[own]="good.own_state"
+								[own]="good.ownState"
 								[name]="good.name"
 								[price]="good.price"
-								[size]="good.file_size"
-								[maxStock]="good.max_stock"
-								[saleNumber]="good.sale_number"
-								[sellState]="good.sell_state"
+								[size]="good.fileSize"
+								[maxStock]="good.maxStock"
+								[saleNumber]="good.saleNumber"
+								[sellState]="good.sellState"
 								[period]="period"
 							>
 							</ivo-good-info>
@@ -131,10 +131,10 @@
 						<ng-container *ngFor="let rw of relevants">
 							<ivo-related-work
 								ivo-image-shadow
-								[authorName]="rw.username"
+								[authorName]="rw.nickName"
 								[cover]="rw.cover"
 								[name]="rw.name"
-								[time]="rw.publishtime"
+								[time]="rw.publishTime"
 								[id]="rw.id"
 								[category]="rw.category"
 							>

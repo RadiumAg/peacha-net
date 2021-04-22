@@ -165,10 +165,6 @@
 							display: flex;
 							justify-content: flex-start;
 							> .left {
-								display: grid;
-								align-items: stretch;
-								grid-template-rows: repeat(3, 33.3%);
-
 								> span {
 									display: block;
 								}
@@ -182,36 +178,30 @@
 									cursor: pointer;
 									outline: none;
 								}
-
-								// 2020/11/4
-								// 去掉商品名称
-								// by kinori
-								// >.goodname {
-								//     margin-top: 4px;
-								//     align-self: flex-start;
-								//     font-size: 14px;
-								//     line-height: 14px;
-								//     color: #FF6398;
-								//     cursor: pointer;
-								//     outline: none;
-								// }
+								> .goodname {
+									align-self: flex-start;
+									font-size: 14px;
+									line-height: 14px;
+									color: #999999;
+									cursor: pointer;
+									outline: none;
+									margin-top: 15px;
+								}
 
 								> .author {
-									// align-self: flex-end;
 									color: #999999;
 									font-size: 12px;
 									line-height: 12px;
 									cursor: pointer;
 									outline: none;
+									margin-top: 14px;
 								}
 								& > .type {
 									font-size: 12px;
 									line-height: 12px;
 									color: #999999;
-									font-weight: bold;
-									align-self: center;
-									margin-top: 4px;
 									align-self: flex-start;
+									margin-top: 14px;
 								}
 								> .gray {
 									background-color: #999999;

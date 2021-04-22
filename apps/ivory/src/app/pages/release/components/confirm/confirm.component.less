@@ -1,0 +1,53 @@
+@import '../../../../../components.less';
+
+:host {
+	.tip-container {
+		box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+		border-radius: 4px;
+		background: @white-color1;
+		width: 500px;
+		height: max-content;
+		padding: 60px;
+
+		.tip-header {
+			font-size: 20px;
+			font-weight: bold;
+			margin-bottom: 22px;
+			position: relative;
+
+			&:after {
+				left: -15px;
+				top: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+
+		.operation {
+			display: flex;
+			justify-content: flex-end;
+			margin-top: 40px;
+
+			.sure-button,
+			.cancel-button {
+				outline: none;
+				border-radius: 4px;
+				font-size: 14px;
+				padding: 6px 15px;
+				border: none;
+				cursor: pointer;
+			}
+
+			.sure-button {
+				margin-right: 10px;
+				border: 1px solid @red-color1;
+				color: @red-color1;
+				background-color: @white-color1;
+			}
+
+			.cancel-button {
+				color: @white-color1;
+				background: @red-color1;
+			}
+		}
+	}
+}

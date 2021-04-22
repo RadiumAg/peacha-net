@@ -1,5 +1,5 @@
 @import '../../../../../components.less';
-
+@import '../../common.less';
 :host {
 	div.live2dorillust-container {
 		width: 100%;
@@ -7,6 +7,8 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		padding-left: 18px;
+		padding-right: 18px;
 
 		> div.left,
 		div.right {
@@ -35,21 +37,13 @@
 			}
 		}
 
-		> div.left {
-			margin-left: 159px;
-		}
-
-		> div.right {
-			margin-right: 159px;
-		}
-
 		> div.active {
-			border: 5px solid rgba(255, 99, 152, 1);
-			background: @background-red-color1;
+			border: 5px solid @select-border-color;
+			background: @primary-color;
 		}
 
 		> div:hover {
-			border: 5px solid rgba(255, 99, 152, 1);
+			border: 5px solid @select-border-color;
 		}
 	}
 }

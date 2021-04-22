@@ -21,19 +21,17 @@
 							<div>
 								<ivo-lazy-img
 									[ngLazyLoad]="good.cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'"
-									(click)="toWork(good.workid)"
+									(click)="toWork(good.workid,good.category)"
 								>
 								</ivo-lazy-img>
 
 								<div class="main-info">
 									<div>
 										<li class="left">
-											<span class="name" (click)="toWork(good.workid)">{{good.work_name}}</span>
-											<!-- 2020/11/4
-                                            去掉商品名称
-                                            by kinori -->
-											<!-- <span class="goodname"
-                                                (click)="toWork(good.workid)">商品名称:&nbsp;&nbsp;{{good.goods_name}}</span> -->
+											<span class="name" (click)="toWork(good.workid,good.category)">{{good.work_name}}</span>
+											<span class="goodname" (click)="toWork(good.workid,good.category)"
+												>商品名称:&nbsp;&nbsp;{{good.goods_name}}</span
+											>
 											<span class="author" [routerLink]="['/user',good.seller_id]"
 												>卖家:&nbsp;&nbsp;{{good.seller_name}}</span
 											>
@@ -44,8 +42,9 @@
 										</li>
 									</div>
 									<li class="right">
-										<span class="cat" (click)="deleteOne(good.goodid)">
-											删除
+										<span class="cat">
+											<span (click)="deleteOne(good.goodid)">删除</span>
+
 											<!--<img (click)="deleteOne(good.goodid)"
                                             src="/assets/image/cart/delete.svg">-->
 										</span>
@@ -104,6 +103,7 @@
 									<span class="name g">{{good.work_name}}</span>
 									<span class="goodname g">商品名称：{{good.goods_name}}</span>
 									<span class="author g">作者:{{good.seller_name}}</span>
+									<span class="type"></span>
 								</li>
 							</div>
 

@@ -6,7 +6,7 @@ import { Component, Renderer2, ViewContainerRef, Input, AfterViewChecked } from 
 	template: '',
 })
 export class CursorComponent implements AfterViewChecked {
-	constructor(private el: ViewContainerRef, private re2: Renderer2) {}
+	constructor(private el: ViewContainerRef, private re2: Renderer2) { }
 
 	@Input() activeClassName = 'active';
 	oldLeft = 0;

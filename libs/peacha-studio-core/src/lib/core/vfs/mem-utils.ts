@@ -23,6 +23,19 @@ export async function loadImageFromArrayBuffer(buffer: ArrayBuffer, signal?: Abo
 	});
 }
 
+export async function loadImageFromUrl(url: string): Promise<HTMLImageElement> {
+	return new Promise((resolve, reject) => {
+		const image = new Image();
+		image.src = url;
+		image.onload = () => {
+			resolve(image);
+		};
+		image.onerror = e => {
+			reject(e);
+		};
+	});
+}
+
 export function readStringToEnd(buffer: ArrayBuffer): string {
 	return new TextDecoder().decode(buffer);
 }

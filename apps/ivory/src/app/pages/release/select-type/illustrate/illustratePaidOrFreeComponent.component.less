@@ -1,4 +1,5 @@
 @import '../../../../../components.less';
+@import '../../common.less';
 
 :host {
 	div.live2dorillust-container {
@@ -46,12 +47,12 @@
 		}
 
 		> div.active {
-			border: 5px solid rgba(255, 99, 152, 1);
-			background: @background-red-color1;
+			border: 5px solid @select-border-color;
+			background: @primary-color;
 		}
 
 		> div:hover {
-			border: 5px solid rgba(255, 99, 152, 1);
+			border: 5px solid @select-border-color;
 		}
 	}
 }

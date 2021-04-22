@@ -1,10 +1,10 @@
-import { AfterViewInit,Component,ElementRef,OnInit,ViewChild } from '@angular/core';
-import { AbstractControl,FormBuilder,ValidatorFn,Validators } from '@angular/forms';
-import { ActivatedRoute,Router } from '@angular/router';
-import { isEmptyInputValue,live2dPriceValidator,ModalService,validator,ZoomService } from '@peacha-core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { isEmptyInputValue, live2dPriceValidator, ModalService, validator, ZoomService } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { fromEvent } from 'rxjs';
-import { debounceTime,map,tap } from 'rxjs/operators';
+import { debounceTime, map, tap } from 'rxjs/operators';
 import { IllustZoomModalComponent } from '../../../work/illust-zoom-modal/illust-zoom-modal.component';
 import { CommissionApiService } from './../../service/commission-api.service';
 
@@ -20,7 +20,7 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private zoom: ZoomService
-	) { }
+	) {}
 
 	activeList = [false, true, true, true];
 	navActiveList = [false, false, false, false];
@@ -350,20 +350,20 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 					spii: x.property.split || 1,
 					f: x.commission.file
 						? [
-							{
-								url: x.commission.file,
-								name: x.commission.fileName,
-							},
-						]
+								{
+									url: x.commission.file,
+									name: x.commission.fileName,
+								},
+						  ]
 						: [],
 					ft:
 						x.commission.fileImages.length == 0
 							? []
 							: x.commission.fileImages.map(_ => {
-								return {
-									url: _,
-								};
-							}),
+									return {
+										url: _,
+									};
+							  }),
 				});
 			},
 			error: x => {
@@ -458,6 +458,7 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 				})
 			)
 			.subscribe(x => {
+				console.log(1);
 				this.param = { ...this.param, ...x };
 			});
 
@@ -467,8 +468,8 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 					this.previewImgsUrl = _.ft ? _.ft?.map(x => x.url) : [];
 					this.previewFileUrl = _.f
 						? _.f.map(x => {
-							return { url: x.url, name: x.name };
-						})
+								return { url: x.url, name: x.name };
+						  })
 						: [];
 				}),
 				map(_ => {

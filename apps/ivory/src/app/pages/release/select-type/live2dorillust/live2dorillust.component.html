@@ -3,8 +3,14 @@
     <img src="/assets/image/release/01.png" alt="" />
     <div>插画</div>
   </div>
-  <div class="right" [ngClass]="{ active: activeList[1] }" (click)="select(1, 'live2d')">
+
+  <div class="right" [ngClass]="{ active: activeList[2] }" (click)="select(2, 'live2d')">
     <img src="/assets/image/release/02.png" alt="" />
     <div>Live2D</div>
+  </div>
+
+  <div class="right" [ngClass]="{ active: activeList[1] }" (click)="select(1, '3d')">
+    <img src="/assets/image/release/05.png" alt="" />
+    <div>3D模型</div>
   </div>
 </div>

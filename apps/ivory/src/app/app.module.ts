@@ -74,6 +74,10 @@ const routes: Routes = [
 		loadChildren: () => import('./pages/search/search.module').then(m => m.SearchModule),
 	},
 	{
+		path: 'select',
+		loadChildren: () => import('./pages/select/select.module').then(m => m.SelectModule),
+	},
+	{
 		path: 'user',
 		loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule),
 	},
@@ -88,6 +92,10 @@ const routes: Routes = [
 	{
 		path: 'live2d',
 		loadChildren: () => import('./pages/work-live2d/work-live2d.module').then(m => m.WorkLive2dModule),
+	},
+	{
+		path: '3d',
+		loadChildren: () => import('./pages/work-3D/work-3D.module').then(m => m.Work3DModule),
 	},
 	{
 		path: 'pay',

@@ -1,10 +1,12 @@
+import { FormInputComponent } from './form-input/form-input.component';
+import { ConfirmComponent } from './confirm/confirm.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TagInputComponent } from './tag-input/tag-input.component';
 import { Live2dUploadComponent } from './live2d-upload/live2d-upload.component';
 import { SelectCompanyComponent } from './select-company/select-company.component';
 import { CompanyModalComponent } from './company-modal/company-modal.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { SuccessTips } from './success-tips/success-tips';
 import { NoticeTitleDirective } from './notice-title.directive';
 import { FormNavComponent } from './form-nav/form-nav.component';
@@ -19,6 +21,7 @@ import { ReactiveComponentModule } from '@peacha-core';
 import { PeachaStudioCoreModule } from '@peacha-studio-core';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { PeachaComponentsModule } from '@peacha-core/components';
+import { FormPriceInputComponent } from './form-price-input/form-price-input.component';
 
 @NgModule({
 	declarations: [
@@ -29,8 +32,11 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 		CompanyModalComponent,
 		SuccessTips,
 		NoticeTitleDirective,
+		FormPriceInputComponent,
 		FormNavComponent,
 		FormNavDirective,
+		ConfirmComponent,
+		FormInputComponent,
 	],
 	imports: [
 		CommonModule,
@@ -56,6 +62,8 @@ import { PeachaComponentsModule } from '@peacha-core/components';
 		NoticeTitleDirective,
 		FormNavComponent,
 		FormNavDirective,
+		FormInputComponent,
+		FormPriceInputComponent,
 	],
 })
 export class ReleaseComponentsModule { }

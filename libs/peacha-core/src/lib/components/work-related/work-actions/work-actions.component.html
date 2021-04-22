@@ -2,9 +2,9 @@
 	<div [@like]="c.like$ | async" class="like" (click)="c.request()" [class.checked]="c.like$ | async">
 		<img [src]="(c.like$ | async) ? '/assets/image/svg/点赞-true.svg' : '/assets/image/svg/点赞-false.svg'" />
 		<span>{{
-			work.like_count + ((c.like$ | async) ? 1 : 0) - work.is_like > 10000
-				? ((work.like_count + ((c.like$ | async) ? 1 : 0) - work.is_like) / 10000).toFixed(2) + 'w'
-				: work.like_count + ((c.like$ | async) ? 1 : 0) - work.is_like
+			work.likeCount + ((c.like$ | async) ? 1 : 0) - work.isLike > 10000
+				? ((work.likeCount + ((c.like$ | async) ? 1 : 0) - work.isLike) / 10000).toFixed(2) + 'w'
+				: work.likeCount + ((c.like$ | async) ? 1 : 0) - work.isLike
 		}}</span>
 	</div>
 </ng-container>

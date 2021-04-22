@@ -16,6 +16,12 @@ import { SingleManagerPage } from './single-manager/single-manager.page';
 import { ReactiveComponentModule } from '@peacha-core';
 import { PeachaComponentsModule } from '@peacha-core/components';
 import { GoodsManager } from './single-manager/goods-manager/goods-manager';
+import { ChangePrice } from './single-manager/change-price/change-price'
+import { ThreeDManagerPage } from './3d-manager/3d-manager.page';
+import { ThreeDAuditingPage } from './3d-manager/3d-auditing/3d-auditing.page';
+import { ThreeDFailPage } from './3d-manager/3d-fail/3d-fail.page';
+import { ThreeDSuccessPage } from './3d-manager/3d-success/3d-success.page';
+
 
 @NgModule({
 	declarations: [
@@ -30,6 +36,11 @@ import { GoodsManager } from './single-manager/goods-manager/goods-manager';
 		IllustSuccessPage,
 		IllustFailPage,
 		SingleManagerPage,
+		ChangePrice,
+		ThreeDManagerPage,
+		ThreeDAuditingPage,
+		ThreeDFailPage,
+		ThreeDSuccessPage
 	],
 	imports: [
 		ReactiveFormsModule,
@@ -79,6 +90,24 @@ import { GoodsManager } from './single-manager/goods-manager/goods-manager';
 							{
 								path: 'auditing',
 								component: LiveAuditingPage,
+							},
+						],
+					},
+					{
+						path: '3d',
+						component: ThreeDManagerPage,
+						children: [
+							{
+								path: '',
+								component: ThreeDSuccessPage,
+							},
+							{
+								path: 'fail',
+								component: ThreeDFailPage,
+							},
+							{
+								path: 'auditing',
+								component: ThreeDAuditingPage,
 							},
 						],
 					},

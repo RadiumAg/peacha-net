@@ -1,36 +1,38 @@
 .main {
 	background-color: white;
-	width: 800px;
+	width: 745px;
 	height: 495px;
 	border-radius: 12px;
 
 	& > .ma {
-		padding: 30px 50px 20px;
+		padding: 30px 30px 20px;
 		font-size: 20px;
 		font-weight: bolder;
-		display: flex;
-		justify-content: space-between;
+		// display: flex;
+		// justify-content: space-between;
 
 		& > img {
-			width: 16px;
-			height: 16px;
-			margin-top: 10px;
+			width: 20px;
+			height: 20px;
+			margin-top: -4px;
+			margin-right: 10px;
 		}
 	}
 
 	& > .kuang {
 		& > .index {
-			background-color: #5c8ae6;
-			padding: 14px 50px;
+			background-color: #f2f2f2;
+			padding: 14px 30px;
 			font-size: 14px;
-			box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.16);
+			color: #343434;
+			font-weight: bold;
+			// box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.16);
 			// display: flex;
 			// justify-content: space-evenly;
 			& > span {
 				margin-right: 30px;
 				display: inline-block;
 				width: 56px;
-				color: #ffffff;
 			}
 
 			& > .name {
@@ -49,9 +51,12 @@
 			height: 275px;
 
 			& > .show {
-				padding: 15px 50px;
+				padding: 15px 30px;
 				font-size: 14px;
-
+				border-bottom: 1px solid #e6e6e6;
+				& > .line {
+					color: #cccccc;
+				}
 				& > span {
 					margin-right: 30px;
 					display: inline-block;
@@ -59,22 +64,29 @@
 					color: #666666;
 
 					& > .line {
-						display: inline-block;
-						width: initial;
-						border-bottom: 1px solid #666666;
-						line-height: 3px;
+						color: #cccccc;
 					}
 				}
 
 				& > .name {
 					width: 224px;
 				}
+				& > .change {
+					cursor: pointer;
+					color: #ff6398;
+					margin-right: 0;
+					// font-weight: bold;
+				}
+				& > .cannot-change {
+					color: #cccccc;
+					cursor: auto;
+				}
 
 				& > .do {
 					cursor: pointer;
 					width: 28px;
 					margin-right: 0;
-					color: #cccccc;
+					color: #ff3333;
 					font-weight: bold;
 				}
 
@@ -82,18 +94,8 @@
 					color: #5c8ae6;
 				}
 
-				& > .price {
-					font-weight: bold;
-				}
-
-				& > .can {
-					font-weight: bold;
-					color: #ff6398;
-				}
-
 				& > .not {
-					font-weight: bold;
-					color: #666666;
+					color: #cccccc;
 				}
 			}
 

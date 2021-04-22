@@ -36,7 +36,7 @@
 <ng-template #success>
 	<div class="overlay">
 		<span (click)="edit(item?.id)">编辑</span>
-		<span *ngIf="item.price>0" (click)="manager(item?.id,item?.publishtime)">商品管理</span>
+		<span *ngIf="item.price!=-1" (click)="manager(item?.id,item?.publishtime)">商品管理</span>
 		<span (click)="deleteWork(item?.id)">删除</span>
 	</div>
 </ng-template>

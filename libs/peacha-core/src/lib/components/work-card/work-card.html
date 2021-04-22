@@ -1,41 +1,36 @@
 <div class="work">
-	<a [href]="work?.category==1?['/illust/'+work?.id]:['/live2d/'+work?.id]">
+	<a [href]="work?.category==1?['/illust/'+work?.id]:work?.category==2?['/3d/'+work?.id]:['/live2d/'+work?.id]">
 		<div class="empty"></div>
 		<img
-			[attr.src]="work?.price==0?'/assets/image/work-card/free-tag.svg':work?.category?'/assets/image/work-card/ikon-tag.svg':'/assets/image/work-card/Live2D-tag.svg'"
+			[attr.src]="work?.price==0?'/assets/image/work-card/free-tag.svg':work?.category===1?'/assets/image/work-card/ikon-tag.svg':work?.category===0?'/assets/image/work-card/Live2D-tag.svg':'/assets/image/work-card/3D-tag.svg'"
 			class="good-icon"
 		/>
 		<ivo-lazy-img [ngLazyLoad]="work?.cover+'?x-oss-process=image/resize,m_fixed,w_224,h_224'" [border]="1"> </ivo-lazy-img>
 	</a>
-	<a [href]="work?.category==1?['/illust/'+work?.id]:['/live2d/'+work?.id]">
+	<a [href]="work?.category==1?['/illust/'+work?.id]:work?.category==2?['/3d/'+work?.id]:['/live2d/'+work?.id]">
 		<span class="name">{{work?.name}}</span>
 	</a>
 	<span class="first">
-		<span class="type" *ngIf="work?.category==1;else other">插画</span>
-		<ng-template #other>
-			<span class="type">Live2D</span>
-		</ng-template>
+		<span class="type" [ngSwitch]="work?.category">
+			<ng-container *ngSwitchCase="1"> 插画 </ng-container>
+			<ng-container *ngSwitchCase="2"> 3D模型 </ng-container>
+			<ng-container *ngSwitchDefault> Live2D </ng-container>
+		</span>
 	</span>
-	<a [href]="work?.category==1?['/illust/'+work?.id]:['/live2d/'+work?.id]">
+	<a [href]="work?.category==1?['/illust/'+work?.id]:work?.category==2?['/3d/'+work?.id]:['/live2d/'+work?.id]">
 		<span class="sad">
-			<span class="like-count">
-				<img src="/assets/image/svg/i-thumbs-up.svg" />
-				<ng-container *ngIf="work?.likeCount;else add"> {{work?.likeCount | changeUnit}} </ng-container>
-				<ng-template #add> 点个赞吧 </ng-template>
-			</span>
-			<ng-container *ngIf="work?.category==0">
-				<span class="price" [ngSwitch]="work?.price">
-					<ng-container *ngSwitchCase="0">
-						<span class="free"> 免费下载 </span>
-					</ng-container>
-					<ng-container *ngSwitchCase="-1">
-						<!-- <span class="no">
+			<span class="publishtime"> {{showtime}} </span>
+			<span class="price" [ngSwitch]="work?.price">
+				<ng-container *ngSwitchCase="0">
+					<span class="free"> 免费下载 </span>
+				</ng-container>
+				<ng-container *ngSwitchCase="-1">
+					<!-- <span class="no">
                             暂无商品
                         </span> -->
-					</ng-container>
-					<ng-container *ngSwitchDefault> <a>¥</a>{{work?.price}} </ng-container>
-				</span>
-			</ng-container>
+				</ng-container>
+				<ng-container *ngSwitchDefault> <a>¥</a>{{work?.price}} </ng-container>
+			</span>
 		</span>
 	</a>
 
@@ -46,6 +41,10 @@
 				<span class="nickname">{{work?.nickName}}</span>
 			</span>
 		</a>
-		<span class="publishtime"> {{showtime}} </span>
+		<span class="like-count">
+			<img src="/assets/image/svg/i-thumbs-up.svg" />
+			<ng-container *ngIf="work?.likeCount;else add"> {{work?.likeCount | changeUnit}} </ng-container>
+			<ng-template #add> </ng-template>
+		</span>
 	</div>
 </div>

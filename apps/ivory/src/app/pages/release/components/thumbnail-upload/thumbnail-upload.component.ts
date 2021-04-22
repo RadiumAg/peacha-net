@@ -1,10 +1,10 @@
-import { Component, forwardRef, ViewChild, ElementRef, Input } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Component,forwardRef,ViewChild,ElementRef,Input } from '@angular/core';
+import { NG_VALUE_ACCESSOR,ControlValueAccessor } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
-import { HttpClient, HttpEventType } from '@angular/common/http';
-import { filter, map, switchMap } from 'rxjs/operators';
-import { dataURLtoBlob, ModalService, Process } from '@peacha-core';
-import { Cropper, PopTips } from '@peacha-core/components';
+import { HttpClient,HttpEventType } from '@angular/common/http';
+import { filter,map,switchMap } from 'rxjs/operators';
+import { dataURLtoBlob,ModalService,Process } from '@peacha-core';
+import { Cropper,PopTips } from '@peacha-core/components';
 
 
 @Component({
@@ -20,17 +20,17 @@ import { Cropper, PopTips } from '@peacha-core/components';
 	],
 })
 export class ThumbnailUploadComponent implements ControlValueAccessor {
-	constructor(private modal: ModalService, private http: HttpClient) { }
+	constructor(private modal: ModalService,private http: HttpClient) { }
 	Process$: BehaviorSubject<Process> = new BehaviorSubject({
 		success: false,
 		progress: 0,
 	});
 	currentImage$ = new BehaviorSubject('');
 	progress = false;
-	@ViewChild('c', { read: ElementRef })
+	@ViewChild('c',{ read: ElementRef })
 	file: ElementRef;
 	@Input() maxSize = 3145728;
-  @Input() withAndHeightSize = 16384;
+	@Input() withAndHeightSize = 16384;
 	fnOnChange?: (value: any) => void;
 	fnOnTouched?: () => void;
 
@@ -47,28 +47,28 @@ export class ThumbnailUploadComponent implements ControlValueAccessor {
 			}
 
 			if (size > this.maxSize) {
-				this.modal.open(PopTips, ['容量超过限制大小，请重新上传']);
+				this.modal.open(PopTips,['容量超过限制大小，请重新上传']);
 				return false;
 			}
 			return true;
 		},
-    withAndHeightSize: (e: File) => {
-      const img = new Image();
-      img.src =  window.URL.createObjectURL(e);
-      if(img.width > this.withAndHeightSize || img.height > this.withAndHeightSize) {
-       this.modal.open(PopTips, ['长宽超过限制']);
-       return false;
-      }
-      return true;
-    }
+		withAndHeightSize: (e: File) => {
+			const img = new Image();
+			img.src = window.URL.createObjectURL(e);
+			if (img.width > this.withAndHeightSize || img.height > this.withAndHeightSize) {
+				this.modal.open(PopTips,['长宽超过限制']);
+				return false;
+			}
+			return true;
+		}
 	};
 
 	upload(img: Blob) {
 		const form = new FormData();
-		form.append('f', img, 'cover.png');
+		form.append('f',img,'cover.png');
 		(this.file.nativeElement as HTMLInputElement).value = '';
 		return this.http
-			.post('/common/upload_file', form, {
+			.post('/common/upload_file',form,{
 				reportProgress: true,
 				observe: 'events',
 			})
@@ -137,7 +137,7 @@ export class ThumbnailUploadComponent implements ControlValueAccessor {
 		}
 
 		this.modal
-			.open(Cropper, inputTarget.files?.item(0))
+			.open(Cropper,inputTarget.files?.item(0))
 			.afterClosed()
 			.pipe(
 				switchMap(_ => {

@@ -6,45 +6,39 @@
 				<span class="num">此标签内含{{label.count}}个作品</span>
 			</div>
 		</ng-container>
-		<div class="select">
-			<div class="menu">
-				<span
-					[routerLink]="['/search']"
-					[queryParams]="{c:-1,choice:0,p:1}"
-					[class.active]="(params$|async).choice==0"
-					[queryParamsHandling]="'merge'"
-					>全部</span
-				>
-				<span
-					[routerLink]="['/search']"
-					[queryParams]="{c:1,choice:1,p:1}"
-					[class.active]="(params$|async).choice==1"
-					[queryParamsHandling]="'merge'"
-					>插画</span
-				>
-				<span
-					[routerLink]="['/search']"
-					[queryParams]="{c:0,choice:2,p:1}"
-					[class.active]="(params$|async).choice==2"
-					[queryParamsHandling]="'merge'"
-					>Live2D</span
-				>
-				<span
-					[routerLink]="['/search/good']"
-					[queryParams]="{choice:3,p:1}"
-					[class.active]="(params$|async).choice==3"
-					[queryParamsHandling]="'merge'"
-					>商品</span
-				>
-				<span
-					[routerLink]="['/search/user']"
-					[queryParams]="{choice:4,p:1}"
-					[class.active]="(params$|async).choice==4"
-					[queryParamsHandling]="'merge'"
-					>用户</span
-				>
+		<div class="router-box">
+			<div class="router">
+				<span [routerLink]="['/search/work']" [queryParams]="{keyword:keyword$|async}" routerLinkActive="active">作品</span>
+				<span [routerLink]="['/search/good']" [queryParams]="{keyword:keyword$|async}" routerLinkActive="active">商品</span>
+				<span [routerLink]="['/search/user']" [queryParams]="{keyword:keyword$|async}" routerLinkActive="active">用户</span>
 			</div>
 			<ivo-cursor></ivo-cursor>
+		</div>
+
+		<div class="select">
+			<div class="menu">
+				<ng-container *ngIf="(searchType$|async)!=2">
+					<span
+						[routerLink]="[]"
+						[queryParams]="{c:-1,p:1}"
+						[class.active]="(params$|async).c==-1 ||!(params$|async).c"
+						[queryParamsHandling]="'merge'"
+						>全部</span
+					>
+					<span [routerLink]="[]" [queryParams]="{c:1,p:1}" [class.active]="(params$|async).c==1" [queryParamsHandling]="'merge'"
+						>插画</span
+					>
+					<span [routerLink]="[]" [queryParams]="{c:0,p:1}" [class.active]="(params$|async).c==0" [queryParamsHandling]="'merge'"
+						>Live2D</span
+					>
+					<span [routerLink]="[]" [queryParams]="{c:2,p:1}" [class.active]="(params$|async).c==2" [queryParamsHandling]="'merge'"
+						>3D模型</span
+					>
+				</ng-container>
+			</div>
+			<ng-container *ngIf="(searchType$|async)!=2">
+				<ivo-cursor></ivo-cursor>
+			</ng-container>
 			<div class="choice">
 				<ng-container [ngSwitch]="searchType$ | async">
 					<ng-container *ngSwitchCase="0">
@@ -65,14 +59,28 @@
 						</ivo-select>
 					</ng-container>
 					<ng-container *ngSwitchCase="1">
+						<ivo-select class="ok" [formControl]="money">
+							<ivo-option value="0" text="价格筛选" [selected]="true"></ivo-option>
+							<ivo-option value="1" text="免费分享"></ivo-option>
+							<ivo-option value="2" text="低于￥500"></ivo-option>
+							<ivo-option value="3" text="￥500~￥1000"></ivo-option>
+							<ivo-option value="4" text="￥1000~￥2000"></ivo-option>
+							<ivo-option value="5" text="￥2000~￥3000"></ivo-option>
+							<ivo-option value="6" text="高于￥3000"></ivo-option>
+						</ivo-select>
+						<ivo-select class="ok" [formControl]="format" *ngIf="(params$|async).c==2">
+							<ivo-option value="-1" text="全部" [selected]="true"></ivo-option>
+							<ivo-option value="2" text=".vrm"></ivo-option>
+							<!-- <ivo-option value="3" text=".vup"></ivo-option> -->
+							<ivo-option value="4" text=".unitypackage"></ivo-option>
+							<ivo-option value="5" text=".fbx"></ivo-option>
+						</ivo-select>
 						<ivo-select class="ok" [formControl]="order">
-							<ivo-option value="0" text="关键字匹配" [selected]="true"></ivo-option>
-							<ivo-option value="1" text="最新发布"></ivo-option>
+							<ivo-option value="1" text="最新发布" [selected]="true"></ivo-option>
 							<ivo-option value="2" text="最多点赞"></ivo-option>
-							<!-- <ivo-option value='3' text='最多收藏'></ivo-option> -->
 						</ivo-select>
 						<ivo-select class="ok" [formControl]="time">
-							<ivo-option value="0" text="发售时间" [selected]="true"></ivo-option>
+							<ivo-option value="0" text="发布时间" [selected]="true"></ivo-option>
 							<ivo-option value="-1" text="本日"></ivo-option>
 							<ivo-option value="-7" text="七日内"></ivo-option>
 							<ivo-option value="-30" text="一个月内"></ivo-option>

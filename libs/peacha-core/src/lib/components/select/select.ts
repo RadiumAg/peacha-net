@@ -11,14 +11,14 @@ import {
 	Renderer2,
 	AfterContentInit
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor,NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Option } from '../option/option';
-import { Overlay, CdkOverlayOrigin, OverlayRef } from '@angular/cdk/overlay';
+import { Overlay,CdkOverlayOrigin,OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { takeUntil } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs'
 import { SelectAnimations } from './select.animations';
-import { SelectFather, SELECT_FATHER } from './selectfather';
+import { SelectFather,SELECT_FATHER } from './selectfather';
 
 export const EXE_COUNTER_VALUE_ACCESSOR: any = {
 	provide: NG_VALUE_ACCESSOR,
@@ -39,11 +39,11 @@ export const EXE_COUNTER_VALUE_ACCESSOR: any = {
 	],
 	animations: [SelectAnimations.transformPanel],
 })
-export class Select implements ControlValueAccessor, SelectFather, AfterContentInit {
-	constructor(private overlay: Overlay, private vc: ViewContainerRef, private render: Renderer2) { }
+export class Select implements ControlValueAccessor,SelectFather,AfterContentInit {
+	constructor(private overlay: Overlay,private vc: ViewContainerRef,private render: Renderer2) { }
 
 	@Input()
-	tipText = { text: '请选择', value: '-1' };
+	tipText = { text: '请选择',value: '-1' };
 	@Input()
 	disabled = false;
 	@ViewChild('hello')
@@ -73,13 +73,13 @@ export class Select implements ControlValueAccessor, SelectFather, AfterContentI
 		this.optionClicked.next(option);
 		this.fnOnChange(option.value);
 		this.overlayRef.detach();
-		this.render.removeClass(this.hello?.nativeElement, 'zhuan');
+		this.render.removeClass(this.hello?.nativeElement,'zhuan');
 		this.selected = false;
 		this.y = this.options.toArray().indexOf(option);
 	}
 
 	open(): void {
-		this.hello && this.render.addClass(this.hello?.nativeElement, 'zhuan');
+		this.hello && this.render.addClass(this.hello?.nativeElement,'zhuan');
 		if (this.disabled) {
 			return;
 		}
@@ -101,14 +101,14 @@ export class Select implements ControlValueAccessor, SelectFather, AfterContentI
 			backdropClass: 'cdk-backdrop-transparent',
 		});
 		this.selected = true;
-		const portal = new TemplatePortal(this.hoverboard, this.vc);
+		const portal = new TemplatePortal(this.hoverboard,this.vc);
 		this.overlayRef.attach(portal);
 		this.overlayRef
 			.backdropClick()
 			.pipe(takeUntil(this.overlayRef.detachments()))
 			.subscribe(() => {
 				this.overlayRef.detach();
-				this.render.removeClass(this.hello?.nativeElement, 'zhuan');
+				this.render.removeClass(this.hello?.nativeElement,'zhuan');
 				this.selected = false;
 			});
 	}
@@ -137,11 +137,11 @@ export class Select implements ControlValueAccessor, SelectFather, AfterContentI
 		});
 	}
 
-	registerOnChange(fn: any): void {
+	registerOnChange(fn): void {
 		this.fnOnChange = fn;
 	}
 
-	registerOnTouched(fn: any): void {
+	registerOnTouched(fn): void {
 		this.fnOnTouched = fn;
 	}
 }

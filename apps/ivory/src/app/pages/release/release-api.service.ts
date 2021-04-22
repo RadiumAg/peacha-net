@@ -2,9 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Work } from '@peacha-core';
 
-@Injectable()
+export interface IPublishFileType {
+	n: string;
+	s: number;
+	p: number;
+	f: string;
+	ft?: 1 | 2 | 3 | 4 | 5 | 99;
+}
+
+export interface IUpdateWork {
+	i: number;
+	n: string;
+	f: string;
+}
+@Injectable({ providedIn: 'root' })
 export class ReleaseApiService {
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	/**
 	 *
@@ -38,13 +51,13 @@ export class ReleaseApiService {
 	 *
 	 * @version 2021/1/4
 	 */
-	public get_edit_work = (w: number) => this.http.get<Work>(`/work/get_edit_work?w=${w}`);
+	public getEditWork = (w: number) => this.http.get<Work>(`/work/get_edit_work?w=${w}`);
 
 	/**
 	 *
 	 * @name 发布作品
 	 *
-	 * @param  p  作品详情
+	 * @param  p n 作品名称，d 作品介绍 ，a 授权选项, g 模型预览文件，gd 预览模型参数， f 预览图， c 作品状态 原创，同人 ，t 标签，bv BV号，b  封面token， cs作品类型，gl 商品 作品详情 
 	 *
 	 * @author ding
 	 *
@@ -52,19 +65,20 @@ export class ReleaseApiService {
 	 *
 	 * @version 2021/1/4
 	 */
-	public publish_work = (p: {
+	public publishWork = (p: {
 		n: string;
 		d: string;
-		a: number;
+		a: number[];
 		b: string;
 		t: string;
 		c: number;
 		cs: number;
-		ss: number;
-		fr: number;
-		f: [];
-		gl: [];
-	}) => this.http.post(`/work/publish_work`, p);
+		f: string[];
+		gl: IPublishFileType[];
+		gd?: string;
+		g?: string;
+		bv?: string;
+	}) => this.http.post(`/work/publish_work`,p);
 
 	/**
 	 *
@@ -78,18 +92,24 @@ export class ReleaseApiService {
 	 *
 	 * @version 2021/1/4
 	 */
-	public update_work = (p: {
+	public updateWork = (p: {
 		w: number;
 		n: string;
 		d: string;
-		g?: string;
-		i: any[];
 		t: string;
 		b: string;
-		gl: any[];
-		a?: Array<number>;
-		fr?: number;
+		gl: IUpdateWork[];
+		i?: string[];
+		g?: string;
+		bv?: string;
 		gd?: string;
-		dg?: any[];
-	}) => this.http.post(`/work/update_work`, p);
+	}) => this.http.post(`/work/update_work`,p);
+
+
+	/**
+	 * @description 更新价格
+	 *  
+	 * @param param g 商品, p 价格
+	 */
+	public updatePrice = (param: { g: number; p: number; }) => this.http.post(`/work/update_price`,param);
 }

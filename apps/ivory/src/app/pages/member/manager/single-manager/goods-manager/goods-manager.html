@@ -1,38 +1,53 @@
 <div class="main" *ngrxLet="good$;let good">
 	<div class="ma">
+		<img src="/assets/image/member/manage.svg" />
 		商品管理
 		<!-- <img src="/assets/image/svg/close.svg" (click)="close()"> -->
 	</div>
 	<div class="kuang">
 		<div class="index">
 			<span class="name">商品名称</span>
+			<span>商品状态</span>
 			<span>出售数量</span>
 			<span>出售类型</span>
 			<span>价格</span>
-			<span>商品状态</span>
 			<span class="do">操作</span>
 		</div>
 		<div class="list">
 			<div class="show" *ngFor="let item of good.list">
 				<span class="name">
-					<span [class.line]="item.sellstate==0">{{item.name}}</span>
+					<span [class.line]="item.sellState==0">{{item.name}}</span>
 				</span>
-				<span>{{item.sale_number}}</span>
+				<span class="not" *ngIf="item.sellState==0;else on" [class.line]="item.sellState==0">已下架</span>
+				<ng-template #on>
+					<span class="can">
+						<ng-container *ngIf="item.maxStock===item.saleNumber"> 已售罄 </ng-container>
+						<ng-container *ngIf="item.maxStock!=item.saleNumber"> 出售中 </ng-container>
+					</span>
+				</ng-template>
+				<span [class.line]="item.sellState==0">{{item.saleNumber}}</span>
 				<span>
-					<span *ngIf="item.max_stock==1;else no" [class.line]="item.sellstate==0">单次出售</span>
+					<span *ngIf="item.maxStock==1;else no" [class.line]="item.sellState==0">单次出售</span>
 					<ng-template #no>
-						<span [class.line]="item.sellstate==0"> 多次出售 </span>
+						<span [class.line]="item.sellState==0"> 多次出售 </span>
 					</ng-template>
 				</span>
 
 				<span class="price">
-					<span [class.line]="item.sellstate==0">¥{{item.price|number}}</span>
+					<span [class.line]="item.sellState==0">
+						<ng-container *ngIf="item.price>0"> ¥{{item.price|number}} </ng-container>
+						<ng-container *ngIf="item.price===0"> 免费分享</ng-container>
+					</span>
 				</span>
-				<span class="not" *ngIf="item.sellstate==0;else on">已下架</span>
-				<ng-template #on>
-					<span class="can"> 出售中</span>
-				</ng-template>
-				<span class="do red" *ngIf="item.sellstate==0;else down" (click)="up(item.id,1)">上架</span>
+
+				<span
+					class="change"
+					[class.cannot-change]="item.sellState==0 || item.price==0"
+					(click)="changePrice(item.price,item.id,item.name)"
+				>
+					改价
+				</span>
+				<span class="do red" *ngIf="item.sellState==0;else down" (click)="up(item.id,1)">上架</span>
 				<ng-template #down>
 					<span class="do" (click)="up(item.id,0)"> 下架</span>
 				</ng-template>

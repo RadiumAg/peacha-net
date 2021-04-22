@@ -16,6 +16,8 @@ export class SingleManagerPage implements AfterViewInit {
 	/**
 	 * type=1 插画
 	 * type=0 live2d
+	 * type=2 3d
+	 * 
 	 *
 	 * state=1 成功
 	 * state=2 等待
@@ -61,17 +63,31 @@ export class SingleManagerPage implements AfterViewInit {
 			});
 	}
 
+
+	/**price===0 为免费商品； price===-1 为仅展示商品； price>0 为付费商品 */
 	edit(id: number) {
 		this.menu.close();
 		if (this.type === 1) {
-			this.router.navigate(['/edit/illust', id]);
-		} else if (this.type === 3) {
-			this.router.navigate(['/edit/illust/paid', id]);
-		}
-		else if (this.type === 0) {
-			this.router.navigate(['/edit/live2d', id]);
+			if (this.item.price > 0) {
+				this.router.navigate(['/edit/illust/paid', id]);
+			} else {
+				this.router.navigate(['/edit/illust', id]);
+			}
+		} else if (this.type === 0) {
+			if (this.item.price > 0) {
+				this.router.navigate(['/edit/live2d/paid', id]);
+			} else {
+				this.router.navigate(['/edit/live2d', id]);
+			}
+
 		} else if (this.type === 2) {
-			this.router.navigate(['/edit/live2d/paid', id]);
+			if (this.item.price > 0) {
+				this.router.navigate(['/edit/3d/paid', id]);
+			} else if (this.item.price === 0) {
+				this.router.navigate(['/edit/3d/free', id]);
+			} else {
+				this.router.navigate(['/edit/3d/onlyShow', id]);
+			}
 		}
 	}
 
@@ -107,11 +123,12 @@ export class SingleManagerPage implements AfterViewInit {
 
 	manager(id: number, time: number) {
 		this.menu.close();
-		if (time + 7 * 24 * 60 * 60 * 1000 - Date.now() < 0) {
-			this.modal.open(GoodsManager, id);
-		} else {
-			this.modal.open(PopTips, ['商品正处于公示期，无法管理！', false]);
-		}
+		// if (time + 7 * 24 * 60 * 60 * 1000 - Date.now() < 0) {
+		// 	this.modal.open(GoodsManager,id);
+		// } else {
+		// 	this.modal.open(PopTips,['商品正处于公示期，无法管理！',false]);
+		// }
+		this.modal.open(GoodsManager, id);
 	}
 
 	toWork(id: number, c: number) {
@@ -119,8 +136,10 @@ export class SingleManagerPage implements AfterViewInit {
 		if (this.state == 1) {
 			if (c == 1) {
 				this.router.navigate(['illust', id]);
-			} else {
+			} else if (c == 0) {
 				this.router.navigate(['live2d', id]);
+			} else {
+				this.router.navigate(['3d', id]);
 			}
 		}
 	}

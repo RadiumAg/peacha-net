@@ -1,0 +1,51 @@
+@import '../../common.less';
+
+:host {
+	display: inline-flex;
+	align-items: stretch;
+	justify-content: stretch;
+	border: 1px solid #e2e2e2;
+	border-radius: 6px;
+	width: 400px;
+	height: 40px;
+	overflow: hidden;
+	position: relative;
+
+	input {
+		box-sizing: border-box;
+		width: 100%;
+		padding-left: 15px;
+		background: @white-color1;
+		border: none;
+		outline: none;
+	}
+
+	input:disabled {
+		background: @release-background-color;
+	}
+
+	input::-ms-input-placeholder {
+		font-size: 16px;
+		color: #c1c1c1;
+	}
+
+	input::-moz-input-placeholder {
+		font-size: 16px;
+		color: #c1c1c1;
+	}
+
+	input::-webkit-input-placeholder {
+		font-size: 16px;
+		line-height: 27px;
+		color: #c1c1c1;
+	}
+
+	.word-count {
+		position: absolute;
+		font-size: 16px;
+		right: 10px;
+		top: 50%;
+		transform: translate(0, -50%);
+		color: @release-font-color1;
+	}
+}

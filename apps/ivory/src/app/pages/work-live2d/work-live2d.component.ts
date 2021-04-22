@@ -20,8 +20,9 @@ export class WorkLive2dComponent {
 		2: ['/assets/image/copyright/Creat_allowed.svg', '/assets/image/copyright/Creat_not_allowed.svg'],
 		3: ['/assets/image/copyright/Com_allowed.svg', '/assets/image/copyright/Com_not_allowed.svg'],
 		4: ['/assets/image/copyright/Creat_allowed.svg', '/assets/image/copyright/Creat_not_allowed.svg'],
-		5: ['/assets/image/copyright/Live_allowed.svg', '/assets/image/copyright/Live_not_allowed.svg'],
-		6: ['/assets/image/copyright/Mod_allowed.svg', '/assets/image/copyright/Mod_not_allowed.svg'],
+		5: ['/assets/image/copyright/Mod_allowed.svg', '/assets/image/copyright/Mod_not_allowed.svg'],
+		6: ['/assets/image/copyright/Live_allowed.svg', '/assets/image/copyright/Live_not_allowed.svg'],
+
 	};
 
 	copyrights$ = this.http.get<CopyrightList>('/work/copyright?c=0');
@@ -36,12 +37,12 @@ export class WorkLive2dComponent {
 	work$ = this.route.data.pipe(
 		map(d => d.work),
 		tap(work => {
-			const previewData = work.file_data ? JSON.parse(work.file_data) : null;
+			const previewData = work.fileData ? JSON.parse(work.fileData) : null;
 			this.transformData = previewData?.transformData as Live2dTransformData;
 			this.enableFaceTracker = previewData?.enableFaceTracker;
 			this.enableSettingPanel = previewData?.enableSettingPanel;
 			this.live2d$ = of(new HttpVirtualFileSystem(work.file));
-			this.publicityPeriod$ = of(work.publishtime + 7 * 24 * 60 * 60 * 1000 - Date.now());
+			this.publicityPeriod$ = of(work.publishTime + 7 * 24 * 60 * 60 * 1000 - Date.now());
 			this.http
 				.get<{
 					avatar: string;
@@ -55,7 +56,7 @@ export class WorkLive2dComponent {
 					num_followed: number;
 					num_following: number;
 					role: { id: number; expiry: number }[];
-				}>(`/user/get_user?i=${work.author_id}`)
+				}>(`/user/get_user?i=${work.userId}`)
 				.subscribe(s => {
 					s?.role.forEach(l => {
 						this.authorRole.push(l.id);
@@ -87,10 +88,10 @@ export class WorkLive2dComponent {
 						id: number;
 						cover: string;
 						name: string;
-						username: string;
-						publishtime: number;
+						nickName: string;
+						userId: number;
+						publishTime: number;
 						category: number;
-						follow_state: number;
 					}[]
 				>(`/work/get_relevant_work?w=${_.id}`)
 				.pipe();
@@ -111,13 +112,5 @@ export class WorkLive2dComponent {
 				return: this.platform.pathname,
 			},
 		});
-	}
-
-	toWork(id: number, type: number) {
-		if (type == 1) {
-			this.router.navigate(['illust', id]);
-		} else {
-			this.router.navigate(['live2d', id]);
-		}
 	}
 }

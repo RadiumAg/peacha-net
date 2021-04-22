@@ -4,8 +4,23 @@
 @release-font-color1: #c1c1c1;
 @release-font-color2: #fa5f93;
 @release-border-color1: #e2e2e2;
+@primary-color: rgba(255, 99, 152, 0.5);
+@select-border-color: rgba(255, 99, 152, 1);
 
 :host {
+	.readme {
+		user-select: none;
+	}
+
+	.file-upload-tip {
+		font-size: 14px;
+		color: @grey-color8;
+		position: absolute;
+		left: 231px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
 	// 表单样式K
 	// 通用表单样式1
 	.form {
@@ -18,6 +33,7 @@
 			top: 0;
 
 			span.download {
+				user-select: none;
 				position: absolute;
 				right: 40px;
 				top: 50%;
@@ -26,6 +42,23 @@
 				color: @release-font-color2;
 				cursor: pointer;
 			}
+
+			span.title-after {
+				user-select: none;
+				font-weight: 400;
+				position: absolute;
+				right: 40px;
+				top: 50%;
+				transform: translateY(-50%);
+				font-size: 14px;
+				color: @release-font-color2;
+			}
+		}
+
+		.label-inner {
+			font-size: 16px;
+			color: @font-color1;
+			user-select: none;
 		}
 
 		.word-count {
@@ -40,7 +73,6 @@
 			border: none;
 			outline: none;
 		}
-
 		div.form-item {
 			background-color: @background-white-color1;
 			width: 1193px;
@@ -49,12 +81,22 @@
 			margin-bottom: @margin-width1;
 
 			div.form-controller {
+				font-size: 16px;
+				color: @black-color2;
 				position: relative;
 				width: 100%;
 				height: max-content;
 				border-top: 1px solid #ececec;
 				padding: 20px 0 20px 40px;
 			}
+
+			div.form-controller.no-top-line {
+				border-top: none;
+			}
+		}
+
+		.button {
+			border-radius: 4px;
 		}
 
 		input::-ms-input-placeholder {
@@ -93,11 +135,15 @@
 		.input,
 		.textarea {
 			width: 1113px;
-			background: @release-background-color;
 			border: 1px solid #e2e2e2;
 			opacity: 1;
 			border-radius: 6px;
 			padding-left: 15px;
+			background-color: @white-color1;
+		}
+
+		.input:disabled {
+			background: @release-background-color;
 		}
 
 		.input {
@@ -109,7 +155,8 @@
 			height: 182px;
 		}
 
-		.required {
+		.required,
+		.required-center {
 			position: relative;
 			display: flex;
 			align-items: center;
@@ -124,6 +171,12 @@
 				border-radius: 50%;
 				background: #ff6398;
 				left: 26px;
+			}
+		}
+		.required-center {
+			&::before {
+				top: 50%;
+				transform: translateY(-50%);
 			}
 		}
 
@@ -150,9 +203,29 @@
 			display: inline-block;
 			margin-left: 10px;
 		}
+
+		.form-item-tip-after {
+			position: absolute;
+			top: 50%;
+			font-size: 14px;
+			color: @red-color2;
+			right: 40px;
+			font-weight: 400;
+			transform: translateY(-50%);
+		}
+
+		.price-tip {
+			font-size: 16px;
+			color: @font-color1;
+			margin-left: 20px;
+		}
 	}
 
 	// 表单样式K
 
 	// 通用表单样式2
+
+	.price-input {
+		width: 305px;
+	}
 }

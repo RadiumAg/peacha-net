@@ -1,11 +1,5 @@
-<div
-	class="ss"
-	[ngClass]="{disabled:disabled}"
-	cdkOverlayOrigin
-	(click)="open()"
-	#trigger
-	[ngStyle]="{'font-size': fontSize,'height':height,'line-height':height}"
->
+<div class="ss" [ngClass]="{disabled:disabled}" cdkOverlayOrigin (click)="open()" #trigger
+	[ngStyle]="{'font-size': fontSize,'height':height,'line-height':height}">
 	{{(optionClicked|async).text}}
 	<img *ngIf="!disabled" src="/assets/image/svg/下拉.svg" #hello />
 </div>
@@ -15,5 +9,3 @@
 		<ng-content></ng-content>
 	</div>
 </ng-template>
-
-<!-- [style.transformOrigin]="_transformOrigin" -->
