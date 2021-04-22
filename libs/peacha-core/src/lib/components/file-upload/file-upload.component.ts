@@ -5,7 +5,6 @@ import { CommmonApiService,ModalService,Process } from '@peacha-core';
 import { Subject,BehaviorSubject } from 'rxjs';
 import { filter,map,takeUntil,tap } from 'rxjs/operators';
 import { PopTips } from '../pop-tips/pop-tips';
-import { findFullParentPath } from '@ngxs/store/src/internal/internals';
 
 
 export interface IFileItem {
@@ -75,8 +74,11 @@ export class FileUploadComponent implements OnDestroy,ControlValueAccessor,OnIni
   }
 
   writeValue(files: IFileItem): void {
-    files ? this.file$.next({ ...files,Process$: new BehaviorSubject({ progress: 0,success: true }) }) : this.file$.next(null);
-    this.isHasFile = true;
+    files ? this.file$.next({ ...files,Process$: new BehaviorSubject({ progress: 0,success: true }) }) 
+    :(()=>{
+      this.file$.next(null);
+      this.isHasFile = false;
+    })();
   }
 
   registerOnChange(fn: (o: IFileItem) => void): void {
