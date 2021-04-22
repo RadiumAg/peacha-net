@@ -1,13 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	EventEmitter,
-	Input,
-	OnInit,
-	Output,
-	Renderer2
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalService, ZoomService } from '@peacha-core';
 import { PopTips, UploadImageDirective } from '@peacha-core/components';
@@ -146,9 +137,7 @@ export class CommissionDetailSteps implements OnInit {
 				{ t: '企划有误', color: 1, fun: 'two', p: 1 },
 				{ t: '企划确认无误', color: 0, fun: 'two', p: 0 },
 			],
-			cbtn: [
-				{ t: '撤回企划开始确认', color: 1, fun: 'ten' },
-			],
+			cbtn: [{ t: '撤回企划开始确认', color: 1, fun: 'ten' }],
 			express: [{ p: '企划方发起开始确认时间：', t: 1 }],
 		},
 		{
@@ -160,9 +149,7 @@ export class CommissionDetailSteps implements OnInit {
 				{ t: '企划有误', color: 1, fun: 'two', p: 1 },
 				{ t: '企划确认无误', color: 0, fun: 'two', p: 0 },
 			],
-			cbtn: [
-				{ t: '撤回企划开始确认', color: 1, fun: 'ten' },
-			],
+			cbtn: [{ t: '撤回企划开始确认', color: 1, fun: 'ten' }],
 			express: [{ p: '企划方发起开始确认时间：', t: 1 }],
 		},
 		{
@@ -231,9 +218,7 @@ export class CommissionDetailSteps implements OnInit {
 				{ t: '绑定文件有误', color: 1, fun: 'five', p: 2 },
 				{ t: '绑定文件无误', color: 0, fun: 'five', p: 1 },
 			],
-			cbtn: [
-				{ t: '撤回阶段节点审核', color: 1, fun: 'ten' },
-			],
+			cbtn: [{ t: '撤回阶段节点审核', color: 1, fun: 'ten' }],
 			express: [{ p: '企划方提交绑定文件时间：', t: 1 }],
 			note: '退回记录',
 		},
@@ -287,7 +272,7 @@ export class CommissionDetailSteps implements OnInit {
 			],
 			pbtn: [
 				{ t: '企划方长时间不审核？', color: 0, fun: 'six', p: 3, time: 1 },
-				{ t: '撤回阶段节点审核', color: 1, fun: 'ten' }
+				{ t: '撤回阶段节点审核', color: 1, fun: 'ten' },
 			],
 			express: [{ p: '画师提交审核时间：', t: 1 }],
 			note: '驳回/退回记录',
@@ -305,7 +290,7 @@ export class CommissionDetailSteps implements OnInit {
 			],
 			pbtn: [
 				{ t: '企划方长时间不审核？', color: 0, fun: 'six', p: 3, time: 1 },
-				{ t: '撤回阶段节点审核', color: 1, fun: 'ten' }
+				{ t: '撤回阶段节点审核', color: 1, fun: 'ten' },
 			],
 			express: [{ p: '模型师提交审核时间：', t: 1 }],
 			note: '退回记录',
@@ -373,7 +358,7 @@ export class CommissionDetailSteps implements OnInit {
 		private isError: CommissionDetailErrorService,
 		private zoom: ZoomService,
 		private render: Renderer2
-	) { }
+	) {}
 
 	ngOnInit(): void {
 		this.commissionApi.nodeModifyCount(this.detail.getCommissionId()).subscribe(i => {
@@ -673,8 +658,8 @@ export class CommissionDetailSteps implements OnInit {
 								queryParams: {
 									orderId: s.orderId,
 									cid: this.detail.getCommissionId(),
-									p: 1
-								}
+									p: 1,
+								},
 							});
 						},
 						e => {
@@ -919,28 +904,34 @@ export class CommissionDetailSteps implements OnInit {
 
 	/**撤销节点提交 */
 	revoke() {
-
-		this.modal.open(CommissionPrompt, {
-			title: this.indexNode.type === 0 ? '撤回企划开始确认' : '撤回阶段节点提交',
-			tips: this.indexNode.type === 0 ? '是否确定撤回企划开始确认？' : '是否确定撤回阶段节点提交？',
-			type: true
-		}).afterClosed().subscribe(is => {
-			if (is) {
-				this.commissionApi.nodeRevoke(Number(this.indexNode.id)).subscribe(
-					_s => {
-						this.indexNode = { ...this.indexNode, status: 0 };
-						this.getNodeSubmitRecord(this.indexNode.id, true);
-						this.fileList = [];
-						this.imageList = [];
-						this.cdr.detectChanges();
-					}, _e => {
-						this.modal.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' }).afterClosed().subscribe(_s => {
-							location.reload();
-						})
-					})
-			}
-		})
-
+		this.modal
+			.open(CommissionPrompt, {
+				title: this.indexNode.type === 0 ? '撤回企划开始确认' : '撤回阶段节点提交',
+				tips: this.indexNode.type === 0 ? '是否确定撤回企划开始确认？' : '是否确定撤回阶段节点提交？',
+				type: true,
+			})
+			.afterClosed()
+			.subscribe(is => {
+				if (is) {
+					this.commissionApi.nodeRevoke(Number(this.indexNode.id)).subscribe(
+						_s => {
+							this.indexNode = { ...this.indexNode, status: 0 };
+							this.getNodeSubmitRecord(this.indexNode.id, true);
+							this.fileList = [];
+							this.imageList = [];
+							this.cdr.detectChanges();
+						},
+						_e => {
+							this.modal
+								.open(CommissionPrompt, { title: '企划状态变化', tips: '企划状态已发生变化，请刷新页面后查看。' })
+								.afterClosed()
+								.subscribe(_s => {
+									location.reload();
+								});
+						}
+					);
+				}
+			});
 	}
 
 	showDetail(data: string): void {

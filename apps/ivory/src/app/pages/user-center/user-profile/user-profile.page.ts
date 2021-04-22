@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { Toast, IvoryError } from '@peacha-core';
@@ -10,7 +10,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 	templateUrl: './user-profile.page.html',
 	styleUrls: ['./user-profile.page.less'],
 })
-export class UserProfilePage implements OnDestroy {
+export class UserProfilePage implements OnInit, OnDestroy {
 	avatar: FormControl;
 	nickName: FormControl;
 	description: FormControl;

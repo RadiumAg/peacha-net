@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SelectData, SELECT_DATA_TOKEN } from '@peacha-core';
 
@@ -19,5 +19,4 @@ export class HeaderComponent {
 			this.title = x.header_title;
 		});
 	}
-
 }

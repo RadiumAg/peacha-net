@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { FORM_NAV_TOKEN } from '@peacha-core';
 
 @Directive({
+	// eslint-disable-next-line @angular-eslint/directive-selector
 	selector: '[ivoFormNav]',
 })
 export class FormNavDirective {

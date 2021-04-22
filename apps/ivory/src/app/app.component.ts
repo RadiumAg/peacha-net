@@ -3,7 +3,10 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { environment } from '../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, mergeMap, take } from 'rxjs/operators';
+import { LogApiService, UserState } from '@peacha-core';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 declare let gtag: (
 	eventName: string,
@@ -21,6 +24,8 @@ declare let gtag: (
 })
 export class AppComponent implements OnInit {
 	title = 'ivory';
+	@Select(UserState.id)
+	id$: Observable<number>;
 
 	showNavbar$ = this.router.events.pipe(
 		filter(event => event instanceof NavigationEnd),
@@ -43,7 +48,7 @@ export class AppComponent implements OnInit {
 		})
 	);
 
-	constructor(public router: Router, private translateService: TranslateService) {
+	constructor(public router: Router, private translateService: TranslateService, private logApi: LogApiService) {
 		if (environment.production) {
 			this.router.events.subscribe(event => {
 				if (event instanceof NavigationEnd) {
@@ -53,6 +58,39 @@ export class AppComponent implements OnInit {
 				}
 			});
 		}
+
+		this.protect();
+	}
+
+	consoleOpenCallback() {
+		this.id$
+			.pipe(
+				take(1),
+				mergeMap(id =>
+					this.logApi.debug(
+						JSON.stringify({
+							type: 'consoleOpen',
+							data: {
+								id,
+							},
+						})
+					)
+				)
+			)
+			.subscribe();
+	}
+
+	protect() {
+		setInterval(() => {
+			const before = Date.now();
+			// eslint-disable-next-line no-debugger
+			debugger;
+			const after = Date.now();
+			const cost = after - before;
+			if (cost > 100) {
+				this.consoleOpenCallback.bind(this)();
+			}
+		}, 1000);
 	}
 
 	ngOnInit() {

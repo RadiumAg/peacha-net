@@ -124,7 +124,7 @@ export class World {
 		// 对比所有system的interest
 		this.systems.forEach(system => {
 			if (system.query && isSystemInterestedInEntity(system, entity)) {
-				this.entityIndices[entity.id] = this.entityIndices[entity.id] ? [system, ...this.entityIndices[entity.id]] : [system]; // todo
+				this.entityIndices[entity.id] = this.entityIndices[entity.id] ? [system, ...this.entityIndices[entity.id]] : [system];
 
 				if (system.enter) {
 					system.enter(entity);
@@ -172,7 +172,7 @@ export class World {
 		});
 		this.systems.forEach(system => {
 			if (system.query && isSystemInterestedInEntity(system, entity)) {
-				this.entityIndices[entity.id] = this.entityIndices[entity.id] ? [system, ...this.entityIndices[entity.id]] : [system]; // todo
+				this.entityIndices[entity.id] = this.entityIndices[entity.id] ? [system, ...this.entityIndices[entity.id]] : [system];
 
 				if (system.enter) {
 					system.enter(entity);

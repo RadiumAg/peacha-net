@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ModalRef, MODAL_DATA_TOKEN } from '@peacha-core';
 import { CommissionApiService } from '../../../service/commission-api.service';
@@ -17,10 +17,9 @@ export class CommissionPrevent {
 		private modalRef: ModalRef<CommissionPrevent>,
 		@Inject(MODAL_DATA_TOKEN) public key: { type: number; id: number },
 		private api: CommissionApiService
-	) { }
+	) {}
 
 	rate = new FormControl(0, [Validators.required, Validators.pattern('^(?:0|[1-9][0-9]?|100)$')]);
-
 
 	update(e: { process: number }): void {
 		this.rate.setValue(Number(e.process * 100).toFixed(0));

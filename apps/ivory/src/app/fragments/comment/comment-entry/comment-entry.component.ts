@@ -8,9 +8,9 @@ import {
 	ElementRef,
 	TemplateRef,
 	ViewContainerRef,
-	AfterContentInit
+	AfterContentInit,
 } from '@angular/core';
-import { BehaviorSubject, EMPTY, empty, Observable } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { switchMap, take, tap, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ModelComment, ModelSubComment } from '../model';
@@ -20,7 +20,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserState, Toast, ModalService, DropDownService } from '@peacha-core';
 import { CommentReportModalComponent, PopTips } from '@peacha-core/components';
 import { CommentApiService } from '../comment-api.service';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
 	selector: 'ivo-comment-entry',
@@ -85,13 +84,12 @@ export class CommentEntryComponent implements AfterContentInit {
 			// 		count: number;
 			// 		list: ModelSubComment[];
 			// 	}>(`/comment/get_comment_sub?c=${this.cid}&p=${p - 1}&s=10`)
-			return this.commentApi.getReplyToComments(this.cid, p - 1, 10)
-				.pipe(
-					tap(s => {
-						this.showLoad = false;
-						this.subList = s;
-					})
-				);
+			return this.commentApi.getReplyToComments(this.cid, p - 1, 10).pipe(
+				tap(s => {
+					this.showLoad = false;
+					this.subList = s;
+				})
+			);
 		})
 	);
 
@@ -99,7 +97,6 @@ export class CommentEntryComponent implements AfterContentInit {
 
 	showLoad = true;
 	list: ModelComment | undefined;
-
 
 	one: ModelSubComment;
 
@@ -118,12 +115,9 @@ export class CommentEntryComponent implements AfterContentInit {
 		private router: Router,
 		private toast: Toast,
 		private commentApi: CommentApiService
-	) { }
+	) {}
 	rootid = -1;
 	subcompage = -1;
-
-
-
 
 	ngAfterContentInit() {
 		this.route.queryParams.subscribe(s => {
@@ -134,7 +128,6 @@ export class CommentEntryComponent implements AfterContentInit {
 			}
 		});
 	}
-
 
 	showAllReply() {
 		this.show_all_reply$.next(true);
@@ -158,19 +151,18 @@ export class CommentEntryComponent implements AfterContentInit {
 		// 	.post('/comment/like', {
 		// 		c: id,
 		// 	})
-		this.commentApi.commentLike(id)
-			.subscribe(_ => {
-				if (this.list?.id == id) {
-					if (this.list.is_like == 1) {
-						this.list.is_like = 0;
-						this.list.like_count--;
-					} else {
-						this.list.is_like = 1;
-						this.list.like_count++;
-					}
+		this.commentApi.commentLike(id).subscribe(_ => {
+			if (this.list?.id == id) {
+				if (this.list.is_like == 1) {
+					this.list.is_like = 0;
+					this.list.like_count--;
+				} else {
+					this.list.is_like = 1;
+					this.list.like_count++;
 				}
-				this.cdr.markForCheck();
-			});
+			}
+			this.cdr.markForCheck();
+		});
 	}
 
 	reply(userid: number, usernick: string, el: HTMLTextAreaElement, input: ElementRef) {
@@ -192,67 +184,66 @@ export class CommentEntryComponent implements AfterContentInit {
 						// 		c: this.b,
 						// 		r: this.a,
 						// 	})
-						return this.commentApi.replyToComments(this.b, this.a)
-							.pipe(
-								tap(s => {
-									this.basicInfo$.subscribe(info => {
-										if (v) {
-											this.one = {
-												id: s.id,
-												userid: info.id,
-												nickname: info.nickname,
-												avatar: info.avatar,
-												content: '回复 @' + v.nickname + ' ' + this.replyControl.value,
-												comment_time: Date.now(),
-												like_count: 0,
-												is_like: 0,
-												replied_user_id: userid,
-												replied_user_name: usernick,
-											};
-										} else {
-											this.one = {
-												id: s.id,
-												userid: info.id,
-												nickname: info.nickname,
-												avatar: info.avatar,
-												content: this.replyControl.value,
-												comment_time: Date.now(),
-												like_count: 0,
-												is_like: 0,
-												replied_user_id: 0,
-												replied_user_name: '',
-											};
-										}
-									});
-									this.show_all_reply$.subscribe(s => {
-										if (s) {
-											this.subList?.list?.unshift(this.one);
-										} else {
-											this.list?.comment_list.unshift(this.one);
-										}
-									});
-
-									// if (this.comment$.value) {
-									//   this.comment$.value.comment_count++;
-									// }
-									// if (this.list?.comment_list.length == 4) {
-									//   this.list?.comment_list.pop()
-									// }
-									this.replyControl.setValue('');
-									this.cdr.markForCheck();
-								}),
-								catchError(e => {
-									if (Math.abs(e.code) == 122) {
-										this.toast.show('重复评论', {
-											type: 'error',
-											el: input,
-											timeout: 1000,
-										});
+						return this.commentApi.replyToComments(this.b, this.a).pipe(
+							tap(s => {
+								this.basicInfo$.subscribe(info => {
+									if (v) {
+										this.one = {
+											id: s.id,
+											userid: info.id,
+											nickname: info.nickname,
+											avatar: info.avatar,
+											content: '回复 @' + v.nickname + ' ' + this.replyControl.value,
+											comment_time: Date.now(),
+											like_count: 0,
+											is_like: 0,
+											replied_user_id: userid,
+											replied_user_name: usernick,
+										};
+									} else {
+										this.one = {
+											id: s.id,
+											userid: info.id,
+											nickname: info.nickname,
+											avatar: info.avatar,
+											content: this.replyControl.value,
+											comment_time: Date.now(),
+											like_count: 0,
+											is_like: 0,
+											replied_user_id: 0,
+											replied_user_name: '',
+										};
 									}
+								});
+								this.show_all_reply$.subscribe(s => {
+									if (s) {
+										this.subList?.list?.unshift(this.one);
+									} else {
+										this.list?.comment_list.unshift(this.one);
+									}
+								});
 
-									return EMPTY;
-								})
-							);
+								// if (this.comment$.value) {
+								//   this.comment$.value.comment_count++;
+								// }
+								// if (this.list?.comment_list.length == 4) {
+								//   this.list?.comment_list.pop()
+								// }
+								this.replyControl.setValue('');
+								this.cdr.markForCheck();
+							}),
+							catchError(e => {
+								if (Math.abs(e.code) == 122) {
+									this.toast.show('重复评论', {
+										type: 'error',
+										el: input,
+										timeout: 1000,
+									});
+								}
+
+								return EMPTY;
+							})
+						);
 					} else {
 						this.toast.show('不能发送空评论', {
 							type: 'error',
@@ -263,8 +254,8 @@ export class CommentEntryComponent implements AfterContentInit {
 				})
 			)
 			.subscribe(
-				_s => { },
-				_e => { }
+				_s => {},
+				_e => {}
 			);
 	}
 	toUser(id: number) {
@@ -314,12 +305,11 @@ export class CommentEntryComponent implements AfterContentInit {
 					// 	.post('/comment/delete', {
 					// 		c: id,
 					// 	})
-					this.commentApi.commentDelete(id)
-						.subscribe(_ => {
-							this.cdr.markForCheck();
-							this.comment$.next(undefined);
-							this.cdr.detectChanges();
-						});
+					this.commentApi.commentDelete(id).subscribe(_ => {
+						this.cdr.markForCheck();
+						this.comment$.next(undefined);
+						this.cdr.detectChanges();
+					});
 				}
 			});
 	}
