@@ -57,8 +57,8 @@ export class AppComponent implements OnInit {
 					});
 				}
 			});
-			this.protect();
 		}
+		this.protect();
 	}
 
 	consoleOpenCallback() {
@@ -82,8 +82,7 @@ export class AppComponent implements OnInit {
 	protect() {
 		setInterval(() => {
 			const before = Date.now();
-			// eslint-disable-next-line no-debugger
-			debugger;
+			eval('debugger');
 			const after = Date.now();
 			const cost = after - before;
 			if (cost > 100) {
