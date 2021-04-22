@@ -24,7 +24,7 @@ export interface Work {
 	name?: string;
 	publishtime?: string;
 	shareCount?: number;
-	tag?: string[] | TGetWorktag[];
+	tag?: (string | TGetWorktag)[];
 	updatetime?: string;
 	cooperateid?: number;
 	authority?: number[];

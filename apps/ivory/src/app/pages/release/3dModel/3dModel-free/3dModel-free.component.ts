@@ -169,7 +169,7 @@ export class ThreeModelFreeComponent implements OnInit, AfterViewInit {
 			d: r.description,
 			b: { url: r.cover },
 			bv: r.bvNumber,
-			t: r.tag.map(x => x.name || x),
+			t: r.tag.map(x => (typeof x === 'string' ? x : x.name)),
 			f: r.assets.map(_ => {
 				return {
 					url: _,

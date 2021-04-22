@@ -1,13 +1,13 @@
-import { map,tap,debounce } from 'rxjs/operators';
-import { AfterViewInit,ElementRef,ViewChild,QueryList,ViewChildren,AfterViewChecked } from '@angular/core';
-import { Component,OnInit,ChangeDetectorRef } from '@angular/core';
-import { FormBuilder,Validators,FormControl } from '@angular/forms';
+import { map, tap, debounce } from 'rxjs/operators';
+import { AfterViewInit, ElementRef, ViewChild, QueryList, ViewChildren, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Live2dUploadComponent } from '../../components/live2d-upload/live2d-upload.component';
 import { SuccessTips } from '../../components/success-tips/success-tips';
-import { BehaviorSubject,fromEvent,interval } from 'rxjs';
+import { BehaviorSubject, fromEvent, interval } from 'rxjs';
 import { ReleaseApiService } from '../../release-api.service';
-import { emptyStringValidator,ModalService,validator,Work } from '@peacha-core';
+import { emptyStringValidator, ModalService, validator, Work } from '@peacha-core';
 import { Live2dTransformData } from '@peacha-studio-core';
 import { PopTips } from '@peacha-core/components';
 import { EWorkAuditState } from '../../../member/manager/single-manager/single-manager.page';
@@ -17,14 +17,14 @@ import { EWorkAuditState } from '../../../member/manager/single-manager/single-m
 	templateUrl: './live2d-free.component.html',
 	styleUrls: ['./live2d-free.component.less'],
 })
-export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecked {
+export class Live2dFreeComponent implements OnInit, AfterViewInit, AfterViewChecked {
 	constructor(
 		private fb: FormBuilder,
 		private modal: ModalService,
 		private route: ActivatedRoute,
 		private api: ReleaseApiService,
 		private cdr: ChangeDetectorRef
-	) { }
+	) {}
 	@ViewChild('submitButton')
 	submitButton: ElementRef;
 	@ViewChildren(Live2dUploadComponent)
@@ -54,17 +54,17 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 		gd: string;
 		t: string;
 		gl: any[];
-	}> ={};
+	}> = {};
 	form = this.fb.group({
-		n: ['',[emptyStringValidator(),Validators.required]],
-		d: ['',[emptyStringValidator(),Validators.required]],
-		b: ['',Validators.required],
-		g: ['',Validators.required],
+		n: ['', [emptyStringValidator(), Validators.required]],
+		d: ['', [emptyStringValidator(), Validators.required]],
+		b: ['', Validators.required],
+		g: ['', Validators.required],
 		a: [[]],
-		fr: ['',Validators.required],
-		c: ['',Validators.required],
+		fr: ['', Validators.required],
+		c: ['', Validators.required],
 		t: [[]],
-		checked: [false,Validators.requiredTrue],
+		checked: [false, Validators.requiredTrue],
 	});
 	checkedForm = this.fb.group({
 		enableFaceTrackerChecked: [false],
@@ -86,10 +86,10 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 		enableFaceTracker: boolean;
 		enableSettingPanel: boolean;
 	} = {
-			transformData: {},
-			enableFaceTracker: false,
-			enableSettingPanel: false,
-		};
+		transformData: {},
+		enableFaceTracker: false,
+		enableSettingPanel: false,
+	};
 	freeModal = [];
 	isEdit = false;
 	stateMentStrategy = {
@@ -133,8 +133,8 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 
 	selectTypeChange(type: 0 | 1) {
 		if (type === 1) {
-			this.form.addControl('fg',new FormControl('',Validators.required));
-			this.form.addControl('fgn',new FormControl('',Validators.required));
+			this.form.addControl('fg', new FormControl('', Validators.required));
+			this.form.addControl('fgn', new FormControl('', Validators.required));
 		} else {
 			this.form.removeControl('fg');
 			this.form.removeControl('fgn');
@@ -152,17 +152,17 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 		this.token = r.file;
 		this.setMainForm(r);
 		this.setModelChecked(r);
-	}
+	};
 
 	private getEditWorkData(): void {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				this.editParam.w = parseInt(x.get('id'),10);
-				if(+this.route.snapshot.queryParams.c === EWorkAuditState.success ){
-					this.api.getWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
-				}else if(+this.route.snapshot.queryParams.c === EWorkAuditState.fail){
-					this.api.getEditWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				this.editParam.w = parseInt(x.get('id'), 10);
+				if (+this.route.snapshot.queryParams.c === EWorkAuditState.success) {
+					this.api.getWork(parseInt(x.get('id'), 10)).subscribe(this.getEditWorkHandler);
+				} else if (+this.route.snapshot.queryParams.c === EWorkAuditState.fail) {
+					this.api.getEditWork(parseInt(x.get('id'), 10)).subscribe(this.getEditWorkHandler);
 				}
 			}
 		});
@@ -173,29 +173,33 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 		this.freeModelFile = freeModel?.file;
 		this.freeGoodsId = freeModel?.id;
 		this.goodsId = r.id;
-		this.form.patchValue(freeModel?.fileType === 1 ? {
-			n: r.name,
-			d: r.description,
-			b: { url: r.cover },
-			t:  r.tag.map(x=>x.name || x),
-			c: r.copyright,
-			g: this.token,
-			a: r.authority,
-			fr: r.goodsList[0].fileType,
-			fg: r.goodsList[0].file,
-			fgn: r.goodsList[0].name,
-		} : {
-			n: r.name,
-			d: r.description,
-			b: { url: r.cover },
-			t:  r.tag.map(x=>x.name || x),
-			c: r.copyright,
-			g: this.token,
-			a: r.authority,
-			fr: 0,
-		});
+		this.form.patchValue(
+			freeModel?.fileType === 1
+				? {
+						n: r.name,
+						d: r.description,
+						b: { url: r.cover },
+						t: r.tag.map(x => (typeof x === 'string' ? x : x.name)),
+						c: r.copyright,
+						g: this.token,
+						a: r.authority,
+						fr: r.goodsList[0].fileType,
+						fg: r.goodsList[0].file,
+						fgn: r.goodsList[0].name,
+				  }
+				: {
+						n: r.name,
+						d: r.description,
+						b: { url: r.cover },
+						t: r.tag.map(x => (typeof x === 'string' ? x : x.name)),
+						c: r.copyright,
+						g: this.token,
+						a: r.authority,
+						fr: 0,
+				  }
+		);
 		this.copyrightModel = r.authority;
-		this.live2dUpload.first.loadFileFromOpal(r.file,r.fileData ? JSON.parse(r.fileData) : null);
+		this.live2dUpload.first.loadFileFromOpal(r.file, r.fileData ? JSON.parse(r.fileData) : null);
 		this.cdr.markForCheck();
 	}
 
@@ -206,7 +210,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 				enableFaceTrackerChecked: JSON.parse(r.fileData).enableFaceTracker ? true : false,
 				enableSettingPanelChecked: JSON.parse(r.fileData).enableSettingPanel ? true : false,
 			});
-		this.modalSet([fileData.enableFaceTracker ? '0' : '',fileData.enableSettingPanel ? '1' : '']);
+			this.modalSet([fileData.enableFaceTracker ? '0' : '', fileData.enableSettingPanel ? '1' : '']);
 		}
 	}
 
@@ -218,60 +222,64 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 	}
 
 	private sure_edit(): void {
-		this.api.updateWork({
-			w: this.editParam.w,
-			n: this.editParam.n,
-			g: this.editParam.g,
-			d: this.editParam.d,
-			gd: this.editParam.gd,
-			t: this.editParam.t,
-			b: this.editParam.b,
-			gl: this.editParam.gl,
-		}).subscribe({
-			next: () => {
-				this.modal.open(SuccessTips,{
-					redirectUrl: 'user',
-					tip: '已成功提交审核，请等待后台人员审核!',
-				});
-			},
-			error: (x: { descrption: string }) => {
-				if (x.descrption) {
-					this.modal.open(PopTips,[x.descrption]);
-				} else {
-					this.modal.open(PopTips,['系统繁忙']);
-				}
-			},
-		});
+		this.api
+			.updateWork({
+				w: this.editParam.w,
+				n: this.editParam.n,
+				g: this.editParam.g,
+				d: this.editParam.d,
+				gd: this.editParam.gd,
+				t: this.editParam.t,
+				b: this.editParam.b,
+				gl: this.editParam.gl,
+			})
+			.subscribe({
+				next: () => {
+					this.modal.open(SuccessTips, {
+						redirectUrl: 'user',
+						tip: '已成功提交审核，请等待后台人员审核!',
+					});
+				},
+				error: (x: { descrption: string }) => {
+					if (x.descrption) {
+						this.modal.open(PopTips, [x.descrption]);
+					} else {
+						this.modal.open(PopTips, ['系统繁忙']);
+					}
+				},
+			});
 	}
 
 	private public_work(): void {
-		this.api.publishWork({
-			n: this.param.n,
-			d: this.param.d,
-			a: this.param.a,
-			b: this.param.b,
-			g: this.param.g,
-			t: this.param.t,
-			c: this.param.c,
-			cs: this.param.cs,
-			f: this.param.f,
-			gd: this.param.gd,
-			gl: this.param.gl,
-		}).subscribe({
-			next: _x => {
-				this.modal.open(SuccessTips,{
-					redirectUrl: '/member/manager/live2D/auditing',
-					tip: '已成功提交审核，请等待后台人员审核！',
-				});
-			},
-			error: (x: { descrption: string }) => {
-				if (x.descrption) {
-					this.modal.open(PopTips,[x.descrption,false,0]);
-				} else {
-					this.modal.open(PopTips,['系统繁忙',false,0]);
-				}
-			},
-		});
+		this.api
+			.publishWork({
+				n: this.param.n,
+				d: this.param.d,
+				a: this.param.a,
+				b: this.param.b,
+				g: this.param.g,
+				t: this.param.t,
+				c: this.param.c,
+				cs: this.param.cs,
+				f: this.param.f,
+				gd: this.param.gd,
+				gl: this.param.gl,
+			})
+			.subscribe({
+				next: _x => {
+					this.modal.open(SuccessTips, {
+						redirectUrl: '/member/manager/live2D/auditing',
+						tip: '已成功提交审核，请等待后台人员审核！',
+					});
+				},
+				error: (x: { descrption: string }) => {
+					if (x.descrption) {
+						this.modal.open(PopTips, [x.descrption, false, 0]);
+					} else {
+						this.modal.open(PopTips, ['系统繁忙', false, 0]);
+					}
+				},
+			});
 	}
 
 	changeCopyrightState($event: number): void {
@@ -315,7 +323,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 	}
 
 	submit(): void {
-		validator(this.form,this.form.controls);
+		validator(this.form, this.form.controls);
 		if (!this.validator()) {
 			return;
 		}
@@ -333,7 +341,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 					this.setModalCheckedDisabled();
 					this.setFreeGoodList();
 				}),
-				map((value) => {
+				map(value => {
 					if (!this.isEdit) {
 						value.gd = JSON.stringify({
 							transformData: { ...this.transformData },
@@ -376,8 +384,8 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 					}
 				})
 			)
-			.subscribe((x) => {
-				this.isEdit ? this.editParam = x : this.param = x;
+			.subscribe(x => {
+				this.isEdit ? (this.editParam = x) : (this.param = x);
 			});
 	}
 
@@ -396,7 +404,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 	isModalFreeDownloadTip(): void {
 		if (this.checkedForm.value['freeModelDownLoadChecked']) {
 			this.modal
-				.open(PopTips,['是否确定免费提供该模型文件下载',true,2])
+				.open(PopTips, ['是否确定免费提供该模型文件下载', true, 2])
 				.afterClosed()
 				.subscribe(x => {
 					if (!x) {
@@ -418,7 +426,6 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 						f: this.form.value.fg,
 					},
 				];
-
 			} else if (!this.isEdit) {
 				this.freeModal = [
 					{
@@ -448,7 +455,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 	}
 
 	ngAfterViewInit(): void {
-		fromEvent(this.submitButton.nativeElement,'click',{ passive: true })
+		fromEvent(this.submitButton.nativeElement, 'click', { passive: true })
 			.pipe(debounce(() => interval(500)))
 			.subscribe(() => {
 				this.submit();
@@ -458,7 +465,7 @@ export class Live2dFreeComponent implements OnInit,AfterViewInit,AfterViewChecke
 	ngAfterViewChecked(): void {
 		if (this.live2dUpload.length > 1) {
 			if (this.live2dUpload.last.live2dLoadStatus$.getValue() === 0 && this.freeModelFile) {
-				this.live2dUpload.last.loadFileFromOpal(this.freeModelFile,null);
+				this.live2dUpload.last.loadFileFromOpal(this.freeModelFile, null);
 				this.freeModelFile = '';
 			}
 		}

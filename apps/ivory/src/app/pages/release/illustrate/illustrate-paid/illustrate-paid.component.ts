@@ -90,7 +90,7 @@ export class IllustratePaidComponent implements OnInit, AfterViewInit {
 			n: r.name,
 			d: r.description,
 			b: { url: r.cover },
-			t: r.tag.map(x => x.name || x),
+			t: r.tag.map(x => (typeof x === 'string' ? x : x.name)),
 			f: r.assets.map(_ => ({
 				url: _,
 			})),

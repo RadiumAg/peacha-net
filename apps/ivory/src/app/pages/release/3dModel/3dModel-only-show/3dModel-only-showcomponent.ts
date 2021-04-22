@@ -1,29 +1,29 @@
-import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SuccessTips } from './../../components/success-tips/success-tips';
-import { Component,OnInit,ViewChild,ElementRef,AfterViewInit,ChangeDetectorRef } from '@angular/core';
-import { debounce,map } from 'rxjs/operators';
-import { FormBuilder,Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { debounce, map } from 'rxjs/operators';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject,fromEvent,interval } from 'rxjs';
-import { emptyStringValidator,ModalService,TGetWorktag,validator,Work } from '@peacha-core';
+import { BehaviorSubject, fromEvent, interval } from 'rxjs';
+import { emptyStringValidator, ModalService, TGetWorktag, validator, Work } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 import { ReleaseApiService } from '../../release-api.service';
 import { EWorkAuditState } from '../../../member/manager/single-manager/single-manager.page';
-
 
 @Component({
 	selector: 'ivo-3dmodel',
 	templateUrl: './3dModel-only-show.component.html',
 	styleUrls: ['./3dModel-only-show.component.less'],
 })
-export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
+export class ThreeModelOnlyShowComponent implements OnInit, AfterViewInit {
 	constructor(
 		public sanitizer: DomSanitizer,
 		private fb: FormBuilder,
 		private modal: ModalService,
 		private route: ActivatedRoute,
 		private api: ReleaseApiService,
-		private cdr: ChangeDetectorRef) { }
+		private cdr: ChangeDetectorRef
+	) {}
 
 	bvUrl: SafeResourceUrl;
 	ESelectPreviewType: ('image' | 'bv')[] = [];
@@ -55,14 +55,14 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 
 	form = this.fb.group({
 		f: [[]],
-		n: ['',[Validators.required,emptyStringValidator()]],
-		d: ['',[Validators.required,emptyStringValidator()]],
+		n: ['', [Validators.required, emptyStringValidator()]],
+		d: ['', [Validators.required, emptyStringValidator()]],
 		t: [[]],
-		b: ['',Validators.required],
-		c: ['',Validators.required],
+		b: ['', Validators.required],
+		c: ['', Validators.required],
 		bv: [''],
 		a: [[]],
-		checked: [false,Validators.requiredTrue],
+		checked: [false, Validators.requiredTrue],
 		gl: this.fb.array([]),
 	});
 
@@ -72,7 +72,7 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 		copyright: [[]],
 		copychecked: [false],
 		selectPreViewImage: [false],
-		selectPreViewTv: [false]
+		selectPreViewTv: [false],
 	});
 	copyrightCheckes$ = new BehaviorSubject<{ id: number; name: string }[]>([]);
 	stateMentStates = [];
@@ -96,7 +96,7 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 
 	setBvNumber(bvNumber: string) {
 		if (bvNumber === '') {
-			this.modal.open(PopTips,['请输入bv号'])
+			this.modal.open(PopTips, ['请输入bv号']);
 			return;
 		}
 		this.bvUrl = this.getSafeUrl('//player.bilibili.com/player.html?bvid=' + bvNumber + '&page=1&high_quality=1');
@@ -142,7 +142,7 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 		return flag;
 	}
 
-    private getEditWorkHandler =(r: Work) => {
+	private getEditWorkHandler = (r: Work) => {
 		this.setPreviewType(r);
 		this.copyrightModel = r.authority;
 		this.form.patchValue({
@@ -150,7 +150,7 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 			d: r.description,
 			bv: r.bvNumber,
 			b: { url: r.cover },
-			t:   r.tag.map(x=>x.name || x),
+			t: r.tag.map(x => (typeof x === 'string' ? x : x.name)),
 			f: r.assets.map(_ => {
 				return {
 					url: _,
@@ -158,16 +158,16 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 			}),
 			c: r.copyright,
 		});
-	}
+	};
 
 	private getEditWork() {
 		this.route.paramMap.subscribe(x => {
 			if (x.get('id')) {
 				this.isEdit = true;
-				if(+this.route.snapshot.queryParams.c === EWorkAuditState.success ){
-					this.api.getWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
-				}else if(+this.route.snapshot.queryParams.c === EWorkAuditState.fail){
-					this.api.getEditWork(parseInt(x.get('id'),10)).subscribe(this.getEditWorkHandler);
+				if (+this.route.snapshot.queryParams.c === EWorkAuditState.success) {
+					this.api.getWork(parseInt(x.get('id'), 10)).subscribe(this.getEditWorkHandler);
+				} else if (+this.route.snapshot.queryParams.c === EWorkAuditState.fail) {
+					this.api.getEditWork(parseInt(x.get('id'), 10)).subscribe(this.getEditWorkHandler);
 				}
 				this.cdr.markForCheck();
 			}
@@ -178,47 +178,49 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 		if (r.assets.length > 0) {
 			this.ESelectPreviewType.push('image');
 			this.checkedForm.patchValue({
-				selectPreViewImage: true
+				selectPreViewImage: true,
 			});
 		}
 		if (r.bvNumber) {
 			this.ESelectPreviewType.push('bv');
 			this.checkedForm.patchValue({
-				selectPreViewTv: true
+				selectPreViewTv: true,
 			});
 		}
 	}
 
 	private public_work() {
-		this.api.publishWork({
-			n: this.publishParam.n,
-			d: this.publishParam.d,
-			a: this.publishParam.a,
-			b: this.publishParam.b,
-			t: this.publishParam.t,
-			c: this.publishParam.c,
-			bv: this.publishParam.bv,
-			cs: 2,
-			f: this.publishParam.f,
-			gl: [],
-		}).subscribe({
-			next: _x => {
-				this.modal.open(SuccessTips,{
-					redirectUrl: '/member/manager/3d/auditing',
-					tip: '已成功提交审核，请等待后台人员审核！',
-				});
-			},
-			error: (x: { descrption: string }) => {
-				if (x.descrption) {
-					this.modal.open(PopTips,[x.descrption,false,0]);
-				} else {
-					this.modal.open(PopTips,['系统繁忙',false,0]);
-				}
-			},
-		});
+		this.api
+			.publishWork({
+				n: this.publishParam.n,
+				d: this.publishParam.d,
+				a: this.publishParam.a,
+				b: this.publishParam.b,
+				t: this.publishParam.t,
+				c: this.publishParam.c,
+				bv: this.publishParam.bv,
+				cs: 2,
+				f: this.publishParam.f,
+				gl: [],
+			})
+			.subscribe({
+				next: _x => {
+					this.modal.open(SuccessTips, {
+						redirectUrl: '/member/manager/3d/auditing',
+						tip: '已成功提交审核，请等待后台人员审核！',
+					});
+				},
+				error: (x: { descrption: string }) => {
+					if (x.descrption) {
+						this.modal.open(PopTips, [x.descrption, false, 0]);
+					} else {
+						this.modal.open(PopTips, ['系统繁忙', false, 0]);
+					}
+				},
+			});
 	}
 
-	trackBy(index: number,model: { symbol: symbol }): symbol {
+	trackBy(index: number, model: { symbol: symbol }): symbol {
 		return model.symbol;
 	}
 
@@ -238,10 +240,10 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 
 	submit() {
 		if (!this.ESelectPreviewType.length) {
-			this.modal.open(PopTips,['请选择预览方式','0']);
+			this.modal.open(PopTips, ['请选择预览方式', '0']);
 			return;
 		}
-		validator(this.form,this.form.controls);
+		validator(this.form, this.form.controls);
 		if (!this.form.valid) {
 			return;
 		}
@@ -267,16 +269,16 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 			})
 			.subscribe({
 				next: () => {
-					this.modal.open(SuccessTips,{
+					this.modal.open(SuccessTips, {
 						redirectUrl: 'user',
 						tip: '已成功提交审核，请等待后台人员审核!',
 					});
 				},
 				error: (x: { descrption: string }) => {
 					if (x.descrption) {
-						this.modal.open(PopTips,[x.descrption,false,0]);
+						this.modal.open(PopTips, [x.descrption, false, 0]);
 					} else {
-						this.modal.open(PopTips,['系统繁忙',false,0]);
+						this.modal.open(PopTips, ['系统繁忙', false, 0]);
 					}
 				},
 			});
@@ -285,7 +287,7 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 	private subscribeForm() {
 		this.form.valueChanges
 			.pipe(
-				map((value) => {
+				map(value => {
 					value.b = value.b.token || value.b.url || '';
 					value.f = value.f.map((s: { remote_token: string; url: string }) => s.remote_token || s.url);
 					return {
@@ -301,8 +303,8 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 					};
 				})
 			)
-			.subscribe((x) => {
-				this.isEdit ? this.editParam = x : this.publishParam = x;
+			.subscribe(x => {
+				this.isEdit ? (this.editParam = x) : (this.publishParam = x);
 			});
 	}
 
@@ -326,7 +328,7 @@ export class ThreeModelOnlyShowComponent implements OnInit,AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		fromEvent(this.submitButton.nativeElement,'click')
+		fromEvent(this.submitButton.nativeElement, 'click')
 			.pipe(debounce(() => interval(500)))
 			.subscribe(() => {
 				this.submit();

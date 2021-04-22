@@ -172,7 +172,7 @@ export class ThreeModelPaidComponent implements OnInit, AfterViewInit {
 			n: r.name,
 			d: r.description,
 			b: { url: r.cover },
-			t: r.tag.map(x => x.name || x),
+			t: r.tag.map(x => (typeof x === 'string' ? x : x.name)),
 			bv: r.bvNumber,
 			f: r.assets.map(_ => {
 				return {
