@@ -57,8 +57,8 @@ export class AppComponent implements OnInit {
 					});
 				}
 			});
+			this.protect();
 		}
-		this.protect();
 	}
 
 	consoleOpenCallback() {
