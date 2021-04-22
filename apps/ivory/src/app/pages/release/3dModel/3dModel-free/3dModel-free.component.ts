@@ -102,7 +102,7 @@ export class ThreeModelFreeComponent implements OnInit, AfterViewInit {
 		const createGlGroup = this.fb.group({
 			n: [n || '', Validators.required],
 			f: [f || null, Validators.required],
-			ft: [ft || 0, Validators.required],
+			ft: [ft || null, Validators.required],
 		});
 		Reflect.set(createGlGroup, 'symbol', Symbol());
 		this.glArray.push(createGlGroup);
