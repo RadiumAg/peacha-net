@@ -46,9 +46,7 @@ export class SelectPage {
 					// eslint-disable-next-line max-len
 					`/work/search_work?p=${r.p ? r.p - 1 : 0}&s=20&o=${r.o ?? 1}&sp=${r.m ? this.priceRegion[r.m].sp : -1}&ep=${
 						r.m ? this.priceRegion[r.m].ep : -1
-					}&dd=${r.dd ?? 0}&c=${r.c === undefined ? '-1' : r.c}&ws=${this.router.url.includes('/select/work') ? -1 : 1}&ft=${
-						r.ft === undefined ? '-1' : r.ft
-					}
+					}&dd=${r.dd ?? 0}&c=${r.c === undefined ? '-1' : r.c}&ws=${r.type}&ft=${r.ft === undefined ? '-1' : r.ft}
                     `
 				)
 				.pipe(
