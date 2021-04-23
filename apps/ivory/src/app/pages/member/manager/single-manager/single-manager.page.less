@@ -54,7 +54,11 @@
 	}
 
 	& > .right {
-		display: inline-block;
+		display: inline-flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 92px;
+		width: 500px;
 
 		& > span {
 			display: block;
@@ -86,7 +90,7 @@
 			line-height: 19px;
 			color: #666666;
 			margin-right: 10px;
-			margin-top: 50px;
+			// margin-top: 50px;
 		}
 	}
 }
