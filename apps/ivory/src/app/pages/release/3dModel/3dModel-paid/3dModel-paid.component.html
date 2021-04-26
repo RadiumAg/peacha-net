@@ -1,209 +1,293 @@
 <div class="illust-free-container form">
-  <form [formGroup]="form">
-    <div class="form-item">
-      <div class="title">发布作品</div>
-    </div>
+	<form [formGroup]="form">
+		<div class="form-item">
+			<div class="title">发布作品</div>
+		</div>
 
-    <div class="form-item">
-      <div class="title">作品信息</div>
-      <div class="form-controller">
-        <div class="title required">
-          作品标题
-          <span class="word-count">{{ title.value.length }}/20</span>
-        </div>
-        <input ivoErroTip ivoErrorTipString="请输入标题!" formControlName="n" class="input" maxlength="20"
-          placeholder="请输入作品标题" data-control-index="0" #title />
-      </div>
-      <div class="form-controller">
-        <div class="title required">
-          作品简介
-          <span class="word-count">{{ des.value.length }}/1000</span>
-        </div>
-        <textarea ivoErroTip ivoErrorTipString="请输入作品简介!" formControlName="d" class="textarea" maxlength="1000" rows="4"
-          placeholder="请输入作品简介…&#10;&#10;" data-control-index="0" #des></textarea>
-      </div>
-    </div>
+		<div class="form-item">
+			<div class="title">作品信息</div>
+			<div class="form-controller">
+				<div class="title required">
+					作品标题
+					<span class="word-count">{{ title.value.length }}/20</span>
+				</div>
+				<input
+					ivoErroTip
+					ivoErrorTipString="请输入标题!"
+					formControlName="n"
+					class="input"
+					maxlength="20"
+					placeholder="请输入作品标题"
+					data-control-index="0"
+					#title
+				/>
+			</div>
+			<div class="form-controller">
+				<div class="title required">
+					作品简介
+					<span class="word-count">{{ des.value.length }}/1000</span>
+				</div>
+				<textarea
+					ivoErroTip
+					ivoErrorTipString="请输入作品简介!"
+					formControlName="d"
+					class="textarea"
+					maxlength="1000"
+					rows="4"
+					placeholder="请输入作品简介…&#10;&#10;"
+					data-control-index="0"
+					#des
+				></textarea>
+			</div>
+		</div>
 
-    <div class="form-item">
-      <div class="title" [ivoNoticeTitle]="'标签能让更多小伙伴看到你的作品(最多输入5个)'">标签</div>
-      <div class="form-controller">
-        <ivo-tag-input formControlName="t" data-control-index="1"></ivo-tag-input>
-      </div>
-    </div>
+		<div class="form-item">
+			<div class="title" [ivoNoticeTitle]="'标签能让更多小伙伴看到你的作品(最多输入5个)'">标签</div>
+			<div class="form-controller">
+				<ivo-tag-input formControlName="t" data-control-index="1"></ivo-tag-input>
+			</div>
+		</div>
 
-    <div class="form-item">
-      <div class="title" [ivoNoticeTitle]="'上传封面图片大小5M以下，长宽不得超过16384*16384px'">上传封面</div>
-      <div class="form-controller required">
-        <ivo-thumbnail-upload maxSize="5242880" formControlName="b" ivoErroTip ivoErrorTipString="请上传封面!"
-          data-control-index="2">
-        </ivo-thumbnail-upload>
-      </div>
-    </div>
+		<div class="form-item">
+			<div class="title" [ivoNoticeTitle]="'上传封面图片大小5M以下，长宽不得超过16384*16384px'">上传封面</div>
+			<div class="form-controller required">
+				<ivo-thumbnail-upload
+					maxSize="5242880"
+					formControlName="b"
+					ivoErroTip
+					ivoErrorTipString="请上传封面!"
+					data-control-index="2"
+				>
+				</ivo-thumbnail-upload>
+			</div>
+		</div>
 
-    <div class="form-item  select-preview">
-      <div class="title" [ivoNoticeTitle]="'可多选'">选择预览方式</div>
-      <div class="form-controller 	required-center">
-        <form [formGroup]="checkedForm">
-          <nz-checkbox-wrapper (nzOnChange)="changeSelectPreviewType($event)">
-            <label nz-checkbox [nzValue]="'image'" formControlName="selectPreViewImage"><span
-                class="select-preview-checkbox">图片/GIF预览</span></label>
+		<div class="form-item select-preview">
+			<div class="title" [ivoNoticeTitle]="'可多选'">选择预览方式</div>
+			<div class="form-controller required-center">
+				<form [formGroup]="checkedForm">
+					<nz-checkbox-wrapper (nzOnChange)="changeSelectPreviewType($event)">
+						<label nz-checkbox [nzValue]="'image'" formControlName="selectPreViewImage"
+							><span class="select-preview-checkbox">图片/GIF预览</span></label
+						>
 
-            <label nz-checkbox [nzValue]="'bv'" formControlName="selectPreViewTv"><span
-                class="select-preview-checkbox">Bilibili视频预览</span></label>
-          </nz-checkbox-wrapper>
-        </form>
-      </div>
-    </div>
+						<label nz-checkbox [nzValue]="'bv'" formControlName="selectPreViewTv"
+							><span class="select-preview-checkbox">Bilibili视频预览</span></label
+						>
+					</nz-checkbox-wrapper>
+				</form>
+			</div>
+		</div>
 
-    <div class="form-item uplaod-Image" *ngIf="ESelectPreviewType.includes('image')">
-      <div class="title" [ivoNoticeTitle]="'支持JPEG.PNG.GIF等格式，每张图片不得大于5M，长宽不得超过16384*16384px'">上传图片/GIF</div>
-      <div class="form-controller required-center">
-        <ivo-illustrate-upload maxSize="5242880" ivoErroTip ivoErrorTipString="请上传图片" formControlName="f"
-          data-control-index="3">
-        </ivo-illustrate-upload>
-      </div>
-    </div>
+		<div class="form-item uplaod-Image" *ngIf="ESelectPreviewType.includes('image')">
+			<div class="title" [ivoNoticeTitle]="'支持JPEG.PNG.GIF等格式，每张图片不得大于5M，长宽不得超过16384*16384px'">上传图片/GIF</div>
+			<div class="form-controller required-center">
+				<ivo-illustrate-upload
+					maxSize="5242880"
+					ivoErroTip
+					ivoErrorTipString="请上传图片"
+					formControlName="f"
+					data-control-index="3"
+				>
+				</ivo-illustrate-upload>
+			</div>
+		</div>
 
-    <div class="form-item bv" *ngIf="ESelectPreviewType.includes('bv')">
-      <div class="title">上传Bilibili视频</div>
-      <div class="form-controller required-center">
-        Bilibili视频BV号:&nbsp;&nbsp;&nbsp;&nbsp;<input ivoErroTip ivoErrorTipString="请上传bv号" #bv_input type="text"
-          class="input" #copyright formControlName="bv" data-control-index="4" />
-        <button class="button" ivo-button (click)="setBvNumber(bv_input.value)">预览视频</button>
-      </div>
-      <div class="form-controller">
-        <iframe [attr.src]="bvUrl" class="bv-video" *ngIf="bvUrl"></iframe>
-      </div>
-    </div>
+		<div class="form-item bv" *ngIf="ESelectPreviewType.includes('bv')">
+			<div class="title">上传Bilibili视频</div>
+			<div class="form-controller required-center">
+				Bilibili视频BV号:&nbsp;&nbsp;&nbsp;&nbsp;<input
+					ivoErroTip
+					ivoErrorTipString="请上传bv号"
+					#bv_input
+					type="text"
+					class="input"
+					#copyright
+					formControlName="bv"
+					data-control-index="4"
+				/>
+				<button class="button" ivo-button (click)="setBvNumber(bv_input.value)">预览视频</button>
+			</div>
+			<div class="form-controller">
+				<iframe [attr.src]="bvUrl" class="bv-video" *ngIf="bvUrl"></iframe>
+			</div>
+		</div>
 
-    <div formArrayName="gl">
-      <div *ngFor="let item of glArray.controls; index as i;trackBy:trackBy" class="form-item  free-share-file-upload"
-        [formGroupName]="i">
-        <div class="title" [ivoNoticeTitle]="'文件大小不得大于210M。'"><span>上传商品内容-{{i+1}}</span><span
-            class="ivo-icon-delete-circle" *ngIf="!isEdit" (click)="deleteGl(item.symbol)"></span>
-          <span class="form-item-tip-after" *ngIf="isEdit">更改价格或上下架商品，请在“商品管理”页面操作</span>
-        </div>
-        <div class="form-controller required-center">
-          <div class="good-file">
-            <span>商品文件:</span>&nbsp;&nbsp;&nbsp;&nbsp;
-            <ivo-file-upload #upload_file formControlName="f" ivoErroTip ivoErrorTipString="请上传分享文件!"
-              [acceptType]="'.zip'">
-            </ivo-file-upload>
-          </div>
+		<div formArrayName="gl">
+			<div
+				*ngFor="let item of glArray.controls; index as i; trackBy: trackBy"
+				class="form-item free-share-file-upload"
+				[formGroupName]="i"
+			>
+				<div class="title" [ivoNoticeTitle]="'文件大小不得大于210M。'">
+					<span>上传商品内容-{{ i + 1 }}</span
+					><span class="ivo-icon-delete-circle" *ngIf="!isEdit" (click)="deleteGl(item.symbol)"></span>
+					<span class="form-item-tip-after" *ngIf="isEdit">更改价格或上下架商品，请在“商品管理”页面操作</span>
+				</div>
+				<div class="form-controller required-center">
+					<div class="good-file">
+						<span>商品文件:</span>&nbsp;&nbsp;&nbsp;&nbsp;
+						<ivo-file-upload
+							#upload_file
+							formControlName="f"
+							ivoErroTip
+							ivoErrorTipString="请上传分享文件!"
+							[acceptType]="'.zip'"
+						>
+						</ivo-file-upload>
+					</div>
 
-          <span class="required-center file-type-area" *ngIf="item.value.f">
-            <span>文件格式:</span>&nbsp;&nbsp;&nbsp;&nbsp;
+					<span class="required-center file-type-area" *ngIf="item.value.f">
+						<span>文件格式:</span>&nbsp;&nbsp;&nbsp;&nbsp;
 
-            <div class="select-upload-type">
-              <ivo-select [tipText]="{text:'请选择文件格式',value:-1}" [height]="'50px'" [disabled]="isEdit" fontSize="16px"
-                formControlName="ft" ivoErroTip ivoErrorTipString="请选择文件格式!">
-                <ivo-option [value]='2' text='.vrm'></ivo-option>
-                <ivo-option [value]='4' text='.unitypackage'></ivo-option>
-                <ivo-option [value]='5' text='.fbx'></ivo-option>
-              </ivo-select>
-            </div>
-          </span>
-          <span class="file-upload-tip"
-            *ngIf="!upload_file.isHasFile">请上传文件格式为fbx、vrm、unitypackage的模型文件，并打包为ZIP格式的压缩包。请勿上传其他格式文件。
-          </span>
-          <span class="good-file-tip"
-            *ngIf="item.value.ft === 4 && upload_file.isHasFile">模型内若含有插件或shader，请在作品简介内具体说明。</span>
-        </div>
+						<div class="select-upload-type">
+							<ivo-select
+								[tipText]="{ text: '请选择文件格式', value: -1 }"
+								[height]="'50px'"
+								[disabled]="isEdit"
+								fontSize="16px"
+								formControlName="ft"
+								ivoErroTip
+								ivoErrorTipString="请选择文件格式!"
+							>
+								<ivo-option [value]="2" text=".vrm"></ivo-option>
+								<ivo-option [value]="4" text=".unitypackage"></ivo-option>
+								<ivo-option [value]="5" text=".fbx"></ivo-option>
+							</ivo-select>
+						</div>
+					</span>
+					<span class="file-upload-tip" *ngIf="!upload_file.isHasFile"
+						>请上传文件格式为fbx、vrm、unitypackage的模型文件，并打包为ZIP格式的压缩包。请勿上传其他格式文件。
+					</span>
+					<span class="good-file-tip" *ngIf="item.value.ft === 4 && upload_file.isHasFile"
+						>模型内若含有插件或shader，请在作品简介内具体说明。</span
+					>
+				</div>
 
-        <div class="form-controller no-top-line required-center good-file-name">
-          <div class="input-area">
-            商品名称:&nbsp;&nbsp;&nbsp;&nbsp;
-            <ivo-form-input ivoPlaceholder="请输入商品名称" ivoErroTip ivoErrorTipString="请填写免费商品名称!" #share_name_input
-              type="text" formControlName="n" [ivoMaxlength]="20">
-            </ivo-form-input>
-          </div>
+				<div class="form-controller no-top-line required-center good-file-name">
+					<div class="input-area">
+						商品名称:&nbsp;&nbsp;&nbsp;&nbsp;
+						<ivo-form-input
+							ivoPlaceholder="请输入商品名称"
+							ivoErroTip
+							ivoErrorTipString="请填写免费商品名称!"
+							#share_name_input
+							type="text"
+							formControlName="n"
+							[ivoMaxLength]="20"
+						>
+						</ivo-form-input>
+					</div>
 
-          <div class="sale-type required-center" *ngIf="!item.value.fr">
-            出售类型：
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <nz-radio-group formControlName="s" ivoErroTip ivoErrorTipString="请选择销售类型">
-              <label nz-radio [nzValue]="1" [nzDisabled]="glArray.length > 1"><span
-                  class="label-inner">单次销售</span></label>
-              <label nz-radio [nzValue]="-1"><span class="label-inner">多次销售</span></label>
-            </nz-radio-group>
-          </div>
-        </div>
+					<div class="sale-type required-center" *ngIf="!item.value.fr">
+						出售类型： &nbsp;&nbsp;&nbsp;&nbsp;
+						<nz-radio-group formControlName="s" ivoErroTip ivoErrorTipString="请选择销售类型">
+							<label nz-radio [nzValue]="1" [nzDisabled]="glArray.length > 1"
+								><span class="label-inner">单次销售</span></label
+							>
+							<label nz-radio [nzValue]="-1"><span class="label-inner">多次销售</span></label>
+						</nz-radio-group>
+					</div>
+				</div>
 
-        <div class="form-controller no-top-line required-center good-file-name">
-          <div class="input-area">
-            商品价格:&nbsp;&nbsp;&nbsp;&nbsp;
-            <span *ngIf="!item.value.fr">
-              <ivo-form-price-input #goods_price_input [ivod] class="price-input" formControlName="p"
-                [ivoDisabled]="isEdit" ivoPlaceholder="&yen;设置商品价格" ivoErroTip [ivoErrorTipString]="{
-                nullPrice: '请设置商品价格!',
-                floatPrice: '价格只能为整数!',
-                negativePrice: '价格不能为负数!',
-                zeroPrice: '价格不能设置为零!'
-              }">
-              </ivo-form-price-input>
-              &nbsp;&nbsp;&nbsp;&nbsp;<span class="price-tip">平台将收取8%的服务费，预计收益{{ call(toFixed,goods_price_input.ivoValue
-                * 0.92,2)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-            </span><label nz-checkbox formControlName="fr">
-              <span class="label-inner">免费分享</span></label>
-          </div>
-        </div>
-      </div>
-    </div>
+				<div class="form-controller no-top-line required-center good-file-name">
+					<div class="input-area">
+						商品价格:&nbsp;&nbsp;&nbsp;&nbsp;
+						<span *ngIf="!item.value.fr">
+							<ivo-form-price-input
+								#goods_price_input
+								class="price-input"
+								formControlName="p"
+								[ivoDisabled]="isEdit"
+								ivoPlaceholder="&yen;设置商品价格"
+								ivoErroTip
+								[ivoErrorTipString]="{
+									nullPrice: '请设置商品价格!',
+									floatPrice: '价格只能为整数!',
+									negativePrice: '价格不能为负数!',
+									zeroPrice: '价格不能设置为零!'
+								}"
+							>
+							</ivo-form-price-input>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span class="price-tip"
+								>平台不收取服务费，预计收益{{ goods_price_input.ivoValue || 0 }}</span
+							>&nbsp;&nbsp;&nbsp;&nbsp; </span
+						><label nz-checkbox formControlName="fr"> <span class="label-inner">免费分享</span></label>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <div class="form-item add-free-goodList" *ngIf="isEdit ? !isEdit : glArray.length !== 5">
-      <div class="title" (click)="addGoodsList()" [ivoNoticeTitle]="'最多添加5个商品。若作品内包含多个商品，则全部商品无法选择“单次销售”的出售类型'"><span
-          class="ivo-icon-add-circle add-free-goodList-operate">新增商品</span></div>
-    </div>
+		<div class="form-item add-free-goodList" *ngIf="isEdit ? !isEdit : glArray.length !== 5">
+			<div
+				class="title"
+				(click)="addGoodsList()"
+				[ivoNoticeTitle]="'最多添加5个商品。若作品内包含多个商品，则全部商品无法选择“单次销售”的出售类型'"
+			>
+				<span class="ivo-icon-add-circle add-free-goodList-operate">新增商品</span>
+			</div>
+		</div>
 
-    <div class="form-item explain">
-      <div class="title">版权声明</div>
-      <div class="form-controller">
-        <nz-radio-group formControlName="c" ivoErroTip ivoErrorTipString="请勾选版权声明!">
-          <label nz-radio [nzValue]="0" [nzDisabled]="isEdit">此作品为原创作品</label>
-        </nz-radio-group>
-        <nz-checkbox-wrapper (nzOnChange)="changeCopyright($event)">
-          <form [formGroup]="checkedForm">
-            <div nz-col>
-              <ng-container *ngFor="let item of copyrightCheckes$ | async; let i = index">
-                <div>
-                  <label nz-checkbox [nzValue]="item['id']" (click)="(copyright.click)" formControlName="copychecked"
-                    [nzChecked]="copyrightModel.includes(item['id'])" [nzDisabled]="isEdit">{{
-                    item['name'] }}</label>
-                </div>
-              </ng-container>
-              <input type="hidden" formControlName="copyright" #copyright data-control-index="4" />
-            </div>
-          </form>
-        </nz-checkbox-wrapper>
-      </div>
-    </div>
+		<div class="form-item explain">
+			<div class="title">版权声明</div>
+			<div class="form-controller">
+				<nz-radio-group formControlName="c" ivoErroTip ivoErrorTipString="请勾选版权声明!">
+					<label nz-radio [nzValue]="0" [nzDisabled]="isEdit">此作品为原创作品</label>
+				</nz-radio-group>
+				<nz-checkbox-wrapper (nzOnChange)="changeCopyright($event)">
+					<form [formGroup]="checkedForm">
+						<div nz-col>
+							<ng-container *ngFor="let item of copyrightCheckes$ | async; let i = index">
+								<div>
+									<label
+										nz-checkbox
+										[nzValue]="item['id']"
+										(click)="(copyright.click)"
+										formControlName="copychecked"
+										[nzChecked]="copyrightModel.includes(item['id'])"
+										[nzDisabled]="isEdit"
+										>{{ item['name'] }}</label
+									>
+								</div>
+							</ng-container>
+							<input type="hidden" formControlName="copyright" #copyright data-control-index="4" />
+						</div>
+					</form>
+				</nz-checkbox-wrapper>
+			</div>
+		</div>
 
-    <nz-form-item>
-      <nz-form-control>
-        <nz-checkbox-wrapper>
-          <nz-row class="releaseNotice" [ivoNoticeTitle]="
+		<nz-form-item>
+			<nz-form-control>
+				<nz-checkbox-wrapper>
+					<nz-row
+						class="releaseNotice"
+						[ivoNoticeTitle]="
 							'为维护网站环境，请严格遵守Peacha.net创作者公约。严禁盗用他人作品，或上传涉及描摹、临摹、抄袭等行为。'
-						"></nz-row>
-          <nz-row class="releaseNotice" [ivoNoticeTitle]="
-						'作品发布后将进入为期一周的公示期，公示期间若发现作品出现描摹、临摹、抄袭等行为，平台会进行违规处理。作品为商品或免费分享时，在公示期间将无法购买/下载。'
-					"></nz-row>
-          <nz-row class="readme">
-            <label nz-checkbox formControlName="checked" ivoErroTip ivoErrorTipString="请勾选作品上传协议!">
-              我已阅读且同意
-            </label>
-            <a target="_blank" href="/useragreement">《Peacha用户协议》</a>
-            和
-            <a class="convention" href="/convention" target="_blank">《Peacha.net创作者公约》</a>
-          </nz-row>
-        </nz-checkbox-wrapper>
-      </nz-form-control>
-    </nz-form-item>
+						"
+					></nz-row>
+					<nz-row
+						class="releaseNotice"
+						[ivoNoticeTitle]="
+							'作品发布后将进入为期一周的公示期，公示期间若发现作品出现描摹、临摹、抄袭等行为，平台会进行违规处理。作品为商品或免费分享时，在公示期间将无法购买/下载。'
+						"
+					></nz-row>
+					<nz-row class="readme">
+						<label nz-checkbox formControlName="checked" ivoErroTip ivoErrorTipString="请勾选作品上传协议!">
+							我已阅读且同意
+						</label>
+						<a target="_blank" href="/useragreement">《Peacha用户协议》</a>
+						和
+						<a class="convention" href="/convention" target="_blank">《Peacha.net创作者公约》</a>
+					</nz-row>
+				</nz-checkbox-wrapper>
+			</nz-form-control>
+		</nz-form-item>
 
-    <nz-form-item>
-      <nz-form-control>
-        <input ivo-button type="button" value="提交" #submitButton />
-      </nz-form-control>
-    </nz-form-item>
-  </form>
-
+		<nz-form-item>
+			<nz-form-control>
+				<input ivo-button type="button" value="提交" #submitButton />
+			</nz-form-control>
+		</nz-form-item>
+	</form>
 </div>
