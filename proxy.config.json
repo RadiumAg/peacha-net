@@ -1,4 +1,9 @@
 {
+	"/api/v1/captcha": {
+		"target": "http://8.136.185.126:18250",
+		"secure": false,
+		"changeOrigin": true
+	},
 	"/api/v1/log": {
 		"target": "http://8.136.185.126:18001",
 		"secure": false,

@@ -26,7 +26,8 @@
 			"@peacha-studio-core": ["libs/peacha-studio-core/src/index.ts"],
 			"@peacha-studio-core/components": ["libs/peacha-studio-core/src/lib/components/index.ts"],
 			"@peacha-studio-core/vfs": ["libs/peacha-studio-core/src/lib/core/vfs/index.ts"],
-			"@peacha-studio-core/zip": ["libs/peacha-studio-core/src/lib/core/devkit/zip/index.ts"]
+			"@peacha-studio-core/zip": ["libs/peacha-studio-core/src/lib/core/devkit/zip/index.ts"],
+			"@peacha-net/gee": ["libs/gee/src/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]
