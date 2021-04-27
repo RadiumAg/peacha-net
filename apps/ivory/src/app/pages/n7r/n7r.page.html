@@ -70,129 +70,84 @@
 		<h1>应用实例</h1>
 		<div class="case">
 			<li (click)="toPlay(1)">
-				<img src="/assets/image/n7r/case/case-1.png" />
-				<span>
-					<img src="/assets/image/n7r/icon/play.svg" />
-					Outside-In Tracking设计、制作、生产力
-				</span>
-			</li>
-			<li (click)="toPlay(2)">
-				<img src="/assets/image/n7r/case/case-2.png" />
-				<span>
-					<img src="/assets/image/n7r/icon/play.svg" />
-					Outside-In Tracking-Tracker制作光剑《Beat Saber》
-				</span>
-			</li>
-			<li (click)="toPlay(3)">
-				<img src="/assets/image/n7r/case/case-3.png" />
-				<span>
-					<img src="/assets/image/n7r/icon/play.svg" />
-					Outside-In Tracking- 《Beat Saber》全身追踪
-				</span>
-			</li>
-			<li (click)="toPlay(4)">
 				<img src="/assets/image/n7r/case/case-4.png" />
 				<span>
 					<img src="/assets/image/n7r/icon/play.svg" />
-					Outside-In Tracking远程同步操控机器人
+					Tundra Tracker新款全身追踪器试用
+				</span>
+			</li>
+			<li (click)="toPlay(2)">
+				<img src="/assets/image/n7r/case/case-3.png" />
+				<span>
+					<img src="/assets/image/n7r/icon/play.svg" />
+					Tundra Tracker vs. HTC Vive Tracker 3.0 -哪个更好？首个完整测评！
 				</span>
 			</li>
 		</div>
-		<h1>新闻资讯</h1>
-		<div class="news">
-			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=7">
-				<li>
-					<img src="/assets/image/n7r/news/one.png" />
-					<span class="news-name">Tundra Tracker：比VIVE Tracker更轻更小更强大 </span>
-					<span>Tundra Labs近期披露，其新产品Tundra Tracker（新一代追踪器）将在近期登陆kickstarter开启众筹。</span>
+		<h1>产品预购</h1>
+		<div class="price" #detail>
+			<div class="show">
+				<div class="right-box">
+					<li>
+						<span class="title"> 选配项 </span>
+						<div class="choice">
+							<span
+								class="option"
+								*ngFor="let item of allGoods?.list;let i=index"
+								[class.option-active]="i===indexChoice"
+								(click)="select(item,i)"
+								>{{item.name}}</span
+							>
+						</div>
+					</li>
+					<li>
+						<span class="title"> 数量 </span>
+						<div class="choice change-input">
+							<span class="hello" (click)="count$.value>1 && count$.next(count$.value-1)">-</span>
+							<span class="hello-input">{{count$.value}}</span>
+							<span
+								class="hello"
+								(click)="count$.value<(indexGood?.stock-indexGood?.salesVolumes) && count$.next(count$.value+1)"
+							>
+								+
+							</span>
+						</div>
+					</li>
 
-					<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
-				</li>
-			</a>
-			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=5">
-				<li>
-					<img src="/assets/image/n7r/news/two.jpg" />
-					<span class="news-name">
-						Exclusive: Tundra Tracker Aims for Smaller, Cheaper Alternative to Vive Tracker for SteamVR Tracking
-					</span>
-					<span
-						>Tundra Labs, which makes chips and development kits for devices which use SteamVR Tracking, is building its own
-						tracking...</span
-					>
-
-					<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
-				</li>
-			</a>
-			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=2">
-				<li>
-					<img src="/assets/image/n7r/news/three.jpg" />
-					<span class="news-name"> Valve 预告今年推出 SteamVR 2.0 </span>
-					<span>Valve Plans to Release “SteamVR 2.0” This Year</span>
-
-					<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
-				</li>
-			</a>
-			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=3">
-				<li>
-					<img src="/assets/image/n7r/news/four.jpg" />
-					<span class="news-name"> Lighthouse + Vive Tracker 的追踪有多牛？牛到可以在 VR 里玩杂耍 </span>
-					<span>其他产品可以洗洗睡了</span>
-
-					<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
-				</li>
-			</a>
-			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=1">
-				<li>
-					<img src="/assets/image/n7r/news/five.jpg" />
-					<span class="news-name"> 最大支持16个2.0基站串联，Steam最新更新让大空间成本降低数十倍！ </span>
-					<span
-						>Steam更新，目前最大可以支持16个2.0基站串联。如果按照4个100平米来计算，是否意味着其目前可以支持400平米的大空间？</span
-					>
-
-					<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
-				</li>
-			</a>
-			<a target="_blank" href="https://www.n7r.com.cn/nd.jsp?id=4">
-				<li>
-					<img src="/assets/image/n7r/news/six.jpg" />
-					<span class="news-name"> CES2020：概念产品走进生活 </span>
-					<span
-						>耐德佳研发与生产的数款AR光学模组与AR整机也在CES亮相……和往年相比，CES2020发布的VR/AR新终端并不多，但展出的上游解决方案和下游应用在数量和质量上都有了显著提升。</span
-					>
-
-					<img class="go" src="/assets/image/n7r/icon/arrow.svg" />
-				</li>
-			</a>
-		</div>
-		<div class="suit" #detail>
-			<div class="detail">
-				<h3>Tundra 动捕套装</h3>
-				<span>更轻巧、线条更流畅</span>
-				<span>性能更强、续航更长</span>
-				<span>一个接收器，完成所有连接</span>
-				<span class="money"
-					>¥{{suitInfo[0]?.price-suitInfo[0]?.discountAmount}}<s *ngIf="suitInfo[0]?.discountAmount!=0" class="less"
-						>¥{{suitInfo[0]?.price}}</s
-					></span
-				>
-				<button (click)="preOrder(1)">立即预购</button>
-				<span class="buy-care">注：图中为3D打印工程样机，非量产发售产品图片</span>
-			</div>
-		</div>
-		<div class="price">
-			<div class="detail">
-				<h3>Tundra Tracker</h3>
-				<span>Born to run!!!</span>
-				<span>为跑马拉松而生！！</span>
-				<span>连续畅玩续航长达7小时！</span>
-				<span>*注：该产品仅用于动捕套装升级，请勿单拍</span>
-				<span class="money"
-					>¥{{singleInfo[0]?.price-singleInfo[0]?.discountAmount}}<s *ngIf="singleInfo[0]?.discountAmount!=0" class="less"
-						>¥{{singleInfo[0]?.price}}</s
-					></span
-				>
-				<button (click)="preOrder(2)">立即预购</button>
-				<span class="buy-care">注：图中为3D打印工程样机，非量产发售产品图片</span>
+					<li>
+						<span class="title"> 包装规格 </span>
+						<div class="choice">
+							<span class="des">{{indexGood?.description}}</span>
+						</div>
+					</li>
+					<li>
+						<span class="title"> 库存 </span>
+						<div class="choice change-input">
+							<span class="des">{{indexGood?.stock-indexGood?.salesVolumes}}</span>
+						</div>
+					</li>
+					<li>
+						<span class="title"> 单价 </span>
+						<div class="choice ext">
+							<span class="money"
+								>¥{{indexGood?.price-indexGood?.discountAmount}}<span class="tip" *ngIf="indexGood?.discountAmount>1"
+									>（限时优惠）</span
+								></span
+							>
+							<s *ngIf="indexGood?.discountAmount>1">原价：￥{{indexGood?.price}}</s>
+						</div>
+					</li>
+					<li>
+						<span class="title"> 预计发货时间 </span>
+						<div class="choice">
+							<span class="time">2021年{{indexGood?.month}}月开始发货</span>
+						</div>
+					</li>
+					<button class="goto-box" (click)="preOrder(indexGood?.stock-indexGood?.salesVolumes)">
+						立即预购 ¥{{(indexGood?.price-indexGood?.discountAmount)*count$.value}}
+					</button>
+					<div class="sale">关于售后：在购买到货后，售后期间内如遇问题，用户可以直接寄回原厂维修。</div>
+				</div>
 			</div>
 		</div>
 		<h1>关于N7R</h1>
@@ -213,7 +168,14 @@
 					<a class="more" href="https://www.n7r.com.cn/" target="_blank"> 查看更多N7R相关信息>> </a>
 				</li>
 			</div>
-			<img src="/assets/image/n7r/single/8.png" />
+			<div class="about-right">
+				<a *ngFor="let item of news" target="_blank" [href]="item.link">
+					<li>
+						<img src="/assets/image/n7r/news/one.png" />
+						<span>{{item.title}}</span>
+					</li>
+				</a>
+			</div>
 		</div>
 	</div>
 

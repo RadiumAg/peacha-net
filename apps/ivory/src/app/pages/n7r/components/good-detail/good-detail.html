@@ -1,71 +1,6 @@
 <div class="box">
 	<img class="close" src="/assets/image/n7r/icon/close.svg" (click)="close()" />
 	<div class="step" ivoStepper #step="steps">
-		<div class="show box-content" *ivoStep="'detail'">
-			<overlay-scrollbars class="first-scrollbars">
-				<div class="left">
-					<img *ngFor="let url of suitPic" [attr.src]="url" />
-				</div>
-			</overlay-scrollbars>
-			<overlay-scrollbars class="first-scrollbars">
-				<div class="right">
-					<h6>Tundra 动捕套装</h6>
-
-					<li>
-						<span class="title"> 选配项 </span>
-						<div class="choice">
-							<span
-								class="option"
-								*ngFor="let item of goodlist?.list;let i=index"
-								[class.option-active]="i===indexChoice"
-								(click)="select(item,i)"
-								>{{item.name}}</span
-							>
-						</div>
-					</li>
-					<li>
-						<span class="title"> 数量 </span>
-						<div class="choice">
-							<button (click)="count$.value>1 && count$.next(count$.value-1)">-</button>
-							<input type="number" #input [value]="count$.value" readonly unselectable="on" />
-							<button (click)="count$.value<(indexGood?.stock-indexGood?.salesVolumes) && count$.next(count$.value+1)">
-								+
-							</button>
-						</div>
-					</li>
-
-					<li>
-						<span class="title"> 包装规格 </span>
-						<div class="choice">
-							<span class="des">{{indexGood?.description}}</span>
-						</div>
-					</li>
-					<li>
-						<span class="title"> 库存 </span>
-						<div class="choice">
-							<span class="des">{{indexGood?.stock-indexGood?.salesVolumes}}</span>
-						</div>
-					</li>
-					<li>
-						<span class="title"> 单价 </span>
-						<div class="choice ext">
-							<span class="money"
-								>¥{{indexGood?.price-indexGood?.discountAmount}}<span class="tip" *ngIf="indexGood?.discountAmount>1"
-									>（限时优惠）</span
-								></span
-							>
-							<s *ngIf="indexGood?.discountAmount>1">原价：￥{{indexGood?.price}}</s>
-						</div>
-					</li>
-					<li>
-						<span class="title"> 预计发货时间 </span>
-						<div class="choice">
-							<span class="time">2021年{{indexGood?.month}}月开始发货</span>
-						</div>
-					</li>
-				</div>
-			</overlay-scrollbars>
-		</div>
 		<div class="box-content" *ivoStep="'order'">
 			<h2>提交订单</h2>
 			<overlay-scrollbars class="second-scrollbars">
@@ -241,7 +176,7 @@
 		<div class="btn" [class.center-btn]="btnType$.value===-1">
 			<button
 				class="go"
-				(click)="goto(indexGood?.stock-indexGood?.salesVolumes)"
+				(click)="goto()"
 				*ngIf="btnType$.value<2"
 				[class.unable]="indexGood?.stock===indexGood?.salesVolumes || (indexGood?.stock-indexGood?.salesVolumes<this.count$.value)"
 			>
