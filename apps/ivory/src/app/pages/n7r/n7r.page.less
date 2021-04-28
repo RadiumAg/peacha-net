@@ -565,15 +565,16 @@
 				width: 100%;
 				background-image: url(/assets/image/n7r/price-bg.png);
 				background-position: center;
+				min-height: 860px;
 
 				.show {
 					display: flex;
 					justify-content: flex-end;
 					.right-box {
-						width: 567px;
+						width: 700px;
 						color: #ffffff;
 						font-weight: bold;
-						height: 650px;
+						height: 76px;
 						& > li {
 							margin-top: 30px;
 							display: flex;
@@ -586,6 +587,12 @@
 							& > .change-input {
 								display: flex;
 							}
+							& > .choice-kinds {
+								width: 540px;
+								display: grid;
+								grid-template-columns: repeat(2, 260px);
+								grid-column-gap: 20px;
+							}
 							& > .choice {
 								font-weight: normal;
 
@@ -596,7 +603,7 @@
 									white-space: pre-line;
 								}
 								& > .option {
-									padding: 8px 20px;
+									padding: 8px 10px;
 									border: 1px solid #ffffff;
 									font-size: 16px;
 									margin-bottom: 15px;
@@ -605,7 +612,6 @@
 								& > .option-active {
 									background-color: #ffffff;
 									color: #000425;
-									color: white;
 								}
 								& > .hello {
 									display: block;

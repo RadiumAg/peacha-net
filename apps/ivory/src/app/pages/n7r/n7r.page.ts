@@ -82,6 +82,7 @@ export class N7rPage {
 		this.autoPlay();
 		this.n7rApi.goodsList().subscribe(good => {
 			this.allGoods = good;
+			this.indexGood = good.list[0];
 			this.singleInfo = good.list.filter(l => Number(l.id) === 1145141007);
 			this.suitInfo = good.list.filter(l => Number(l.id) === 1145141006);
 		});
