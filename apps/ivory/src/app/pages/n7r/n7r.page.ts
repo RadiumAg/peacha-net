@@ -103,15 +103,28 @@ export class N7rPage {
 		'/assets/image/n7r/banner/02.png',
 	];
 	news = [
-		{ link: 'https://www.n7r.com.cn/nd.jsp?id=7', title: 'Tundra Tracker：比VIVE Tracker更轻更小更强大' },
+		{
+			link: 'https://www.n7r.com.cn/nd.jsp?id=7',
+			title: 'Tundra Tracker：比VIVE Tracker更轻更小更强大',
+			img: '/assets/image/n7r/news/one.png',
+		},
 		{
 			link: 'https://www.n7r.com.cn/nd.jsp?id=5',
 			title: 'Exclusive: Tundra Tracker Aims for Smaller, Cheaper Alternative to Vive Tracker for SteamVR Tracking',
+			img: '/assets/image/n7r/news/two.jpg',
 		},
-		{ link: 'https://www.n7r.com.cn/nd.jsp?id=2', title: 'Valve 预告今年推出SteamVR 2.0 ' },
-		{ link: 'https://www.n7r.com.cn/nd.jsp?id=3', title: 'Lighthouse + Vive Tracker 的追踪有多牛？牛到可以在 VR 里玩杂耍' },
-		{ link: 'https://www.n7r.com.cn/nd.jsp?id=1', title: '最大支持16个2.0基站串联，Steam最新更新让大空间成本降低数十倍！' },
-		{ link: 'https://www.n7r.com.cn/nd.jsp?id=4', title: 'CES2020：概念产品走进生活' },
+		{ link: 'https://www.n7r.com.cn/nd.jsp?id=2', title: 'Valve 预告今年推出SteamVR 2.0 ', img: '/assets/image/n7r/news/three.jpg' },
+		{
+			link: 'https://www.n7r.com.cn/nd.jsp?id=3',
+			title: 'Lighthouse + Vive Tracker 的追踪有多牛？牛到可以在 VR 里玩杂耍',
+			img: '/assets/image/n7r/news/four.jpg',
+		},
+		{
+			link: 'https://www.n7r.com.cn/nd.jsp?id=1',
+			title: '最大支持16个2.0基站串联，Steam最新更新让大空间成本降低数十倍！',
+			img: '/assets/image/n7r/news/five.jpg',
+		},
+		{ link: 'https://www.n7r.com.cn/nd.jsp?id=4', title: 'CES2020：概念产品走进生活', img: '/assets/image/n7r/news/six.jpg' },
 	];
 	allGoods: { list: Good[] };
 	suitInfo: any = [];
