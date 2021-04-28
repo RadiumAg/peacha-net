@@ -21,7 +21,7 @@ export class PayPage implements OnInit, OnDestroy {
 		private http: HttpClient,
 		private modal: ModalService,
 		private tradeApi: TradeApiService
-	) { }
+	) {}
 	@ViewChild(Steps) steps: Steps;
 
 	wallet$: Observable<number>;
@@ -86,7 +86,7 @@ export class PayPage implements OnInit, OnDestroy {
 					switchMap(() => this.tradeApi.payHeartbeat(s.tradeId)),
 					tap(heartbeat => {
 						if ([2, 4, 5].includes(heartbeat.status)) {
-              const goToUrl = this.getSuccessUrl(parseInt(s.a,10));
+							const goToUrl = this.getSuccessUrl(parseInt(s.a, 10));
 							this.router.navigate([goToUrl], {
 								queryParamsHandling: 'preserve',
 							});
@@ -95,7 +95,6 @@ export class PayPage implements OnInit, OnDestroy {
 								.open(PopTips, [heartbeat.error, false])
 								.afterClosed()
 								.subscribe(_ => {
-
 									this.router.navigate([s.a ? '/setting/order' : '/commission/detail/node'], {
 										queryParams: {
 											id: s.id ?? -1,
@@ -111,19 +110,19 @@ export class PayPage implements OnInit, OnDestroy {
 		});
 	}
 
-  private getSuccessUrl(category: number) {
-    let goToUrl = '/commission/detail/payment';
-    switch (category) {
-      case EPaymentWay.live2dOrIllust:
-        goToUrl = '/pay/results';
-        break;
+	private getSuccessUrl(category: number) {
+		let goToUrl = '/commission/detail/payment';
+		switch (category) {
+			case EPaymentWay.live2dOrIllust:
+				goToUrl = '/pay/results';
+				break;
 
-      case EPaymentWay.prprlive:
-        goToUrl = '/setting/linkagetime/order';
-        break;
-    }
-    return goToUrl;
-  }
+			case EPaymentWay.prprlive:
+				goToUrl = '/setting/linkagetime/order';
+				break;
+		}
+		return goToUrl;
+	}
 
 	// 确定支付方式按钮
 	next() {
@@ -160,9 +159,9 @@ export class PayPage implements OnInit, OnDestroy {
 						.pipe(
 							tap(params => {
 								this.destroy$.next();
-								if (params.a == 0) {
+								if (params.before == EBeforeRouter.Cart) {
 									this.router.navigate(['cart']);
-								} else if (params.a === 1) {
+								} else if (params.before === EBeforeRouter.Setting) {
 									this.router.navigate(['setting', 'order']);
 								} else {
 									//由企划部分跳转的支付
@@ -181,7 +180,6 @@ export class PayPage implements OnInit, OnDestroy {
 				}
 			});
 	}
-
 
 	payByAlipay() {
 		this.route.queryParams
@@ -238,6 +236,11 @@ export class PayPage implements OnInit, OnDestroy {
 }
 
 export enum EPaymentWay {
-   live2dOrIllust,
-   prprlive
+	live2dOrIllust,
+	prprlive,
+}
+
+export enum EBeforeRouter {
+	Cart,
+	Setting,
 }

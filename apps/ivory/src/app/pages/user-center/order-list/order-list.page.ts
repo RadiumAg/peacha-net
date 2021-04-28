@@ -7,7 +7,6 @@ import { FormControl } from '@angular/forms';
 import { ModalService } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
 
-
 type OrderInfo = {
 	count: number;
 	list: {
@@ -30,7 +29,7 @@ type OrderInfo = {
 	styleUrls: ['./order-list.page.less'],
 })
 export class OrderListPage {
-	constructor(private modal: ModalService, private route: ActivatedRoute, private http: HttpClient, private router: Router) { }
+	constructor(private modal: ModalService, private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 	key: FormControl = new FormControl();
 	a: number[];
 	page$ = new BehaviorSubject<number>(0);
@@ -81,7 +80,6 @@ export class OrderListPage {
 			queryParamsHandling: 'merge',
 		});
 	}
-
 
 	cancel(orderid: number, event: DragEvent) {
 		event.stopPropagation();
@@ -146,7 +144,8 @@ export class OrderListPage {
 				this.router.navigate(['../pay'], {
 					queryParams: {
 						tradeId: s.trade_id,
-						a: 1,
+						a: 0,
+						before: 1,
 						orderId: JSON.stringify([id]),
 					},
 				});

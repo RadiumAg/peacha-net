@@ -57,7 +57,7 @@ export class OrderPage {
 		private router: Router,
 		private store: Store,
 		private modal: ModalService
-	) { }
+	) {}
 
 	a: string;
 
@@ -94,6 +94,7 @@ export class OrderPage {
 									queryParams: {
 										tradeId: i.trade_id,
 										a: 0,
+										before: 0,
 										orderId: JSON.stringify(s.list),
 									},
 								});
