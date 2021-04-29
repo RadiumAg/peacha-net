@@ -21,7 +21,10 @@ export class LoginPage implements AfterViewInit, OnDestroy {
 	currentUrl$ = new BehaviorSubject<string>('');
 	loginForm: FormGroup;
 
+	//极验验证码服务
 	captcha: Captcha = null;
+
+	//极验验证码订阅
 	geeSubscription: Subscription = null;
 	constructor(
 		private fb: FormBuilder,
@@ -57,6 +60,7 @@ export class LoginPage implements AfterViewInit, OnDestroy {
 	}
 
 	ngAfterViewInit(): void {
+		//注册并订阅验证码服务
 		this.geeSubscription = this.gt
 			.register(GeetestClientType.Web, {
 				width: '390px',
@@ -64,15 +68,18 @@ export class LoginPage implements AfterViewInit, OnDestroy {
 			.subscribe({
 				next: res => {
 					switch (res.state) {
+						//验证码初始化成功
 						case 'ready': {
 							this.captcha = res.captcha;
 							break;
 						}
+						//验证码校验成功
 						case 'success': {
 							const token = res.token;
 							this.login(token);
 							break;
 						}
+						//验证码二次校验失败 非正常状态，不做特殊处理
 						case 'fail': {
 							console.log(res);
 							break;
@@ -80,12 +87,14 @@ export class LoginPage implements AfterViewInit, OnDestroy {
 					}
 				},
 				error: err => {
+					// 极验内部错误 见http://docs.geetest.com/sensebot/apirefer/errorcode/web
 					console.log(err);
 				},
 			});
 	}
 
 	ngOnDestroy() {
+		//取消订阅 销毁验证码对象
 		this.geeSubscription.unsubscribe();
 		this.captcha.destroy();
 	}
@@ -105,6 +114,7 @@ export class LoginPage implements AfterViewInit, OnDestroy {
 				})
 			)
 			.subscribe(() => {
+				//调起验证码
 				this.captcha.verify();
 			});
 	}
@@ -152,6 +162,8 @@ export class LoginPage implements AfterViewInit, OnDestroy {
 								break;
 						}
 						this.cdr.markForCheck();
+
+						this.captcha.reset();
 					}
 				},
 				() => {}
