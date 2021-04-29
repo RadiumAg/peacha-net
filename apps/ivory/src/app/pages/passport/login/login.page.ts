@@ -1,16 +1,18 @@
-import { Component, ChangeDetectorRef, AfterViewInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Store, Select } from '@ngxs/store';
-import { Router, ActivatedRoute, Route } from '@angular/router';
-import { merge, Observable, BehaviorSubject, fromEvent, combineLatest, Subscription } from 'rxjs';
-import { map, tap, take, switchMap, filter } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
+import { merge, Observable, BehaviorSubject } from 'rxjs';
+import { map, take, filter } from 'rxjs/operators';
 import { UserState, Login, IvoryError } from '@peacha-core';
-import { Captcha, GeetestClientType, GeeTestService } from '@peacha-net/gee';
+import { GeetestClientType, GeeTestService } from '@peacha-net/gee';
 
 @Component({
 	selector: 'ivo-login',
 	templateUrl: './login.page.html',
 	styleUrls: ['./login.page.less'],
+	//每个组件唯一实例
+	providers: [GeeTestService],
 })
 export class LoginPage implements AfterViewInit, OnDestroy {
 	@Select(UserState.isLogin)
@@ -21,11 +23,6 @@ export class LoginPage implements AfterViewInit, OnDestroy {
 	currentUrl$ = new BehaviorSubject<string>('');
 	loginForm: FormGroup;
 
-	//极验验证码服务
-	captcha: Captcha = null;
-
-	//极验验证码订阅
-	geeSubscription: Subscription = null;
 	constructor(
 		private fb: FormBuilder,
 		private router: Router,
@@ -61,42 +58,32 @@ export class LoginPage implements AfterViewInit, OnDestroy {
 
 	ngAfterViewInit(): void {
 		//注册并订阅验证码服务
-		this.geeSubscription = this.gt
-			.register(GeetestClientType.Web, {
-				width: '390px',
-			})
-			.subscribe({
-				next: res => {
-					switch (res.state) {
-						//验证码初始化成功
-						case 'ready': {
-							this.captcha = res.captcha;
-							break;
-						}
-						//验证码校验成功
-						case 'success': {
-							const token = res.token;
-							this.login(token);
-							break;
-						}
-						//验证码二次校验失败 非正常状态，不做特殊处理
-						case 'fail': {
-							console.log(res);
-							break;
-						}
-					}
-				},
-				error: err => {
-					// 极验内部错误 见http://docs.geetest.com/sensebot/apirefer/errorcode/web
-					console.log(err);
-				},
-			});
+		const { ready$, success$, fail$ } = this.gt.register(GeetestClientType.Web, {
+			width: '390px',
+		});
+		//验证码初始化成功 只在这里订阅错误处理
+		ready$.subscribe({
+			next: () => {
+				console.log('ready');
+			},
+			error: err => {
+				console.log(err);
+			},
+		});
+		//验证码验证成功 做后续的表单提交处理
+		success$.subscribe(res => {
+			//token 添加到接口调用
+			this.login(res.token);
+		});
+		//验证失败，非正常情况，可不处理
+		fail$.subscribe(res => {
+			console.log(res);
+		});
 	}
 
 	ngOnDestroy() {
-		//取消订阅 销毁验证码对象
-		this.geeSubscription.unsubscribe();
-		this.captcha.destroy();
+		//统一销毁
+		this.gt.destroy();
 	}
 
 	submit() {
@@ -115,7 +102,7 @@ export class LoginPage implements AfterViewInit, OnDestroy {
 			)
 			.subscribe(() => {
 				//调起验证码
-				this.captcha.verify();
+				this.gt.verify();
 			});
 	}
 
@@ -162,8 +149,6 @@ export class LoginPage implements AfterViewInit, OnDestroy {
 								break;
 						}
 						this.cdr.markForCheck();
-
-						this.captcha.reset();
 					}
 				},
 				() => {}

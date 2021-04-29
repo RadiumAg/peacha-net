@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GeeInitParams, Captcha, initGeetest, GeeConfig } from '../gt';
-import { map, switchMap } from 'rxjs/operators';
-import { from, Observable } from 'rxjs';
+import { catchError, filter, map, publish, switchMap, takeUntil } from 'rxjs/operators';
+import { ConnectableObservable, EMPTY, from, Observable, Subject } from 'rxjs';
 
 export enum GeetestClientType {
 	Web,
@@ -37,15 +37,33 @@ function initGeetestAsync(params: GeeInitParams & GeeConfig) {
 		initGeetest(params, res);
 	});
 }
+interface CaptchaReadyEvent {
+	state: 'ready';
+}
 
-@Injectable({
-	providedIn: 'root',
-})
+interface CaptchaSuccessEvent {
+	state: 'success';
+	msg: string;
+	token: string;
+}
+
+interface CaptchaFailEvent {
+	state: 'fail';
+	msg: string;
+	token: string;
+}
+
+@Injectable()
 export class GeeTestService {
+	private captcha: Captcha | null = null;
+	private destroy$ = new Subject<void>();
 	constructor(private http: HttpClient) {}
 
-	public register(client: GeetestClientType, config?: GeeConfig) {
-		return this.http
+	/**
+	 * 注册验证码服务
+	 */
+	public register(client: GeetestClientType = GeetestClientType.Web, config: GeeConfig = {}) {
+		const source = this.http
 			.get<RegisterResult>('/captcha/geetest/register', {
 				params: {
 					client: client.toString(),
@@ -65,26 +83,11 @@ export class GeeTestService {
 					);
 				}),
 				switchMap(captcha => {
-					return new Observable<
-						| {
-								state: 'ready';
-								captcha: Captcha;
-						  }
-						| {
-								state: 'success';
-								msg: string;
-								token: string;
-						  }
-						| {
-								state: 'fail';
-								msg: string;
-								token: string;
-						  }
-					>(observer => {
+					return new Observable<CaptchaReadyEvent | CaptchaSuccessEvent | CaptchaFailEvent>(observer => {
 						captcha.onReady(() => {
+							this.captcha = captcha;
 							observer.next({
 								state: 'ready',
-								captcha,
 							});
 						});
 						captcha.onSuccess(() => {
@@ -117,8 +120,46 @@ export class GeeTestService {
 							observer.error(error);
 						});
 					});
-				})
-			);
+				}),
+				publish()
+			) as ConnectableObservable<CaptchaReadyEvent | CaptchaSuccessEvent | CaptchaFailEvent>;
+		const ready$ = source.pipe(
+			takeUntil(this.destroy$),
+			filter(res => res.state === 'ready')
+		) as Observable<CaptchaReadyEvent>;
+		const success$ = source.pipe(
+			takeUntil(this.destroy$),
+			catchError(() => {
+				return EMPTY;
+			}),
+			filter(res => res.state === 'success')
+		) as Observable<CaptchaSuccessEvent>;
+		const fail$ = source.pipe(
+			takeUntil(this.destroy$),
+			catchError(() => {
+				return EMPTY;
+			}),
+			filter(res => res.state === 'fail')
+		) as Observable<CaptchaFailEvent>;
+		source.connect();
+
+		return { ready$, success$, fail$ };
+	}
+
+	/**
+	 * 拉起验证码
+	 */
+	public verify() {
+		this.captcha?.verify();
+	}
+
+	/**
+	 * 验证码服务销毁
+	 */
+	public destroy() {
+		this.destroy$.next();
+		this.destroy$.unsubscribe();
+		this.captcha?.destroy();
 	}
 
 	private validate(params: SecondValidateParams) {

@@ -12,8 +12,6 @@ import { HttpClient } from '@angular/common/http';
 import { UserState, CustomerService, ChatStartService, MessageUnreadCountService } from '@peacha-core';
 import { ChatState, Logout } from '@peacha-core/state';
 
-
-
 @Component({
 	selector: 'ivo-navbar',
 	templateUrl: './navbar.fragment.html',
@@ -71,7 +69,6 @@ export class NavbarFragment {
 		private dialog: ChatStartService,
 		private msgCount: MessageUnreadCountService
 	) {
-
 		this.isLogin$.subscribe(is => {
 			if (is) {
 				this.customer.count();
@@ -83,7 +80,6 @@ export class NavbarFragment {
 
 	params$ = this.route.queryParams;
 	isPortalShowing$ = new BehaviorSubject<boolean>(false);
-
 
 	timer$ = combineLatest([timer(0, 20000)])
 		.pipe(
@@ -103,9 +99,6 @@ export class NavbarFragment {
 								this.followerCount = s.follow;
 								this.cdr.markForCheck();
 							});
-
-
-
 					}
 				});
 			})
