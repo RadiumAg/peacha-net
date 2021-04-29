@@ -1,9 +1,9 @@
 import { app_config } from './../../../global.config';
 import { Component, ChangeDetectionStrategy, ViewChild, ElementRef, TemplateRef, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
-import { Observable, BehaviorSubject, combineLatest, timer } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest, timer, Subject } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map, take, tap } from 'rxjs/operators';
+import { map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { DASHBOARD_ANIMATION, AVATAR_ANIMATION } from './animations';
@@ -11,8 +11,6 @@ import { PlatformLocation } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { UserState, CustomerService, ChatStartService, MessageUnreadCountService } from '@peacha-core';
 import { ChatState, Logout } from '@peacha-core/state';
-
-
 
 @Component({
 	selector: 'ivo-navbar',
@@ -71,12 +69,12 @@ export class NavbarFragment {
 		private dialog: ChatStartService,
 		private msgCount: MessageUnreadCountService
 	) {
-
 		this.isLogin$.subscribe(is => {
 			if (is) {
-				this.customer.count();
+				this.customer.count$.subscribe();
 				this.dialog.getWebsocketUrl();
-				this.msgCount.getUnreadCount();
+				this.msgCount.getMessageUnreadCount$.subscribe();
+				this.timer$.subscribe();
 			}
 		});
 	}
@@ -84,33 +82,25 @@ export class NavbarFragment {
 	params$ = this.route.queryParams;
 	isPortalShowing$ = new BehaviorSubject<boolean>(false);
 
+	destroy$ = new Subject<void>();
 
-	timer$ = combineLatest([timer(0, 20000)])
-		.pipe(
-			tap(([_t]) => {
-				this.isLogin$.subscribe(isLogin => {
-					if (isLogin) {
-						this.http
-							.get<{
-								newest: number;
-								notice: number;
-								star: number;
-								forum: number;
-								follow: number;
-								cooperation: number;
-							}>('/news/count')
-							.subscribe(s => {
-								this.followerCount = s.follow;
-								this.cdr.markForCheck();
-							});
-
-
-
-					}
-				});
-			})
-		)
-		.subscribe();
+	timer$ = combineLatest([timer(0, 20000)]).pipe(
+		switchMap(() => {
+			return this.http.get<{
+				newest: number;
+				notice: number;
+				star: number;
+				forum: number;
+				follow: number;
+				cooperation: number;
+			}>('/news/count');
+		}),
+		tap(s => {
+			this.followerCount = s.follow;
+			this.cdr.markForCheck();
+		}),
+		takeUntil(this.destroy$)
+	);
 
 	hoverAvatar(_e: Event): void {
 		// if (this.currentOverlay == undefined) {
@@ -179,6 +169,10 @@ export class NavbarFragment {
 				this.router.navigate(['/']);
 				this.isPortalShowing$.next(false);
 				this.dialog.disconnectWs();
+				this.msgCount.cancelGetCount();
+				this.customer.cancelGetCount();
+				this.destroy$.complete();
+				this.destroy$.next();
 			},
 			e => {
 				if (e.code == 401 || e.code == 403) {

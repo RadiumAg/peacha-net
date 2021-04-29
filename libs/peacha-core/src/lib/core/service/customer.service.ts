@@ -1,27 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { timer, Observable, BehaviorSubject } from 'rxjs';
+import { timer, Observable, BehaviorSubject, Subject } from 'rxjs';
 import { Select } from '@ngxs/store';
 import { UserState } from '../state/user.state';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Injectable()
 export class CustomerService {
 	@Select(UserState.isLogin)
 	isLogin$: Observable<boolean>;
 
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient) {}
 
 	unreadCounnt$ = new BehaviorSubject(0);
 
-	count(): void {
-		this.isLogin$.subscribe(is => {
-			if (is) {
-				timer(0, 10000).subscribe(_t => {
-					this.http.get<{ count: number }>('/webim/unread_count').subscribe(l => {
-						this.unreadCounnt$.next(l.count);
-					});
-				});
-			}
-		});
+	destroy$ = new Subject<void>();
+
+	cancelGetCount() {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
+
+	// eslint-disable-next-line @typescript-eslint/member-ordering
+	count$ = timer(0, 10000).pipe(
+		switchMap(() => {
+			return this.http.get<{ count: number }>('/webim/unread_count');
+		}),
+		tap(s => {
+			this.unreadCounnt$.next(s.count);
+		}),
+		takeUntil(this.destroy$)
+	);
 }
