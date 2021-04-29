@@ -18,16 +18,18 @@ export interface GeeConfig {
 	hideRefresh?: boolean;
 }
 
+export type ValidateResult =
+	| {
+			geetest_challenge: string;
+			geetest_validate: string;
+			geetest_seccode: string;
+	  }
+	| false;
+
 export interface Captcha {
 	appendTo(dom: string | HTMLElement): void;
 	bindForm(dom: string | HTMLElement): void;
-	getValidate():
-		| {
-				geetest_challenge: string;
-				geetest_validate: string;
-				geetest_seccode: string;
-		  }
-		| false;
+	getValidate(): ValidateResult;
 	reset(): void;
 	verify(): void;
 	onReady(callback: () => void): void;

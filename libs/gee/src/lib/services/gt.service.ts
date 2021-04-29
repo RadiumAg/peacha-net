@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GeeInitParams, Captcha, initGeetest, GeeConfig } from '../gt';
-import { switchMap, tap } from 'rxjs/operators';
-import { from } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
 
 export enum GeetestClientType {
 	Web,
@@ -44,7 +44,7 @@ function initGeetestAsync(params: GeeInitParams & GeeConfig) {
 export class GeeTestService {
 	constructor(private http: HttpClient) {}
 
-	public register(dom: HTMLElement | null, client: GeetestClientType, config?: GeeConfig) {
+	public register(client: GeetestClientType, config?: GeeConfig) {
 		return this.http
 			.get<RegisterResult>('/captcha/geetest/register', {
 				params: {
@@ -57,17 +57,71 @@ export class GeeTestService {
 						initGeetestAsync({
 							gt: result.gt,
 							challenge: result.challenge,
-							offline: result.success === 1,
+							offline: !result.success,
 							new_captcha: result.new_captcha,
 							...config,
 							product: 'bind',
 						})
 					);
+				}),
+				switchMap(captcha => {
+					return new Observable<
+						| {
+								state: 'ready';
+								captcha: Captcha;
+						  }
+						| {
+								state: 'success';
+								msg: string;
+								token: string;
+						  }
+						| {
+								state: 'fail';
+								msg: string;
+								token: string;
+						  }
+					>(observer => {
+						captcha.onReady(() => {
+							observer.next({
+								state: 'ready',
+								captcha,
+							});
+						});
+						captcha.onSuccess(() => {
+							const validate = captcha.getValidate();
+							if (validate !== false) {
+								this.validate({
+									seccode: validate.geetest_seccode,
+									challenge: validate.geetest_challenge,
+									validate: validate.geetest_validate,
+									client: GeetestClientType.Web,
+								})
+									.pipe(
+										map(res => ({
+											state: res.result,
+											msg: res.msg,
+											token: res.token,
+										}))
+									)
+									.subscribe({
+										next: res => {
+											observer.next(res);
+										},
+										error: err => {
+											observer.error(err);
+										},
+									});
+							}
+						});
+						captcha.onError(error => {
+							observer.error(error);
+						});
+					});
 				})
 			);
 	}
 
-	public validate(params: SecondValidateParams) {
+	private validate(params: SecondValidateParams) {
 		return this.http.post<SecondValidateResult>('/captcha/geetest/validate', params);
 	}
 }
