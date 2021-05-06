@@ -1,10 +1,11 @@
-import { AfterViewInit,ChangeDetectorRef,Component,ElementRef,OnInit,ViewChild } from '@angular/core';
-import { AbstractControl,FormBuilder,ValidatorFn,Validators } from '@angular/forms';
-import { ActivatedRoute,Router } from '@angular/router';
-import { isEmptyInputValue,live2dPriceValidator,ModalService,validator,ZoomService } from '@peacha-core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { isEmptyInputValue, live2dPriceValidator, ModalService, validator, ZoomService } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
+import { GeetestClientType, GeeTestService } from '@peacha-net/gee';
 import { fromEvent } from 'rxjs';
-import { debounceTime,map,tap } from 'rxjs/operators';
+import { debounceTime, map, tap } from 'rxjs/operators';
 import { IllustZoomModalComponent } from '../../../work/illust-zoom-modal/illust-zoom-modal.component';
 import { CommissionNodeComponent } from '../../components/commission-node/commission-node.component';
 import { CommissionApiService } from '../../service/commission-api.service';
@@ -12,6 +13,7 @@ import { CommissionApiService } from '../../service/commission-api.service';
 @Component({
 	templateUrl: './commission-publish-illustration.component.html',
 	styleUrls: ['./commission-publish-illustration.component.less'],
+	providers: [GeeTestService],
 })
 export class CommissionPublishIllustrationComponent implements OnInit, AfterViewInit {
 	constructor(
@@ -21,8 +23,9 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 		private route: ActivatedRoute,
 		private cdr: ChangeDetectorRef,
 		private router: Router,
-		private zoom: ZoomService
-	) { }
+		private zoom: ZoomService,
+		private gt: GeeTestService
+	) {}
 
 	activeList = [false, true, true, true, true];
 	navActiveList = [false, false, false, false, false];
@@ -278,20 +281,20 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 					wi: x.property.width,
 					f: x.commission.file
 						? [
-							{
-								url: x.commission.file,
-								name: x.commission.fileName,
-							},
-						]
+								{
+									url: x.commission.file,
+									name: x.commission.fileName,
+								},
+						  ]
 						: [],
 					ft:
 						x.commission.fileImages.length == 0
 							? []
 							: x.commission.fileImages.map(_ => {
-								return {
-									url: _,
-								};
-							}),
+									return {
+										url: _,
+									};
+							  }),
 				});
 			},
 			error: x => {
@@ -336,17 +339,18 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 			if (!this.isNext) {
 				return currentIndex;
 			}
-			if (this.isEdit) {
-				this.sureEdit();
-			} else {
-				this.pubslish();
-			}
+			// if (this.isEdit) {
+			// 	this.sureEdit()
+			// } else {
+			// 	this.pubslish()
+			// }
+			this.gt.verify();
 		}
 
 		return currentIndex;
 	}
 
-	private sureEdit(): void {
+	private sureEdit(captchaToken: string): void {
 		this.api
 			.update(
 				this.param.c,
@@ -359,7 +363,8 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 				this.param.hi,
 				this.param.wi,
 				this.param.f,
-				this.param.ft
+				this.param.ft,
+				captchaToken
 			)
 			.subscribe({
 				next: _x => {
@@ -372,7 +377,9 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 									id: this.param.c,
 								},
 							});
+							this.cdr.detectChanges();
 						});
+					this.cdr.detectChanges();
 				},
 				error: _x => {
 					this.modal.open(PopTips, ['编辑失败']);
@@ -386,7 +393,7 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 	/**
 	 * @description publish the work
 	 */
-	private pubslish(): void {
+	private pubslish(captchaToken: string): void {
 		this.api
 			.publishIllustration(
 				this.param.n,
@@ -406,7 +413,8 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 				this.param.f,
 				this.param.ft,
 				this.param.mc,
-				this.param.fl
+				this.param.fl,
+				captchaToken
 			)
 			.subscribe({
 				next: (x: { id: number }) => {
@@ -419,12 +427,14 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 									id: x.id,
 								},
 							});
+							this.cdr.detectChanges();
 						});
+					this.cdr.detectChanges();
 				},
 				error: _x => {
 					this.modal.open(PopTips, ['发布失败']);
 				},
-				complete: () => { },
+				complete: () => {},
 			});
 	}
 
@@ -490,6 +500,31 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 
 	ngAfterViewInit(): void {
 		this.bind();
+
+		//注册并订阅验证码服务
+		const { ready$, success$, fail$ } = this.gt.register(GeetestClientType.Web);
+		//验证码初始化成功 只在这里订阅错误处理
+		ready$.subscribe({
+			next: () => {
+				console.log('ready');
+			},
+			error: err => {
+				console.log(err);
+			},
+		});
+		//验证码验证成功 做后续的表单提交处理
+		success$.subscribe(res => {
+			//token 添加到接口调用
+			if (this.isEdit) {
+				this.sureEdit(res.token);
+			} else {
+				this.pubslish(res.token);
+			}
+		});
+		//验证失败，非正常情况，可不处理
+		fail$.subscribe(res => {
+			console.log(res);
+		});
 	}
 
 	private bind(): void {
@@ -547,8 +582,8 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 					this.previewImgsUrl = _.ft ? _.ft?.map(x => x.url) : [];
 					this.previewFileUrl = _.f
 						? _.f.map(x => {
-							return { url: x.url, name: x.name };
-						})
+								return { url: x.url, name: x.name };
+						  })
 						: [];
 				}),
 				map(_ => {

@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isEmptyInputValue, live2dPriceValidator, ModalService, validator, ZoomService } from '@peacha-core';
 import { PopTips } from '@peacha-core/components';
+import { GeetestClientType, GeeTestService } from '@peacha-net/gee';
 import { fromEvent } from 'rxjs';
 import { debounceTime, map, tap } from 'rxjs/operators';
 import { IllustZoomModalComponent } from '../../../work/illust-zoom-modal/illust-zoom-modal.component';
@@ -11,6 +12,7 @@ import { CommissionApiService } from './../../service/commission-api.service';
 @Component({
 	templateUrl: './commission-publish-live2d.component.html',
 	styleUrls: ['./commission-publish-live2d.component.less'],
+	providers: [GeeTestService],
 })
 export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 	constructor(
@@ -19,7 +21,9 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 		private modal: ModalService,
 		private route: ActivatedRoute,
 		private router: Router,
-		private zoom: ZoomService
+		private zoom: ZoomService,
+		private gt: GeeTestService,
+		private cdr: ChangeDetectorRef
 	) {}
 
 	activeList = [false, true, true, true];
@@ -236,17 +240,18 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 			if (!this.isNext) {
 				return currentIndex;
 			}
-			if (this.isEdit) {
-				this.sureEdit();
-			} else {
-				this.pubslish();
-			}
+			// if (this.isEdit) {
+			// 	this.sureEdit();
+			// } else {
+			// 	this.pubslish();
+			// }
+			this.gt.verify();
 		}
 
 		return currentIndex;
 	}
 
-	private sureEdit(): void {
+	private sureEdit(captchaToken: string): void {
 		this.api
 			.update(
 				this.param.c,
@@ -259,7 +264,8 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 				0,
 				0,
 				this.param.f,
-				this.param.ft
+				this.param.ft,
+				captchaToken
 			)
 			.subscribe({
 				next: _x => {
@@ -273,6 +279,7 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 								},
 							});
 						});
+					this.cdr.detectChanges();
 				},
 				error: _x => {
 					this.modal.open(PopTips, ['编辑失败']);
@@ -286,7 +293,7 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 	/**
 	 * @description publish the work
 	 */
-	private pubslish(): void {
+	private pubslish(captchaToken: string): void {
 		this.api
 			.publishLive2D(
 				this.param.n,
@@ -301,7 +308,8 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 				this.param.spi,
 				this.param.spii,
 				this.param.f,
-				this.param.ft
+				this.param.ft,
+				captchaToken
 			)
 			.subscribe({
 				next: (x: { id: number }) => {
@@ -314,7 +322,9 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 									id: x.id,
 								},
 							});
+							this.cdr.detectChanges();
 						});
+					this.cdr.detectChanges();
 				},
 				error: _x => {
 					this.modal.open(PopTips, ['发布失败']);
@@ -415,6 +425,31 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 
 	ngAfterViewInit(): void {
 		this.bind();
+
+		//注册并订阅验证码服务
+		const { ready$, success$, fail$ } = this.gt.register(GeetestClientType.Web);
+		//验证码初始化成功 只在这里订阅错误处理
+		ready$.subscribe({
+			next: () => {
+				console.log('ready');
+			},
+			error: err => {
+				console.log(err);
+			},
+		});
+		//验证码验证成功 做后续的表单提交处理
+		success$.subscribe(res => {
+			//token 添加到接口调用
+			if (this.isEdit) {
+				this.sureEdit(res.token);
+			} else {
+				this.pubslish(res.token);
+			}
+		});
+		//验证失败，非正常情况，可不处理
+		fail$.subscribe(res => {
+			console.log(res);
+		});
 	}
 
 	private bind(): void {

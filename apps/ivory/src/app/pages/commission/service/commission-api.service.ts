@@ -5,7 +5,7 @@ import { CommissionDetail } from '../model/commission-detail';
 
 @Injectable()
 export class CommissionApiService {
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient) {}
 
 	/**
 	 *
@@ -260,28 +260,37 @@ export class CommissionApiService {
 				n: string;
 				r: string;
 			}
-		]
+		],
+		captchaToken: string
 	) =>
-		this.http.post('/commission/publish_illustration', {
-			n,
-			de,
-			s: Number(s),
-			sd,
-			d,
-			sp,
-			mp,
-			det,
-			en,
-			an,
-			hi,
-			wi,
-			spi,
-			spr,
-			f,
-			ft,
-			mc,
-			fl,
-		});
+		this.http.post(
+			'/commission/publish_illustration',
+			{
+				n,
+				de,
+				s: Number(s),
+				sd,
+				d,
+				sp,
+				mp,
+				det,
+				en,
+				an,
+				hi,
+				wi,
+				spi,
+				spr,
+				f,
+				ft,
+				mc,
+				fl,
+			},
+			{
+				headers: {
+					captcha: captchaToken,
+				},
+			}
+		);
 
 	/**
 	 * @name 发布Live2D企划(参数都必填)
@@ -319,23 +328,32 @@ export class CommissionApiService {
 		spi: number,
 		spii: number,
 		f: number,
-		ft: Array<string>
+		ft: Array<string>,
+		captchaToken: string
 	) =>
-		this.http.post('/commission/publish_live2d', {
-			n,
-			s,
-			sd,
-			d,
-			sp,
-			mp,
-			det,
-			en,
-			an,
-			spi,
-			spii,
-			f,
-			ft,
-		});
+		this.http.post(
+			'/commission/publish_live2d',
+			{
+				n,
+				s,
+				sd,
+				d,
+				sp,
+				mp,
+				det,
+				en,
+				an,
+				spi,
+				spii,
+				f,
+				ft,
+			},
+			{
+				headers: {
+					captcha: captchaToken,
+				},
+			}
+		);
 
 	/**
 	 * @name 设置企划状态
@@ -387,21 +405,30 @@ export class CommissionApiService {
 		hi: number,
 		wi: number,
 		f: number,
-		ft: Array<string>
+		ft: Array<string>,
+		captchaToken: string
 	) =>
-		this.http.post('/commission/update', {
-			c,
-			s,
-			sd,
-			d,
-			sp,
-			mp,
-			det,
-			hi: hi ?? '',
-			wi: wi ?? '',
-			f: f ?? '',
-			ft: ft ?? [],
-		});
+		this.http.post(
+			'/commission/update',
+			{
+				c,
+				s,
+				sd,
+				d,
+				sp,
+				mp,
+				det,
+				hi: hi ?? '',
+				wi: wi ?? '',
+				f: f ?? '',
+				ft: ft ?? [],
+			},
+			{
+				headers: {
+					captcha: captchaToken,
+				},
+			}
+		);
 
 	/**
 	 * @name 选择约稿用户
@@ -697,28 +724,24 @@ export class CommissionApiService {
 	 */
 	public nodeRevoke = (n: number) =>
 		this.http.post(`/commission/node/revoke`, {
-			n
+			n,
 		});
-
 
 	/**
-* @name 撤销申诉
-*
-* @param  c  企划Id
-*
-* @author ding
-*
-* @description 只能申请最后一个节点最新一次提交
-*
-* @version 2021/3/10
-*/
+	 * @name 撤销申诉
+	 *
+	 * @param  c  企划Id
+	 *
+	 * @author ding
+	 *
+	 * @description 只能申请最后一个节点最新一次提交
+	 *
+	 * @version 2021/3/10
+	 */
 	public nodeRevokeAppeal = (c: number) =>
 		this.http.post(`/commission/node/revoke_appeal`, {
-			c
+			c,
 		});
-
-
-
 
 	/**=============  增加稿酬模块接口  ================== */
 
@@ -827,24 +850,21 @@ export class CommissionApiService {
 			d,
 		});
 
-
 	/**
-* @name 撤回中止企划申请
-*
-* @param  c  申请Id
-*
-* @author ding
-*
-* @description
-*
-* @version 2021/3/10
-*/
+	 * @name 撤回中止企划申请
+	 *
+	 * @param  c  申请Id
+	 *
+	 * @author ding
+	 *
+	 * @description
+	 *
+	 * @version 2021/3/10
+	 */
 	public revokeDiscontinue = (c: number) =>
 		this.http.post(`/commission/revoke_discontinue`, {
-			c
+			c,
 		});
-
-
 
 	/**
 	 * @name 是否确认中止企划申请
@@ -970,9 +990,8 @@ export class CommissionApiService {
 	 */
 	public revokeFileRecords = (c: number) =>
 		this.http.post(`/commission/discontinue/revoke_submit_file`, {
-			c
+			c,
 		});
-
 
 	/**
 	 * @name 用户作品
