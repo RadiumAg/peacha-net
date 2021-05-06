@@ -42,7 +42,8 @@
 		<div class="form-control" style="height: 30px; text-align: left; width: 78%">
 			<label nz-checkbox>记住我</label>
 		</div>
-		<button ivo-button type="submit" (click)="login($event)">登录</button>
+		<div #captcha></div>
+		<button ivo-button type="submit" (click)="submit()">登录</button>
 		<div class="form-actions">
 			<a [routerLink]="['..','register']" queryParamsHandling="preserve">注册</a>
 			<a class="right" [routerLink]="['..','forget_password']" [queryParams]="{type:1}" queryParamsHandling="preserve">忘记密码？</a>

@@ -147,22 +147,29 @@ export class UserState {
 		return state;
 	}
 
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient) {}
 
 	@Action(Login)
 	login(ctx: Context, action: Login) {
-		console.log('login');
 		return this.http
-			.post('/user/login', {
-				a: action.account,
-				p: action.password,
-				v: action.verify_code,
-			})
+			.post(
+				'/user/login',
+				{
+					a: action.account,
+					p: action.password,
+					v: action.verify_code,
+				},
+				{
+					headers: {
+						captcha: action.captcha,
+					},
+				}
+			)
 			.pipe(
 				switchMap(_ => {
 					return ctx.dispatch(new FetchMe());
 				}),
-				tap(_ => { })
+				tap(_ => {})
 			);
 	}
 

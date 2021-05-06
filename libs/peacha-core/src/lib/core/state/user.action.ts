@@ -1,6 +1,6 @@
 export class Login {
 	static type = '[User] Update login';
-	constructor(public account: string, public password: string, public verify_code?: string) {}
+	constructor(public account: string, public password: string, public captcha: string, public verify_code?: string) {}
 }
 
 export class Logout {

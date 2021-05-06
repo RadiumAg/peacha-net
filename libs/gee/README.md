@@ -1,3 +1,10 @@
+# gee
+
+极验验证码服务
+
+# demo
+
+```
 import { Component, ChangeDetectorRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Store, Select } from '@ngxs/store';
@@ -169,3 +176,5 @@ export class LoginPage implements AfterViewInit, OnDestroy {
 		return this.password_async_error;
 	}
 }
+
+```
