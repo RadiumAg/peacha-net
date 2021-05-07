@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isEmptyInputValue, live2dPriceValidator, ModalService, validator, ZoomService } from '@peacha-core';
@@ -14,7 +14,7 @@ import { CommissionApiService } from './../../service/commission-api.service';
 	styleUrls: ['./commission-publish-live2d.component.less'],
 	providers: [GeeTestService],
 })
-export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
+export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit, OnDestroy {
 	constructor(
 		private formBuild: FormBuilder,
 		private api: CommissionApiService,
@@ -556,5 +556,8 @@ export class CommissionPublishLive2dComponent implements OnInit, AfterViewInit {
 			assets: [data],
 			index: 0,
 		});
+	}
+	ngOnDestroy() {
+		this.gt.destroy();
 	}
 }
