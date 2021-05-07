@@ -1,5 +1,4 @@
-import { ThisReceiver } from '@angular/compiler';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isEmptyInputValue, live2dPriceValidator, ModalService, validator, ZoomService } from '@peacha-core';
@@ -25,7 +24,8 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 		private cdr: ChangeDetectorRef,
 		private router: Router,
 		private zoom: ZoomService,
-		private gt: GeeTestService
+		private gt: GeeTestService,
+		private ngZone: NgZone
 	) {}
 
 	activeList = [false, true, true, true, true];
@@ -373,14 +373,16 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 						.open(PopTips, ['编辑成功', 0, 1])
 						.afterClosed()
 						.subscribe(_i => {
-							this.router.navigate(['/commission/detail'], {
-								queryParams: {
-									id: this.param.c,
-								},
-							});
-							this.cdr.detectChanges();
+							this.ngZone
+								.run(() =>
+									this.router.navigate(['/commission/detail'], {
+										queryParams: {
+											id: this.param.c,
+										},
+									})
+								)
+								.then();
 						});
-					this.cdr.detectChanges();
 				},
 				error: _x => {
 					this.modal.open(PopTips, ['编辑失败']);
@@ -423,14 +425,16 @@ export class CommissionPublishIllustrationComponent implements OnInit, AfterView
 						.open(PopTips, ['发布成功', 0, 1])
 						.afterClosed()
 						.subscribe(_i => {
-							this.router.navigate(['/commission/detail'], {
-								queryParams: {
-									id: x.id,
-								},
-							});
-							this.cdr.detectChanges();
+							this.ngZone
+								.run(() =>
+									this.router.navigate(['/commission/detail'], {
+										queryParams: {
+											id: x.id,
+										},
+									})
+								)
+								.then();
 						});
-					this.cdr.detectChanges();
 				},
 				error: _x => {
 					this.modal.open(PopTips, ['发布失败']);
